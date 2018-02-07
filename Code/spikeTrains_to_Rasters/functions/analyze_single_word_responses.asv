@@ -1,0 +1,126 @@
+function single_words = analyze_single_word_responses(rasters, trials_info, settings, num_dim)
+
+unit_names = fieldnames(rasters);
+num_units = length(unit_names);
+for u = 1:num_units
+    var_names{u} = unit_names{u}(1:(strfind(unit_names{u}, '_')-1));
+end
+
+%% Get lexicon from stimuli
+sentences = trials_info.stimuli{1};
+words = cellfun(@strsplit, sentences, 'uniformoutput', false);
+word_lengths = cellfun(@length, words, 'uniformoutput', false);
+lexicon = [];
+for w = 1:length(word_lengths)
+    lexicon = [lexicon words{w}];
+end
+% Omit '?'/'!'/'.'
+for w = 1:length(lexicon)
+    if lexicon{w}(end) == '?' || lexicon{w}(end) == '.' || lexicon{w}(end) == '!'
+        lexicon{w} = lexicon{w}(1:end-1);
+    end
+end
+% Make lower case
+lexicon = lower(lexicon);
+lexicon = union(lexicon, lexicon);
+
+%% Load features for lexicon words
+[path2paradigm, sentence_filename, ext] = fileparts(settings.feautre_codes_file);
+[num, txt, ~] = xlsread(fullfile(path2paradigm, [sentence_filename ' words' ext]));
+word_features = num(:, 3:end);
+nouns.IX = logical(word_features(:,1));
+verbs.IX = logical(word_features(:,2));
+function_words.IX = any(word_features(:,3:5), 2);
+
+%%
+for unit = 1:num_units
+    curr_unit = unit_names{unit};
+    for w = 1:length(lexicon)
+        curr_word = lexicon(w);
+        single_words.(curr_unit).responses.(curr_word{1}) = [];
+    end
+end
+
+for unit = 1:num_units
+    curr_unit = unit_names{unit};
+    curr_raster = rasters.(curr_unit).All__trials.matrix;
+    for trial = 1:size(curr_raster, 1)
+        curr_spike_train = curr_raster(trial, :);
+        for w = 1:word_lengths{trial}
+            curr_word = lower(words{trial}{w});
+            if curr_word(end) == '?' || curr_word(end) == '.' || curr_word(end) == '!'
+                curr_word = curr_word(1:end-1);
+            end 
+            
+            latency = 150;
+            window_size = settings.SOA - latency -1;
+            window_size = 150;
+            st = latency + settings.duration_before_stimulus_onset + ...
+                                (w-1)*settings.SOA;
+            ed = st + window_size;
+            curr_response = curr_spike_train(st:ed);
+            single_words.(curr_unit).responses.(curr_word) = [single_words.(curr_unit).responses.(curr_word); ... 
+                                                curr_response];
+        end
+    end
+end
+%%
+for unit = 1:num_units
+    curr_unit = unit_names{unit};
+    for w = 1:length(lexicon)
+        curr_word = lexicon{w};
+        single_words.(curr_unit).ave_responses.(curr_word) = ...
+            mean(single_words.(curr_unit).responses.(curr_word), 1);
+    end
+end
+
+design_matrix = [];
+for w = 1:length(lexicon)
+    curr_word = lexicon{w};
+    feature_vector = [];
+    for unit = 1:num_units
+        curr_unit = unit_names{unit};
+        curr_features = sum(single_words.(curr_unit).ave_responses.(curr_word));
+        feature_vector = [feature_vector, curr_features];
+    end
+    design_matrix = [design_matrix; feature_vector];
+end
+[coeff, score, latent] = pca(design_matrix);
+f = figure('color', [1 1 1]);
+biplot(coeff(:,1:num_dim),'scores',score(:,1:num_dim),'varlabels',var_names, 'obslabels', lexicon);
+hold on
+max_score = max(max(abs(score)));
+if num_dim == 2
+    text(score(:,1)/max_score, score(:,2)/max_score, lexicon, 'color', 'r')
+elseif num_dim == 3
+    text(score(:,1)/max_score, score(:,2)/max_score, score(:,3)/max_score, lexicon, 'color', 'r')
+end
+
+% Sumarize the results
+for pc = 1:length(coeff)
+    nouns.mean(pc) = mean(score(nouns.IX , pc));
+    nouns.std(pc) = std(score(nouns.IX , pc));
+    verbs.mean(pc) = mean(score(verbs.IX , pc));
+    verbs.std(pc) = std(score(verbs.IX , pc));
+    function_words.mean(pc) = mean(score(function_words.IX , pc));
+    function_words.std(pc) = std(score(function_words.IX , pc));
+end
+
+%%
+% f_dist = figure('color', [1 1 1]);
+% hold on
+% hist3([score(nouns.IX, 1) score(nouns.IX, 2)] ,[10 10],'FaceAlpha',.3);
+% hist3([score(verbs.IX, 1) score(verbs.IX, 2)] ,[10 10],'FaceAlpha',.3, 'facecolor', 'r');
+% hist3([score(function_words.IX, 1) score(function_words.IX, 2)] ,[10 10],'FaceAlpha',.3, 'facecolor', 'g');
+% xlabel('Score (PC1)'); ylabel('Score (PC2)');
+% set(gcf,'renderer','opengl');
+
+f_dist = figure('color', [1 1 1]);
+hold on
+histogram(score(nouns.IX, 1), 20, 'binwidth', 0.2, 'facecolor', 'b','FaceAlpha',.3);
+histogram(score(verbs.IX, 1), 20, 'binwidth', 0.2, 'facecolor', 'r','FaceAlpha',.3);
+histogram(score(function_words.IX, 1), 20, 'binwidth', 0.2, 'facecolor', 'g','FaceAlpha',.3);
+legend({'Nouns', '
+xlabel('Score (PC1)')
+
+end

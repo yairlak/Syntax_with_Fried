@@ -1,0 +1,9 @@
+function [filteredSignal]= filterSignal(decimatedSignal,fcuts,fsamp)
+% fcuts=[79 80 180 181];
+% fsamp = 1250;
+mags = [0 1 0];
+devs = [0.01 0.05 0.01];
+[n,Wn,beta,ftype] = kaiserord(fcuts,mags,devs,fsamp);
+n = n + rem(n,2);
+b = fir1(n,Wn,ftype,kaiser(n+1,beta),'noscale');
+filteredSignal = filtfilt(b,1,decimatedSignal);

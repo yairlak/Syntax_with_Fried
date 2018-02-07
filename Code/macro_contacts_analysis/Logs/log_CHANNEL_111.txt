@@ -1,0 +1,19 @@
+111
+Loading data...
+Load events...
+../../Output/raw_data_with_events_to_python_all_comparisons_patient_479_sentences_blocks_135.mat
+Generating MNE raw object...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  4212.309 secs
+Ready.
+0
+Epoching data...
+532 matching events found
+0 projection items activated
+Loading data for 532 events and 180001 original time points ...
+0 bad epochs dropped
+<Epochs  |  n_events : 532 (all good), tmin : -3.0 (s), tmax : 3.0 (s), baseline : None, ~730.6 MB, data loaded,
+ 'FIRST_WORD_TIMES_block_1': 152, 'FIRST_WORD_TIMES_block_3': 152, 'FIRST_WORD_TIMES_block_5': 152, 'KEY_PRESS_l_TIMES_block_1': 20, 'KEY_PRESS_l_TIMES_block_3': 28, 'KEY_PRESS_l_TIMES_block_5': 28>
+('Original sampling rate:', 30000.0, 'Hz')
+('New sampling rate:', 2000.0, 'Hz')
+Time-freq...

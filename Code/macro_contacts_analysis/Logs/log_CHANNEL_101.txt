@@ -1,0 +1,37 @@
+101
+Loading data...
+Load events...
+../../Output/raw_data_with_events_to_python_all_comparisons_patient_479_sentences_blocks_135.mat
+Generating MNE raw object...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  4212.309 secs
+Ready.
+0
+Epoching data...
+532 matching events found
+0 projection items activated
+Loading data for 532 events and 180001 original time points ...
+0 bad epochs dropped
+<Epochs  |  n_events : 532 (all good), tmin : -3.0 (s), tmax : 3.0 (s), baseline : None, ~730.6 MB, data loaded,
+ 'FIRST_WORD_TIMES_block_1': 152, 'FIRST_WORD_TIMES_block_3': 152, 'FIRST_WORD_TIMES_block_5': 152, 'KEY_PRESS_l_TIMES_block_1': 20, 'KEY_PRESS_l_TIMES_block_3': 28, 'KEY_PRESS_l_TIMES_block_5': 28>
+('Original sampling rate:', 30000.0, 'Hz')
+('New sampling rate:', 2000.0, 'Hz')
+Time-freq...
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/volatile/anaconda2/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/volatile/anaconda2/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/volatile/anaconda2/lib/python2.7/multiprocessing/pool.py", line 326, in _handle_workers
+    pool._maintain_pool()
+  File "/volatile/anaconda2/lib/python2.7/multiprocessing/pool.py", line 230, in _maintain_pool
+    self._repopulate_pool()
+  File "/volatile/anaconda2/lib/python2.7/multiprocessing/pool.py", line 223, in _repopulate_pool
+    w.start()
+  File "/volatile/anaconda2/lib/python2.7/multiprocessing/process.py", line 130, in start
+    self._popen = Popen(self)
+  File "/volatile/anaconda2/lib/python2.7/multiprocessing/forking.py", line 121, in __init__
+    self.pid = os.fork()
+OSError: [Errno 12] Cannot allocate memory
+
