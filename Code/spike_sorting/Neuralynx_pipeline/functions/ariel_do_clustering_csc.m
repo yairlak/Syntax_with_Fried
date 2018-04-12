@@ -110,7 +110,7 @@ for k=1:length(channels)
                 f_in  = spikes(classes~=0,:);
                 f_out = spikes(classes==0,:);
                 class_in = classes(find(classes~=0),:);
-                class_out = force_membership_wc(f_in, class_in, f_out, handles.par);
+                class_out = force_membership_wc(f_in, class_in, f_out, handles);
                 classes(classes==0) = class_out;
                 class0=find(classes==0);        
                 class1=find(classes==1);        
@@ -271,6 +271,10 @@ for k=1:length(channels)
     
     catch ex
         ex.message
+        error(ex.message)
+        fprintf('!!!!!!!!!!!!!!!!!!!!\n')
+        fprintf('!!!!!!!!!!!!!!!!!!!!\n')
+        fprintf('!!!!!!!!!!!!!!!!!!!!\n')
         failed_channels = [failed_channels, channel];
     end
     

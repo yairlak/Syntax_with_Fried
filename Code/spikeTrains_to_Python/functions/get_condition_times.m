@@ -1,7 +1,11 @@
 function [trials_info, settings] = get_condition_times(trials_info, settings)
 
     switch settings.patient 
+<<<<<<< HEAD
         case 'ArM01'
+=======
+        case 'ArM01';
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
             trials_info.trial_times_button_press = []; trials_info.key_was_pressed_after = [];
             %% read paradigm logs
             fid = fopen(fullfile(settings.path2data, settings.run_type_file), 'r');
@@ -38,11 +42,19 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                             end
                         end
                         % Add found trial timings to output cell array
+<<<<<<< HEAD
                         trials_info.trial_times_per_condition{cnd} = trial_times_of_curr_condition;
                     end
 
         case {'En_01', 'En_02', 'patient_479'}
                 load(fullfile('..', '..', 'Data', settings.hospital, settings.patient, sprintf('sentences_start_%s.mat', settings.patient)));
+=======
+                        trials_info.trial_times_per_condition{cnd} = trial_times_of_curr_condition -  settings.time0;
+                    end
+
+        case 'En_01'
+                load(fullfile('..', '..', 'Data', 'Patients', 'En_01', sprintf('sentences_start_%s.mat', settings.patient)));
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                 fid = fopen(fullfile(settings.path2data, settings.run_type_file), 'r');
     %             aa = dlmread(fullfile(settings.path2data, settings.run_type_file), ' ');
                 trial = 1;trial_button_press = 1;consec = false;
@@ -56,7 +68,11 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                                 if ~consec
                                         trials_info.trial_times_button_press(trial_button_press) = str2double(curr_fields{1});
                                         switch settings.block_name
+<<<<<<< HEAD
                                             case  'sentences'
+=======
+                                            case  'sentences';
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                                                     trials_info.key_was_pressed_after.trial(trial_button_press) = str2double(trial_labels{trial-1});
                                                     trials_info.key_was_pressed_after.sentence(trial_button_press) = find((str2double(trial_labels{trial-1})-sentences_start)>0, 1, 'last');
                                             case 'words_press'
@@ -69,6 +85,7 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                                 consec = false;
                             end
                         end
+<<<<<<< HEAD
                         if (strcmp(curr_fields{2}, 'DISPLAY_PICTURE') || strcmp(curr_fields{2}, 'DISPLAY_TEXT')) && ~strcmp(curr_fields{3}, 'OFF')
                             trial_times{trial} = curr_fields{1};
                             trial_labels{trial} = curr_fields{3};
@@ -83,6 +100,12 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
 %                             trial_times{trial} = curr_fields{1};
 %                             trial_labels{trial} = num_file;
 %                             trial = trial + 1;
+=======
+                        if strcmp(curr_fields{2}, 'DISPLAY_PICTURE') && ~strcmp(curr_fields{3}, 'OFF') 
+                            trial_times{trial} = curr_fields{1};
+                            trial_labels{trial} = curr_fields{3};
+                            trial = trial + 1;
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                         end
                 end
                 fclose(fid);
@@ -90,12 +113,16 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                  if isempty(settings.conditions)
                     trials_info.trial_numbers_per_condition{1} =cellfun (@str2double, trial_labels);
                     if strcmp(settings.block_name, 'sentences')
+<<<<<<< HEAD
                         switch settings.patient
                             case 'En_01'
                                 trials_info.trial_numbers_per_condition{1} = 1:200;
                             case 'En_02'
                                 trials_info.trial_numbers_per_condition{1} = 1:152;
                         end
+=======
+                        trials_info.trial_numbers_per_condition{1} = 1:200;
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                     end
                  end
 
@@ -110,6 +137,7 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                                         case 'first' %Sentences have varying lengths - take the FIRST word.
                                                 curr_token_number = sentences_start(curr_trial_number); 
                                         case 'last' %Sentences have varying lengths - take the LAST word.
+<<<<<<< HEAD
                                                 switch settings.patient
                                                     case 'En_01'
                                                         last_sentence = 200;
@@ -122,6 +150,12 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                                                     curr_token_number = sentences_start(curr_trial_number+1)-1; 
                                                 else
                                                     curr_token_number = last_token;
+=======
+                                                if curr_trial_number ~= 200
+                                                    curr_token_number = sentences_start(curr_trial_number+1)-1; 
+                                                else
+                                                    curr_token_number = 702;
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                                                 end
                                         case 'subject'
                                             curr_token_number = sentences_start(curr_trial_number) + trials_info.category_position(curr_trial_number, 1) - 1; 
@@ -129,8 +163,11 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                                             curr_token_number = sentences_start(curr_trial_number) + trials_info.category_position(curr_trial_number, 2) - 1; 
                                         case 'object'
                                             curr_token_number = sentences_start(curr_trial_number) + trials_info.category_position(curr_trial_number, 3) - 1; 
+<<<<<<< HEAD
                                         case 'audio'
                                             curr_token_number = curr_trial_number; 
+=======
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                                     end
                                 else
                                     curr_token_number = curr_trial_number;
@@ -143,7 +180,11 @@ function [trials_info, settings] = get_condition_times(trials_info, settings)
                                 end
                             end
                             % Add found trial timings to output cell array
+<<<<<<< HEAD
                             trials_info.trial_times_per_condition{cnd} = trial_times_of_curr_condition;
+=======
+                            trials_info.trial_times_per_condition{cnd} = trial_times_of_curr_condition -  settings.time0;
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                     end
                 else
                     trials_info.trial_times_per_condition = [];

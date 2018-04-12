@@ -1,8 +1,6 @@
 from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, analyses
 from scipy import io
-import os, glob
-import mne
-import matplotlib.pyplot as plt
+import os
 import numpy as np
 
 # Following Ariel's setup, this function generates CSC_cluster?.mat files according to the output of Wave_Clus.
@@ -31,6 +29,7 @@ def generate_spike_csc_cluster_files(data_all_channels_spike_clusters, channel_n
                 temp_dict['time0'] = settings.time0
                 temp_dict['timeend'] = settings.timeend
                 temp_dict['electrode_name'] = electrode_names[ch-1]
+                temp_dict['from_channel'] = ch
 
                 filename_curr_cluster = 'CSC' + str(cnt) + '_cluster.mat'
                 io.savemat(os.path.join(settings.path2output_spike_clusters, filename_curr_cluster), temp_dict)

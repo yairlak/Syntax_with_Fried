@@ -58,11 +58,19 @@ switch settings.patient
         cluster.name = curr_cluster_info(20:24);
         cluster.firing_rate = curr_cluster_info(28:49);
         % cluster.single_or_multi = curr_cluster_info(53:end);
+<<<<<<< HEAD
     case {'En_01', 'En_02', 'patient_479'}
         %script_location = fullfile('..', '..', 'Data', 'Patients', settings.patient, settings.block_name, 'clusters_electrode_montage.m');
         %copyfile(script_location, pwd)
         m = clusters_electrode_montage;
         %delete('clusters_electrode_montage.m')
+=======
+    case 'En_01'
+        script_location = fullfile('..', '..', 'Data', 'Patients', settings.patient, settings.block_name, 'clusters_electrode_montage.m');
+        copyfile(script_location, pwd)
+        m = clusters_electrode_montage;
+        delete('clusters_electrode_montage.m')
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
         % Extract info
         cluster_number = cell(size(m, 1), 1);
         cluster_number(:) = {cluster.number};

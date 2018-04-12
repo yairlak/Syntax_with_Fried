@@ -85,6 +85,7 @@ for k=1:length(channels)
         HighVoltageIndsAll  = [];
         HighVoltageTimesAll = [];
         
+        beginning_of_recordings_filtered = [];
         for j=1:length(tsmin)
             
             % LOAD CSC DATA
@@ -122,7 +123,11 @@ for k=1:length(channels)
             HighVoltageTimesAll = [HighVoltageTimesAll, HighVoltageTimes];
             
             % SPIKE DETECTION WITH AMPLITUDE THRESHOLDING
+            handles.par.data_folder = data_folder;
+            handles.par.channel = channel;
+            handles.par.j = j;
             [spikes,thr,index] = amp_detect(x,handles.par);       %detection with amp. thresh.
+            
             % ARIEL: was: index=index*1e6/sr+tsmin(j);
             % The above is a bug, which shifts all spike times by 1 sample (i.e.,
             % by 36 microsec.):  The index begins from 1, so the if the spike

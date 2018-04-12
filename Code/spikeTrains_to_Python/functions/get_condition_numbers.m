@@ -2,6 +2,7 @@ function [trials_info, settings] = get_condition_numbers(settings)
 % Load code data
 
 if ~isempty(settings.conditions)
+<<<<<<< HEAD
     fid = fopen(fullfile(settings.path2data, settings.run_type_file), 'r');
     trial = 1;
     while ~feof(fid)
@@ -32,6 +33,17 @@ if ~isempty(settings.conditions)
     trials_info.category_position = codes(:, 97:99);
     [~, perm_vec] = sort(IX_in_exp);
     trials_info.category_position = trials_info.category_position(perm_vec, :);
+=======
+    [num, txt, ~] = xlsread(settings.feautre_codes_file, 1);
+    IX_in_exp = num(2:end,1);
+    codes = num(2:end,4:end);
+    txt = txt(3:end, :);
+    if strcmp(settings.block_name, 'sentences')
+        trials_info.category_position = codes(:, 97:99);
+        [~, perm_vec] = sort(IX_in_exp);
+        trials_info.category_position = trials_info.category_position(perm_vec, :);
+    end
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
     % codes = codes(IX_in_exp, :);
 
 %% set conditions
@@ -64,6 +76,7 @@ if ~isempty(settings.conditions)
 %                 curr_IXs = curr_IXs > 0; % Remove -1 represnting irrelevant
                 curr_IXs_pos = curr_IXs_pos > 0;
                 curr_IXs = [curr_IXs_pos ~curr_IXs_neg;];
+<<<<<<< HEAD
                 if ~isempty(settings.conditions_union)
                     if settings.conditions_union(cnd)
                         IX_intersection = any(curr_IXs, 2);
@@ -73,13 +86,27 @@ if ~isempty(settings.conditions)
                 else % default is to instersect (and not to union) columns
                     IX_intersection = all(curr_IXs, 2);
                 end
+=======
+                IX_intersection = all(curr_IXs, 2);
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
                 trials_info.trial_numbers_per_condition{cnd} = IX_in_exp(IX_intersection);
                 trials_info.stimuli{cnd} =txt(IX_intersection, 1);
                 if size(settings.conditions_labels) ~= size(settings.conditions)
                        settings.conditions_labels{cnd} = ['Condition_' num2str(cnd)];    
                 end
         end
+<<<<<<< HEAD
     end
+=======
+        
+        if size(settings.conditions_labels) ~= size(settings.conditions)
+            settings.conditions_labels{cnd} = ['Condition_' num2str(cnd)];    
+        end       
+        
+    end
+    
+    
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304
 else
     trials_info.trial_numbers_per_condition = [];
     settings.conditions_labels = {'All__Trials'};
@@ -94,4 +121,8 @@ else
     trials_info.category_position = trials_info.category_position(perm_vec, :);
 end
 
+<<<<<<< HEAD
     end
+=======
+end
+>>>>>>> 5b9b039709819b6943ba2d6fe6a2cb30b8113304

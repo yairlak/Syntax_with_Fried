@@ -28,6 +28,9 @@ xf=filtfilt(b,a,x);
 lx=length(xf);
 clear x;
 
+
+%%
+
 %noise_std_detect = quickselect_median(abs(xf_detect))/0.6745;
 %noise_std_sorted = quickselect_median(abs(xf))/0.6745;
 noise_std_detect = median(abs(xf_detect))/0.6745;
@@ -38,7 +41,30 @@ thrmax = stdmax * noise_std_sorted;     %thrmax for artifact removal is based on
 
 index = [];
 
-% LOCATE SPIKE TIMES
+%%
+% Save filterd signal
+if par.j == 1
+    save(fullfile(par.data_folder, ['Signal_filtered_', num2str(par.channel)]), 'xf_detect', 'thr', 'thrmax');
+    f = figure('visible', 'off', 'color', [1 1 1]);
+    % st = 0; % in sec
+    ed = 100; % in sec
+    yy = xf_detect(1:ed*sr);
+    xx = (1:length(yy))/sr;
+    plot(xx, yy);
+    line([0, ed],[thr, thr], 'color', 'g')
+    line([0,ed],[-thr, -thr], 'color', 'g')
+    line([0, ed],[thrmax, thrmax], 'color', 'r')
+    line([0,ed],[-thrmax, -thrmax], 'color', 'r')
+    title(sprintf('Channel %i', par.channel))
+    xlim([0, ed])
+    xlabel('Time [sec]', 'fontsize', 16)
+    ylabel('Signal', 'fontsize', 16)
+
+    savefig(f, fullfile(par.data_folder, ['Signal_filtered_', num2str(par.channel), '.fig']))
+    saveas(f, fullfile(par.data_folder, ['Signal_filtered_', num2str(par.channel), '.png']), 'png')
+end
+
+%% LOCATE SPIKE TIMES
 switch detect
  case 'pos'
   xaux = find(xf_detect(w_pre+2:end-w_post-2) > thr) +w_pre+1;
