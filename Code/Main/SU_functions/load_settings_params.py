@@ -9,7 +9,7 @@ class Settings:
         self.load_line_filtered_resampled_epoch_object = False
 
         # PARADIGM
-        self.blocks = [2]
+        self.blocks = [2,4,6]
         self.blocks_str = ''.join(str(x) for x in self.blocks)
 
         self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'END_WAV_TIMES', 'KEY_PRESS_l_TIMES']
@@ -17,7 +17,7 @@ class Settings:
         # self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'KEY_PRESS_l_TIMES']
         # self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3]  # Should match the above (event_types_to_extract)
         # self.events_to_plot = ['FIRST_WORD_TIMES_block_1', 'FIRST_WORD_TIMES_block_3']
-        self.events_to_plot = ['END_WAV_TIMES_block_2']
+        self.events_to_plot = ['END_WAV_TIMES_block_2', 'END_WAV_TIMES_block_4', 'END_WAV_TIMES_block_6']
         # self.events_to_plot = ['LAST_WORD_TIMES_block_1', 'LAST_WORD_TIMES_block_2', 'LAST_WORD_TIMES_block_3']
         # self.events_to_plot = ['KEY_PRESS_l_TIMES_block_1', 'KEY_PRESS_l_TIMES_block_2', 'KEY_PRESS_l_TIMES_block_3']
 
