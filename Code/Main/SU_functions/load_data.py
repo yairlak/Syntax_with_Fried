@@ -37,13 +37,13 @@ def macro_electrodes(settings):
 def spike_clusters(settings):
     CSC_cluster_files = glob.glob(os.path.join(settings.path2spike_clusters, 'CSC*_cluster.mat'))
     CSC_cluster_files.sort(key = alphanum_key)
-    data_all = []; electrode_names_from_raw_files = []; from_channels = {}
+    data_all = []; electrode_names_from_raw_files = []; from_channels = []
     for cluster in CSC_cluster_files:
         data_all.append(io.loadmat(cluster)['spike_times_sec'])
         settings.time0 = io.loadmat(cluster)['time0'][0,0]
         settings.timeend = io.loadmat(cluster)['timeend'][0,0]
         electrode_names_from_raw_files.append(io.loadmat(cluster)['electrode_name'][0] + ',ch ' + str(io.loadmat(cluster)['from_channel'][0]))
-        from_channels[cluster] = io.loadmat(cluster)['from_channel'][0]
+        from_channels.append(io.loadmat(cluster)['from_channel'][0][0])
 
 
     electrode_names = cluster_to_electrode_name(settings)

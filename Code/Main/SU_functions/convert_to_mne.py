@@ -13,20 +13,23 @@ def generate_events_array(log_all_blocks, settings, params):
         # Add all event times from log to events object.
 
         for i, event_type in enumerate(settings.event_types_to_extract):
-            event_number = settings.event_numbers_to_assign_to_extracted_event_types[i] + 100 * (block_number - 1) # For each block, the event_ids are ordered within a range of 20 number 1-20, 21-40, etc.
-            event_type_name = event_type + '_block_' + str(block_number)
-            event_id[event_type_name] = event_number
-            curr_times = getattr(log, event_type)
-            curr_times = np.asarray(curr_times, dtype=float)
-            curr_times = params.sfreq_raw * (curr_times - settings.time0)/1e6 # Subtract the beginning of the recording and convert to samples
-            curr_times = np.expand_dims(curr_times, axis=1)
+            if hasattr(log, event_type):
+                event_number = settings.event_numbers_to_assign_to_extracted_event_types[i] + 100 * (block_number) # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
+                event_type_name = event_type + '_block_' + str(block_number)
+                event_id[event_type_name] = event_number
+                curr_times = getattr(log, event_type)
+                curr_times = np.asarray(curr_times, dtype=float)
+                curr_times = params.sfreq_raw * (curr_times - settings.time0)/1e6 # Subtract the beginning of the recording and convert to samples
+                curr_times = np.expand_dims(curr_times, axis=1)
 
-            num_events = len(curr_times)
-            second_column = np.zeros((num_events, 1))
-            third_column = event_number * np.ones((num_events, 1))
-            curr_array = np.hstack((curr_times, second_column, third_column))
+                num_events = len(curr_times)
+                second_column = np.zeros((num_events, 1))
+                third_column = event_number * np.ones((num_events, 1))
+                curr_array = np.hstack((curr_times, second_column, third_column))
 
-            events = np.vstack((events, curr_array))
+                events = np.vstack((events, curr_array))
+
+            curr_times = None; second_column = None; third_column = None; curr_array = None
 
     # Change to integer and sort events object
     events = events.astype(int)

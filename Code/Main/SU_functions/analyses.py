@@ -6,7 +6,7 @@ import pickle
 import matplotlib.image as mpimg
 
 
-def generate_rasters(epochs_spikes, log_all_blocks, params, settings, preferences):
+def generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences):
     for cluster in np.arange(epochs_spikes.info['nchan']):
         if preferences.sort_according_to_sentence_length:
             sentences_length = []
@@ -37,13 +37,14 @@ def generate_rasters(epochs_spikes, log_all_blocks, params, settings, preference
 
         plt.setp(fig[0].axes[1], ylim=[0, params.ylim_PSTH], xlabel = 'Time [sec]', ylabel='spikes / s')
         IX = settings.events_to_plot[0].find('block')
-        fname = 'raster_' + settings.hospital + '_' + settings.patient + '_' + str(cluster) + '_blocks_' + str(
-            settings.blocks) + '_' + settings.events_to_plot[0][0:IX-1] + '_lengthSorted_' + \
-                str(preferences.sort_according_to_sentence_length) + '.png'
+        fname = 'raster_' + settings.hospital + '_' + settings.patient + '_channel_' + str(from_channels[cluster]) \
+                + '_cluster_' + str(cluster) + '_blocks_' + str(settings.blocks) + '_' + settings.events_to_plot[0][0:IX-1] + '_lengthSorted_' + \
+                str(preferences.sort_according_to_sentence_length) + '_' + electrode_names_from_raw_files[cluster] + '.png'
+                # )
         plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Rasters', fname))
 
 
-def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, P_zero = None):
+def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, params):
     print('Time-freq...')
     freqs = np.arange(fmin, fmax, fstep)
     n_cycles = freqs / 2
@@ -51,11 +52,65 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, P_zero = None)
                                           return_itc=False, picks=[0])
     power_ave = np.squeeze(np.average(power.data, axis=2))
     # Baseline data
-    if P_zero is None:
-        P_zero = np.mean(power_ave[:, epochs.times < 0]) # For baseline: Average over negative times (assuming first word alignment)
+    baseline_type = 'trial_wise'
+    if baseline is None:
+        IX = (epochs.times > -abs(params.baseline_period / 1e3)) & (epochs.times < 0) # indices to relevant times
+        if baseline_type == 'subtract_average':
+            baseline = np.mean(power_ave[:, IX]) # For baseline: Average over negative times (assuming first word alignment)
+            power_ave_baselined = 10 * np.log10(power_ave / baseline)
+        elif baseline_type == 'trial_wise':
+            baseline = np.mean(power_ave[:, IX], axis=1) # For baseline: Average over negative times (assuming first word alignment)
+            power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
+        if all("KEY" in s for s in event_id):
+            power_ave_baselined = power_ave
+    else:
+        IX = (epochs.times > -abs(params.baseline_period / 1e3)) & (epochs.times < 0)  # indices to relevant times
+        if baseline_type == 'subtract_average':
+            power_ave_baselined = 10 * np.log10(power_ave / baseline)
+        elif baseline_type == 'trial_wise':
+            power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
 
-    power_ave_baselined = 10*np.log10(power_ave/P_zero)
-    return power, power_ave_baselined, P_zero
+    return power, power_ave_baselined, baseline
+
+
+def plot_and_save_high_gamma(power, power_ave, event_id, log_all_blocks, file_name, settings, params, preferences):
+    if preferences.sort_according_to_sentence_length:
+        sentences_length = []
+        for log in log_all_blocks:
+            sentences_length = sentences_length + log.sentences_length.values()
+        order = np.argsort(sentences_length)
+        power_ave = power_ave[order, :]
+    else:
+        order = None
+
+    IX = settings.events_to_plot[0].find('block')
+    title = settings.events_to_plot[0][0:IX-1]
+    fig, ax = plt.subplots(1, 1, figsize=(20, 12))
+    vmax1 = np.percentile(power_ave, 95)
+    vmin1 = np.percentile(power_ave, 5)
+    map = ax.imshow(power_ave,
+                    extent=[np.min(power.times), np.max(power.times), 1, power.data.shape[0] + 1],
+                    interpolation='nearest',
+                    aspect='auto', vmin=vmin1, vmax=vmax1)
+    cbar = plt.colorbar(map, ax=ax)
+    cbar.set_label(label='Power (dB)', size=16)
+
+    ax.set_title('Aligned to first word', fontsize=24)
+    ax.set_ylabel('Trial', fontsize=24)
+    ax.set_xlabel('Time [sec]', fontsize=24)
+    ax.axvline(x=0, linestyle='--', linewidth=3, color='k')
+    ax.axvline(x=params.SOA*1e-3, linestyle='--', linewidth=1, color='k')
+    ax.axvline(x=2*params.SOA*1e-3, linestyle='--', linewidth=1, color='b')
+    ax.axvline(x=3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+    if preferences.sort_according_to_sentence_length:
+        ax.set_yticks(range(0, len(sentences_length), preferences.step))
+        sent_len = np.sort(sentences_length)[::preferences.step]
+        sent_len = sent_len[::-1]
+        ax.set_yticklabels(sent_len)
+        plt.setp(ax, ylabel='Sentence length')
+
+    fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
+    plt.close(fig)
 
 
 def plot_and_save_average_freq_band(power1, power2, power3, power_ave1, power_ave2, power_ave3, event_id_1, event_id_2, event_id_3, file_name, fig_paradigm, settings, log_all_blocks, preferences):
@@ -82,7 +137,7 @@ def plot_and_save_average_freq_band(power1, power2, power3, power_ave1, power_av
                             interpolation='nearest',
                             aspect='auto', vmin=vmin1, vmax=vmax1)
             plt.colorbar(map, ax=ax, label='Power (dB)')
-            ax.set_title('Locked to first word')
+            # ax.set_title('Locked to first word')
             ax.set_ylabel('Trial')
             ax.axvline(x=0, linestyle='--', linewidth=3, color='k')
             ax.axvline(x=settings.SOA*1e-3, linestyle='--', linewidth=1, color='k')
