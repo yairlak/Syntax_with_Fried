@@ -2,7 +2,10 @@ from SU_functions import load_settings_params, load_data, read_logs_and_comparis
 from scipy import io
 import os, glob
 import mne
+import matplotlib
+#matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import numpy as np
 import sys
 
@@ -20,8 +23,13 @@ settings = load_settings_params.Settings()
 if len(sys.argv) > 1:
     print 'Channel ' + sys.argv[1]
     ch = int(sys.argv[1])
+<<<<<<< HEAD
+    channels_macro = range(ch, ch + 1, 1)
+    channels_micro = range(ch, ch + 1, 1)
+=======
     channels_macro = range(ch, ch + 10, 1)
     channels_micro = range(ch, ch + 10, 1)
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
 
 print('Loading parameters...')
 params = load_settings_params.Params()
@@ -63,6 +71,76 @@ if preferences.analyze_micro_single:
 
     print('Generate rasters and PSTHs...')
     analyses.generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences)
+
+# Micro (raw) analysis
+if preferences.analyze_micro_raw:
+    channels = channels_micro
+    for channel in channels:
+        settings.channel = channel
+        print('Loading CSC raw data...')
+        raw_CSC_data_in_mat, settings = load_data.raw_in_matlab_format(settings)
+        print 'Analyzing high-gamma for channel ' + str(channel)
+        # Line filter and resample, or load from file
+        file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
+            channel) + '_line_filtered_resampled-epo.fif'
+
+        if not settings.load_line_filtered_resampled_epoch_object:
+            print('Generating MNE raw object for continuous data...')
+            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
+
+            print('Line filtering...')
+            raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+
+            print('Epoching data...')
+
+            epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, baseline=None, preload=True)
+            print(epochs)
+
+            print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
+            epochs_resampled = epochs.copy().resample(params.downsampling_sfreq, npad='auto')
+            print('New sampling rate:', epochs_resampled.info['sfreq'], 'Hz')
+
+            print('Save Epoch data after line filtering and resampling')
+            epochs_resampled.save(os.path.join(settings.path2epoch_data, file_name_epochs))
+        else:
+            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
+            print(
+            'Loading already epoch data, after line filtering and resampling: ' + os.path.join(settings.path2epoch_data,
+                                                                                               file_name_epochs))
+            epochs_resampled = mne.read_epochs(os.path.join(settings.path2epoch_data, file_name_epochs))
+
+        fig_paradigm = mne.viz.plot_events(events_spikes, raw.info['sfreq'], raw.first_samp, color=color_curr,
+                                           event_id=event_id, show=False)
+        fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '_' + str(settings.blocks) + '.png'
+        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
+        plt.close(fig_paradigm)
+
+        epochs = None; raw = None
+        print('High-Gamma analyses...')
+        event_ids_epochs = epochs_resampled.event_id.keys()
+        for band, fmin, fmax in params.iter_freqs:
+            # Calculate average power activity
+            for event_str in ["FIRST_WORD", "LAST_WORD", 'KEY']:
+                curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
+                if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
+                    power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
+                                                                             fmin, fmax, params.freq_step, None, params)
+                else:
+                    if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
+                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
+                    else:
+                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
+                                                                          fmin, fmax, params.freq_step, baseline, params)
+
+                file_name = band + '_' + settings.patient + '_channel_' + str(
+                    settings.channel) + '_micro_Blocks_' + str(
+                    settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
+                    preferences.sort_according_to_sentence_length) + '.png'
+                analyses.plot_and_save_high_gamma(power, power_ave, curr_event_id_to_plot, log_all_blocks, file_name,
+                                                  settings, params, preferences)
+
+power = None; power_ave = None
+
 
 # MACRO analysis
 if preferences.analyze_macro:
@@ -118,85 +196,15 @@ if preferences.analyze_macro:
                     power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
                 else:
                     if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
+                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
+                                                                                 fmax, params.freq_step, None, params)
                     else:
                         power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, baseline, params)
 
-                file_name = band + '_' + settings.patient + '_macro_channel_' + str(
-                    settings.channel) + '_Blocks_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
+                file_name = band + '_' + settings.patient + '_channel_' + str(
+                    settings.channel) + '_macro_Blocks_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
                     preferences.sort_according_to_sentence_length) + '.png'
-                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name, settings, params, preferences)
-
-# Micro (raw) analysis
-if preferences.analyze_micro_raw:
-    channels = channels_micro
-    for channel in channels:
-        settings.channel = channel
-        print('Loading CSC raw data...')
-        raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)
-        print 'Analyzing high-gamma for channel ' + str(channel)
-        # Line filter and resample, or load from file
-        file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
-            channel) + '_line_filtered_resampled-epo.fif'
-
-        if not settings.load_line_filtered_resampled_epoch_object:
-            print('Generating MNE raw object for continuous data...')
-            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
-
-            print('Line filtering...')
-            raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
-
-            print('Epoching data...')
-
-            epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, baseline=None, preload=True)
-            print(epochs)
-
-            print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
-            epochs_resampled = epochs.copy().resample(params.downsampling_sfreq, npad='auto')
-            print('New sampling rate:', epochs_resampled.info['sfreq'], 'Hz')
-
-            print('Save Epoch data after line filtering and resampling')
-            epochs_resampled.save(os.path.join(settings.path2epoch_data, file_name_epochs))
-        else:
-            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
-            print(
-            'Loading already epoch data, after line filtering and resampling: ' + os.path.join(settings.path2epoch_data,
-                                                                                               file_name_epochs))
-            epochs_resampled = mne.read_epochs(os.path.join(settings.path2epoch_data, file_name_epochs))
-
-        fig_paradigm = mne.viz.plot_events(events_spikes, raw.info['sfreq'], raw.first_samp, color=color_curr,
-                                           event_id=event_id, show=False)
-        fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '_' + str(settings.blocks) + '.png'
-        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
-        plt.close(fig_paradigm)
-
-        epochs = None; raw = None
-        print('High-Gamma analyses...')
-        event_ids_epochs = epochs_resampled.event_id.keys()
-        for band, fmin, fmax in params.iter_freqs:
-            # Calculate average power activity
-            for event_str in ["FIRST_WORD", "LAST_WORD", 'KEY']:
-                curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
-                    power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                             fmin, fmax, params.freq_step, None, params)
-                else:
-                    if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                          fmin,
-                                                                          fmax, params.freq_step, None, params)
-                    else:
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                          fmin, fmax, params.freq_step, baseline, params)
-
-                file_name = band + '_' + settings.patient + '_micro_channel_' + str(
-                    settings.channel) + '_Blocks_' + str(
-                    settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
-                    preferences.sort_according_to_sentence_length) + '.png'
-                analyses.plot_and_save_high_gamma(power, power_ave, curr_event_id_to_plot, log_all_blocks, file_name,
-                                                  settings, params, preferences)
-
-
+                analyses.plot_and_save_high_gamma(power, power_ave, curr_event_id_to_plot, log_all_blocks, file_name, settings, params, preferences)
 
 
 

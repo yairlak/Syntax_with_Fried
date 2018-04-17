@@ -457,8 +457,13 @@
       <file leaf-file-name="main_analyze_single_unit.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Code/Main/main_analyze_single_unit.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1908">
-              <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+<<<<<<< HEAD
+            <state relative-caret-position="414">
+              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+=======
+            <state relative-caret-position="2034">
+              <caret line="113" column="29" lean-forward="true" selection-start-line="113" selection-start-column="29" selection-end-line="113" selection-end-column="29" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
               <folding>
                 <element signature="e#0#109#0" expanded="true" />
               </folding>
@@ -466,11 +471,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="read_logs_and_comparisons.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/read_logs_and_comparisons.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="398">
+              <caret line="65" column="123" lean-forward="false" selection-start-line="65" selection-start-column="123" selection-end-line="65" selection-end-column="123" />
+=======
       <file leaf-file-name="load_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/load_data.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="414">
               <caret line="26" column="104" lean-forward="true" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="104" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
               <folding />
             </state>
           </provider>
@@ -489,8 +502,13 @@
       <file leaf-file-name="load_settings_params.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/load_settings_params.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="972">
+              <caret line="54" column="28" lean-forward="false" selection-start-line="54" selection-start-column="28" selection-end-line="54" selection-end-column="28" />
+=======
             <state relative-caret-position="288">
               <caret line="88" column="22" lean-forward="false" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
               <folding />
             </state>
           </provider>
@@ -535,9 +553,16 @@
         <option value="$PROJECT_DIR$/Code/Main/SU_functions/convert_to_mne.py" />
         <option value="$PROJECT_DIR$/Code/Main/SU_functions/read_logs_and_comparisons.py" />
         <option value="$PROJECT_DIR$/Code/Main/SU_functions/load_data.py" />
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/Code/Main/SU_functions/load_settings_params.py" />
+        <option value="$PROJECT_DIR$/Code/Main/SU_functions/analyses.py" />
+        <option value="$PROJECT_DIR$/Code/Main/main_analyze_single_unit.py" />
+        <option value="$PROJECT_DIR$/Code/Main/SU_functions/read_logs_and_comparisons.py" />
+=======
         <option value="$PROJECT_DIR$/Code/Main/main_analyze_single_unit.py" />
         <option value="$PROJECT_DIR$/Code/Main/SU_functions/analyses.py" />
         <option value="$PROJECT_DIR$/Code/Main/SU_functions/load_settings_params.py" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
       </list>
     </option>
   </component>
@@ -721,12 +746,12 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23827493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3210634" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3210634" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38343558" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38343558" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991913" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -757,7 +782,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
+<<<<<<< HEAD
+      <option name="time" value="319" />
+=======
       <option name="time" value="339" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1082,6 +1111,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/load_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+=======
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
     <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/convert_to_mne.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1122,24 +1162,42 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/analyses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="138" column="19" lean-forward="true" selection-start-line="138" selection-start-column="19" selection-end-line="138" selection-end-column="19" />
+=======
     <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/read_logs_and_comparisons.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1046">
           <caret line="65" column="123" lean-forward="false" selection-start-line="65" selection-start-column="123" selection-end-line="65" selection-end-column="123" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/load_settings_params.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="972">
+          <caret line="54" column="28" lean-forward="false" selection-start-line="54" selection-start-column="28" selection-end-line="54" selection-end-column="28" />
+=======
     <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/load_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="26" column="104" lean-forward="true" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="104" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/analyses.py">
+    <entry file="file://$PROJECT_DIR$/Code/Main/SU_functions/read_logs_and_comparisons.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="398">
+          <caret line="65" column="123" lean-forward="false" selection-start-line="65" selection-start-column="123" selection-end-line="65" selection-end-column="123" />
+=======
         <state relative-caret-position="-152">
           <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
           <folding />
@@ -1150,19 +1208,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="88" column="22" lean-forward="false" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Code/Main/main_analyze_single_unit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1908">
-          <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+<<<<<<< HEAD
+        <state relative-caret-position="414">
+          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+=======
+        <state relative-caret-position="2034">
+          <caret line="113" column="29" lean-forward="true" selection-start-line="113" selection-start-column="29" selection-end-line="113" selection-end-column="29" />
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
           <folding>
             <element signature="e#0#109#0" expanded="true" />
           </folding>
         </state>
-      </provider>
     </entry>
   </component>
 </project>
