@@ -9,7 +9,7 @@ class Settings:
         self.load_line_filtered_resampled_epoch_object = False
 
         # BLOCKS in paradigm to process
-        self.blocks = [1,3,5]
+        self.blocks = [1, 3, 5]
         self.blocks_str = ''.join(str(x) for x in self.blocks)
 
         if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array
@@ -73,9 +73,9 @@ class Settings:
 class Preferences:
     def __init__(self):
         self.analyze_micro_single = False
-        self.analyze_micro_raw = False
+        self.analyze_micro_raw = True
         self.analyze_macro = True
-        self.sort_according_to_sentence_length = False
+        self.sort_according_to_sentence_length = True
         self.step = 20 # yticklabels step when showing the length of each trial
 
 

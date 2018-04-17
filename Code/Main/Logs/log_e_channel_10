@@ -1,22 +1,14 @@
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/convert_to_mne.py:49: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
+[u'GA1-LAH3_0019.ncs']
+  info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
 /neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_analyze_single_unit.py:87: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
   raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   16.1s finished
+[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   15.5s finished
+[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:    1.4s finished
 Traceback (most recent call last):
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_analyze_single_unit.py", line 105, in <module>
-    fig_paradigm = mne.viz.plot_events(events_spikes, raw.info['sfreq'], raw.first_samp, color=color_curr, event_id=event_id, show=False)
-  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/viz/misc.py", line 525, in plot_events
-    fig = plt.figure()
-  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/pyplot.py", line 535, in figure
-    **kwargs)
-  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/backends/backend_qt5agg.py", line 44, in new_figure_manager
-    return new_figure_manager_given_figure(num, thisFig)
-  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/backends/backend_qt5agg.py", line 51, in new_figure_manager_given_figure
-    canvas = FigureCanvasQTAgg(figure)
-  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/backends/backend_qt5agg.py", line 242, in __init__
-    super(FigureCanvasQTAgg, self).__init__(figure=figure)
-  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/backends/backend_qt5agg.py", line 66, in __init__
-    super(FigureCanvasQTAggBase, self).__init__(figure=figure)
-  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/backends/backend_qt5.py", line 236, in __init__
-    _create_qApp()
-  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/backends/backend_qt5.py", line 144, in _create_qApp
-    raise RuntimeError('Invalid DISPLAY variable')
-RuntimeError: Invalid DISPLAY variable
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_analyze_single_unit.py", line 137, in <module>
+    settings, params, preferences)
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py", line 82, in plot_and_save_high_gamma
+    power_ave = power_ave[order, :]
+IndexError: index 220 is out of bounds for axis 0 with size 39
