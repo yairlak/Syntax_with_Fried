@@ -1,0 +1,46 @@
+Loading settings, params and preferences...
+Channel 21
+Loading parameters...
+Loading preferences...
+Reading log files from experiment...
+Generating event object for MNE from log data...
+Loading electrode names for all channels...
+MACRO Channels analysis
+Loading CSC raw data...
+Analyzing high-gamma for channel 21
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+main_analyze_single_unit.py:87: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
+  raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
+Filter length of 528000 samples (13.200 sec) selected
+Traceback (most recent call last):
+  File "main_analyze_single_unit.py", line 87, in <module>
+    raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+  File "<string>", line 2, in notch_filter
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/utils.py", line 728, in verbose
+    return function(*args, **kwargs)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/io/base.py", line 1401, in notch_filter
+    pad=pad)
+  File "<string>", line 2, in notch_filter
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/utils.py", line 728, in verbose
+    return function(*args, **kwargs)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/filter.py", line 1333, in notch_filter
+    fir_design, pad=pad)
+  File "<string>", line 2, in filter_data
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/utils.py", line 728, in verbose
+    return function(*args, **kwargs)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/filter.py", line 866, in filter_data
+    copy, pad)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/filter.py", line 212, in _overlap_add_filter
+    cuda_dict, pad)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/filter.py", line 233, in _1d_overlap_filter
+    x_filtered = np.zeros_like(x_ext)
+  File "/usr/lib/python2.7/dist-packages/numpy/core/numeric.py", line 142, in zeros_like
+    res = empty_like(a, dtype=dtype, order=order, subok=subok)
+MemoryError
+Killed

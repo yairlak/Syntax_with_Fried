@@ -20,7 +20,8 @@ settings = load_settings_params.Settings()
 if len(sys.argv) > 1:
     print 'Channel ' + sys.argv[1]
     ch = int(sys.argv[1])
-    channels_macro = range(ch, ch + 10, 1)
+    channels_macro = range(ch, ch + 1, 1)
+    channels_micro = range(ch, ch + 1, 1)
 
 print('Loading parameters...')
 params = load_settings_params.Params()
@@ -126,6 +127,7 @@ if preferences.analyze_macro:
                     settings.channel) + '_Blocks_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
                     preferences.sort_according_to_sentence_length) + '.png'
                 analyses.plot_and_save_high_gamma(power, power_ave, curr_event_id_to_plot, log_all_blocks, file_name, settings, params, preferences)
+	power = None; power_ave = None
 
 # Micro (raw) analysis
 if preferences.analyze_micro_raw:

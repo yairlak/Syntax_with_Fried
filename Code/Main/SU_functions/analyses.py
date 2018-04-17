@@ -95,7 +95,7 @@ def plot_and_save_high_gamma(power, power_ave, event_id, log_all_blocks, file_na
     cbar = plt.colorbar(map, ax=ax)
     cbar.set_label(label='Power (dB)', size=16)
 
-    ax.set_title('Aligned to first word', fontsize=24)
+#    ax.set_title('Aligned to first word', fontsize=24)
     ax.set_ylabel('Trial', fontsize=24)
     ax.set_xlabel('Time [sec]', fontsize=24)
     ax.axvline(x=0, linestyle='--', linewidth=3, color='k')
