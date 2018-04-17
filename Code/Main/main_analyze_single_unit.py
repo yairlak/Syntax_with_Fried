@@ -21,6 +21,7 @@ if len(sys.argv) > 1:
     print 'Channel ' + sys.argv[1]
     ch = int(sys.argv[1])
     channels_macro = range(ch, ch + 10, 1)
+    channels_micro = range(ch, ch + 10, 1)
 
 print('Loading parameters...')
 params = load_settings_params.Params()
