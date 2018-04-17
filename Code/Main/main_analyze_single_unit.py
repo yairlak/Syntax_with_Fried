@@ -23,13 +23,8 @@ settings = load_settings_params.Settings()
 if len(sys.argv) > 1:
     print 'Channel ' + sys.argv[1]
     ch = int(sys.argv[1])
-<<<<<<< HEAD
     channels_macro = range(ch, ch + 1, 1)
     channels_micro = range(ch, ch + 1, 1)
-=======
-    channels_macro = range(ch, ch + 10, 1)
-    channels_micro = range(ch, ch + 10, 1)
->>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
 
 print('Loading parameters...')
 params = load_settings_params.Params()
@@ -78,7 +73,7 @@ if preferences.analyze_micro_raw:
     for channel in channels:
         settings.channel = channel
         print('Loading CSC raw data...')
-        raw_CSC_data_in_mat, settings = load_data.raw_in_matlab_format(settings)
+        raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)
         print 'Analyzing high-gamma for channel ' + str(channel)
         # Line filter and resample, or load from file
         file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
@@ -136,7 +131,7 @@ if preferences.analyze_micro_raw:
                     settings.channel) + '_micro_Blocks_' + str(
                     settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
                     preferences.sort_according_to_sentence_length) + '.png'
-                analyses.plot_and_save_high_gamma(power, power_ave, curr_event_id_to_plot, log_all_blocks, file_name,
+                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name,
                                                   settings, params, preferences)
 
 power = None; power_ave = None
@@ -204,7 +199,7 @@ if preferences.analyze_macro:
                 file_name = band + '_' + settings.patient + '_channel_' + str(
                     settings.channel) + '_macro_Blocks_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
                     preferences.sort_according_to_sentence_length) + '.png'
-                analyses.plot_and_save_high_gamma(power, power_ave, curr_event_id_to_plot, log_all_blocks, file_name, settings, params, preferences)
+                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name, settings, params, preferences)
 
 
 
