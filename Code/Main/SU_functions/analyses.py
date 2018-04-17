@@ -73,7 +73,8 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, para
     return power, power_ave_baselined, baseline
 
 
-def plot_and_save_high_gamma(power, power_ave, event_id, log_all_blocks, file_name, settings, params, preferences):
+def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name, settings, params, preferences):
+
     if preferences.sort_according_to_sentence_length:
         sentences_length = []
         for log in log_all_blocks:
@@ -85,29 +86,62 @@ def plot_and_save_high_gamma(power, power_ave, event_id, log_all_blocks, file_na
 
     IX = settings.events_to_plot[0].find('block')
     title = settings.events_to_plot[0][0:IX-1]
-    fig, ax = plt.subplots(1, 1, figsize=(20, 12))
+    fig = plt.figure(figsize=(20, 12))
+    ax0 = plt.subplot2grid((12, 13), (0, 0), rowspan=10, colspan=10)
+    ax1 = plt.subplot2grid((12, 13), (0, 10), rowspan=10, colspan=2)
+    ax2 = plt.subplot2grid((12, 13), (10, 0), rowspan=2, colspan=10)
+    cbaxes = plt.subplot2grid((12, 13), (0, 12), rowspan=10)
+
     vmax1 = np.percentile(power_ave, 95)
     vmin1 = np.percentile(power_ave, 5)
-    map = ax.imshow(power_ave,
-                    extent=[np.min(power.times), np.max(power.times), 1, power.data.shape[0] + 1],
-                    interpolation='nearest',
-                    aspect='auto', vmin=vmin1, vmax=vmax1)
-    cbar = plt.colorbar(map, ax=ax)
-    cbar.set_label(label='Power (dB)', size=16)
+    map = ax0.imshow(power_ave,
+                     extent=[np.min(power.times), np.max(power.times), 1, power.data.shape[0] + 1],
+                     interpolation='nearest',
+                     aspect='auto', vmin=vmin1, vmax=vmax1, cmap='jet')
+    cbar = plt.colorbar(map, cax=cbaxes)
+    # cbar = plt.colorbar(map, ax=ax0)
+    cbar.set_label(label='Power (dB)', size=22)
+    # cbaxes = fig.add_axes([0.8, 0.1, 0.03, 0.8])
 
-    ax.set_title('Aligned to first word', fontsize=24)
-    ax.set_ylabel('Trial', fontsize=24)
-    ax.set_xlabel('Time [sec]', fontsize=24)
-    ax.axvline(x=0, linestyle='--', linewidth=3, color='k')
-    ax.axvline(x=params.SOA*1e-3, linestyle='--', linewidth=1, color='k')
-    ax.axvline(x=2*params.SOA*1e-3, linestyle='--', linewidth=1, color='b')
-    ax.axvline(x=3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+    ax0.set_title('Aligned to ' + event_str, fontsize=24)
+    ax0.set_ylabel('Trial', fontsize=24)
+    ax0.tick_params(axis='x', which='both', bottom='off', labelbottom='off')
+
     if preferences.sort_according_to_sentence_length:
-        ax.set_yticks(range(0, len(sentences_length), preferences.step))
+        ax0.set_yticks(range(0, len(sentences_length), preferences.step))
         sent_len = np.sort(sentences_length)[::preferences.step]
         sent_len = sent_len[::-1]
-        ax.set_yticklabels(sent_len)
-        plt.setp(ax, ylabel='Sentence length')
+        ax0.set_yticklabels(sent_len)
+        plt.setp(ax0, ylabel='Sentence length')
+
+    IX = (power.times > params.window_st/1e3) & (power.times < params.window_ed/1e3)
+    ax1.plot(np.mean(power_ave, axis=1), np.arange(1, 1 + power_ave.shape[0]))
+    ax1.set_xlabel('Mean activity')
+    ax1.set_ylim([1, 1 + power_ave.shape[0]])
+    ax1.tick_params(axis='y', which='both', left='off', labelleft='off', direction='in')
+
+    ax2.plot(power.times, np.mean(power_ave, axis=0))
+    ax2.set_xlabel('Time [sec]', fontsize=24)
+    ax2.set_ylabel('Mean activity', fontsize=18)
+    ax2.set_xlim([np.min(power.times), np.max(power.times)])
+
+    # Add vertical lines
+    ax0.axvline(x=0, linestyle='--', linewidth=3, color='k')
+    ax2.axvline(x=0, linestyle='--', linewidth=3, color='k')
+    if event_str == "FIRST_WORD":
+        ax0.axvline(x=params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax0.axvline(x=2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax0.axvline(x=3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax2.axvline(x=params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax2.axvline(x=2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax2.axvline(x=3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+    elif event_str == "LAST_WORD":
+        ax0.axvline(x=-params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax0.axvline(x=-2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax0.axvline(x=-3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax2.axvline(x=-params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax2.axvline(x=-2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
+        ax2.axvline(x=-3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
 
     fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
     plt.close(fig)

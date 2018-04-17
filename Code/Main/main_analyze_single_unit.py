@@ -9,8 +9,8 @@ import sys
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(1,2,1)
-channels_macro = range(3,4,1)
+channels_micro = range(59,60,1)
+channels_macro = range(1,2,1)
 
 # ------------ START MAIN --------------
 
@@ -118,15 +118,14 @@ if preferences.analyze_macro:
                     power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
                 else:
                     if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
-                                                                                 fmax, params.freq_step, None, params)
+                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
                     else:
                         power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, baseline, params)
 
                 file_name = band + '_' + settings.patient + '_macro_channel_' + str(
                     settings.channel) + '_Blocks_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
                     preferences.sort_according_to_sentence_length) + '.png'
-                analyses.plot_and_save_high_gamma(power, power_ave, curr_event_id_to_plot, log_all_blocks, file_name, settings, params, preferences)
+                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name, settings, params, preferences)
 
 # Micro (raw) analysis
 if preferences.analyze_micro_raw:
@@ -134,7 +133,7 @@ if preferences.analyze_micro_raw:
     for channel in channels:
         settings.channel = channel
         print('Loading CSC raw data...')
-        raw_CSC_data_in_mat, settings = load_data.raw_in_matlab_format(settings)
+        raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)
         print 'Analyzing high-gamma for channel ' + str(channel)
         # Line filter and resample, or load from file
         file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
