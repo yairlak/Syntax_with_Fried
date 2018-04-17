@@ -9,7 +9,7 @@ class Settings:
         self.load_line_filtered_resampled_epoch_object = False
 
         # BLOCKS in paradigm to process
-        self.blocks = [1, 3, 5]
+        self.blocks = [2, 4, 6]
         self.blocks_str = ''.join(str(x) for x in self.blocks)
 
         if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array
@@ -54,9 +54,11 @@ class Settings:
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
         self.path2macro = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/Macro/ChannelsCSC'
+        self.path2macro =  os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Macro', 'ChannelsCSC')
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
@@ -94,10 +96,14 @@ class Params:
         # self.slice_size = 500 * self.sfreq
 
         # Paradigm
+
         self.SOA = 500  # [msec]
         self.word_ON_duration = 200 # [msec]
         self.word_OFF_duration = 300  # [msec]
         self.baseline_period = 500 # [msec]
+        self.window_st = 200 # [msec]
+        self.window_ed = 500  # [msec]
+
         if self.baseline_period > abs(self.tmin)*1000:
             import sys
             sys.exit('Basline period must be longer than tmin. Otherwise, baseline cannot be computed.')

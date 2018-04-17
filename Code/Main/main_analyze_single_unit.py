@@ -12,8 +12,8 @@ import sys
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(1,2,1)
-channels_macro = range(3,4,1)
+channels_micro = range(59,60,1)
+channels_macro = range(1,2,1)
 
 # ------------ START MAIN --------------
 
@@ -23,8 +23,13 @@ settings = load_settings_params.Settings()
 if len(sys.argv) > 1:
     print 'Channel ' + sys.argv[1]
     ch = int(sys.argv[1])
+<<<<<<< HEAD
     channels_macro = range(ch, ch + 1, 1)
     channels_micro = range(ch, ch + 1, 1)
+=======
+    channels_macro = range(ch, ch + 10, 1)
+    channels_micro = range(ch, ch + 10, 1)
+>>>>>>> 11f87939532a0261f0f5791ff40333fdf86f8c56
 
 print('Loading parameters...')
 params = load_settings_params.Params()
@@ -122,9 +127,7 @@ if preferences.analyze_micro_raw:
                                                                              fmin, fmax, params.freq_step, None, params)
                 else:
                     if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                          fmin,
-                                                                          fmax, params.freq_step, None, params)
+                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
                     else:
                         power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
                                                                           fmin, fmax, params.freq_step, baseline, params)

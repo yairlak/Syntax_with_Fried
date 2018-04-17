@@ -4,7 +4,7 @@ import numpy as np
 import re
 
 # Raw data
-def raw_in_matlab_format(settings):
+def micro_electrodes_raw(settings):
     CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'CSC' + str(settings.channel) + '.mat'))
     data_all = io.loadmat(CSC_file[0])['data']
     if 'file_name' in io.loadmat(CSC_file[0]).keys():
