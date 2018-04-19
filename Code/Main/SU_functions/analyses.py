@@ -64,11 +64,13 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, para
         if all("KEY" in s for s in event_id):
             power_ave_baselined = power_ave
     else:
-        IX = (epochs.times > -abs(params.baseline_period / 1e3)) & (epochs.times < 0)  # indices to relevant times
-        if baseline_type == 'subtract_average':
-            power_ave_baselined = 10 * np.log10(power_ave / baseline)
-        elif baseline_type == 'trial_wise':
-            power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
+        if not baseline:
+            power_ave_baselined = power_ave # don't apply any baseline
+        else:
+            if baseline_type == 'subtract_average':
+                power_ave_baselined = 10 * np.log10(power_ave / baseline)
+            elif baseline_type == 'trial_wise':
+                power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
 
     return power, power_ave_baselined, baseline
 
@@ -81,6 +83,12 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
             sentences_length = sentences_length + log.sentences_length.values()
         order = np.argsort(sentences_length)
         power_ave = power_ave[order, :]
+    elif preferences.sort_according_to_num_letters:
+            num_letters = []
+            for log in log_all_blocks:
+                num_letters = num_letters + log.num_letters
+            order = np.argsort(num_letters)
+            power_ave = power_ave[order, :]
     else:
         order = None
 
@@ -113,6 +121,12 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
         sent_len = sent_len[::-1]
         ax0.set_yticklabels(sent_len)
         plt.setp(ax0, ylabel='Sentence length')
+    elif preferences.sort_according_to_num_letters:
+        ax0.set_yticks(range(0, len(num_letters), preferences.step))
+        num_letters_str = np.sort(num_letters)[::preferences.step]
+        num_letters_str = num_letters_str[::-1]
+        ax0.set_yticklabels(num_letters_str)
+        plt.setp(ax0, ylabel='Number of letters')
 
     IX = (power.times > params.window_st/1e3) & (power.times < params.window_ed/1e3)
     ax1.plot(np.mean(power_ave, axis=1), np.arange(1, 1 + power_ave.shape[0]))
@@ -143,6 +157,7 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
         ax2.axvline(x=-2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax2.axvline(x=-3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
 
+    print('Saving as - ' + os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
     fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
     plt.close(fig)
 

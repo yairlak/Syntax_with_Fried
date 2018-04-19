@@ -23,26 +23,22 @@ class LogSingleUnit:
         event_types_added = []
         for event_type in event_types_in_paradigm_log:
             if event_type == 'DISPLAY_TEXT':
-                setattr(self, event_type + '_ON_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append(event_type + '_ON_TIMES')
-                setattr(self, event_type + '_ON_TOKEN_NUM', [i[2] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append(event_type + '_ON_TOKEN_NUM')
-                setattr(self, event_type + '_TOKEN_STRING', [i[5] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append(event_type + '_TOKEN_STRING')
-                setattr(self, event_type + '_ON_SENTENCE_NUM', [i[3] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append(event_type + '_ON_SENTENCE_NUM')
-                setattr(self, event_type + '_ON_WORD_NUM', [i[4] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append(event_type + '_ON_WORD_NUM')
-                setattr(self, event_type + '_ON_WORD', [i[5] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append(event_type + '_ON_WORD')
+                setattr(self, event_type + '_WORDS_ON_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append(event_type + '_WORDS_ON_TIMES')
+                setattr(self, event_type + '_WORD_NUM', [i[2] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append(event_type + '_WORD_NUM')
+                setattr(self, event_type + '_SENTENCE_NUM', [i[3] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append(event_type + '_SENTENCE_NUM')
+                setattr(self, event_type + '_WORD_SERIAL_NUM', [i[4] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append(event_type + '_WORD_SERIAL_NUM')
+                setattr(self, event_type + '_WORD_STRING', [i[5] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append(event_type + '_WORD_STRING')
                 setattr(self, 'FIRST_WORD_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF' if i[4] == '1'])
                 event_types_added.append('FIRST_WORD_TIMES')
-                setattr(self, 'TOKEN_NUM', [i[2] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append('TOKEN_NUM')
                 setattr(self, 'SENTENCE_NUM', [i[3] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
                 event_types_added.append('SENTENCE_NUM')
-                setattr(self, 'WORD_NUM', [i[4] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
-                event_types_added.append('WORD_NUM')
+                setattr(self, 'WORD_SERIAL_NUM', [i[4] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append('WORD_SERIAL_NUM')
                 self.SENTENCE_NUM_ORDER = []; last_sent=[]
                 for i in self.SENTENCE_NUM:
                     if i!=last_sent:
@@ -52,32 +48,40 @@ class LogSingleUnit:
                 setattr(self, event_type + '_OFF_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] == 'OFF']) # WORD-IMAGE IS 'OFF'
                 event_types_added.append(event_type + '_OFF_TIMES')
 
+                setattr(self, 'WORDS_ON_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append('WORDS_ON_TIMES')
+
                 sentences_start, sentences_end, sentences_length = get_sentences_start_end_length(self.SENTENCE_NUM_ORDER, settings)
                 setattr(self, 'FIRST_WORD_TIMES1', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF' if int(i[2]) in sentences_start.values()])
                 event_types_added.append('FIRST_WORD_TIMES1') # SANITY CHECK: FIRST_WORD_TIMES=FIRST_WORD_TIMES1
                 setattr(self, 'LAST_WORD_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF' if int(i[2]) in sentences_end.values()])
                 event_types_added.append('LAST_WORD_TIMES')
 
+                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.DISPLAY_TEXT_WORD_STRING]
+                num_letters = [len(s) for s in word_strings_parsed]
+                setattr(self, 'num_letters', num_letters)
+                event_types_added.append('num_letters')
+
             elif event_type == 'AUDIO_PLAYBACK_ONSET':
-                setattr(self, event_type + '_ON_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append(event_type + '_ON_TIMES')
-                setattr(self, event_type + '_ON_TOKEN_NUM', [i[2] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append(event_type + '_ON_TOKEN_NUM')
-                setattr(self, event_type + '_TOKEN_STRING', [i[5] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append(event_type + '_TOKEN_STRING')
-                setattr(self, event_type + '_ON_SENTENCE_NUM', [i[3] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append(event_type + '_ON_SENTENCE_NUM')
-                setattr(self, event_type + '_ON_WORD', [i[4] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append(event_type + '_ON_WORD')
+                setattr(self, event_type + '_WORDS_ON_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append(event_type + '_WORDS_ON_TIMES')
+                setattr(self, event_type + '_WORD_NUM', [i[2] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append(event_type + '_WORD_NUM')
+                setattr(self, event_type + '_WAV_FILE', [i[3] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append('SENTENCE_NUM')
+                setattr(self, event_type + '_WORD_SERIAL_NUM', [i[4] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append(event_type + '_WORD_SERIAL_NUM')
+                setattr(self, event_type + '_WORD_STRING', [i[5] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append(event_type + '_WORD_STRING')
+
                 setattr(self, 'FIRST_WORD_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != '_' if i[4] == '1'])
                 event_types_added.append('FIRST_WORD_TIMES')
-                setattr(self, 'TOKEN_NUM', [i[2] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append('TOKEN_NUM')
                 setattr(self, 'SENTENCE_NUM',
-                        [i[3].split('.')[0] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append('SENTENCE_NUM')
-                setattr(self, 'WORD_NUM', [i[4] for i in log_content if event_type == i[1] and i[2] != '_'])
-                event_types_added.append('WORD_NUM')
+                [i[3].split('.')[0] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append(event_type + '_SENTENCE_NUM')
+                setattr(self, 'WORD_SERIAL_NUM', [i[4] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append('WORD_SERIAL_NUM')
+
                 self.SENTENCE_NUM_ORDER = []; last_sent = []
                 for i in self.SENTENCE_NUM:
                     if i != last_sent:
@@ -93,9 +97,17 @@ class LogSingleUnit:
                 event_types_added.append('FIRST_WORD_TIMES1')  # SANITY CHECK: FIRST_WORD_TIMES=FIRST_WORD_TIMES1
                 setattr(self, 'LAST_WORD_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != '_' if int(i[2]) in sentences_end.values()])
                 event_types_added.append('LAST_WORD_TIMES')
+                setattr(self, 'WORDS_ON_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append('WORDS_ON_TIMES')
+
                 setattr(self, 'sentences_start', sentences_start)
                 setattr(self, 'sentences_end', sentences_end)
                 setattr(self, 'sentences_length', sentences_length)
+
+                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.DISPLAY_TEXT_WORD_STRING]
+                num_letters = [len(s) for s in word_strings_parsed]
+                setattr(self, 'num_letters', num_letters)
+                event_types_added.append('num_letters')
 
             elif event_type == 'KEY_PRESS':
                 setattr(self, event_type + '_SPACE_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] == 'space'])

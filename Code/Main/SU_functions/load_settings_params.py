@@ -15,10 +15,14 @@ class Settings:
 
         if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array
             self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'END_WAV_TIMES', 'KEY_PRESS_l_TIMES']
-            self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3, 4]  # Should match the above (event_types_to_extract)
+            self.event_types_to_extract = ['WORDS_ON_TIMES']
+            self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3, 4, 5]  # Should match the above (event_types_to_extract)
+            self.event_numbers_to_assign_to_extracted_event_types = [1]
         else:
-            self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'KEY_PRESS_l_TIMES']
-            self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3]  # Should match the above (event_types_to_extract)
+            self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'KEY_PRESS_l_TIMES', 'WORDS_ON_TIMES']
+            self.event_types_to_extract = ['WORDS_ON_TIMES']
+            self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3, 4]  # Should match the above (event_types_to_extract)
+            self.event_numbers_to_assign_to_extracted_event_types = [1]  # Should match the above (event_types_to_extract)
 
         self.events_to_plot = ['FIRST_WORD_TIMES_block_1', 'FIRST_WORD_TIMES_block_2', 'FIRST_WORD_TIMES_block_3']
         # self.events_to_plot = ['END_WAV_TIMES_block_2', 'END_WAV_TIMES_block_4', 'END_WAV_TIMES_block_6']
@@ -78,8 +82,12 @@ class Preferences:
         self.analyze_micro_single = False
         self.analyze_micro_raw = True
         self.analyze_macro = True
-        self.sort_according_to_sentence_length = True
+        self.sort_according_to_sentence_length = False
+        self.sort_according_to_num_letters = True
         self.step = 20 # yticklabels step when showing the length of each trial
+        if (self.sort_according_to_sentence_length + self.sort_according_to_num_letters) > 1:
+            import sys
+            sys.exit('Too many sorting flags in Preferences')
 
 
 class Params:
@@ -102,8 +110,8 @@ class Params:
         self.word_ON_duration = 200 # [msec]
         self.word_OFF_duration = 300  # [msec]
         self.baseline_period = 500 # [msec]
-        self.window_st = 200 # [msec]
-        self.window_ed = 500  # [msec]
+        self.window_st = 200 # [msec] beginning of averaging window used for the vertical plot, relative time 0
+        self.window_ed = 500  # [msec] end of averaging window used for the vertical plot, relative to time 0
 
         if self.baseline_period > abs(self.tmin)*1000:
             import sys
