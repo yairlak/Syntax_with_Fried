@@ -2,8 +2,6 @@ from SU_functions import load_settings_params, load_data, read_logs_and_comparis
 from scipy import io
 import os, glob
 import mne
-import matplotlib
-#matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import numpy as np
@@ -112,7 +110,7 @@ if preferences.analyze_micro_raw:
         plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
         plt.close(fig_paradigm)
 
-        epochs = None
+        del raw, epochs
         print('High-Gamma analyses...')
         event_ids_epochs = epochs_resampled.event_id.keys()
         for band, fmin, fmax in params.iter_freqs:
@@ -132,25 +130,28 @@ if preferences.analyze_micro_raw:
 
             # Calculate average power activity
             for event_str in ["FIRST_WORD", "LAST_WORD", "KEY"]:
-                curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
-                    power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                             fmin, fmax, params.freq_step, None, params)
-                else:
-                    if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
+                if any([event_str in s for s in event_ids_epochs]):
+                    curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
+                    if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
+                        power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
+                                                                                 fmin, fmax, params.freq_step, None, params)
                     else:
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                          fmin, fmax, params.freq_step, baseline, params)
+                        if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
+                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
+                        else:
+                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
+                                                                              fmin, fmax, params.freq_step, baseline, params)
 
-                file_name = band + '_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_micro_Blocks_' + str(
-                    settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
-                    preferences.sort_according_to_sentence_length) + '.png'
-                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name,
-                                                  settings, params, preferences)
+                    file_name = band + '_' + settings.patient + '_channel_' + str(
+                        settings.channel) + '_micro_Blocks_' + str(
+                        settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+                    if preferences.sort_according_to_sentence_length: file_name = file_name + '_LengthSorted'
+                    if preferences.sort_according_to_num_letters: file_name = file_name + '_LengthSorted'
+                    file_name = file_name + '.png'
+                    analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name,
+                                                      settings, params, preferences)
 
-del power, power_ave
+del raw, epochs, epochs_resampled, power, power_ave
 
 
 # MACRO analysis
@@ -196,7 +197,7 @@ if preferences.analyze_macro:
         plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
         plt.close(fig_paradigm)
 
-        epochs = None; raw = None
+        del raw, epochs
         print('High-Gamma analyses...')
         event_ids_epochs = epochs_resampled.event_id.keys()
         for band, fmin, fmax in params.iter_freqs:
@@ -208,7 +209,7 @@ if preferences.analyze_macro:
                 power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
                                                                   fmax, params.freq_step, False, params)
                 file_name = band + '_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_micro_Blocks_' + str(
+                    settings.channel) + '_macro_Blocks_' + str(
                     settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
                     preferences.sort_according_to_sentence_length) + '_numLettersSorted_' + str(
                     preferences.sort_according_to_num_letters) + '.png'
@@ -216,22 +217,24 @@ if preferences.analyze_macro:
                                                   settings, params, preferences)
 
             # Calculate average power activity
-            for event_str in ["FIRST_WORD", "LAST_WORD", "KEY", "WORDS_ON'"]:
-                curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                if event_str == "FIRST_WORD": # Calculate baseline when alignment is locking to first word.
-                    power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
-                else:
-                    if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
-                                                                                 fmax, params.freq_step, None, params)
+            for event_str in ["FIRST_WORD", "LAST_WORD", "KEY"]:
+                if any([event_str in s for s in event_ids_epochs]):
+                    curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
+                    if event_str == "FIRST_WORD": # Calculate baseline when alignment is locking to first word.
+                        power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
                     else:
-                        power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, baseline, params)
+                        if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
+                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
+                                                                                     fmax, params.freq_step, None, params)
+                        else:
+                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, baseline, params)
 
-                file_name = band + '_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_macro_Blocks_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
-                    preferences.sort_according_to_sentence_length) + '.png'
-                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name, settings, params, preferences)
-
+                    file_name = band + '_' + settings.patient + '_channel_' + str(
+                        settings.channel) + '_macro_Blocks_' + str(
+                        settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+                    if preferences.sort_according_to_sentence_length: file_name = file_name + '_LengthSorted'
+                    if preferences.sort_according_to_num_letters: file_name = file_name + '_LengthSorted'
+                    file_name = file_name + '.png'
 
 
 

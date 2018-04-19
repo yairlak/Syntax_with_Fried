@@ -121,6 +121,12 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
         sent_len = sent_len[::-1]
         ax0.set_yticklabels(sent_len)
         plt.setp(ax0, ylabel='Sentence length')
+    elif preferences.sort_according_to_num_letters:
+        ax0.set_yticks(range(0, len(num_letters), preferences.step))
+        num_letters_str = np.sort(num_letters)[::preferences.step]
+        num_letters_str = num_letters_str[::-1]
+        ax0.set_yticklabels(num_letters_str)
+        plt.setp(ax0, ylabel='Number of letters')
 
     IX = (power.times > params.window_st/1e3) & (power.times < params.window_ed/1e3)
     ax1.plot(np.mean(power_ave, axis=1), np.arange(1, 1 + power_ave.shape[0]))
@@ -151,6 +157,7 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
         ax2.axvline(x=-2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax2.axvline(x=-3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
 
+    print('Saving as - ' + os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
     fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
     plt.close(fig)
 
