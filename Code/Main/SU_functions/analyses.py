@@ -64,11 +64,13 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, para
         if all("KEY" in s for s in event_id):
             power_ave_baselined = power_ave
     else:
-        IX = (epochs.times > -abs(params.baseline_period / 1e3)) & (epochs.times < 0)  # indices to relevant times
-        if baseline_type == 'subtract_average':
-            power_ave_baselined = 10 * np.log10(power_ave / baseline)
-        elif baseline_type == 'trial_wise':
-            power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
+        if not baseline:
+            power_ave_baselined = power_ave # don't apply any baseline
+        else:
+            if baseline_type == 'subtract_average':
+                power_ave_baselined = 10 * np.log10(power_ave / baseline)
+            elif baseline_type == 'trial_wise':
+                power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
 
     return power, power_ave_baselined, baseline
 
@@ -81,6 +83,12 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
             sentences_length = sentences_length + log.sentences_length.values()
         order = np.argsort(sentences_length)
         power_ave = power_ave[order, :]
+    elif preferences.sort_according_to_num_letters:
+            num_letters = []
+            for log in log_all_blocks:
+                num_letters = num_letters + log.num_letters
+            order = np.argsort(num_letters)
+            power_ave = power_ave[order, :]
     else:
         order = None
 
