@@ -1,16 +1,16 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_479';
+patient = 'patient_482';
 recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
 
 base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
-base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
+% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient];
 output_path = fullfile(base_folder,'ChannelsCSC');
 
-% mkdir(output_path);
+mkdir(output_path);
 addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions'))
 
 
@@ -29,12 +29,12 @@ ModeArray=[]; %all.
 switch recording_system
         case 'Neuralynx'
             ncs_files = dir([base_folder '/Raw/*.ncs']);
-            ncs_files = dir([base_folder '/*.ncs']);
+%             ncs_files = dir([base_folder '/*.ncs']);
             idx=1;
             for ncs_file_name=ncs_files'
                 file_name = ncs_file_name.name;
                 ncs_file = fullfile(base_folder,'Raw',file_name);
-                ncs_file = fullfile(base_folder,file_name);
+%                 ncs_file = fullfile(base_folder,file_name);
                 fprintf('CSC of channnel %d...',idx);
                 [Timestamps, ChannelNumbers, SampleFrequencies, NumberOfValidSamples, Samples, Header] = Nlx2MatCSC_v3(ncs_file,[1 1 1 1 1],1,1,1);
                 data=reshape(Samples,1,size(Samples,1)*size(Samples,2));

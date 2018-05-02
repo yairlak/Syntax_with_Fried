@@ -35,10 +35,10 @@ par.ref = floor(ref *sr/1000);       % conversion to datapoints
 par.stdmin = 5;                      % minimum threshold for detection
 par.stdmax = 50;                     % maximum threshold for detection
 par.fmin = 300;                      % high pass filter.
-par.fmax = 3000;                     % low pass filter.
+par.fmax = 1000;                     % low pass filter.
 %par.detection = 'pos';               % type of threshold
-%par.detection = 'neg';
-par.detection = 'pos';
+par.detection = 'neg';
+% par.detection = 'pos';
 par.segments = 4;                    % nr. of segments in which the data is cutted.
 
 % INTERPOLATION PARAMETERS
