@@ -64,14 +64,16 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, para
         if all("KEY" in s for s in event_id):
             power_ave_baselined = power_ave
     else:
-        if not baseline:
+        if not np.sum(baseline):
             power_ave_baselined = power_ave # don't apply any baseline
+	    print("No baseline used")
         else:
             if baseline_type == 'subtract_average':
                 power_ave_baselined = 10 * np.log10(power_ave / baseline)
+		print("Baseline: subtract average")
             elif baseline_type == 'trial_wise':
                 power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
-
+		print("Baseline: trial-wise")
     return power, power_ave_baselined, baseline
 
 

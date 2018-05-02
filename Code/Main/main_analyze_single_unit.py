@@ -151,7 +151,7 @@ if preferences.analyze_micro_raw:
                     analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name,
                                                       settings, params, preferences)
 
-del raw, epochs, epochs_resampled, power, power_ave
+del epochs_resampled, power, power_ave
 
 
 # MACRO analysis

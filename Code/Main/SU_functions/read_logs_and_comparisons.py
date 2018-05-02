@@ -48,6 +48,8 @@ class LogSingleUnit:
                 setattr(self, event_type + '_OFF_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] == 'OFF']) # WORD-IMAGE IS 'OFF'
                 event_types_added.append(event_type + '_OFF_TIMES')
 
+                setattr(self, 'WORD_STRING', [i[5] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
+                event_types_added.append('WORD_STRING')
                 setattr(self, 'WORDS_ON_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF'])
                 event_types_added.append('WORDS_ON_TIMES')
 
@@ -57,7 +59,7 @@ class LogSingleUnit:
                 setattr(self, 'LAST_WORD_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] != 'OFF' if int(i[2]) in sentences_end.values()])
                 event_types_added.append('LAST_WORD_TIMES')
 
-                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.DISPLAY_TEXT_WORD_STRING]
+                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.WORD_STRING]
                 num_letters = [len(s) for s in word_strings_parsed]
                 setattr(self, 'num_letters', num_letters)
                 event_types_added.append('num_letters')
@@ -92,6 +94,9 @@ class LogSingleUnit:
                 setattr(self, 'END_WAV_TIMES', [i[0] for i in log_content if event_type == i[1] and i[2] == '_'])
                 event_types_added.append('END_WAV_TIMES')
 
+                setattr(self, 'WORD_STRING', [i[5] for i in log_content if event_type == i[1] and i[2] != '_'])
+                event_types_added.append('WORD_STRING')
+
                 sentences_start, sentences_end, sentences_length = get_sentences_start_end_length(self.SENTENCE_NUM_ORDER, settings)
                 setattr(self, 'FIRST_WORD_TIMES1', [i[0] for i in log_content if event_type == i[1] and i[2] != '_' if int(i[2]) in sentences_start.values()])
                 event_types_added.append('FIRST_WORD_TIMES1')  # SANITY CHECK: FIRST_WORD_TIMES=FIRST_WORD_TIMES1
@@ -104,7 +109,7 @@ class LogSingleUnit:
                 setattr(self, 'sentences_end', sentences_end)
                 setattr(self, 'sentences_length', sentences_length)
 
-                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.DISPLAY_TEXT_WORD_STRING]
+                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.WORD_STRING]
                 num_letters = [len(s) for s in word_strings_parsed]
                 setattr(self, 'num_letters', num_letters)
                 event_types_added.append('num_letters')
