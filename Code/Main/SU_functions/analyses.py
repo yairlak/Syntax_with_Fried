@@ -44,15 +44,15 @@ def generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_fil
         plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Rasters', fname))
 
 
-def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, params):
+def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, baseline_type, params):
     print('Time-freq...')
     freqs = np.arange(fmin, fmax, fstep)
-    n_cycles = freqs / 2
+    temporal_resolution = 0.05 # in [sec]
+    n_cycles = freqs * 3.14 * temporal_resolution
     power = mne.time_frequency.tfr_morlet(epochs[event_id], freqs=freqs, n_jobs=30, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
     power_ave = np.squeeze(np.average(power.data, axis=2))
     # Baseline data
-    baseline_type = 'trial_wise'
     if baseline is None:
         IX = (epochs.times > -abs(params.baseline_period / 1e3)) & (epochs.times < 0) # indices to relevant times
         if baseline_type == 'subtract_average':
@@ -64,46 +64,63 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, para
         if all("KEY" in s for s in event_id):
             power_ave_baselined = power_ave
     else:
-        if not baseline:
-            power_ave_baselined = power_ave # don't apply any baseline
-        else:
             if baseline_type == 'subtract_average':
                 power_ave_baselined = 10 * np.log10(power_ave / baseline)
             elif baseline_type == 'trial_wise':
                 power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
+            elif baseline_type == 'no_baseline':
+                power_ave_baselined = power_ave  # don't apply any baseline
+
+    # Remove 0.2 sec from each side due to boundary effects
+    IX_smaller_time_window = (epochs.times > epochs.tmin + 0.2) & (epochs.times < epochs.tmax - 0.2)  # indices to relevant times
+    power_ave_baselined = power_ave_baselined[:, IX_smaller_time_window]
 
     return power, power_ave_baselined, baseline
 
 
-def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_name, settings, params, preferences):
+def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name, settings, params, preferences):
+    from scipy import stats
+    power_ave_zscore = stats.zscore(power_ave)
+    power_ave[(power_ave_zscore > 3) | (power_ave_zscore < -3)] = np.NaN
 
-    if preferences.sort_according_to_sentence_length:
-        sentences_length = []
-        for log in log_all_blocks:
-            sentences_length = sentences_length + log.sentences_length.values()
-        order = np.argsort(sentences_length)
-        power_ave = power_ave[order, :]
-    elif preferences.sort_according_to_num_letters:
-            num_letters = []
+    if "KEY" not in event_str:
+        if preferences.sort_according_to_sentence_length:
+            sentences_length = []
             for log in log_all_blocks:
-                num_letters = num_letters + log.num_letters
-            order = np.argsort(num_letters)
+                sentences_length = sentences_length + log.sentences_length.values()
+            order = np.argsort(sentences_length)
             power_ave = power_ave[order, :]
-    else:
-        order = None
+        elif preferences.sort_according_to_num_letters:
+                num_letters = []
+                for log in log_all_blocks:
+                    num_letters = num_letters + log.num_letters
+                order = np.argsort(num_letters)
+                power_ave = power_ave[order, :]
+        elif preferences.sort_according_to_pos:
+            all_words_pos = []
+            for log in log_all_blocks:
+                attribute_word_string = [s for s in dir(log) if "_STRING" in s][0]
+                curr_pos = [word2pos[w[0:-1].lower()] if w[-1] == '?' or w[-1] == '.' else word2pos[w.lower()] for w in
+                            getattr(log, attribute_word_string)]
+                all_words_pos = all_words_pos + curr_pos
+            order = np.argsort(all_words_pos)
+            word_pos_sorted = np.asarray(all_words_pos)[order]
+            power_ave = power_ave[order, :]
+        else:
+            order = None
 
-    IX = settings.events_to_plot[0].find('block')
-    title = settings.events_to_plot[0][0:IX-1]
+    # IX = settings.events_to_plot[0].find('block')
+    # title = settings.events_to_plot[0][0:IX-1]
     fig = plt.figure(figsize=(20, 12))
     ax0 = plt.subplot2grid((12, 13), (0, 0), rowspan=10, colspan=10)
     ax1 = plt.subplot2grid((12, 13), (0, 10), rowspan=10, colspan=2)
     ax2 = plt.subplot2grid((12, 13), (10, 0), rowspan=2, colspan=10)
     cbaxes = plt.subplot2grid((12, 13), (0, 12), rowspan=10)
 
-    vmax1 = np.percentile(power_ave, 95)
-    vmin1 = np.percentile(power_ave, 5)
+    vmax1 = np.nanpercentile(power_ave, 95)
+    vmin1 = np.nanpercentile(power_ave, 5)
     map = ax0.imshow(power_ave,
-                     extent=[np.min(power.times), np.max(power.times), 1, power.data.shape[0] + 1],
+                     extent=[np.min(power.times)+0.2, np.max(power.times)-0.2, 1, power.data.shape[0] + 1],
                      interpolation='nearest',
                      aspect='auto', vmin=vmin1, vmax=vmax1, cmap='jet')
     cbar = plt.colorbar(map, cax=cbaxes)
@@ -127,29 +144,35 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
         num_letters_str = num_letters_str[::-1]
         ax0.set_yticklabels(num_letters_str)
         plt.setp(ax0, ylabel='Number of letters')
+    elif preferences.sort_according_to_pos:
+        ax0.set_yticks(range(0, len(all_words_pos), preferences.step))
+        ax0.set_yticklabels(word_pos_sorted[::preferences.step])
+        plt.setp(ax0, ylabel='Part of Speech')
 
-    IX = (power.times > params.window_st/1e3) & (power.times < params.window_ed/1e3)
-    ax1.plot(np.mean(power_ave, axis=1), np.arange(1, 1 + power_ave.shape[0]))
+    IX = (power.times > params.window_st / 1e3) & (power.times < params.window_ed / 1e3)
+    ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
     ax1.set_xlabel('Mean activity')
     ax1.set_ylim([1, 1 + power_ave.shape[0]])
+    ax1.set_xlim([0, np.nanmean(power_ave) + 3*np.nanstd(power_ave)])
     ax1.tick_params(axis='y', which='both', left='off', labelleft='off', direction='in')
 
-    ax2.plot(power.times, np.mean(power_ave, axis=0))
+    IX_smaller_time_window = (power.times > min(power.times) + 0.2) & (power.times < max(power.times) - 0.2)  # indices to relevant times
+    ax2.plot(power.times[IX_smaller_time_window], np.nanmean(power_ave, axis=0))
     ax2.set_xlabel('Time [sec]', fontsize=24)
     ax2.set_ylabel('Mean activity', fontsize=18)
-    ax2.set_xlim([np.min(power.times), np.max(power.times)])
+    ax2.set_xlim([np.min(power.times)+0.2, np.max(power.times)-0.2])
 
     # Add vertical lines
     ax0.axvline(x=0, linestyle='--', linewidth=3, color='k')
     ax2.axvline(x=0, linestyle='--', linewidth=3, color='k')
-    if event_str == "FIRST_WORD":
+    if event_str == "FIRST_WORD" and (set(settings.blocks) & set([1,3,5])):
         ax0.axvline(x=params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax0.axvline(x=2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax0.axvline(x=3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax2.axvline(x=params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax2.axvline(x=2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax2.axvline(x=3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
-    elif event_str == "LAST_WORD":
+    elif event_str == "LAST_WORD" and (set(settings.blocks) & set([1,3,5])):
         ax0.axvline(x=-params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax0.axvline(x=-2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax0.axvline(x=-3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
@@ -157,9 +180,13 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, file_n
         ax2.axvline(x=-2 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
         ax2.axvline(x=-3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
 
-    print('Saving as - ' + os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
-    fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
+    print('Saving as - ' + os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
+    fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
     plt.close(fig)
+
+    # import pickle
+    # with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name + '.pkl'), 'w') as f:
+    #     pickle.dump([power, settings, params, preferences], f)
 
 
 def plot_and_save_average_freq_band(power1, power2, power3, power_ave1, power_ave2, power_ave3, event_id_1, event_id_2, event_id_3, file_name, fig_paradigm, settings, log_all_blocks, preferences):

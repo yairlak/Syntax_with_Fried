@@ -1,9 +1,10 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_480';
-recording_system = 'BlackRock';
-probes_names = {'rEC', 'rMH', 'RA', 'rSTGa', 'rAIP', 'rMC', 'rSTG', 'rIF', 'rSO', 'rSP', 'rOP', 'rIG', 'LMH', 'LP'};
+patient = 'patient_482';
+probes_names = {'rEC', 'rMH', 'RA', 'rSTGa', 'rAIP', 'rMC', 'rSTG', 'rIF', 'rSO', 'rSP', 'rOP', 'rIG', 'LMH', 'LP'}; % Patient 480
+probes_names = {'lEC', 'laH', 'lA', 'lpHG', 'lSTG', 'lIP', 'lO', 'lIO', 'rEC', 'raH', 'rIO'}; % Patient 482
+
 
 base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient];

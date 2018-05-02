@@ -104,7 +104,7 @@ class LogSingleUnit:
                 setattr(self, 'sentences_end', sentences_end)
                 setattr(self, 'sentences_length', sentences_length)
 
-                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.DISPLAY_TEXT_WORD_STRING]
+                word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.AUDIO_PLAYBACK_ONSET_WORD_STRING]
                 num_letters = [len(s) for s in word_strings_parsed]
                 setattr(self, 'num_letters', num_letters)
                 event_types_added.append('num_letters')
@@ -148,3 +148,60 @@ def get_sentences_start_end_length(SENTENCE_NUM_ORDER, settings):
     sentences_start = dict(zip(range(1, len(sentences_start) + 1, 1), sentences_start))
 
     return sentences_start, sentences_end, sentences_length
+
+
+def load_comparisons_and_features(settings):
+    import pandas
+
+    # Read comparison file ('xlsx')
+    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, settings.comparisons_file))
+    headers = sheet.columns
+    fields = []
+    for i, header in enumerate(headers):
+        fields.append(sheet[header].values)
+        comparison_list = {'headers':headers, 'fields':fields}
+
+    del sheet, headers
+
+    # Read features file ('xlsx')
+    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, settings.features_file))
+    headers = sheet.columns
+    fields = []
+    for i, header in enumerate(headers):
+        fields.append(sheet[header].values)
+    features = {'headers': headers, 'fields': fields}
+
+    return comparison_list, features
+
+
+def extract_comparison(contrasts, union_or_intersection, features):
+    trial_numbers = features['fields'][0][1::]
+    stimuli = features['fields'][1][1::]
+    features = features['fields'][2::]
+
+    comparisons = []
+    for i, contrast in enumerate(contrasts):
+        contrast = str(contrast[2:-2]).split('],[')
+        trial_numbers_and_strings = []
+        for j, columns_condition in enumerate(contrast):
+            columns_condition = columns_condition.split(',')
+            columns_condition = [int(s) for s in columns_condition]
+            binary_values_in_columns = [binary_values[1::] for col, binary_values in enumerate(features) if col+3 in columns_condition] # +3: Assumes features in XLS starts at column C
+            if bool(union_or_intersection[i][j]):
+                IX_trials_curr_cond = np.prod(np.asarray(binary_values_in_columns), axis=0) == 1 # AND
+            else:
+                IX_trials_curr_cond = np.sum(np.asarray(binary_values_in_columns), axis=0) > 0 # OR
+            curr_trial_numbers = trial_numbers[IX_trials_curr_cond]
+            curr_stimuli = stimuli[IX_trials_curr_cond]
+            IX_sort = np.argsort(curr_trial_numbers)
+            trial_numbers_and_strings.append({'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
+        comparisons.append(trial_numbers_and_strings)
+
+    return comparisons
+
+
+def load_POS_tags(settings):
+    with open(os.path.join(settings.path2stimuli, settings.word2pos_file), 'r') as f:
+        word2pos = pickle.load(f)
+
+    return word2pos
