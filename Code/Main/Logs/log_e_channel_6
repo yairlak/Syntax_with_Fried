@@ -1,8 +1,7 @@
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_analyze_single_unit.py:96: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
-  raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
-[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   35.6s finished
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py:157: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 2866 but corresponding boolean dimension is 3072
-  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py:157: RuntimeWarning: Mean of empty slice
-  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   15.4s finished
+[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:    6.4s finished
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py:207: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 2866 but corresponding boolean dimension is 3072
+  vec_i = power_ave[trial_i, IX_timewindow]
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py:208: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 2866 but corresponding boolean dimension is 3072
+  vec1_j = power_ave[trial_j + num_trials_in_block, IX_timewindow]
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py:209: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 2866 but corresponding boolean dimension is 3072
+  vec2_j = power_ave[trial_j + 2*num_trials_in_block, IX_timewindow]

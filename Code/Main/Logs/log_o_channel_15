@@ -10,29 +10,20 @@ Loading electrode names for all channels...
 MICRO Channels analysis
 Loading CSC raw data...
 Analyzing high-gamma for channel 15
-Generating MNE raw object for continuous data...
 1 channel names are too long, have been truncated to 15 characters:
 [u'GA1-LAH8_0019.ncs']
 Creating RawArray with float64 data, n_channels=1, n_times=126369280
     Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
 Ready.
-Line filtering...
-Setting up band-stop filter
-fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
-Filter length of 528000 samples (13.200 sec) selected
-Epoching data...
+Loading epoched data, after line filtering and resampling: ../../Data/UCLA/patient_479/Epochs/micro_UCLA_patient_479_channel_15_line_filtered_resampled-epo
+Reading ../../Data/UCLA/patient_479/Epochs/Epochs_micro_UCLA_patient_479_channel_15_line_filtered_resampled-epo.fif ...
+Isotrak not found
+    Found the data of interest:
+        t =   -3000.00 ...    2998.05 ms
+        0 CTF compensation matrices available
+1407 matching events found
 1407 matching events found
 0 projection items activated
-Loading data for 1407 events and 240001 original time points ...
-0 bad epochs dropped
-<Epochs  |  n_events : 1407 (all good), tmin : -3.0 (s), tmax : 3.0 (s), baseline : None, ~2.52 GB, data loaded,
- 'END_WAV_TIMES_block_2': 152, 'END_WAV_TIMES_block_4': 152, 'END_WAV_TIMES_block_6': 152, 'FIRST_WORD_TIMES_block_2': 152, 'FIRST_WORD_TIMES_block_4': 152, 'FIRST_WORD_TIMES_block_6': 152, 'KEY_PRESS_l_TIMES_block_2': 14, 'KEY_PRESS_l_TIMES_block_4': 10, 'KEY_PRESS_l_TIMES_block_6': 15, 'LAST_WORD_TIMES_block_2': 152, 'LAST_WORD_TIMES_block_4': 152, 'LAST_WORD_TIMES_block_6': 152>
-('Original sampling rate:', 40000.0, 'Hz')
-('New sampling rate:', 512.0, 'Hz')
-Save Epoch data after line filtering and resampling
 High-Gamma analyses...
 Time-freq...
-Saving as - ../../Figures/patient_479/HighGamma/High-Gamma_patient_479_channel_15_micro_Blocks_[2, 4, 6]_Event_id_FIRST_WORD_GA1-LAH8_0019.ncs.png
-Time-freq...
-Baseline: trial-wise
-Saving as - ../../Figures/patient_479/HighGamma/High-Gamma_patient_479_channel_15_micro_Blocks_[2, 4, 6]_Event_id_END_WAV_TIMES_GA1-LAH8_0019.ncs.png
+(0.12061724915659706, 0.90399629008250748)

@@ -32,10 +32,10 @@ print('Loading preferences...')
 preferences = load_settings_params.Preferences()
 
 print('Loading features and comparisons...')
-comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
-contrasts = comparison_list['fields'][2]
-union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrasts, union_or_intersection, features)
+#comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
+#contrasts = comparison_list['fields'][2]
+#union_or_intersection = comparison_list['fields'][6]
+#comparisons = read_logs_and_comparisons.extract_comparison(contrasts, union_or_intersection, features)
 
 print('Reading log files from experiment...')
 log_all_blocks = []
@@ -159,18 +159,19 @@ if preferences.analyze_micro_raw:
             axs[1].set_xlabel('Inter-block correlation', fontsize=24)
             axs[1].set_ylabel('Normalized counts', fontsize=24)
             axs[1].set_ylim([0, 5])
-            axs[1].text(-0.5, 4.2, r'$\mu=$' + "%.2f" % np.mean(diag) + ',\ $\sigma=$' + "%.2f" % np.std(diag), color='b',
+	    axs[1].set_xlim([-1, 1])
+            axs[1].text(-0.9, 4.2, r'$\mu=$' + "%.2f" % np.mean(diag) + ',\ $\sigma=$' + "%.2f" % np.std(diag), color='b',
                         fontsize=24)
-            axs[1].text(-0.5, 4, r'$\mu=$' + "%.2f" % np.mean(off_diag) + ',\ $\sigma=$' + "%.2f" % np.std(off_diag),
+            axs[1].text(-0.9, 4, r'$\mu=$' + "%.2f" % np.mean(off_diag) + ',\ $\sigma=$' + "%.2f" % np.std(off_diag),
                         color='r', fontsize=24)
-            axs[1].text(-0.5, 3.8, 'p-value=' + "%.2f" % np.mean(pvalue), color='k', fontsize=24)
+            axs[1].text(-0.9, 3.8, 'p-value=' + "%.2f" % np.mean(pvalue), color='k', fontsize=24)
 
             axs[1].legend(loc=1, fontsize=24)
             axs[1].grid(True)
             plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.png'))
             print(tvalue, pvalue)
 
-del raw, epochs, epochs_resampled, power, power_ave
+#del raw, epochs, epochs_resampled, power, power_ave
 
 
 # MACRO analysis
