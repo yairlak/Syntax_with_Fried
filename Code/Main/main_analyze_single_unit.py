@@ -10,7 +10,7 @@ import sys
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(48,89,1)
+channels_micro = range(49,89,1)
 channels_macro = range(1,2,1)
 
 

@@ -106,7 +106,6 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2p
                             getattr(log, attribute_word_string)]
                 all_words_pos = all_words_pos + curr_pos
             order = np.argsort(all_words_pos)
-            word_pos_sorted = np.asarray(all_words_pos)[order]
             power_ave = power_ave[order, :]
         else:
             order = None
@@ -148,7 +147,10 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2p
         plt.setp(ax0, ylabel='Number of letters')
     elif preferences.sort_according_to_pos:
         ax0.set_yticks(range(0, len(all_words_pos), preferences.step))
-        ax0.set_yticklabels(word_pos_sorted[::preferences.step])
+        word_pos_sorted = np.asarray(all_words_pos)[order]
+	word_pos_sorted = word_pos_sorted[::preferences.step]
+	word_pos_sorted = word_pos_sorted[::-1]
+        ax0.set_yticklabels(word_pos_sorted)
         plt.setp(ax0, ylabel='Part of Speech')
 
     IX = (power.times > params.window_st / 1e3) & (power.times < params.window_ed / 1e3)

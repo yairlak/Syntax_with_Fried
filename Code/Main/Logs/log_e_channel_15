@@ -1,14 +1,11 @@
 /neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/convert_to_mne.py:49: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
 [u'GA1-LAH8_0019.ncs']
   info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_analyze_single_unit.py:87: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_analyze_single_unit.py:96: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
   raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
-[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   16.3s finished
-[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   17.2s finished
-[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:    1.2s finished
-Traceback (most recent call last):
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_analyze_single_unit.py", line 152, in <module>
-    settings, params, preferences)
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py", line 87, in plot_and_save_high_gamma
-    power_ave = power_ave[order, :]
-IndexError: index 234 is out of bounds for axis 0 with size 37
+[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   15.2s finished
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py:157: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 2866 but corresponding boolean dimension is 3072
+  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py:157: RuntimeWarning: Mean of empty slice
+  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
+[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:    8.5s finished
