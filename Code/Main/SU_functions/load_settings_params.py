@@ -8,7 +8,7 @@ class Preferences:
         self.analyze_macro = False
         self.sort_according_to_sentence_length = False
         self.sort_according_to_num_letters = False
-        self.sort_according_to_pos = True
+        self.sort_according_to_pos = False
         self.step = 30 # yticklabels step when showing the length of each trial
         if (self.sort_according_to_sentence_length + self.sort_according_to_num_letters + self.sort_according_to_pos) > 1:
             import sys
@@ -20,7 +20,7 @@ class Settings:
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_479'
-        self.load_line_filtered_resampled_epoch_object = False
+        self.load_line_filtered_resampled_epoch_object = True
 
         # BLOCKS in paradigm to process
         self.blocks = [1, 3, 5]
@@ -29,9 +29,9 @@ class Settings:
 
         if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array
             self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'END_WAV_TIMES', 'KEY_PRESS_l_TIMES']
-            self.event_types_to_extract = ['WORDS_ON_TIMES']
+            # self.event_types_to_extract = ['WORDS_ON_TIMES']
             self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3, 4]  # Should match the above (event_types_to_extract)
-            self.event_numbers_to_assign_to_extracted_event_types = [1]
+            # self.event_numbers_to_assign_to_extracted_event_types = [1]
         else:
             self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'KEY_PRESS_l_TIMES']
             # self.event_types_to_extract = ['WORDS_ON_TIMES']
@@ -77,7 +77,7 @@ class Settings:
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
-        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')

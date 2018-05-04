@@ -189,6 +189,34 @@ def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2p
     #     pickle.dump([power, settings, params, preferences], f)
 
 
+def reproducability(power, power_ave, settings, params):
+    # Assumes trials are in chronolgical order, and block size is 152
+    num_trials_in_block = 152
+    num_blocks = 3
+    time_st = 0
+    time_ed = 1 # [sec]
+    IX_timewindow = (power.times > time_st) & (power.times < time_ed)
+
+    reproducability_matrix = np.zeros([num_trials_in_block, num_trials_in_block])
+    for trial_i in range(num_trials_in_block):
+        for trial_j in range(trial_i, num_trials_in_block, 1):
+            vec_i = power_ave[trial_i, IX_timewindow]
+            vec1_j = power_ave[trial_j + num_trials_in_block, IX_timewindow]
+            vec2_j = power_ave[trial_j + 2*num_trials_in_block, IX_timewindow]
+
+            rho = np.mean([np.corrcoef(vec_i, vec1_j)[0, 1], np.corrcoef(vec_i, vec2_j)[0, 1]])
+            reproducability_matrix[trial_i, trial_j] = rho
+
+    return reproducability_matrix
+
+
+
+
+
+
+
+
+
 def plot_and_save_average_freq_band(power1, power2, power3, power_ave1, power_ave2, power_ave3, event_id_1, event_id_2, event_id_3, file_name, fig_paradigm, settings, log_all_blocks, preferences):
     if preferences.sort_according_to_sentence_length:
         sentences_length = []

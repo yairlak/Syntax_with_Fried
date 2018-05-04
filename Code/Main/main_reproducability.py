@@ -1,11 +1,12 @@
 from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses
-from scipy import io
+from scipy import stats
 import os, glob
 import mne
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import numpy as np
 import sys
+import pickle
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
@@ -113,11 +114,6 @@ if preferences.analyze_micro_raw:
                                                                                                file_name_epochs))
             epochs_resampled = mne.read_epochs(os.path.join(settings.path2epoch_data, 'Epochs_' + file_name_epochs + '.fif'))
 
-        fig_paradigm = mne.viz.plot_events(events_spikes, raw.info['sfreq'], raw.first_samp, color=color_curr,
-                                           event_id=event_id, show=False)
-        fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '_' + str(settings.blocks) + '.png'
-        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
-        plt.close(fig_paradigm)
 
         del raw
         if not settings.load_line_filtered_resampled_epoch_object: del epochs
@@ -126,40 +122,53 @@ if preferences.analyze_micro_raw:
         event_ids_epochs = epochs_resampled.event_id.keys()
         for band, fmin, fmax in params.iter_freqs:
 
-            # Parse according to Words
-            if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
-                event_str = "WORDS_ON_TIMES"
-                curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, False, 'no_baseline', params)
-                file_name = band + '_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_micro_Blocks_' + str(
-                    settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
-                if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name,
-                                                  settings, params, preferences)
+            event_str = "FIRST_WORD" # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+            curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s] # Filter events
 
-            # Calculate average power activity
-            for event_str in ["FIRST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
-                if any([event_str in s for s in event_ids_epochs]):
-                    curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                    if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                                 fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                    else:
-                        if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                        else:
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                              fmin, fmax, params.freq_step, baseline, 'trial_wise', params)
+            power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
+                                                                         fmin, fmax, params.freq_step, None, 'trial_wise', params)
 
-                    file_name = band + '_' + settings.patient + '_channel_' + str(
-                        settings.channel) + '_micro_Blocks_' + str(
-                        settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                    if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
-                    if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                    analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name,
-                                                      settings, params, preferences)
+            reproducability_matrix = analyses.reproducability(power, power_ave, settings, params)
+
+            file_name = 'reproducability_' + band + '_' + settings.patient + '_channel_' + str(
+                settings.channel) + '_micro_Blocks_' + str(
+                settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+
+            # Save to file
+            diag = np.diagonal(reproducability_matrix)
+            off_diag = reproducability_matrix[np.triu(np.ones(reproducability_matrix.shape, dtype=bool), k=1)]
+            tvalue, pvalue = stats.ttest_ind(diag, off_diag)
+            with open(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.pkl'),
+                      'wb') as f:
+                pickle.dump([reproducability_matrix, diag, off_diag, tvalue, pvalue], f)
+
+            # Generate and save figure
+            from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+            fig, axs = plt.subplots(1, 2, figsize=[30, 20])
+            im = axs[0].imshow(reproducability_matrix, vmin=-1, vmax=1)
+            axs[0].set_xlabel('Sentence number', fontsize=24)
+            axs[0].set_ylabel('Sentence number', fontsize=24)
+            divider = make_axes_locatable(axs[0])
+            cax = divider.append_axes("right", size="2%", pad=0.1)
+            cbar = plt.colorbar(im, cax=cax)
+            cbar.ax.set_ylabel('Inter-block Correlation', rotation=270, fontsize=24)
+            # cbar = fig.colorbar(cax, ax=axs[0])
+            axs[1].hist([diag, off_diag], 20, normed=True,
+                        label=['Same sentence (diagonal)', 'Different sentences (off-diagonal)'])
+            axs[1].set_xlabel('Inter-block correlation', fontsize=24)
+            axs[1].set_ylabel('Normalized counts', fontsize=24)
+            axs[1].set_ylim([0, 5])
+            axs[1].text(-0.5, 4.2, r'$\mu=$' + "%.2f" % np.mean(diag) + ',\ $\sigma=$' + "%.2f" % np.std(diag), color='b',
+                        fontsize=24)
+            axs[1].text(-0.5, 4, r'$\mu=$' + "%.2f" % np.mean(off_diag) + ',\ $\sigma=$' + "%.2f" % np.std(off_diag),
+                        color='r', fontsize=24)
+            axs[1].text(-0.5, 3.8, 'p-value=' + "%.2f" % np.mean(pvalue), color='k', fontsize=24)
+
+            axs[1].legend(loc=1, fontsize=24)
+            axs[1].grid(True)
+            plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.png'))
+            print(tvalue, pvalue)
 
 del raw, epochs, epochs_resampled, power, power_ave
 
