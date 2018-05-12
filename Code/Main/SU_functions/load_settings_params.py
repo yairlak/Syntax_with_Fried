@@ -9,6 +9,7 @@ class Preferences:
         self.sort_according_to_sentence_length = False
         self.sort_according_to_num_letters = False
         self.sort_according_to_pos = False
+        self.run_contrasts = True
         self.step = 30 # yticklabels step when showing the length of each trial
         if (self.sort_according_to_sentence_length + self.sort_according_to_num_letters + self.sort_according_to_pos) > 1:
             import sys
@@ -20,7 +21,7 @@ class Settings:
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_479'
-        self.load_line_filtered_resampled_epoch_object = True
+        self.load_line_filtered_resampled_epoch_object = False
 
         # BLOCKS in paradigm to process
         self.blocks = [1, 3, 5]
@@ -77,7 +78,7 @@ class Settings:
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
-        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')

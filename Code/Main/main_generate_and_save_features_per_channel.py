@@ -5,12 +5,15 @@ import mne
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import numpy as np
+from mne.decoding import GeneralizationAcrossTime
+from sklearn.svm import LinearSVC
 import sys
+import pickle
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(1,89,1)
+channels_micro = range(1,7,1)
 channels_macro = range(1,2,1)
 
 
@@ -32,9 +35,10 @@ preferences = load_settings_params.Preferences()
 
 print('Loading features and comparisons...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
+contrast_names = comparison_list['fields'][1]
 contrasts = comparison_list['fields'][2]
 union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrasts, union_or_intersection, features)
+comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, union_or_intersection, features)
 
 print('Reading log files from experiment...')
 log_all_blocks = []
@@ -45,11 +49,6 @@ del log, block
 
 print('Loading POS tags for all words in the lexicon')
 word2pos = read_logs_and_comparisons.load_POS_tags(settings)
-
-print('Generating event object for MNE from log data...')
-events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, settings, params)
-curr_event_ids = set(events[:, 2])
-color_curr = dict([item for item in settings.event_colors.items() if item[0] in curr_event_ids])
 
 print('Loading electrode names for all channels...')
 electrode_names = load_data.electrodes_names(settings)
@@ -88,15 +87,23 @@ if preferences.analyze_micro_raw:
         file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
             channel) + '_line_filtered_resampled-epo'
 
-        if not settings.load_line_filtered_resampled_epoch_object:
-            print('Generating MNE raw object for continuous data...')
-            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
+        # if not settings.load_line_filtered_resampled_epoch_object:
+        print('Generating MNE raw object for continuous data...')
+        raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
 
-            print('Line filtering...')
-            raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+        print('Line filtering...')
+        raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 
-            print('Epoching data...')
+        print('Loop over all comparisons: prepare & save data for classification')
+        for i, comparison in enumerate(comparisons):
+            print('Preparing contrast:' + contrast_names[i])
+            print('Generating event object for MNE from log data...')
+            events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, comparison, settings,
+                                                                                   params, preferences)
+            curr_event_ids = set(events[:, 2])
+            color_curr = dict([item for item in settings.event_colors.items() if item[0] in curr_event_ids])
 
+            print('High-Gamma analyses...')
             epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, baseline=None, preload=True)
             print(epochs)
 
@@ -104,64 +111,31 @@ if preferences.analyze_micro_raw:
             epochs_resampled = epochs.copy().resample(params.downsampling_sfreq, npad='auto')
             print('New sampling rate:', epochs_resampled.info['sfreq'], 'Hz')
 
-            print('Save Epoch data after line filtering and resampling')
-            epochs_resampled.save(os.path.join(settings.path2epoch_data, 'Epochs_' + file_name_epochs + '.fif'))
+            event_ids_epochs = epochs_resampled.event_id.keys()
+            for band, fmin, fmax in params.iter_freqs:
 
-        else:
-            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
-            print('Loading epoched data, after line filtering and resampling: ' + os.path.join(settings.path2epoch_data,
-                                                                                               file_name_epochs))
-            epochs_resampled = mne.read_epochs(os.path.join(settings.path2epoch_data, 'Epochs_' + file_name_epochs + '.fif'))
-
-        fig_paradigm = mne.viz.plot_events(events_spikes, raw.info['sfreq'], raw.first_samp, color=color_curr,
-                                           event_id=event_id, show=False)
-        fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '_' + str(settings.blocks) + '.png'
-        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
-        plt.close(fig_paradigm)
-
-        del raw
-        if not settings.load_line_filtered_resampled_epoch_object: del epochs
-
-        print('High-Gamma analyses...')
-        event_ids_epochs = epochs_resampled.event_id.keys()
-        for band, fmin, fmax in params.iter_freqs:
-
-            # Parse according to Words
-            if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
-                event_str = "WORDS_ON_TIMES"
-                curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, False, 'no_baseline', params)
-                file_name = band + '_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_micro_Blocks_' + str(
-                    settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
-                if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name,
-                                                  settings, params, preferences)
-
-            # Calculate average power activity
-            for event_str in ["FIRST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
-                if any([event_str in s for s in event_ids_epochs]):
+                # Parse according to Words
+                if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
+                    event_str = "WORDS_ON_TIMES"
                     curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                    if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                                 fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                    else:
-                        if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                        else:
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                              fmin, fmax, params.freq_step, baseline, 'trial_wise', params)
+                    power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, False, 'no_baseline', params)
 
-                    file_name = band + '_' + settings.patient + '_channel_' + str(
-                        settings.channel) + '_micro_Blocks_' + str(
-                        settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                    if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
-                    if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                    analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, log_all_blocks, word2pos, file_name,
-                                                      settings, params, preferences)
+                # Calculate average power activity
+                else: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+                    power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, event_ids_epochs, band,
+                                                                                     fmin, fmax, params.freq_step, False, 'no_baseline', params)
 
-del epochs_resampled, power, power_ave
+                epochs_resampled._data = np.expand_dims(power_ave, axis=1)
+
+                file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                     settings.channel) + '_' + settings.channel_name + '_' + contrast_names[i]
+
+                with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
+                    pickle.dump([epochs_resampled, comparison, settings, params, preferences] ,f)
+
+                print('Save to: ' + file_name)
+
+    del epochs_resampled, power, power_ave
 
 
 # MACRO analysis
@@ -245,65 +219,3 @@ if preferences.analyze_macro:
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_LengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_LengthSorted'
                     file_name = file_name + '.png'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            # # Calculate average power activity
-            # event_id_1 = [s for s in event_ids_epochs if "FIRST_WORD" in s]
-            # power1, power_ave1, P_zero1 = analyses.average_high_gamma(epochs_resampled, event_id_1, band, fmin, fmax,
-            #                                                           params.freq_step)
-            # event_id_2 = [s for s in event_ids_epochs if "KEY" in s]
-            # power2, power_ave2, P_zero2 = analyses.average_high_gamma(epochs_resampled, event_id_2, band, fmin, fmax,
-            #                                                           params.freq_step)
-            # event_id_3 = [s for s in event_ids_epochs if "LAST_WORD" in s]
-            # power3, power_ave3, _ = analyses.average_high_gamma(epochs_resampled, event_id_3, band, fmin, fmax,
-            #                                                     params.freq_step, P_zero1)
-            # # event_id_3 = [s for s in event_ids_epochs if "END_WAV" in s]
-            # # power3, power_ave3, _ = analyses.average_high_gamma(epochs_resampled, event_id_3, band, fmin, fmax, params.freq_step, P_zero1)
-            #
-            # # PLOT
-            # file_name = band + '_' + settings.patient + '_micro' + '_Channel_' + str(
-            #     settings.channel) + '_Blocks_' + str(settings.blocks) + '_Event_id' + str(
-            #     epochs_resampled.event_id.values()) + settings.channel_name + '_lengthSorted_' + str(
-            #     preferences.sort_according_to_sentence_length) + '.png'
-            # analyses.plot_and_save_average_freq_band(power1, power2, power3, power_ave1, power_ave2, power_ave3, event_id_1,
-            #                                          event_id_2, event_id_3, file_name, fig_paradigm, settings,
-            #                                          log_all_blocks, preferences)
-
-
-
-# cluster16 = raw_spikes.pick_channels(ch_names=[raw_spikes.info['ch_names'][16]])
-    # cluster16.plot(start=500, duration=1000)
-    # cluster16_data = raw_spikes.get_data(picks=[16])
-    # cluster16_data_smoothed = analyses.smooth_with_gaussian(np.squeeze(cluster16_data), gaussian_width=100)
-    # plt.plot(raw_spikes.times, cluster16_data_smoothed)
-    # plt.xlabel('Time [sec]', fontsize=16)
-    # plt.ylabel('Gaussian smoothed spike train', fontsize=16)
-    # plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Rasters', 'cluster_16_smoothed_spike_train.png'))
-    # plt.close()
-
-
-# settings.time0 = 1.489760586848367e+15
-    # settings.time0 = 25393.747629 # patient 480
-    # settings.timeend = settings.timeend + settings.time0
-
-# print('Baseline High-Gamma data, based on first-word alignment')
-                # settings.event_types_to_extract = ['FIRST_WORD_TIMES']
-                # events_FIRST_WORD_TIMES, _, event_id_FIRST_WORD_TIMES = convert_to_mne.generate_events_array(log_all_blocks, settings, params)
-                # epochs_FIRST_WORD_TIMES = mne.Epochs(raw, events_FIRST_WORD_TIMES, event_id_FIRST_WORD_TIMES, params.tmin, params.tmax, baseline=None, preload=True)
-                # epochs_FIRST_WORD_TIMES_resampled = epochs_FIRST_WORD_TIMES.copy().resample(params.downsampling_sfreq, npad='auto')
-                # event_ids_epochs_FIRST_WORD_TIMES = epochs_FIRST_WORD_TIMES_resampled.event_id.keys()
-                # curr_event_id_to_plot = [s for s in event_ids_epochs_FIRST_WORD_TIMES if 'FIRST_WORD_TIMES' in s]
-                # _, _, baseline = analyses.average_high_gamma(epochs_FIRST_WORD_TIMES_resampled, curr_event_id_to_plot, 'High-Gamma', 70, 150, params.freq_step, None, params)

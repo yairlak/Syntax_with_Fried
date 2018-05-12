@@ -73,15 +73,16 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, base
         elif baseline_type == 'no_baseline':
             power_ave_baselined = power_ave  # don't apply any baseline
 
-    # Remove 0.2 sec from each side due to boundary effects
-    IX_smaller_time_window = (epochs.times > epochs.tmin + 0.2) & (epochs.times < epochs.tmax - 0.2)  # indices to relevant times
-    power_ave_baselined = power_ave_baselined[:, IX_smaller_time_window]
-
     return power, power_ave_baselined, baseline
 
 
-def plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name, settings, params, preferences):
+def plot_and_save_high_gamma(epochs, power, power_ave, event_str, log_all_blocks, word2pos, file_name, settings, params, preferences):
     from scipy import stats
+    # Remove 0.2 sec from each side due to boundary effects
+    IX_smaller_time_window = (power.times > epochs.tmin + 0.2) & (
+    epochs.times < epochs.tmax - 0.2)  # indices to relevant times
+    power_ave = power_ave[:, IX_smaller_time_window]
+
     power_ave_zscore = stats.zscore(power_ave)
     power_ave[(power_ave_zscore > 3) | (power_ave_zscore < -3)] = np.NaN
 
