@@ -32,8 +32,9 @@ print('Loading features and comparisons...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
 contrast_names = comparison_list['fields'][1]
 contrasts = comparison_list['fields'][2]
+align_to = comparison_list['fields'][4]
 union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, union_or_intersection, features)
+comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
