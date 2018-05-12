@@ -39,7 +39,7 @@ if settings.comparisons is not None: comparisons = [cmp for i, cmp in enumerate(
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
-    contrast_name = comparison[0]
+    contrast_name = comparison[2]
     print('Preparing contrast:' + contrast_name)
 
     #----- RASTERS ------
@@ -76,7 +76,7 @@ for i, comparison in enumerate(comparisons):
 
 
             file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                     settings.channel) + '_' + settings.channel_name + '_' + contrast_name + '_' + comparison[1]
+                     settings.channel) + '_' + settings.channel_name + '_' + contrast_name  
 
             with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'rb') as f:
                 curr_data = pickle.load(f)

@@ -34,7 +34,7 @@ def generate_events_array(log_all_blocks, comparison, settings, params, preferen
             for j, cond in enumerate(comparison[0]):
                 # if hasattr(log, event_type): # Assumes LAST_WORD
                 event_number = j + 100 * (block_number)  # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
-                event_type_name = cond['contrast_name'] + '_' + str(j) + '_block_' + str(block_number)
+                event_type_name = comparison[1] + '_' + str(j) + '_block_' + str(block_number)
                 event_id[event_type_name] = event_number
                 align_to = comparison[1] # FIRST_WORD_TIMES or LAST_WORD_TIMES
                 curr_times = getattr(log, align_to)
