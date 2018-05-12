@@ -130,7 +130,7 @@ if preferences.analyze_micro_raw:
                          settings.channel) + '_' + settings.channel_name + '_' + comparison[2] + '_' + comparison[1] + '_blocks_' + str(settings.blocks)
                 elif preferences.run_POS:
                     file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                        settings.channel) + '_' + settings.channel_name + '_POS_' + '_blocks_' + str(settings.blocks)
+                        settings.channel) + '_' + settings.channel_name + '_POS_blocks_' + str(settings.blocks)
 
                 with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
                     pickle.dump([epochs_resampled, comparison, settings, params, preferences] ,f)

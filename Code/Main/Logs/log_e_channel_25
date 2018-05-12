@@ -1,11 +1,109 @@
 /neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/convert_to_mne.py:71: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
 [u'GA3-RIFAC3_0019.ncs']
   info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_generate_and_save_features_per_channel.py:97: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_generate_and_save_features_per_channel.py:101: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
   raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 Traceback (most recent call last):
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_generate_and_save_features_per_channel.py", line 104, in <module>
-    params, preferences)
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/convert_to_mne.py", line 37, in generate_events_array
-    event_type_name = cond['contrast_name'] + '_' + str(j) + '_block_' + str(block_number)
-KeyError: 'contrast_name'
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_generate_and_save_features_per_channel.py", line 124, in <module>
+    fmin, fmax, params.freq_step, False, 'no_baseline', params)
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/analyses.py", line 53, in average_high_gamma
+    return_itc=False, picks=[0])
+  File "<string>", line 2, in tfr_morlet
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/utils.py", line 728, in verbose
+    return function(*args, **kwargs)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/time_frequency/tfr.py", line 710, in tfr_morlet
+    average, **tfr_params)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/time_frequency/tfr.py", line 620, in _tfr_aux
+    output=output, decim=decim, **tfr_params)
+  File "/home/yl254115/.local/lib/python2.7/site-packages/mne/time_frequency/tfr.py", line 376, in _compute_tfr
+    for channel in epoch_data.transpose(1, 0, 2))
+  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/sklearn/externals/joblib/parallel.py", line 789, in __call__
+    self.retrieve()
+  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/sklearn/externals/joblib/parallel.py", line 699, in retrieve
+    self._output.extend(job.get(timeout=self.timeout))
+  File "/home/yl254115/anaconda2/lib/python2.7/multiprocessing/pool.py", line 567, in get
+    raise self._value
+multiprocessing.pool.MaybeEncodingError: Error sending result: '[array([[[   995.74118662,    949.62645484,    880.38045159, ...,
+          10214.40220204,   8992.48909483,   7822.44193113],
+        [   861.00017764,    832.39437017,    785.16483349, ...,
+           9854.40777746,   8645.77608534,   7496.23428679],
+        [   874.92544308,    883.86846178,    879.72706573, ...,
+           9438.66188605,   8258.74556145,   7142.94377885],
+        ..., 
+        [  2090.9640633 ,   2122.48627397,   2128.18488427, ...,
+             45.82844398,     44.90088841,     42.98342311],
+        [  1933.86770934,   1948.67142074,   1938.30010459, ...,
+             37.34096345,     39.16999896,     39.61471526],
+        [  1808.88352772,   1810.999693  ,   1788.16394972, ...,
+             47.19357458,     49.06555031,     49.4558142 ]],
+
+       [[   939.1076379 ,   1181.18037539,   1473.18051667, ...,
+          11955.51201561,  10886.00951513,   9839.00069959],
+        [   423.35929968,    607.68890384,    839.54555938, ...,
+          10736.04391326,   9849.33306061,   8969.16478842],
+        [   315.27688618,    471.86061363,    669.76672796, ...,
+           8875.13892862,   8248.00726798,   7607.07340224],
+        ..., 
+        [  1042.30276048,   1135.95140572,   1233.32698442, ...,
+           1739.91966332,   1471.8436249 ,   1231.15178748],
+        [   543.07555126,    592.24498409,    644.97667209, ...,
+           1766.4686224 ,   1491.55031427,   1246.30096382],
+        [   234.81845213,    258.58493505,    285.52542187, ...,
+           1741.21683222,   1469.54450672,   1228.20916952]],
+
+       [[ 12476.07328238,  13282.04781271,  14023.55392679, ...,
+          21032.07667904,  20685.68739511,  20134.06558891],
+        [ 10401.15443374,  11065.69732776,  11684.43999052, ...,
+          20925.51589572,  20620.62214099,  20096.14834305],
+        [  8061.75699043,   8542.72859018,   8994.18916167, ...,
+          20449.47007724,  20173.19055803,  19674.72854897],
+        ..., 
+        [  1753.46859998,   1727.62769438,   1681.26138178, ...,
+           1110.23291546,   1165.56660255,   1204.43441259],
+        [  2390.87065742,   2405.97595185,   2394.38294745, ...,
+           1302.18007008,   1345.85506448,   1373.19775765],
+        [  3207.38625916,   3291.70666946,   3345.24152754, ...,
+           1545.26427069,   1572.49509011,   1583.32673306]],
+
+       ..., 
+       [[  3047.22822059,   3076.97471948,   3111.1480847 , ...,
+           3850.78988317,   3434.93850853,   3082.7459265 ],
+        [  1510.88319401,   1343.55420185,   1173.45624182, ...,
+           5479.76422687,   4967.06181553,   4498.71550052],
+        [   957.5747908 ,    738.71845395,    516.56003493, ...,
+           6489.88726918,   5942.1718101 ,   5420.48441716],
+        ..., 
+        [    91.98466662,    110.68431198,    131.15877746, ...,
+            965.35192658,   1001.04972775,   1024.46680248],
+        [    71.58611182,     85.78015652,    101.3548599 , ...,
+            791.80950835,    838.05980476,    872.76046309],
+        [    57.90821894,     68.28721819,     79.65858316, ...,
+            696.73358179,    748.01512502,    787.84181427]],
+
+       [[  6940.05366626,   7549.04659855,   8104.23403796, ...,
+          23575.68353512,  21906.59882855,  20164.83141603],
+        [  6181.07770626,   6542.86500699,   6821.21302815, ...,
+          22269.55929993,  20678.07221505,  19026.39168724],
+        [  5721.04483554,   5943.10609355,   6074.36082259, ...,
+          19970.24064732,  18563.38508869,  17102.65492524],
+        ..., 
+        [  4883.49637832,   5065.16930344,   5201.95395609, ...,
+            583.50301333,    580.4702801 ,    572.52978458],
+        [  4538.53600067,   4669.7803904 ,   4752.51663231, ...,
+            568.05023743,    563.70552875,    555.46213315],
+        [  4137.56849398,   4219.39242315,   4250.54872172, ...,
+            503.60694063,    504.16941749,    501.56462873]],
+
+       [[  4073.12726499,   4084.74566103,   4028.32838087, ...,
+           5517.02520177,   4975.03976195,   4427.3144054 ],
+        [  5115.37149869,   5397.62712242,   5646.60833687, ...,
+           5375.91768983,   4883.13489372,   4376.69131316],
+        [  6209.18787497,   6787.33238246,   7371.18317142, ...,
+           5350.83541636,   4878.92205233,   4390.5605346 ],
+        ..., 
+        [   893.28786859,    951.57781302,   1001.23666156, ...,
+            690.43687321,    723.89459716,    744.9839851 ],
+        [   998.76665147,   1066.05173433,   1125.18516787, ...,
+           1007.72428115,    998.23339676,    978.78800842],
+        [  1094.31675629,   1174.57870221,   1248.4905456 , ...,
+           1410.16860266,   1343.14260039,   1270.10118969]]])]'. Reason: 'MemoryError()'
