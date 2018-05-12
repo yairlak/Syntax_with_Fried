@@ -74,9 +74,13 @@ for i, comparison in enumerate(comparisons):
             settings.channel = channel
             _, settings = load_data.micro_electrodes_raw(settings)
 
-
-            file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                     settings.channel) + '_' + settings.channel_name + '_' + contrast_name  
+            if preferences.run_contrasts:
+                file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                    settings.channel) + '_' + settings.channel_name + '_' + comparison[2] + '_' + comparison[
+                                1] + '_blocks_' + str(settings.blocks)
+            elif preferences.run_POS:
+                file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                    settings.channel) + '_' + settings.channel_name + '_POS_blocks_' + str(settings.blocks)
 
             with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'rb') as f:
                 curr_data = pickle.load(f)
@@ -99,7 +103,12 @@ for i, comparison in enumerate(comparisons):
                 epochs_all_channels.info['chs'].append(ch_info)
         epochs_all_channels.info['nchan'] = len(channels)
 
-        file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name + '_' + comparison[1]
+        if preferences.run_contrasts:
+            file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name + '_' + comparison[
+                1] + '_blocks_' + str(settings.blocks)
+        elif preferences.run_POS:
+            file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_POS_blocks_' + str(settings.blocks)
+
         with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification',
                                file_name + '.pkl'), 'wb') as f:
             pickle.dump(epochs_all_channels, f)
