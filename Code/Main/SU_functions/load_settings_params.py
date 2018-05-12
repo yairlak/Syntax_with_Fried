@@ -23,6 +23,9 @@ class Settings:
         self.patient = 'patient_479'
         self.load_line_filtered_resampled_epoch_object = False
 
+        # Comparisons (contrasts):
+        self.comparisons = [2] # List of integers, which defines which comparisons will be executed from the comparison file in Paradigm folder. If set to 'None' then all comparisons in the file are executed.
+
         # BLOCKS in paradigm to process
         self.blocks = [1, 3, 5]
         self.blocks = [2, 4, 6]

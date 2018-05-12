@@ -35,10 +35,11 @@ contrasts = comparison_list['fields'][2]
 align_to = comparison_list['fields'][4]
 union_or_intersection = comparison_list['fields'][6]
 comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
+if settings.comparisons is not None: comparisons = [cmp for i, cmp in enumerate(comparisons) if i+1 in settings.comparisons]
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
-    contrast_name = contrast_names[i]
+    contrast_name = comparison[0]
     print('Preparing contrast:' + contrast_name)
 
     #----- RASTERS ------
@@ -75,7 +76,7 @@ for i, comparison in enumerate(comparisons):
 
 
             file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                     settings.channel) + '_' + settings.channel_name + '_' + contrast_name
+                     settings.channel) + '_' + settings.channel_name + '_' + contrast_name + '_' + comparison[1]
 
             with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'rb') as f:
                 curr_data = pickle.load(f)
@@ -98,7 +99,7 @@ for i, comparison in enumerate(comparisons):
                 epochs_all_channels.info['chs'].append(ch_info)
         epochs_all_channels.info['nchan'] = len(channels)
 
-        file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name
+        file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name + '_' + comparison[1]
         with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification',
                                file_name + '.pkl'), 'wb') as f:
             pickle.dump(epochs_all_channels, f)

@@ -200,8 +200,8 @@ def extract_comparison(contrast_names, contrasts, align_to, union_or_intersectio
             curr_trial_numbers = trial_numbers[IX_trials_curr_cond]
             curr_stimuli = stimuli[IX_trials_curr_cond]
             IX_sort = np.argsort(curr_trial_numbers)
-            trial_numbers_and_strings.append({'contrast_name':contrast_names[i], 'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
-        comparisons.append([trial_numbers_and_strings, align_to[i]])
+            trial_numbers_and_strings.append({'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
+        comparisons.append([trial_numbers_and_strings, align_to[i], contrast_names[i]])
 
     return comparisons
 

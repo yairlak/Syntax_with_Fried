@@ -40,6 +40,7 @@ contrasts = comparison_list['fields'][2]
 align_to = comparison_list['fields'][4]
 union_or_intersection = comparison_list['fields'][6]
 comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
+if settings.comparisons is not None: comparisons = [cmp for i, cmp in enumerate(comparisons) if i+1 in settings.comparisons]
 
 print('Reading log files from experiment...')
 log_all_blocks = []
@@ -97,7 +98,7 @@ if preferences.analyze_micro_raw:
 
         print('Loop over all comparisons: prepare & save data for classification')
         for i, comparison in enumerate(comparisons):
-            print('Preparing contrast:' + contrast_names[i])
+            print('Preparing contrast:' + comparison[2])
             print('Generating event object for MNE from log data...')
             events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, comparison, settings,
                                                                                    params, preferences)
@@ -129,7 +130,7 @@ if preferences.analyze_micro_raw:
                 epochs_resampled._data = np.expand_dims(power_ave, axis=1)
 
                 file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                     settings.channel) + '_' + settings.channel_name + '_' + contrast_names[i]
+                     settings.channel) + '_' + settings.channel_name + '_' + comparison[2] + '_' + comparison[1]
 
                 with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
                     pickle.dump([epochs_resampled, comparison, settings, params, preferences] ,f)

@@ -43,12 +43,6 @@ band = 'High-Gamma'
 # ------------ START MAIN --------------
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings()
-# Get (optional) argument from terminal which defines the channel for gamma analysis
-if len(sys.argv) > 1:
-    print 'Channel ' + sys.argv[1]
-    ch = int(sys.argv[1])
-    channels_macro = range(ch, ch + 1, 1)
-    channels_micro = range(ch, ch + 1, 1)
 
 print('Loading parameters...')
 params = load_settings_params.Params()
@@ -63,12 +57,13 @@ contrasts = comparison_list['fields'][2]
 align_to = comparison_list['fields'][4]
 union_or_intersection = comparison_list['fields'][6]
 comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
+if settings.comparisons is not None: comparisons = [cmp for i, cmp in enumerate(comparisons) if i+1 in settings.comparisons]
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
-    contrast_name = contrast_names[i]
+    contrast_name = comparison[0]
     print(contrast_name)
-    file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name
+    file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name + '_' + comparison[1]
     with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification',
                            file_name + '.pkl'), 'rb') as f:
         epochs_all_channels = pickle.load(f)
@@ -116,7 +111,7 @@ for i, comparison in enumerate(comparisons):
     cbar = plt.colorbar(im, ax=ax)
     cbar.ax.set_ylabel('AUC', rotation=270, fontsize=20, labelpad=25)
 
-    fig_file_name = 'GAT_' + band + '_' + settings.patient + '_' + contrast_name + '.png' # + curr_patient + '_' + curr_run + '_' + curr_comparison_name + '_blocks_' + blocks_str + '_last' + '.png'
+    fig_file_name = 'GAT_' + band + '_' + settings.patient + '_' + contrast_name + '_' + comparison[1] + '.png' # + curr_patient + '_' + curr_run + '_' + curr_comparison_name + '_blocks_' + blocks_str + '_last' + '.png'
     fig_gat.savefig(os.path.join(settings.path2figures, settings.patient, 'GAT', fig_file_name))
     plt.close(fig_gat)
 
@@ -155,6 +150,6 @@ for i, comparison in enumerate(comparisons):
     ax_diag.set_ylabel('Classif. score ({0})'.format('AUC' if 'roc' in repr(gat.scorer_) else r'%'))
     ax_diag.legend(loc='best')
 
-    fig_diag_file_name = 'gat_diag_' + settings.patient + '_' + contrast_name + '.png'
+    fig_diag_file_name = 'gat_diag_' + settings.patient + '_' + contrast_name + '_' + comparison[1] + '.png'
     fig_diag.savefig(os.path.join(settings.path2figures, settings.patient, 'GAT', fig_diag_file_name))
     plt.close(fig_diag)
