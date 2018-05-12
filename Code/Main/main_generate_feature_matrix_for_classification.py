@@ -76,7 +76,7 @@ for i, comparison in enumerate(comparisons):
 
 
             file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                     settings.channel) + '_' + settings.channel_name + '_' + contrast_name + '_' + comparison[1]
+                     settings.channel) + '_' + settings.channel_name + '_' + contrast_name  
 
             with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'rb') as f:
                 curr_data = pickle.load(f)

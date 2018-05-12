@@ -22,27 +22,3 @@ Filter length of 528000 samples (13.200 sec) selected
 Loop over all comparisons: prepare & save data for classification
 Preparing contrast:Declarative_Question
 Generating event object for MNE from log data...
-High-Gamma analyses...
-456 matching events found
-0 projection items activated
-Loading data for 456 events and 240001 original time points ...
-0 bad epochs dropped
-<Epochs  |  n_events : 456 (all good), tmin : -3.0 (s), tmax : 3.0 (s), baseline : None, ~835.0 MB, data loaded,
- u'Declarative_Question_0_block_2': 112, u'Declarative_Question_0_block_4': 112, u'Declarative_Question_0_block_6': 112, u'Declarative_Question_1_block_2': 40, u'Declarative_Question_1_block_4': 40, u'Declarative_Question_1_block_6': 40>
-('Original sampling rate:', 40000.0, 'Hz')
-('New sampling rate:', 512.0, 'Hz')
-Time-freq...
-Save to: Feature_matrix_High-Gamma_patient_479_channel_27_GA3-RIFAC5_0019.ncs_Declarative_Question
-Preparing contrast:Subject_type_NP_pro
-Generating event object for MNE from log data...
-High-Gamma analyses...
-360 matching events found
-0 projection items activated
-Loading data for 360 events and 240001 original time points ...
-0 bad epochs dropped
-<Epochs  |  n_events : 360 (all good), tmin : -3.0 (s), tmax : 3.0 (s), baseline : None, ~659.2 MB, data loaded,
- u'Subject_type_NP_pro_0_block_2': 38, u'Subject_type_NP_pro_0_block_4': 38, u'Subject_type_NP_pro_0_block_6': 38, u'Subject_type_NP_pro_1_block_2': 82, u'Subject_type_NP_pro_1_block_4': 82, u'Subject_type_NP_pro_1_block_6': 82>
-('Original sampling rate:', 40000.0, 'Hz')
-('New sampling rate:', 512.0, 'Hz')
-Time-freq...
-Save to: Feature_matrix_High-Gamma_patient_479_channel_27_GA3-RIFAC5_0019.ncs_Subject_type_NP_pro
