@@ -39,7 +39,7 @@ if settings.comparisons is not None: comparisons = [cmp for i, cmp in enumerate(
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
-    contrast_name = comparison[0]
+    contrast_name = comparison[2]
     print('Preparing contrast:' + contrast_name)
 
     #----- RASTERS ------

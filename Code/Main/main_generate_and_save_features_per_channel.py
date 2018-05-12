@@ -52,8 +52,8 @@ del log, block
 print('Loading POS tags for all words in the lexicon')
 word2pos = read_logs_and_comparisons.load_POS_tags(settings)
 
-print('Loading electrode names for all channels...')
-electrode_names = load_data.electrodes_names(settings)
+# print('Loading electrode names for all channels...')
+# electrode_names = load_data.electrodes_names(settings)
 
 #----- RASTERS ------
 if preferences.analyze_micro_single:
@@ -94,7 +94,7 @@ if preferences.analyze_micro_raw:
         raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
 
         print('Line filtering...')
-        # raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+        raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 
         print('Loop over all comparisons: prepare & save data for classification')
         for i, comparison in enumerate(comparisons):
@@ -117,14 +117,14 @@ if preferences.analyze_micro_raw:
             for band, fmin, fmax in params.iter_freqs:
 
                 # Parse according to Words
-                if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
-                    event_str = "WORDS_ON_TIMES"
-                    curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                    power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, False, 'no_baseline', params)
-
-                # Calculate average power activity
-                else: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
-                    power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, event_ids_epochs, band,
+                # if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
+                #     event_str = "WORDS_ON_TIMES"
+                #     curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
+                #     power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, False, 'no_baseline', params)
+                #
+                # # Calculate average power activity
+                # else: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+                power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, event_ids_epochs, band,
                                                                                      fmin, fmax, params.freq_step, False, 'no_baseline', params)
 
                 epochs_resampled._data = np.expand_dims(power_ave, axis=1)
