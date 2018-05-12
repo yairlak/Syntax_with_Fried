@@ -14,7 +14,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-channels_micro = range(1,3,1)
+channels_micro = range(1,129,1)
 channels_macro = range(1,2,1)
 
 
@@ -68,6 +68,7 @@ for i, comparison in enumerate(comparisons):
         band = 'High-Gamma'
         channel_names = []; channel_info = []
         for c, channel in enumerate(channels):
+            print('Channel - ' + str(channel))
             settings.channel = channel
             _, settings = load_data.micro_electrodes_raw(settings)
 
@@ -113,7 +114,7 @@ for i, comparison in enumerate(comparisons):
             print('Loading CSC raw data...')
             raw_CSC_data_in_mat, settings = load_data.macro_electrodes(settings)
 
-            print 'Analyzing high-gamma for channel ' + str(channel)
+            #print 'Analyzing high-gamma for channel ' + str(channel)
             # Line filter and resample, or load from file
             file_name_epochs = 'macro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(channel) + '_line_filtered_resampled-epo.fif'
 

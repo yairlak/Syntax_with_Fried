@@ -66,10 +66,10 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, base
     else:
         if baseline_type == 'subtract_average':
             power_ave_baselined = 10 * np.log10(power_ave / baseline)
-	    print("Baseline: subtract average")
+            print("Baseline: subtract average")
         elif baseline_type == 'trial_wise':
             power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
-	    print("Baseline: trial-wise")
+            print("Baseline: trial-wise")
         elif baseline_type == 'no_baseline':
             power_ave_baselined = power_ave  # don't apply any baseline
 
@@ -149,8 +149,8 @@ def plot_and_save_high_gamma(epochs, power, power_ave, event_str, log_all_blocks
     elif preferences.sort_according_to_pos:
         ax0.set_yticks(range(0, len(all_words_pos), preferences.step))
         word_pos_sorted = np.asarray(all_words_pos)[order]
-	word_pos_sorted = word_pos_sorted[::preferences.step]
-	word_pos_sorted = word_pos_sorted[::-1]
+        word_pos_sorted = word_pos_sorted[::preferences.step]
+        word_pos_sorted = word_pos_sorted[::-1]
         ax0.set_yticklabels(word_pos_sorted)
         plt.setp(ax0, ylabel='Part of Speech')
 
@@ -385,17 +385,17 @@ def smooth(x, window_len=11, window='hanning'):
     NOTE: length(output) != length(input), to correct this: return y[(window_len/2-1):-(window_len/2)] instead of just y.
     """
 
-    if x.ndim != 1:
-        raise ValueError, "smooth only accepts 1 dimension arrays."
+    #if x.ndim != 1:
+        #raise ValueError, "smooth only accepts 1 dimension arrays."
 
-    if x.size < window_len:
-        raise ValueError, "Input vector needs to be bigger than window size."
+    #if x.size < window_len:
+        #raise ValueError, "Input vector needs to be bigger than window size."
 
     if window_len < 3:
         return x
 
-    if not window in ['flat', 'hanning', 'hamming', 'bartlett', 'blackman']:
-        raise ValueError, "Window is on of 'flat', 'hanning', 'hamming', 'bartlett', 'blackman'"
+    #if not window in ['flat', 'hanning', 'hamming', 'bartlett', 'blackman']:
+        #raise ValueError, "Window is on of 'flat', 'hanning', 'hamming', 'bartlett', 'blackman'"
 
     s = np.r_[x[window_len - 1:0:-1], x, x[-2:-window_len - 1:-1]]
     # print(len(s))

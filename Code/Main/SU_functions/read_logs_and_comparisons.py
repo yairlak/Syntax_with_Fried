@@ -111,7 +111,7 @@ class LogSingleUnit:
 
                 word_strings_parsed = [s[0:-1] if s[-1] in ['.', '?'] else s for s in self.AUDIO_PLAYBACK_ONSET_WORD_STRING]
                 
-		num_letters = [len(s) for s in word_strings_parsed]
+                num_letters = [len(s) for s in word_strings_parsed]
                 setattr(self, 'num_letters', num_letters)
                 event_types_added.append('num_letters')
 
