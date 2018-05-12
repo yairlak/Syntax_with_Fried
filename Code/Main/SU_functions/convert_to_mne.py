@@ -31,12 +31,13 @@ def generate_events_array(log_all_blocks, comparison, settings, params, preferen
 
                 curr_times = None; second_column = None; third_column = None; curr_array = None
         else: # Run contrasts
-            for j, cond in enumerate(comparison):
+            for j, cond in enumerate(comparison[0]):
                 # if hasattr(log, event_type): # Assumes LAST_WORD
                 event_number = j + 100 * (block_number)  # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
                 event_type_name = cond['contrast_name'] + '_' + str(j) + '_block_' + str(block_number)
                 event_id[event_type_name] = event_number
-                curr_times = getattr(log, 'LAST_WORD_TIMES')
+                align_to = comparison[1] # FIRST_WORD_TIMES or LAST_WORD_TIMES
+                curr_times = getattr(log, align_to)
                 curr_times = np.asarray(curr_times, dtype=float)
                 IX_contrast_sentences = [IX-1 for IX in log.SENTENCE_NUM_ORDER if IX in cond['trial_numbers']]
                 curr_times = curr_times[IX_contrast_sentences]

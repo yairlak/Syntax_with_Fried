@@ -37,8 +37,9 @@ print('Loading features and comparisons...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
 contrast_names = comparison_list['fields'][1]
 contrasts = comparison_list['fields'][2]
+align_to = comparison_list['fields'][4]
 union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, union_or_intersection, features)
+comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
 
 print('Reading log files from experiment...')
 log_all_blocks = []
@@ -92,7 +93,7 @@ if preferences.analyze_micro_raw:
         raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
 
         print('Line filtering...')
-        raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+        # raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 
         print('Loop over all comparisons: prepare & save data for classification')
         for i, comparison in enumerate(comparisons):

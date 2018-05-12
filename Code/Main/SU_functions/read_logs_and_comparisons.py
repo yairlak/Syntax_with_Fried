@@ -180,7 +180,7 @@ def load_comparisons_and_features(settings):
     return comparison_list, features
 
 
-def extract_comparison(contrast_names, contrasts, union_or_intersection, features):
+def extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features):
     trial_numbers = features['fields'][0][1::]
     stimuli = features['fields'][1][1::]
     features = features['fields'][2::]
@@ -201,7 +201,7 @@ def extract_comparison(contrast_names, contrasts, union_or_intersection, feature
             curr_stimuli = stimuli[IX_trials_curr_cond]
             IX_sort = np.argsort(curr_trial_numbers)
             trial_numbers_and_strings.append({'contrast_name':contrast_names[i], 'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
-        comparisons.append(trial_numbers_and_strings)
+        comparisons.append([trial_numbers_and_strings, align_to[i]])
 
     return comparisons
 
