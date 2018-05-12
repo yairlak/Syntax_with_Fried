@@ -9,14 +9,16 @@ class Preferences:
         self.sort_according_to_sentence_length = False
         self.sort_according_to_num_letters = False
         self.sort_according_to_pos = False
-        self.run_contrasts = True
+        self.run_contrasts = False
+        self.run_POS = True
         self.step = 30 # yticklabels step when showing the length of each trial
+        import sys
         if (self.sort_according_to_sentence_length + self.sort_according_to_num_letters + self.sort_according_to_pos) > 1:
-            import sys
             sys.exit('Too many sorting flags in Preferences')
+        if (self.run_contrasts + self.run_POS) > 1:
+            sys.exit('In Preferences - either run_contrast or run_POS, not both')
 
-
-class Settings:
+class Settings():
     def __init__(self):
         # PATIENT:
         self.hospital = 'UCLA'
@@ -33,14 +35,10 @@ class Settings:
 
         if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array
             self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'END_WAV_TIMES', 'KEY_PRESS_l_TIMES']
-            self.event_types_to_extract = ['WORDS_ON_TIMES']
             self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3, 4]  # Should match the above (event_types_to_extract)
-            self.event_numbers_to_assign_to_extracted_event_types = [1]
         else:
             self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'KEY_PRESS_l_TIMES']
-            self.event_types_to_extract = ['WORDS_ON_TIMES']
             self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3]  # Should match the above (event_types_to_extract)
-            self.event_numbers_to_assign_to_extracted_event_types = [1]  # Should match the above (event_types_to_extract)
 
         # self.events_to_plot = ['FIRST_WORD_TIMES_block_1', 'FIRST_WORD_TIMES_block_2', 'FIRST_WORD_TIMES_block_3']
         # self.events_to_plot = ['END_WAV_TIMES_block_2', 'END_WAV_TIMES_block_4', 'END_WAV_TIMES_block_6']
@@ -81,7 +79,7 @@ class Settings:
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
-        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')

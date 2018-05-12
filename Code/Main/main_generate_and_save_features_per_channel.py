@@ -33,6 +33,10 @@ params = load_settings_params.Params()
 print('Loading preferences...')
 preferences = load_settings_params.Preferences()
 
+if preferences.run_POS: # When running POS, Make sure 'WORDS_ON_TIMES' are extracted from the logs
+    settings.event_types_to_extract = ['WORDS_ON_TIMES']
+    settings.event_numbers_to_assign_to_extracted_event_types = [1]
+
 print('Loading features and comparisons...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
 contrast_names = comparison_list['fields'][1]
@@ -116,21 +120,17 @@ if preferences.analyze_micro_raw:
             event_ids_epochs = epochs_resampled.event_id.keys()
             for band, fmin, fmax in params.iter_freqs:
 
-                # Parse according to Words
-                # if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
-                #     event_str = "WORDS_ON_TIMES"
-                #     curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                #     power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, False, 'no_baseline', params)
-                #
-                # # Calculate average power activity
-                # else: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
                 power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, event_ids_epochs, band,
                                                                                      fmin, fmax, params.freq_step, False, 'no_baseline', params)
 
                 epochs_resampled._data = np.expand_dims(power_ave, axis=1)
 
-                file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                     settings.channel) + '_' + settings.channel_name + '_' + comparison[2] + '_' + comparison[1] + '_blocks_' + str(settings.blocks)
+                if preferences.run_contrasts:
+                    file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                         settings.channel) + '_' + settings.channel_name + '_' + comparison[2] + '_' + comparison[1] + '_blocks_' + str(settings.blocks)
+                elif preferences.run_POS:
+                    file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                        settings.channel) + '_' + settings.channel_name + '_POS_' + '_blocks_' + str(settings.blocks)
 
                 with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
                     pickle.dump([epochs_resampled, comparison, settings, params, preferences] ,f)
