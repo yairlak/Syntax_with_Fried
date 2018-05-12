@@ -63,7 +63,12 @@ print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
     contrast_name = comparison[2]
     print(contrast_name)
-    file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name + '_' + comparison[1]
+    if preferences.run_contrasts:
+        file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_' + contrast_name + '_' + comparison[
+            1] + '_blocks_' + str(settings.blocks)
+    elif preferences.run_POS:
+        file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_POS_blocks_' + str(settings.blocks)
+
     with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification',
                            file_name + '.pkl'), 'rb') as f:
         epochs_all_channels = pickle.load(f)
