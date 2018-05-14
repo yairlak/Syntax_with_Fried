@@ -98,13 +98,13 @@ if preferences.analyze_micro_raw:
         raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
 
         print('Line filtering...')
-        raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+        # raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 
         print('Loop over all comparisons: prepare & save data for classification')
         for i, comparison in enumerate(comparisons):
             print('Preparing contrast:' + comparison[2])
             print('Generating event object for MNE from log data...')
-            events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, comparison, settings,
+            events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, comparison, word2pos, settings,
                                                                                    params, preferences)
             curr_event_ids = set(events[:, 2])
             color_curr = dict([item for item in settings.event_colors.items() if item[0] in curr_event_ids])

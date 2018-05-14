@@ -30,11 +30,17 @@ params = load_settings_params.Params()
 print('Loading preferences...')
 preferences = load_settings_params.Preferences()
 
+if preferences.run_POS: # When running POS, Make sure 'WORDS_ON_TIMES' are extracted from the logs
+    settings.event_types_to_extract = ['WORDS_ON_TIMES']
+    settings.event_numbers_to_assign_to_extracted_event_types = [1]
+
 print('Loading features and comparisons...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
+contrast_names = comparison_list['fields'][1]
 contrasts = comparison_list['fields'][2]
+align_to = comparison_list['fields'][4]
 union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrasts, union_or_intersection, features)
+comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
 
 print('Reading log files from experiment...')
 log_all_blocks = []
@@ -47,7 +53,7 @@ print('Loading POS tags for all words in the lexicon')
 word2pos = read_logs_and_comparisons.load_POS_tags(settings)
 
 print('Generating event object for MNE from log data...')
-events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, settings, params)
+events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, [], word2pos, settings, params, preferences)
 curr_event_ids = set(events[:, 2])
 color_curr = dict([item for item in settings.event_colors.items() if item[0] in curr_event_ids])
 
