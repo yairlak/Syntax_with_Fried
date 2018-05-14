@@ -79,18 +79,18 @@ for i, comparison in enumerate(comparisons):
     gat = GeneralizationAcrossTime(clf=LinearSVC(), scorer = 'roc_auc', train_times=train_times, test_times=test_times,
                                  predict_mode='cross-validation', n_jobs=4)
 
-    class_1 = []; class_2 = []
-    for key, value in epochs_all_channels.event_id.items():
-        if value % 100 == 0:
-            class_1.append(value)
-        elif value % 100 == 1:
-            class_2.append(value)
-    for rw in range(epochs_all_channels.events.shape[0]):
-        if epochs_all_channels.events[rw, 2] in class_1:
-            epochs_all_channels.events[rw, 2] = 1
-        if epochs_all_channels.events[rw, 2] in class_2:
-            epochs_all_channels.events[rw, 2] = 2
-
+    if not preferences.run_contrasts:
+        class_1 = []; class_2 = []
+        for key, value in epochs_all_channels.event_id.items():
+            if value % 100 == 0:
+                class_1.append(value)
+            elif value % 100 == 1:
+                class_2.append(value)
+        for rw in range(epochs_all_channels.events.shape[0]):
+            if epochs_all_channels.events[rw, 2] in class_1:
+                epochs_all_channels.events[rw, 2] = 1
+            if epochs_all_channels.events[rw, 2] in class_2:
+                epochs_all_channels.events[rw, 2] = 2
 
     # fit and score
     print('Fit model')
