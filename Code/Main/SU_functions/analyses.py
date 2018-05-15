@@ -37,10 +37,16 @@ def generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_fil
 
         plt.setp(fig[0].axes[1], ylim=[0, params.ylim_PSTH], xlabel = 'Time [sec]', ylabel='spikes / s')
         IX = settings.events_to_plot[0].find('block')
-        fname = 'raster_' + settings.hospital + '_' + settings.patient + '_channel_' + str(from_channels[cluster]) \
-                + '_cluster_' + str(cluster) + '_blocks_' + str(settings.blocks) + '_' + settings.events_to_plot[0][0:IX-1] + '_lengthSorted_' + \
-                str(preferences.sort_according_to_sentence_length) + '_' + electrode_names_from_raw_files[cluster] + '.png'
-                # )
+        # fname = 'raster_' + settings.hospital + '_' + settings.patient + '_channel_' + str(from_channels[cluster]) \
+        #         + '_cluster_' + str(cluster) + '_blocks_' + str(settings.blocks) + '_' + settings.events_to_plot[0][0:IX-1] + '_lengthSorted_' + \
+        #         str(preferences.sort_according_to_sentence_length) + '_' + electrode_names_from_raw_files[cluster] + '.png'
+        #         # )
+        fname = 'raster_' + settings.hospital + '_' + settings.patient + '_channel_' + '_cluster_' + str(cluster) + '_blocks_' + str(settings.blocks) + '_' + settings.events_to_plot[0][
+                                                                                         0:IX - 1] + '_lengthSorted_' + \
+                str(preferences.sort_according_to_sentence_length) + '_' + electrode_names_from_raw_files[
+                    cluster] + '.png'
+        # )
+
         plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Rasters', fname))
 
 

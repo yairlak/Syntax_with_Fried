@@ -34,13 +34,14 @@ if preferences.run_POS: # When running POS, Make sure 'WORDS_ON_TIMES' are extra
     settings.event_types_to_extract = ['WORDS_ON_TIMES']
     settings.event_numbers_to_assign_to_extracted_event_types = [1]
 
-print('Loading features and comparisons...')
-comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
-contrast_names = comparison_list['fields'][1]
-contrasts = comparison_list['fields'][2]
-align_to = comparison_list['fields'][4]
-union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
+if preferences.run_contrasts:
+    print('Loading features and comparisons...')
+    comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
+    contrast_names = comparison_list['fields'][1]
+    contrasts = comparison_list['fields'][2]
+    align_to = comparison_list['fields'][4]
+    union_or_intersection = comparison_list['fields'][6]
+    comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
 
 print('Reading log files from experiment...')
 log_all_blocks = []
@@ -78,8 +79,13 @@ if preferences.analyze_micro_single:
     epochs_spikes = mne.Epochs(raw_spikes, events_spikes, event_id, params.tmin, params.tmax, baseline=None, preload=True)
     print(epochs_spikes)
 
-    print('Generate rasters and PSTHs...')
-    analyses.generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences)
+    event_ids_epochs = epochs_spikes.event_id.keys()
+    for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]:  # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+        if any([event_str in s for s in event_ids_epochs]):
+            curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
+            print('Generate rasters and PSTHs...')
+            settings.events_to_plot = curr_event_id_to_plot
+            analyses.generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences)
 
 # Micro (raw) analysis
 if preferences.analyze_micro_raw:
@@ -146,7 +152,7 @@ if preferences.analyze_micro_raw:
                                                   settings, params, preferences)
 
             # Calculate average power activity
-            for event_str in ["FIRST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+            for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
                 if any([event_str in s for s in event_ids_epochs]):
                     curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
                     if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.

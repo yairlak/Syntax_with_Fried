@@ -42,11 +42,13 @@ def spike_clusters(settings):
         data_all.append(io.loadmat(cluster)['spike_times_sec'])
         settings.time0 = io.loadmat(cluster)['time0'][0,0]
         settings.timeend = io.loadmat(cluster)['timeend'][0,0]
-        electrode_names_from_raw_files.append(io.loadmat(cluster)['electrode_name'][0] + ',ch ' + str(io.loadmat(cluster)['from_channel'][0]))
-        from_channels.append(io.loadmat(cluster)['from_channel'][0][0])
-
+        if 'from_channel' in io.loadmat(cluster).keys():
+            electrode_names_from_raw_files.append(io.loadmat(cluster)['electrode_name'][0] + ',ch ' + str(io.loadmat(cluster)['from_channel'][0]))
+            from_channels.append(io.loadmat(cluster)['from_channel'][0][0])
 
     electrode_names = cluster_to_electrode_name(settings)
+    if not electrode_names_from_raw_files:
+        electrode_names_from_raw_files = electrode_names  # if names from raw files don't exist
 
     return data_all, settings, electrode_names, electrode_names_from_raw_files, from_channels
 
@@ -85,12 +87,13 @@ def cluster_to_electrode_name(settings):
         for IX in electrode_names[ele][0].split(":"):
             electrode_names_list[int(IX)-1] = electrode_names[ele][1]
 
+    electrode_names_list = [s for s in electrode_names_list if s]
+
     return electrode_names_list
 
 
 def electrodes_names(settings):
     electrode_names = io.loadmat(os.path.join(settings.path2patient_folder, 'electrodes_info_names.mat'))['electrodes_info'][0]
-    np.ndarray.tolist(electrode_names)
     electrode_names = [s[0] for s in electrode_names]
     return electrode_names
 

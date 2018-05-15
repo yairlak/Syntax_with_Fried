@@ -3,14 +3,14 @@ import os
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = False
-        self.analyze_micro_raw = True
+        self.analyze_micro_single = True
+        self.analyze_micro_raw = False
         self.analyze_macro = False
-        self.sort_according_to_sentence_length = False
+        self.sort_according_to_sentence_length = True
         self.sort_according_to_num_letters = False
         self.sort_according_to_pos = False
         self.run_contrasts = False
-        self.run_POS = True
+        self.run_POS = False
         self.step = 30 # yticklabels step when showing the length of each trial
         import sys
         if (self.sort_according_to_sentence_length + self.sort_according_to_num_letters + self.sort_according_to_pos) > 1:
