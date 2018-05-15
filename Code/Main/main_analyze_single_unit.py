@@ -30,7 +30,7 @@ params = load_settings_params.Params()
 print('Loading preferences...')
 preferences = load_settings_params.Preferences()
 
-if preferences.run_POS: # When running POS, Make sure 'WORDS_ON_TIMES' are extracted from the logs
+if preferences.sort_according_to_pos or preferences.run_POS: # When running POS, Make sure 'WORDS_ON_TIMES' are extracted from the logs
     settings.event_types_to_extract = ['WORDS_ON_TIMES']
     settings.event_numbers_to_assign_to_extracted_event_types = [1]
 
@@ -142,11 +142,12 @@ if preferences.analyze_micro_raw:
                     settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
                 if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                 if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name,
+                if preferences.sort_according_to_pos: file_name = file_name + 'posSorted'
+                analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, log_all_blocks, word2pos, file_name,
                                                   settings, params, preferences)
 
             # Calculate average power activity
-            for event_str in ["FIRST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+            for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
                 if any([event_str in s for s in event_ids_epochs]):
                     curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
                     if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.

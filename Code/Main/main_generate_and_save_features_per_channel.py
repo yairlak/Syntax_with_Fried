@@ -98,7 +98,7 @@ if preferences.analyze_micro_raw:
         raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
 
         print('Line filtering...')
-        # raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+        raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 
         print('Loop over all comparisons: prepare & save data for classification')
         for i, comparison in enumerate(comparisons):

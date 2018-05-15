@@ -6,11 +6,11 @@ class Preferences:
         self.analyze_micro_single = False
         self.analyze_micro_raw = True
         self.analyze_macro = False
-        self.sort_according_to_sentence_length = False
+        self.sort_according_to_sentence_length = False 
         self.sort_according_to_num_letters = False
-        self.sort_according_to_pos = False
+        self.sort_according_to_pos = True
         self.run_contrasts = False
-        self.run_POS = True
+        self.run_POS = False
         self.step = 30 # yticklabels step when showing the length of each trial
         import sys
         if (self.sort_according_to_sentence_length + self.sort_according_to_num_letters + self.sort_according_to_pos) > 1:
@@ -26,7 +26,7 @@ class Settings():
         self.load_line_filtered_resampled_epoch_object = False
 
         # Comparisons (contrasts):
-        self.comparisons = [1, 2] # List of integers, which defines which comparisons will be executed from the comparison file in Paradigm folder. If set to 'None' then all comparisons in the file are executed.
+        self.comparisons = [3, 4, 5] # List of integers, which defines which comparisons will be executed from the comparison file in Paradigm folder. If set to 'None' then all comparisons in the file are executed.
 
         # BLOCKS in paradigm to process
         self.blocks = [1, 3, 5]
@@ -39,11 +39,6 @@ class Settings():
         else:
             self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'KEY_PRESS_l_TIMES']
             self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3]  # Should match the above (event_types_to_extract)
-
-        # self.events_to_plot = ['FIRST_WORD_TIMES_block_1', 'FIRST_WORD_TIMES_block_2', 'FIRST_WORD_TIMES_block_3']
-        # self.events_to_plot = ['END_WAV_TIMES_block_2', 'END_WAV_TIMES_block_4', 'END_WAV_TIMES_block_6']
-        # self.events_to_plot = ['LAST_WORD_TIMES_block_1', 'LAST_WORD_TIMES_block_2', 'LAST_WORD_TIMES_block_3']
-        # self.events_to_plot = ['KEY_PRESS_l_TIMES_block_1', 'KEY_PRESS_l_TIMES_block_2', 'KEY_PRESS_l_TIMES_block_3']
 
         # Event colors
         keys = [i+j for i in range(100, 700, 100) for j in range(1,5,1)]
@@ -79,7 +74,7 @@ class Settings():
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
-        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
