@@ -69,18 +69,30 @@ for i, comparison in enumerate(comparisons):
     elif preferences.run_POS:
         file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_POS_blocks_' + str(settings.blocks)
 
+    print('Loading feature matrix')
     with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification',
                            file_name + '.pkl'), 'rb') as f:
         epochs_all_channels = pickle.load(f)
-
+    print(epochs_all_channels)
     # epochs_all_channels.decim = 100
 
     # gat = GeneralizationAcrossTime(clf=LinearSVC(), predict_mode='cross-validation', n_jobs=30)
+    print('Define GAT model..')
     gat = GeneralizationAcrossTime(clf=LinearSVC(), scorer = 'roc_auc', train_times=train_times, test_times=test_times,
                                  predict_mode='cross-validation', n_jobs=4)
 
-    if not preferences.run_contrasts:
-        class_1 = []; class_2 = []
+    class_1 = []; class_2 = [] 
+    if preferences.run_POS:
+	epochs_all_channels = epochs_all_channels['NN_block_1', 'NN_block_3', 'NN_block_5', 'VB_block_1', 'VB_block_3', 'VB_block_5']
+        print(epochs_all_channels)
+	class_1 = [100, 200, 300]
+        class_2 = [101, 201, 301]
+	for rw in range(epochs_all_channels.events.shape[0]):
+            if epochs_all_channels.events[rw, 2] in class_1:
+                epochs_all_channels.events[rw, 2] = 1
+            if epochs_all_channels.events[rw, 2] in class_2:
+                epochs_all_channels.events[rw, 2] = 2
+    elif preferences.run_contrasts:
         for key, value in epochs_all_channels.event_id.items():
             if value % 100 == 0:
                 class_1.append(value)
@@ -92,6 +104,7 @@ for i, comparison in enumerate(comparisons):
             if epochs_all_channels.events[rw, 2] in class_2:
                 epochs_all_channels.events[rw, 2] = 2
 
+    print(epochs_all_channels.events)
     # fit and score
     print('Fit model')
     gat.fit(epochs_all_channels)
@@ -158,3 +171,5 @@ for i, comparison in enumerate(comparisons):
     fig_diag_file_name = 'gat_diag_' + settings.patient + '_' + contrast_name + '_' + comparison[1] + '.png'
     fig_diag.savefig(os.path.join(settings.path2figures, settings.patient, 'GAT', fig_diag_file_name))
     plt.close(fig_diag)
+
+    if preferences.run_POS: break 

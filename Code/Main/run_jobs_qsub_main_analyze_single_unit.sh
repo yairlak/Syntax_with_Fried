@@ -17,9 +17,9 @@ foreach CH ( `seq ${st} ${ed}` )
 	 set filename_py='main_analyze_single_unit.py '$CH
 	 set output_log='Logs/log_o_channel_'$CH
 	 set error_log='Logs/log_e_channel_'$CH
-	 set queue='Unicog_run32'
+	 set queue='Unicog_short'
 	 set job_name='Channel_'$CH
-	 set walltime='72:00:00'
+	 set walltime='01:00:00'
 
          rm -f $filename_bash
          touch $filename_bash
