@@ -1,3 +1,4 @@
+from __future__ import division
 import numpy as np
 import os
 import mne
@@ -53,8 +54,7 @@ def generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_fil
 def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, baseline_type, params):
     print('Time-freq...')
     freqs = np.arange(fmin, fmax, fstep)
-    temporal_resolution = 0.05 # in [sec]
-    n_cycles = freqs * 3.14 * temporal_resolution
+    n_cycles = freqs * 3.14 * params.temporal_resolution
     power = mne.time_frequency.tfr_morlet(epochs[event_id], freqs=freqs, n_jobs=30, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
     power_ave = np.squeeze(np.average(power.data, axis=2))
@@ -82,7 +82,7 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, base
     return power, power_ave_baselined, baseline
 
 
-def plot_and_save_high_gamma(epochs, power, power_ave, event_str, log_all_blocks, word2pos, file_name, settings, params, preferences):
+def plot_and_save_high_gamma(epochs, power, power_ave, event_str, band, log_all_blocks, word2pos, file_name, settings, params, preferences):
     from scipy import stats
     # Remove 0.2 sec from each side due to boundary effects
     IX_smaller_time_window = (power.times > epochs.tmin + 0.2) & (
@@ -136,7 +136,7 @@ def plot_and_save_high_gamma(epochs, power, power_ave, event_str, log_all_blocks
     cbar.set_label(label='Power (dB)', size=22)
     # cbaxes = fig.add_axes([0.8, 0.1, 0.03, 0.8])
 
-    ax0.set_title('Aligned to ' + event_str, fontsize=24)
+    ax0.set_title('Aligned to ' + event_str + ' Frequency band: ' + band, fontsize=24)
     ax0.set_ylabel('Trial', fontsize=24)
     ax0.tick_params(axis='x', which='both', bottom='off', labelbottom='off')
 
@@ -201,11 +201,14 @@ def plot_and_save_high_gamma(epochs, power, power_ave, event_str, log_all_blocks
 
 
 def reproducability(power, power_ave, settings, params):
+    from scipy import stats
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+
     # Assumes trials are in chronolgical order, and block size is 152
     num_trials_in_block = 152
     num_blocks = 3
     time_st = 0
-    time_ed = 1 # [sec]
+    time_ed = 2 # [sec]
     IX_timewindow = (power.times > time_st) & (power.times < time_ed)
 
     reproducability_matrix = np.zeros([num_trials_in_block, num_trials_in_block])
@@ -218,14 +221,88 @@ def reproducability(power, power_ave, settings, params):
             rho = np.mean([np.corrcoef(vec_i, vec1_j)[0, 1], np.corrcoef(vec_i, vec2_j)[0, 1]])
             reproducability_matrix[trial_i, trial_j] = rho
 
-    return reproducability_matrix
+    file_name = 'reproducability_' + settings.band + '_' + settings.patient + '_channel_' + str(
+        settings.channel) + '_Blocks_' + str(
+        settings.blocks) + '_Event_id_' + settings.event_str + '_' + settings.channel_name
 
+    # Save to file
+    diag = np.diagonal(reproducability_matrix)
+    off_diag = reproducability_matrix[np.triu(np.ones(reproducability_matrix.shape, dtype=bool), k=1)]
+    tvalue, pvalue = stats.ttest_ind(diag, off_diag)
+    D, pvalue = stats.ks_2samp(diag, off_diag)
+    with open(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.pkl'),
+              'wb') as f:
+        pickle.dump([reproducability_matrix, diag, off_diag, tvalue, pvalue], f)
 
+    # Generate and save figure
+    fig, axs = plt.subplots(2, 3, figsize=[30, 20])
+    im = axs[0, 0].imshow(reproducability_matrix, vmin=-1, vmax=1)
+    axs[0, 0].set_xlabel('Sentence number', fontsize=24)
+    axs[0, 0].set_ylabel('Sentence number', fontsize=24)
+    divider = make_axes_locatable(axs[0, 0])
+    cax = divider.append_axes("right", size="2%", pad=0.1)
+    cbar = plt.colorbar(im, cax=cax)
+    cbar.ax.set_ylabel('Inter-block Correlation', rotation=270, fontsize=24, labelpad=25)
+    # cbar = fig.colorbar(cax, ax=axs[0])
+    axs[0, 1].hist([diag, off_diag], 20, normed=True,
+                label=['Same sentence', 'Different sentences'])
+    axs[0, 1].set_xlabel('Inter-block correlation', fontsize=24)
+    axs[0, 1].set_ylabel('Normalized counts', fontsize=24)
+    axs[0, 1].set_ylim([0, 5])
+    axs[0, 1].set_xlim([-1, 1])
+    axs[0, 1].text(-0.9, 4.6, r'$\mu=$' + "%.2f" % np.mean(diag) + ',\ $\sigma=$' + "%.2f" % np.std(diag), color='b',
+                fontsize=24)
+    axs[0, 1].text(-0.9, 4.3, r'$\mu=$' + "%.2f" % np.mean(off_diag) + ',\ $\sigma=$' + "%.2f" % np.std(off_diag),
+                color='g', fontsize=24)
+    axs[0, 1].text(-0.9, 3.8, 'KS, p-value=' + "%.2f" % np.mean(pvalue), color='k', fontsize=24)
+    axs[0, 1].text(-0.9, 3.5, 'KS, D=' + "%.2f" % np.mean(D), color='k', fontsize=24)
 
+    axs[0, 1].legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0, fontsize=16)
+    axs[0, 1].grid(True)
+    print(tvalue, pvalue)
 
+    all_blocks = []
+    for block in range(3):
+        vec_all_trials = []
+        for trial_i in range(num_trials_in_block):
+            vec_all_trials.append(power_ave[trial_i + block*num_trials_in_block, IX_timewindow])
+        all_blocks.append(vec_all_trials)
 
+    actual_mean_rho = np.mean([np.corrcoef(np.hstack(all_blocks[0]), np.hstack(all_blocks[1]))[0, 1],
+             np.corrcoef(np.hstack(all_blocks[0]), np.hstack(all_blocks[2]))[0, 1]])
 
+    import random
+    random.seed(1)
+    num_perumtations = 1000
+    mean_rho = []
+    for perm in range(num_perumtations):
+        shuffled_trials_block_1 = random.sample(all_blocks[0], len(all_blocks[0]))
+        mean_rho.append(np.mean([np.corrcoef(np.hstack(shuffled_trials_block_1), np.hstack(all_blocks[1]))[0, 1], np.corrcoef(np.hstack(shuffled_trials_block_1), np.hstack(all_blocks[2]))[0, 1]]))
 
+    p_value = (sum(mean_rho > actual_mean_rho) + 1) / (len(mean_rho) + 1)
+
+    axs[0, 2].hist(mean_rho, 20,  normed=True)
+    axs[0, 2].set_xlabel('Inter-block correlation', fontsize=24)
+    axs[0, 2].set_ylabel('Normalized counts of permutated trials', fontsize=24)
+    axs[0, 2].set_ylim([0, 40])
+    # axs[0, 2].set_xlim([-0.5, 0.5])
+    axs[0, 2].text(axs[0, 2].get_xlim()[0] + 0.1*(axs[0, 2].get_xlim()[1]- axs[0, 2].get_xlim()[0]), 38, 'rho (experiment)=' + "%.2f" % actual_mean_rho, color='k', fontsize=24)
+    axs[0, 2].text(axs[0, 2].get_xlim()[0] + 0.1*(axs[0, 2].get_xlim()[1]- axs[0, 2].get_xlim()[0]), 33, 'p-value=' + "%.2f" % p_value, color='k', fontsize=24)
+
+    axs[0, 2].legend(loc=1, fontsize=24)
+    axs[0, 2].grid(True)
+    print(tvalue, pvalue)
+
+    # Plot blocks
+    for block in range(3):
+        axs[1, block].imshow(np.vstack(all_blocks[block]))
+        axs[1, block].set_title('Block ' + str(block+1))
+        step = 100
+        plt.setp(axs[1, block], xticks = range(0, all_blocks[block][0].shape[0], step), xticklabels=[str(np.around(n,1)) for n in power.times[IX_timewindow][0::step]])
+        axs[1, block].set_xlabel('Time [sec]', fontsize=16)
+        axs[1, block].set_ylabel('Trial', fontsize=16)
+
+    plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.png'))
 
 
 def plot_and_save_average_freq_band(power1, power2, power3, power_ave1, power_ave2, power_ave3, event_id_1, event_id_2, event_id_3, file_name, fig_paradigm, settings, log_all_blocks, preferences):

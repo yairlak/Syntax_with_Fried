@@ -3,12 +3,12 @@ import os
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = True
-        self.analyze_micro_raw = False
+        self.analyze_micro_single = False
+        self.analyze_micro_raw = True
         self.analyze_macro = False
         self.sort_according_to_sentence_length = False 
         self.sort_according_to_num_letters = False
-        self.sort_according_to_pos = True
+        self.sort_according_to_pos = False
         self.run_contrasts = False
         self.run_POS = False
         self.step = 30 # yticklabels step when showing the length of each trial
@@ -30,7 +30,7 @@ class Settings():
 
         # BLOCKS in paradigm to process
         self.blocks = [1, 3, 5]
-        #self.blocks = [2, 4, 6]
+        self.blocks = [2, 4, 6]
         self.blocks_str = ''.join(str(x) for x in self.blocks)
 
         if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array
@@ -74,7 +74,7 @@ class Settings():
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
-        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
@@ -102,9 +102,16 @@ class Params:
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
         self.iter_freqs = [('High-Gamma', 70, 150)]
+        step = 5
+        for freq in range(1, 146, 2):
+            band = str(freq) + '_to_' + str(freq + step) + 'Hz'
+            self.iter_freqs.append((band, freq, freq + step))
         self.freq_step = 2  # [Hz] Step in spectrogram
         # self.time_step = self.tmax * self.sfreq_raw # Epoch into subsequent segments\
         # self.slice_size = 500 * self.sfreq
+
+        # Time-frequency
+        self.temporal_resolution = 0.05  # Wavelt's time resolution [sec]
 
         # Paradigm
 

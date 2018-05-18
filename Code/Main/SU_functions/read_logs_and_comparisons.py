@@ -207,7 +207,7 @@ def extract_comparison(contrast_names, contrasts, align_to, union_or_intersectio
 
 
 def load_POS_tags(settings):
-    with open(os.path.join(settings.path2stimuli, settings.word2pos_file), 'r') as f:
+    with open(os.path.join(settings.path2stimuli, settings.word2pos_file), 'rb') as f:
         word2pos = pickle.load(f)
 
     return word2pos

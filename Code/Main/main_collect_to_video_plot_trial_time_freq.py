@@ -6,11 +6,12 @@ import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import numpy as np
 import sys
+import cv2
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(1,89,1)
+channels_micro = range(18,89,1)
 channels_macro = range(1,2,1)
 
 
@@ -93,88 +94,57 @@ if preferences.analyze_micro_raw:
     channels = channels_micro
     for channel in channels:
         settings.channel = channel
-        print('Loading CSC raw data...')
+
         raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)
         print 'Analyzing high-gamma for channel ' + str(channel)
         # Line filter and resample, or load from file
         file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
             channel) + '_line_filtered_resampled-epo'
 
-        if not settings.load_line_filtered_resampled_epoch_object:
-            print('Generating MNE raw object for continuous data...')
-            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
+        print('Generating MNE raw object for continuous data...')
+        raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
 
-            print('Line filtering...')
-            raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+        print('Epoching data...')
 
-            print('Epoching data...')
+        epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, baseline=None, preload=True)
+        print(epochs)
 
-            epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, baseline=None, preload=True)
-            print(epochs)
+        event_ids_epochs = epochs.event_id.keys()
 
-            print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
-            epochs_resampled = epochs.copy().resample(params.downsampling_sfreq, npad='auto')
-            print('New sampling rate:', epochs_resampled.info['sfreq'], 'Hz')
+        del raw, epochs
 
-            print('Save Epoch data after line filtering and resampling')
-            epochs_resampled.save(os.path.join(settings.path2epoch_data, 'Epochs_' + file_name_epochs + '.fif'))
-
-        else:
-            raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
-            print('Loading epoched data, after line filtering and resampling: ' + os.path.join(settings.path2epoch_data,
-                                                                                               file_name_epochs))
-            epochs_resampled = mne.read_epochs(os.path.join(settings.path2epoch_data, 'Epochs_' + file_name_epochs + '.fif'))
-
-        fig_paradigm = mne.viz.plot_events(events_spikes, raw.info['sfreq'], raw.first_samp, color=color_curr,
-                                           event_id=event_id, show=False)
-        fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '_' + str(settings.blocks) + '.png'
-        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
-        plt.close(fig_paradigm)
-
-        del raw
-        if not settings.load_line_filtered_resampled_epoch_object: del epochs
-
-        print('High-Gamma analyses...')
-        event_ids_epochs = epochs_resampled.event_id.keys()
-        for band, fmin, fmax in params.iter_freqs:
-
-            # Parse according to Words
-            if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
-                event_str = "WORDS_ON_TIMES"
-                curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, False, 'no_baseline', params)
-                file_name = band + '_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_micro_Blocks_' + str(
-                    settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
-                if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                if preferences.sort_according_to_pos: file_name = file_name + 'posSorted'
-                analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, log_all_blocks, word2pos, file_name,
-                                                  settings, params, preferences)
-
-            # Calculate average power activity
-            for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
-                if any([event_str in s for s in event_ids_epochs]):
-                    curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                    if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                                 fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                    else:
-                        if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                        else:
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                              fmin, fmax, params.freq_step, baseline, 'trial_wise', params)
-
+        for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]:  # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+            if any([event_str in s for s in event_ids_epochs]):
+                images = []
+                print('Load Time-frequency plots...')
+                for band, fmin, fmax in params.iter_freqs:
                     file_name = band + '_' + settings.patient + '_channel_' + str(
                         settings.channel) + '_micro_Blocks_' + str(
                         settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                    analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, log_all_blocks, word2pos, file_name,
-                                                      settings, params, preferences)
+                    images.append(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
 
-del epochs_resampled, power, power_ave
+                    video_name = 'Time-freq_' + settings.patient + '_channel_' + str(
+                    settings.channel) + '_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+                if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
+                if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
+
+                video_name = os.path.join(settings.path2figures, settings.patient, video_name + '.avi')
+
+                frame = cv2.imread(images[0])
+                height, width, layers = frame.shape
+
+                video = cv2.VideoWriter(video_name, cv2.cv.CV_FOURCC(*"MJPG"), 1, (width, height))
+
+                for image in images:
+                    frame = cv2.imread(image)
+                    video.write(frame)  # Write out frame to video
+
+                # Release everything if job is finished
+                video.release()
+                cv2.destroyAllWindows()
+                print("The output video is {}".format(video_name))
 
 
 # MACRO analysis
