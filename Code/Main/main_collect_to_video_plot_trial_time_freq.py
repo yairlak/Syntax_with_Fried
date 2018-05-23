@@ -11,7 +11,7 @@ import cv2
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(18,89,1)
+channels_micro = range(59,89,1)
 channels_macro = range(1,2,1)
 
 
@@ -119,7 +119,7 @@ if preferences.analyze_micro_raw:
                 print('Load Time-frequency plots...')
                 for band, fmin, fmax in params.iter_freqs:
                     file_name = band + '_' + settings.patient + '_channel_' + str(
-                        settings.channel) + '_micro_Blocks_' + str(
+                        settings.channel) + '_Blocks_' + str(
                         settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
@@ -131,6 +131,8 @@ if preferences.analyze_micro_raw:
                 if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
 
                 video_name = os.path.join(settings.path2figures, settings.patient, video_name + '.avi')
+                if preferences.sort_according_to_sentence_length: file_name = video_name + '_lengthSorted'
+                if preferences.sort_according_to_num_letters: file_name = video_name + '_numLettersSorted'
 
                 frame = cv2.imread(images[0])
                 height, width, layers = frame.shape

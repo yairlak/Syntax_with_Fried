@@ -55,6 +55,7 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, base
     print('Time-freq...')
     freqs = np.arange(fmin, fmax, fstep)
     n_cycles = freqs * 3.14 * params.temporal_resolution
+    n_cycles = freqs/2.
     power = mne.time_frequency.tfr_morlet(epochs[event_id], freqs=freqs, n_jobs=30, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
     power_ave = np.squeeze(np.average(power.data, axis=2))
@@ -93,12 +94,16 @@ def plot_and_save_high_gamma(epochs, power, power_ave, event_str, band, log_all_
     power_ave[(power_ave_zscore > 3) | (power_ave_zscore < -3)] = np.NaN
 
     if "KEY" not in event_str:
+        from operator import itemgetter
         if preferences.sort_according_to_sentence_length:
             sentences_length = []
             for log in log_all_blocks:
                 sentences_length = sentences_length + log.sentences_length.values()
-            order = np.argsort(sentences_length)
-            power_ave = power_ave[order, :]
+            chronological_order = range(len(sentences_length))
+            mylist = [(i, j, k) for (i, j, k) in zip(chronological_order, sentences_length, chronological_order)]
+            IX = [i[0] for i in sorted(mylist, key=itemgetter(1, 2))]
+            # order = np.argsort(sentences_length)
+            power_ave = power_ave[IX, :]
         elif preferences.sort_according_to_num_letters:
                 num_letters = []
                 for log in log_all_blocks:
@@ -295,12 +300,19 @@ def reproducability(power, power_ave, settings, params):
 
     # Plot blocks
     for block in range(3):
-        axs[1, block].imshow(np.vstack(all_blocks[block]))
+        if block == 0:
+            vmax1 = np.nanpercentile(np.vstack(all_blocks[block]), 95)
+            vmin1 = np.nanpercentile(np.vstack(all_blocks[block]), 5)
+
+        map = axs[1, block].imshow(np.vstack(all_blocks[block]), vmin=vmin1, vmax=vmax1, cmap='jet')
         axs[1, block].set_title('Block ' + str(block+1))
         step = 100
         plt.setp(axs[1, block], xticks = range(0, all_blocks[block][0].shape[0], step), xticklabels=[str(np.around(n,1)) for n in power.times[IX_timewindow][0::step]])
         axs[1, block].set_xlabel('Time [sec]', fontsize=16)
         axs[1, block].set_ylabel('Trial', fontsize=16)
+        # if block == 2:
+            # cbar = plt.colorbar(map, cax=axs[1, 2])
+            # cbar.set_label(label='Power (dB)', size=16)
 
     plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.png'))
 
