@@ -91,7 +91,7 @@ def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, base
     return power, power_ave_baselined, baseline
 
 
-def plot_and_save_high_gamma(epochs, power, power_ave, event_str, band, log_all_blocks, word2pos, file_name, settings, params, preferences):
+def plot_and_save_high_gamma(epochs, power, power_ave, event_str, band, log_all_blocks, word2pos, probe_name, file_name, settings, params, preferences):
     from scipy import stats
     # Remove 0.2 sec from each side due to boundary effects
     IX_smaller_time_window = (power.times > epochs.tmin + 0.2) & (
@@ -149,7 +149,7 @@ def plot_and_save_high_gamma(epochs, power, power_ave, event_str, band, log_all_
     cbar.set_label(label='Power (dB)', size=22)
     # cbaxes = fig.add_axes([0.8, 0.1, 0.03, 0.8])
 
-    ax0.set_title('Aligned to ' + event_str + ' Frequency band: ' + band, fontsize=24)
+    ax0.set_title('Blocks: ' + str(settings.blocks) + ' aligned to ' + event_str + ' Frequency band: ' + band, fontsize=20)
     ax0.set_ylabel('Trial', fontsize=24)
     ax0.tick_params(axis='x', which='both', bottom='off', labelbottom='off')
 
@@ -205,7 +205,9 @@ def plot_and_save_high_gamma(epochs, power, power_ave, event_str, band, log_all_
         ax2.axvline(x=-3 * params.SOA * 1e-3, linestyle='--', linewidth=1, color='b')
 
     print('Saving as - ' + os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
-    fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
+    if not os.path.exists(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name)):
+        os.makedirs(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name))
+    fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, file_name + '.png'))
     plt.close(fig)
 
     # import pickle

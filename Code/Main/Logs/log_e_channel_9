@@ -1,8 +1,0 @@
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/convert_to_mne.py:105: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
-[u'GA1-LAH2_0019.ncs']
-  info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/main_reproducability.py:70: DeprecationWarning: fir_design defaults to "firwin2" in 0.15 but will change to "firwin" in 0.16, set it explicitly to avoid this warning.
-  raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
-[Parallel(n_jobs=30)]: Done   1 out of   1 | elapsed:   34.3s finished
-/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/axes/_axes.py:545: UserWarning: No labelled objects found. Use label='...' kwarg on individual plots.
-  warnings.warn("No labelled objects found. "
