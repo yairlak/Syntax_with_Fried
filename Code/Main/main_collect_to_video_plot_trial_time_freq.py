@@ -20,10 +20,16 @@ def findInSubdirectory(filename, subdirectory=''):
     # raise 'File not found'
 
 
+def scanfolder(file_root, subdirectory):
+    for path, dirs, files in os.walk(subdirectory):
+        for d in dirs:
+            for f in glob.iglob(os.path.join(path, d, file_root)):
+                return f
+
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(1,129,1)
+channels_micro = range(1,59,1)
 channels_macro = range(1,2,1)
 
 
@@ -123,9 +129,9 @@ if preferences.analyze_micro_raw:
 
         del raw, epochs
         if 2 in settings.blocks:
-            blocks = '2,'
+            blocks = '2'
         elif 1 in settings.blocks:
-            blocks = '1,'
+            blocks = '1'
 
         for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]:  # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
             if any([event_str in s for s in event_ids_epochs]):
@@ -137,18 +143,23 @@ if preferences.analyze_micro_raw:
                         blocks) + '*_Event_id_' + event_str + '_' + settings.channel_name
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                    #path2file = findInSubdirectory(file_name + '.png', os.path.join(settings.path2figures, settings.patient, 'HighGamma'))
-                    path2file = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', '**', file_name + '.png'))
-		    
-                    if len(path2file)>1:
+                    path2file = scanfolder(file_name + '.png', os.path.join(settings.path2figures, settings.patient, 'HighGamma'))
+                    # path2file = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
+                    if path2file:
                         print(path2file)
-                        print('Too many files found for current frame')
-                    elif len(path2file)<1:
+                        images.append(path2file)
+                    else:
                         print(path2file)
                         print('File not found')
-                    else:
-                        images.append(path2file)
-                        path2file = None
+                    # if len(path2file)>1:
+                    #     print(path2file)
+                    #     print('Too many files found for current frame')
+                    # elif len(path2file)<1:
+                    #     print(path2file)
+                    #     print('File not found')
+                    # else:
+                    #     images.append(path2file)
+                    #     path2file = None
 
                 video_name = 'Time-freq_' + settings.patient + '_channel_' + str(settings.channel) + '_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
                 if preferences.sort_according_to_sentence_length: video_name = video_name + '_lengthSorted'
@@ -156,19 +167,18 @@ if preferences.analyze_micro_raw:
                 video_name = os.path.join(settings.path2figures, settings.patient, 'HighGamma', 'videos', video_name + '.avi')
 
                 frame = cv2.imread(images[0])
-                if frame:
-                    height, width, layers = frame.shape
+                height, width, layers = frame.shape
 
-                    video = cv2.VideoWriter(video_name, cv2.cv.CV_FOURCC(*"MJPG"), 1, (width, height))
+                video = cv2.VideoWriter(video_name, cv2.cv.CV_FOURCC(*"MJPG"), 1, (width, height))
 
-                    for image in images:
-                        frame = cv2.imread(image)
-                        video.write(frame)  # Write out frame to video
+                for image in images:
+                    frame = cv2.imread(image)
+                    video.write(frame)  # Write out frame to video
 
-          	        # Release everything if job is finished
-                        video.release()
-                        cv2.destroyAllWindows()
-                        print("The output video is {}".format(video_name))
+                # Release everything if job is finished
+                    video.release()
+                    cv2.destroyAllWindows()
+                    print("The output video is {}".format(video_name))
 
 
 # MACRO analysis
