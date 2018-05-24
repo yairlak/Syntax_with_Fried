@@ -11,7 +11,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 channels_micro = range(1,89,1)
-channels_micro = [59] # 18, 46, 59
+channels_micro = [18] # 18, 46, 59
 channels_macro = range(1,2,1)
 
 
@@ -102,5 +102,5 @@ for channel in channels:
 
         settings.band = band
         settings.event_str = event_str
-        analyses.reproducability(power, power_ave, settings, params)
+        analyses.reproducability(power, power_ave, log_all_blocks, settings, params)
 

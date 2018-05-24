@@ -205,7 +205,7 @@ def plot_and_save_high_gamma(epochs, power, power_ave, event_str, band, log_all_
     #     pickle.dump([power, settings, params, preferences], f)
 
 
-def reproducability(power, power_ave, settings, params):
+def reproducability(power, power_ave, log_all_blocks, settings, params):
     from scipy import stats
     from mpl_toolkits.axes_grid1 import make_axes_locatable
 
@@ -216,12 +216,22 @@ def reproducability(power, power_ave, settings, params):
     time_ed = 2 # [sec]
     IX_timewindow = (power.times > time_st) & (power.times < time_ed)
 
+    power_ave_blocks = []
+    for block in range(3):
+        IX_trials_curr_block = log_all_blocks[block].SENTENCE_NUM_ORDER
+        IX_trials_curr_block = [i-1 for i in IX_trials_curr_block]
+        st = block * 152
+        ed = (block + 1) * 152
+        curr_block_power = power_ave[st:ed,:]
+        power_ave_blocks.append(curr_block_power[IX_trials_curr_block, :])
+    power_ave_sorted = np.vstack(power_ave_blocks)
+
     reproducability_matrix = np.zeros([num_trials_in_block, num_trials_in_block])
     for trial_i in range(num_trials_in_block):
         for trial_j in range(trial_i, num_trials_in_block, 1):
-            vec_i = power_ave[trial_i, IX_timewindow]
-            vec1_j = power_ave[trial_j + num_trials_in_block, IX_timewindow]
-            vec2_j = power_ave[trial_j + 2*num_trials_in_block, IX_timewindow]
+            vec_i = power_ave_blocks[0][trial_i, :] # First block
+            vec1_j = power_ave_blocks[1][trial_j, :] # Second block
+            vec2_j = power_ave_blocks[2][trial_j, :] # Third block
 
             rho = np.mean([np.corrcoef(vec_i, vec1_j)[0, 1], np.corrcoef(vec_i, vec2_j)[0, 1]])
             reproducability_matrix[trial_i, trial_j] = rho
@@ -266,23 +276,23 @@ def reproducability(power, power_ave, settings, params):
     axs[0, 1].grid(True)
     print(tvalue, pvalue)
 
-    all_blocks = []
-    for block in range(3):
-        vec_all_trials = []
-        for trial_i in range(num_trials_in_block):
-            vec_all_trials.append(power_ave[trial_i + block*num_trials_in_block, IX_timewindow])
-        all_blocks.append(vec_all_trials)
+    # all_blocks = []
+    # for block in range(3):
+    #     vec_all_trials = []
+    #     for trial_i in range(num_trials_in_block):
+    #         vec_all_trials.append(power_ave[trial_i + block*num_trials_in_block, IX_timewindow])
+    #     all_blocks.append(vec_all_trials)
 
-    actual_mean_rho = np.mean([np.corrcoef(np.hstack(all_blocks[0]), np.hstack(all_blocks[1]))[0, 1],
-             np.corrcoef(np.hstack(all_blocks[0]), np.hstack(all_blocks[2]))[0, 1]])
+    actual_mean_rho = np.mean([np.corrcoef(np.hstack(power_ave_blocks[0]), np.hstack(power_ave_blocks[1]))[0, 1],
+             np.corrcoef(np.hstack(power_ave_blocks[0]), np.hstack(power_ave_blocks[2]))[0, 1]])
 
     import random
     random.seed(1)
     num_perumtations = 1000
     mean_rho = []
     for perm in range(num_perumtations):
-        shuffled_trials_block_1 = random.sample(all_blocks[0], len(all_blocks[0]))
-        mean_rho.append(np.mean([np.corrcoef(np.hstack(shuffled_trials_block_1), np.hstack(all_blocks[1]))[0, 1], np.corrcoef(np.hstack(shuffled_trials_block_1), np.hstack(all_blocks[2]))[0, 1]]))
+        shuffled_trials_block_1 = random.sample(power_ave_blocks[0], len(power_ave_blocks[0]))
+        mean_rho.append(np.mean([np.corrcoef(np.hstack(shuffled_trials_block_1), np.hstack(power_ave_blocks[1]))[0, 1], np.corrcoef(np.hstack(shuffled_trials_block_1), np.hstack(power_ave_blocks[2]))[0, 1]]))
 
     p_value = (sum(mean_rho > actual_mean_rho) + 1) / (len(mean_rho) + 1)
 
@@ -301,13 +311,13 @@ def reproducability(power, power_ave, settings, params):
     # Plot blocks
     for block in range(3):
         if block == 0:
-            vmax1 = np.nanpercentile(np.vstack(all_blocks[block]), 95)
-            vmin1 = np.nanpercentile(np.vstack(all_blocks[block]), 5)
+            vmax1 = np.nanpercentile(np.vstack(power_ave_blocks[block]), 95)
+            vmin1 = np.nanpercentile(np.vstack(power_ave_blocks[block]), 5)
 
-        map = axs[1, block].imshow(np.vstack(all_blocks[block]), vmin=vmin1, vmax=vmax1, cmap='jet')
+        map = axs[1, block].imshow(np.vstack(power_ave_blocks[block]), vmin=vmin1, vmax=vmax1, cmap='jet')
         axs[1, block].set_title('Block ' + str(block+1))
         step = 100
-        plt.setp(axs[1, block], xticks = range(0, all_blocks[block][0].shape[0], step), xticklabels=[str(np.around(n,1)) for n in power.times[IX_timewindow][0::step]])
+        plt.setp(axs[1, block], xticks = range(0, power_ave_blocks[block][0].shape[0], step), xticklabels=[str(np.around(n,1)) for n in power.times[IX_timewindow][0::step]])
         axs[1, block].set_xlabel('Time [sec]', fontsize=16)
         axs[1, block].set_ylabel('Trial', fontsize=16)
         # if block == 2:
