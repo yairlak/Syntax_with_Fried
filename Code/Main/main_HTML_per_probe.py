@@ -7,7 +7,7 @@ import numpy as np
 
 # Patient 479
 probe_names = ['C3', 'C4', 'EMG', 'EOG', 'Ez', 'LAH', 'LSTG', 'Pz', 'RASTG', 'RIFAC', 'RPC', 'PRSTG', 'RPMTG', 'RPSTG', 'RTO']
-probe_names = ['EMG', 'EOG', 'Ez', 'LAH', 'LSTG', 'Pz', 'RASTG', 'RIFAC', 'RPC', 'PRSTG', 'RPMTG', 'RPSTG', 'RTO']
+probe_names = ['LAH', 'LSTG', 'RASTG', 'RIFAC', 'RPC', 'PRSTG', 'RPMTG', 'RPSTG', 'RTO']
 
 
 print('Loading settings...')
@@ -61,7 +61,7 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
                         if blocks == '1, 3, 5' and event_id == 'FINAL': curr_event_id = 'LAST_WORD'
                         if blocks == '2, 4, 6' and event_id == 'FINAL': curr_event_id = 'END_WAV'
 
-                        root_name = 'High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks + '*_Event_id_' + curr_event_id + '*' + probe_name + '*.ncs_lengthSorted.png'
+                        root_name = 'High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks[0:1] + '*_Event_id_' + curr_event_id + '*' + probe_name + '*.ncs_lengthSorted.png'
                         curr_img_name = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, root_name))
                         if len(curr_img_name)> 1:
                             import sys
@@ -74,9 +74,10 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
 
                 # f_probe.write('<img class="right" style="width:1024px;height:512px;">\n')
                 # Add Reproducability
-                root_name_Reproducability = 'reproducability_High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks + '*_Event_id_FIRST_WORD_*.png'
-                curr_img_name = glob.glob(os.path.join(settings.path2figures, settings.patient, 'Reproducability', root_name_Reproducability))
-                f_probe.write('<img class="right" src="%s" style="width:1024px;height:512px;">\n' % os.path.join('Reproducability', os.path.basename(curr_img_name[0])))
+		for blocks in ['1, 3, 5', '2, 4, 6']:
+                	root_name_Reproducability = 'reproducability_High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks + '*_Event_id_FIRST_WORD_*.png'
+                	curr_img_name = glob.glob(os.path.join(settings.path2figures, settings.patient, 'Reproducability', root_name_Reproducability))
+                	f_probe.write('<img class="right" src="%s" style="width:1024px;height:512px;">\n' % os.path.join('Reproducability', os.path.basename(curr_img_name[0])))
 
                 path2GAT = os.path.join('GAT')
                 # f_probe.write()

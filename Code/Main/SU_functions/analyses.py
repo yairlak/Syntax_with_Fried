@@ -54,8 +54,16 @@ def generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_fil
 def average_high_gamma(epochs, event_id, band, fmin, fmax, fstep, baseline, baseline_type, params):
     print('Time-freq...')
     freqs = np.arange(fmin, fmax, fstep)
-    n_cycles = freqs * 3.14 * params.temporal_resolution
-    n_cycles = freqs/2.
+    # -------------------------------
+    # - delta_F =  2 * F / n_cycles -
+    # - delta_T = n_cycles / F / pi -
+    # - delta_T * delta_F = 2 / pi  -
+    # -------------------------------
+    # n_cycles = freq[0] / freqs * 3.14
+    # n_cycles = freqs / 2.
+    n_cycles = 7 # Fieldtrip's default
+    if band == 'High-Gamma': n_cycles = 20
+
     power = mne.time_frequency.tfr_morlet(epochs[event_id], freqs=freqs, n_jobs=30, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
     power_ave = np.squeeze(np.average(power.data, axis=2))

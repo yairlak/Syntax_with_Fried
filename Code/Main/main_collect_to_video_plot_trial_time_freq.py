@@ -11,7 +11,7 @@ import cv2
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(59,89,1)
+channels_micro = range(1,129,1)
 channels_macro = range(1,2,1)
 
 
@@ -123,6 +123,7 @@ if preferences.analyze_micro_raw:
                         settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
+		    print(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
                     images.append(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
 
                     video_name = 'Time-freq_' + settings.patient + '_channel_' + str(
