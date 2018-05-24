@@ -232,7 +232,7 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
         IX_trials_curr_block = [i-1 for i in IX_trials_curr_block]
         st = block * 152
         ed = (block + 1) * 152
-        curr_block_power = power_ave[st:ed,:]
+        curr_block_power = power_ave[st:ed, IX_timewindow]
         power_ave_blocks.append(curr_block_power[IX_trials_curr_block, :])
     power_ave_sorted = np.vstack(power_ave_blocks)
 
@@ -259,7 +259,6 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
               'wb') as f:
         pickle.dump([reproducability_matrix, diag, off_diag, tvalue, pvalue], f)
 
-    # Generate and save figure
     fig, axs = plt.subplots(2, 3, figsize=[30, 20])
     im = axs[0, 0].imshow(reproducability_matrix, vmin=-1, vmax=1)
     axs[0, 0].set_xlabel('Sentence number', fontsize=24)
@@ -324,7 +323,7 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
             vmax1 = np.nanpercentile(np.vstack(power_ave_blocks[block]), 95)
             vmin1 = np.nanpercentile(np.vstack(power_ave_blocks[block]), 5)
 
-        map = axs[1, block].imshow(np.vstack(power_ave_blocks[block]), vmin=vmin1, vmax=vmax1, cmap='jet')
+        map = axs[1, block].imshow(np.vstack(power_ave_blocks[block]), vmin=vmin1, vmax=vmax1, cmap='jet', aspect='auto')
         axs[1, block].set_title('Block ' + str(block+1))
         step = 100
         plt.setp(axs[1, block], xticks = range(0, power_ave_blocks[block][0].shape[0], step), xticklabels=[str(np.around(n,1)) for n in power.times[IX_timewindow][0::step]])
