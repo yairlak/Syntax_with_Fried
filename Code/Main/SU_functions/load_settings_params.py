@@ -6,7 +6,7 @@ class Preferences:
         self.analyze_micro_single = False
         self.analyze_micro_raw = True
         self.analyze_macro = False
-        self.sort_according_to_sentence_length = False
+        self.sort_according_to_sentence_length = True
         self.sort_according_to_num_letters = False
         self.sort_according_to_pos = False
         self.run_contrasts = False

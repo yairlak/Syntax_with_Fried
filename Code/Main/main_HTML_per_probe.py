@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Patient 479
-probe_names = ['C3', 'C4', 'EMG', 'EOG', 'Ez', 'LAH', 'LSTG', 'Pz', 'RASTG', 'RIFAC', 'RPC', 'PRSTG', 'RPMTG', 'RPSTG', 'RTO']
-probe_names = ['LAH', 'LSTG', 'RASTG', 'RIFAC', 'RPC', 'PRSTG', 'RPMTG', 'RPSTG', 'RTO']
 
 
 print('Loading settings...')
@@ -17,6 +15,12 @@ print('Loading parameters...')
 params = load_settings_params.Params()
 
 file_name = 'analyses_per_probe.html'
+
+# probe_names = ['C3', 'C4', 'EMG', 'EOG', 'Ez', 'LAH', 'LSTG', 'Pz', 'RASTG', 'RIFAC', 'RPC', 'PRSTG', 'RPMTG', 'RPSTG', 'RTO']
+# probe_names = ['LAH', 'LSTG', 'RASTG', 'RIFAC', 'RPC', 'PRSTG', 'RPMTG', 'RPSTG', 'RTO']
+directory = os.path.join(settings.path2figures, settings.patient, 'HighGamma')
+probe_names = [os.path.join(directory, o) for o in os.listdir(directory) if os.path.isdir(os.path.join(directory,o))]
+probe_names = [os.path.basename(f) for f in probe_names]
 
 with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w') as f:
     # Beginning of file
@@ -28,7 +32,11 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
     #
     for probe_name in probe_names:
         HTML_probe_filename = probe_name + '.html'
-        f.write('<a href="%s" title="%s"> %s</a><br><br>' % (HTML_probe_filename, probe_name, probe_name))
+        if probe_name == 'videos':
+            f.write('<a href="%s" title="%s"> %s</a><br><br>' % ('HighGamma/videos', probe_name, probe_name))
+        else:
+            f.write('<a href="%s" title="%s"> %s</a><br><br>' % (HTML_probe_filename, probe_name, probe_name))
+
         with open(os.path.join(settings.path2figures, settings.patient, probe_name + '.html'), 'w') as f_probe:
             # Beginning of probe file
             f_probe.write('<head>\n')
@@ -67,17 +75,37 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
                             import sys
                             sys.error('More than a single file name was found for current image.')
                         elif len(curr_img_name) < 1:
-                            print('Image %s wasn''t found' % root_name)
+                            print('Image %s was not found' % root_name)
                         else:
                             f_probe.write('<img class="right" src="%s" style="width:1024px;height:512px;">\n' % os.path.join('HighGamma', probe_name, os.path.basename(curr_img_name[0])))
+
+                        # -------------------
+                        # Add video
+                        # ------------------
+                        # root_name = 'Time-freq_' + settings.patient + '_channel_' + str(channel) + '_*' + blocks[0:1] +'*_Event_id_' + curr_event_id + '*' + probe_name + '*.ncs_lengthSorted.avi'
+                        # curr_video_name = glob.glob(
+                        #     os.path.join(settings.path2figures, settings.patient, 'HighGamma', 'videos', root_name))
+                        # if len(curr_video_name)> 1:
+                        #     import sys
+                        #     sys.error('More than a single file name was found for current video.')
+                        # elif len(curr_video_name) < 1:
+                        #     print('Video %s was not found' % root_name)
+                        # else:
+                        #     f_probe.write(
+                        #         '<video width = "1024" height = "512" controls>  <source src="%s"> < / video >\n' % os.path.join(
+                        #             'HighGamma', 'videos', os.path.basename(curr_video_name[0])))
+
                         curr_event_id = None
 
                 # f_probe.write('<img class="right" style="width:1024px;height:512px;">\n')
+                # -------------------
                 # Add Reproducability
-		for blocks in ['1, 3, 5', '2, 4, 6']:
-                	root_name_Reproducability = 'reproducability_High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks + '*_Event_id_FIRST_WORD_*.png'
-                	curr_img_name = glob.glob(os.path.join(settings.path2figures, settings.patient, 'Reproducability', root_name_Reproducability))
-                	f_probe.write('<img class="right" src="%s" style="width:1024px;height:512px;">\n' % os.path.join('Reproducability', os.path.basename(curr_img_name[0])))
+                # -------------------
+                for blocks in ['1, 3, 5', '2, 4, 6']:
+                    root_name_Reproducability = 'reproducability_High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks + '*_Event_id_FIRST_WORD_*.png'
+                    curr_img_name = glob.glob(os.path.join(settings.path2figures, settings.patient, 'Reproducability', root_name_Reproducability))
+                    f_probe.write('<img class="right" src="%s" style="width:1024px;height:512px;">\n' % os.path.join('Reproducability', os.path.basename(curr_img_name[0])))
+
 
                 path2GAT = os.path.join('GAT')
                 # f_probe.write()

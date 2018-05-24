@@ -8,10 +8,22 @@ import numpy as np
 import sys
 import cv2
 
+
+def findInSubdirectory(filename, subdirectory=''):
+    if subdirectory:
+        path = subdirectory
+    else:
+        path = os.getcwd()
+    for root, dirs, names in os.walk(path):
+        if filename in names:
+            return os.path.join(root, filename)
+    # raise 'File not found'
+
+
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(1,129,1)
+channels_micro = range(59,129,1)
 channels_macro = range(1,2,1)
 
 
@@ -94,7 +106,7 @@ if preferences.analyze_micro_raw:
     channels = channels_micro
     for channel in channels:
         settings.channel = channel
-
+        print('Channel ' + str(channel))
         raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)
         print 'Analyzing high-gamma for channel ' + str(channel)
         # Line filter and resample, or load from file
@@ -123,17 +135,13 @@ if preferences.analyze_micro_raw:
                         settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-		    print(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
-                    images.append(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
+                    path2file = findInSubdirectory(file_name + '.png', os.path.join(settings.path2figures, settings.patient, 'HighGamma'))
+                    images.append(path2file)
 
-                    video_name = 'Time-freq_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
-                if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-
-                video_name = os.path.join(settings.path2figures, settings.patient, video_name + '.avi')
-                if preferences.sort_according_to_sentence_length: file_name = video_name + '_lengthSorted'
-                if preferences.sort_according_to_num_letters: file_name = video_name + '_numLettersSorted'
+                video_name = 'Time-freq_' + settings.patient + '_channel_' + str(settings.channel) + '_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+                if preferences.sort_according_to_sentence_length: video_name = video_name + '_lengthSorted'
+                if preferences.sort_according_to_num_letters: video_name = video_name + '_numLettersSorted'
+                video_name = os.path.join(settings.path2figures, settings.patient, 'HighGamma', 'videos', video_name + '.avi')
 
                 frame = cv2.imread(images[0])
                 height, width, layers = frame.shape
@@ -231,9 +239,6 @@ if preferences.analyze_macro:
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_LengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_LengthSorted'
                     file_name = file_name + '.png'
-
-
-
 
 
 
