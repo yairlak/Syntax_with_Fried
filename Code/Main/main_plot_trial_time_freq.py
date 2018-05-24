@@ -10,7 +10,7 @@ import sys
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels_micro = range(18,89,1)
+channels_micro = range(59,89,1)
 channels_macro = range(1,2,1)
 
 
@@ -137,7 +137,7 @@ if preferences.analyze_micro_raw:
         print('Time-frequency analyses...')
         event_ids_epochs = epochs_resampled.event_id.keys()
         for band, fmin, fmax in params.iter_freqs:
-
+            print(band)
             # Parse according to Words
             if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
                 event_str = "WORDS_ON_TIMES"
@@ -167,7 +167,7 @@ if preferences.analyze_micro_raw:
                                                                               fmin, fmax, params.freq_step, baseline, 'trial_wise', params)
 
                     file_name = band + '_' + settings.patient + '_channel_' + str(
-                        settings.channel) + '_micro_Blocks_' + str(
+                        settings.channel) + '_Blocks_' + str(
                         settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'

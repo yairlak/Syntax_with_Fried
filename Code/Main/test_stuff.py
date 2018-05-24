@@ -1,23 +1,38 @@
-import pickle
-from os import path as op
 
-file_name = 'word2POS.pkl'
-with open(op.join('..', '..', 'Paradigm', file_name), 'r') as f:
-    word2pos = pickle.load(f)
-print(word2pos)
-
-word2pos_simplified = {}
-for word, tag in word2pos.items():
-    if tag[0:2] == 'VB':
-        word2pos_simplified.update({word:'VB'})
-    else:
-        word2pos_simplified.update({word: tag})
-print(word2pos_simplified)
+mylist = ['a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e']
+key1 =   [3, 1, 3, 2, 1, 5, 2, 1, 4, 5]
+key2 =   [2, 2, 1, 2, 1, 2, 1, 1, 2, 1]
+mylist_tuple = [(i, j, k) for (i, j, k) in zip(mylist, key1, key2)]
+from operator import itemgetter
+# mylist_sorted = sorted(mylist, key=lambda x: (key2, key1))
+IX = [i[0] for i in sorted(mylist_tuple, key=itemgetter(1,2))]
+print(IX)
+mylist_sorted = sorted(mylist_tuple, key=itemgetter(1,2))
+print(mylist_sorted)
 
 
-file_name = 'word2POS_simplified.pkl'
-with open(op.join('..', '..', 'Paradigm', file_name), 'w') as f:
-     pickle.dump(word2pos_simplified, f)
+########################################################################
+# import pickle
+# from os import path as op
+#
+# file_name = 'word2POS.pkl'
+# with open(op.join('..', '..', 'Paradigm', file_name), 'r') as f:
+#     word2pos = pickle.load(f)
+# print(word2pos)
+#
+# word2pos_simplified = {}
+# for word, tag in word2pos.items():
+#     if tag[0:2] == 'VB':
+#         word2pos_simplified.update({word:'VB'})
+#     else:
+#         word2pos_simplified.update({word: tag})
+# print(word2pos_simplified)
+#
+#
+# file_name = 'word2POS_simplified.pkl'
+# with open(op.join('..', '..', 'Paradigm', file_name), 'w') as f:
+#      pickle.dump(word2pos_simplified, f)
+#############################################################################
 
 # from SU_functions import load_settings_params, load_data, read_logs_and_comparisons
 # import numpy as np
