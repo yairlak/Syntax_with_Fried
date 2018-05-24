@@ -103,7 +103,7 @@ class Params:
         self.downsampling_sfreq = 512
         self.iter_freqs = [('High-Gamma', 70, 150)]
         # self.iter_freqs = []
-        step = 3
+        step = 5
         for freq in range(4, 146, 1):
             band = str(freq) + '_to_' + str(freq + step) + 'Hz'
             self.iter_freqs.append((band, freq, freq + step))

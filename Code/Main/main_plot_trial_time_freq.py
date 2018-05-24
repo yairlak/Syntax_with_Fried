@@ -137,6 +137,7 @@ if preferences.analyze_micro_raw:
         print('Time-frequency analyses...')
         event_ids_epochs = epochs_resampled.event_id.keys()
         for band, fmin, fmax in params.iter_freqs:
+
             print(band)
             # Parse according to Words
             if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
@@ -169,9 +170,12 @@ if preferences.analyze_micro_raw:
                     file_name = band + '_' + settings.patient + '_channel_' + str(
                         settings.channel) + '_Blocks_' + str(
                         settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+                    IX1 = settings.channel_name.find('_0019')
+                    probe_name = settings.channel_name[0:IX1 - 1]
+
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                    analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, band, log_all_blocks, word2pos, file_name,
+                    analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, band, log_all_blocks, word2pos, probe_name, file_name,
                                                       settings, params, preferences)
 
 del epochs_resampled, power, power_ave
