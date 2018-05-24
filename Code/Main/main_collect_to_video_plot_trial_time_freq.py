@@ -8,6 +8,18 @@ import numpy as np
 import sys
 import cv2
 
+
+def findInSubdirectory(filename, subdirectory=''):
+    if subdirectory:
+        path = subdirectory
+    else:
+        path = os.getcwd()
+    for root, dirs, names in os.walk(path):
+        if filename in names:
+            return os.path.join(root, filename)
+    # raise 'File not found'
+
+
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
@@ -20,7 +32,7 @@ print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings()
 # Get (optional) argument from terminal which defines the channel for gamma analysis
 if len(sys.argv) > 1:
-    print 'Channel ' + sys.argv[1]
+    print('Channel ' + sys.argv[1])
     ch = int(sys.argv[1])
     channels_macro = range(ch, ch + 1, 1)
     channels_micro = range(ch, ch + 1, 1)
@@ -90,13 +102,11 @@ if preferences.analyze_micro_single:
 
 # Micro (raw) analysis
 if preferences.analyze_micro_raw:
-    print("MICRO Channels analysis")
     channels = channels_micro
     for channel in channels:
         settings.channel = channel
-
+        print('Channel ' + str(channel))
         raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)
-        print 'Analyzing high-gamma for channel ' + str(channel)
         # Line filter and resample, or load from file
         file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
             channel) + '_line_filtered_resampled-epo'
@@ -112,6 +122,10 @@ if preferences.analyze_micro_raw:
         event_ids_epochs = epochs.event_id.keys()
 
         del raw, epochs
+        if 2 in settings.blocks:
+            blocks = '2,'
+        elif 1 in settings.blocks:
+            blocks = '1,'
 
         for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]:  # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
             if any([event_str in s for s in event_ids_epochs]):
@@ -119,35 +133,42 @@ if preferences.analyze_micro_raw:
                 print('Load Time-frequency plots...')
                 for band, fmin, fmax in params.iter_freqs:
                     file_name = band + '_' + settings.patient + '_channel_' + str(
-                        settings.channel) + '_Blocks_' + str(
-                        settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+                        settings.channel) + '_Blocks_*' + str(
+                        blocks) + '*_Event_id_' + event_str + '_' + settings.channel_name
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-		    print(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name))
-                    images.append(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
+                    #path2file = findInSubdirectory(file_name + '.png', os.path.join(settings.path2figures, settings.patient, 'HighGamma'))
+                    path2file = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', '**', file_name + '.png'))
+		    
+                    if len(path2file)>1:
+                        print(path2file)
+                        print('Too many files found for current frame')
+                    elif len(path2file)<1:
+                        print(path2file)
+                        print('File not found')
+                    else:
+                        images.append(path2file)
+                        path2file = None
 
-                    video_name = 'Time-freq_' + settings.patient + '_channel_' + str(
-                    settings.channel) + '_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
-                if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-
-                video_name = os.path.join(settings.path2figures, settings.patient, video_name + '.avi')
-                if preferences.sort_according_to_sentence_length: file_name = video_name + '_lengthSorted'
-                if preferences.sort_according_to_num_letters: file_name = video_name + '_numLettersSorted'
+                video_name = 'Time-freq_' + settings.patient + '_channel_' + str(settings.channel) + '_' + str(settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
+                if preferences.sort_according_to_sentence_length: video_name = video_name + '_lengthSorted'
+                if preferences.sort_according_to_num_letters: video_name = video_name + '_numLettersSorted'
+                video_name = os.path.join(settings.path2figures, settings.patient, 'HighGamma', 'videos', video_name + '.avi')
 
                 frame = cv2.imread(images[0])
-                height, width, layers = frame.shape
+                if frame:
+                    height, width, layers = frame.shape
 
-                video = cv2.VideoWriter(video_name, cv2.cv.CV_FOURCC(*"MJPG"), 1, (width, height))
+                    video = cv2.VideoWriter(video_name, cv2.cv.CV_FOURCC(*"MJPG"), 1, (width, height))
 
-                for image in images:
-                    frame = cv2.imread(image)
-                    video.write(frame)  # Write out frame to video
+                    for image in images:
+                        frame = cv2.imread(image)
+                        video.write(frame)  # Write out frame to video
 
-                # Release everything if job is finished
-                video.release()
-                cv2.destroyAllWindows()
-                print("The output video is {}".format(video_name))
+          	        # Release everything if job is finished
+                        video.release()
+                        cv2.destroyAllWindows()
+                        print("The output video is {}".format(video_name))
 
 
 # MACRO analysis
@@ -161,7 +182,7 @@ if preferences.analyze_macro:
         print('Loading CSC raw data...')
         raw_CSC_data_in_mat, settings = load_data.macro_electrodes(settings)
 
-        print 'Analyzing high-gamma for channel ' + str(channel)
+        print('Analyzing high-gamma for channel ' + str(channel))
         # Line filter and resample, or load from file
         file_name_epochs = 'macro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(channel) + '_line_filtered_resampled-epo.fif'
 
@@ -231,9 +252,6 @@ if preferences.analyze_macro:
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_LengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_LengthSorted'
                     file_name = file_name + '.png'
-
-
-
 
 
 
