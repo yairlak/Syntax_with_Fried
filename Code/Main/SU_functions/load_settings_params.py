@@ -30,7 +30,7 @@ class Settings():
 
         # BLOCKS in paradigm to process
         self.blocks = [1, 3, 5]
-        # self.blocks = [2, 4, 6]
+        self.blocks = [2, 4, 6]
         self.blocks_str = ''.join(str(x) for x in self.blocks)
 
         if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array

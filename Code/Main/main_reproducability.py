@@ -15,7 +15,7 @@ channels_micro = [18] # 18, 46, 59
 #channels_micro = range(1,130,1)
 #channels_micro = [1, 2, 18, 46, 59] # 18, 46, 59
 #channels_micro = range(1,89,1)
-channels_micro = [59] # 18, 46, 59
+# channels_micro = [59] # 18, 46, 59
 channels_macro = range(1,2,1)
 
 
