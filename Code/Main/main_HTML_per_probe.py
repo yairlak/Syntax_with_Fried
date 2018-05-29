@@ -21,6 +21,7 @@ file_name = 'analyses_per_probe.html'
 directory = os.path.join(settings.path2figures, settings.patient, 'HighGamma')
 probe_names = [os.path.join(directory, o) for o in os.listdir(directory) if os.path.isdir(os.path.join(directory,o))]
 probe_names = [os.path.basename(f) for f in probe_names]
+probe_names.sort()
 
 with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w') as f:
     # Beginning of file

@@ -146,7 +146,7 @@ if preferences.analyze_micro_raw:
                     path2file = scanfolder(file_name + '.png', os.path.join(settings.path2figures, settings.patient, 'HighGamma'))
                     # path2file = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', file_name + '.png'))
                     if path2file:
-                        print(path2file)
+                        #print(path2file)
                         images.append(path2file)
                     else:
                         print(path2file)
@@ -176,9 +176,9 @@ if preferences.analyze_micro_raw:
                     video.write(frame)  # Write out frame to video
 
                 # Release everything if job is finished
-                    video.release()
-                    cv2.destroyAllWindows()
-                    print("The output video is {}".format(video_name))
+                video.release()
+                cv2.destroyAllWindows()
+                print("The output video is {}".format(video_name))
 
 
 # MACRO analysis
