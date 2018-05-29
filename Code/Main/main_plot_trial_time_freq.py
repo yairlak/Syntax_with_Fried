@@ -157,26 +157,28 @@ if preferences.analyze_micro_raw:
             for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]: # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
                 if any([event_str in s for s in event_ids_epochs]):
                     curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                    if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                                 fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                    else:
-                        if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
-                        else:
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
-                                                                              fmin, fmax, params.freq_step, baseline, 'trial_wise', params)
-
                     file_name = band + '_' + settings.patient + '_channel_' + str(
                         settings.channel) + '_Blocks_' + str(
                         settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name
-                    IX1 = settings.channel_name.find('_0019')
-                    probe_name = settings.channel_name[0:IX1 - 1]
-
                     if preferences.sort_according_to_sentence_length: file_name = file_name + '_lengthSorted'
                     if preferences.sort_according_to_num_letters: file_name = file_name + '_numLettersSorted'
-                    analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, band, log_all_blocks, word2pos, probe_name, file_name,
+                    IX1 = settings.channel_name.find('_0019')
+                    probe_name = settings.channel_name[0:IX1 - 1]
+                    if not os.path.isfile(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, file_name + '.png')): 
+                        if event_str == "FIRST_WORD":  # Calculate baseline when alignment is locking to first word.
+                             power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
+                                                                                 fmin, fmax, params.freq_step, None, 'trial_wise', params)
+                        else:
+                             if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
+                                  power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
+                             else:
+                                  power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band,
+                                                                              fmin, fmax, params.freq_step, baseline, 'trial_wise', params)
+
+                        analyses.plot_and_save_high_gamma(epochs_resampled, power, power_ave, event_str, band, log_all_blocks, word2pos, probe_name, file_name,
                                                       settings, params, preferences)
+                    else:
+                        print('File already exists')
 
 del epochs_resampled, power, power_ave
 

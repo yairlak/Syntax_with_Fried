@@ -17,7 +17,7 @@ foreach CH ( `seq ${st} ${ed}` )
 	 set filename_py='main_plot_trial_time_freq.py '$CH
 	 set output_log='Logs/log_o_channel_'$CH
 	 set error_log='Logs/log_e_channel_'$CH
-	 set queue='Global_long'
+	 set queue='Unicog_long'
 	 set job_name='Channel_'$CH
 	 set walltime='72:00:00'
 
