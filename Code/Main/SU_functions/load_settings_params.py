@@ -5,16 +5,11 @@ class Preferences:
     def __init__(self):
         self.analyze_micro_single = False
         self.analyze_micro_raw = True
-        self.analyze_macro = False
-        self.sort_according_to_sentence_length = False 
-        self.sort_according_to_num_letters = False
-        self.sort_according_to_pos = False
-        self.run_contrasts = False
+        self.run_contrasts = True
         self.run_POS = False
+        self.use_metadata_only = True
         self.step = 30 # yticklabels step when showing the length of each trial
         import sys
-        if (self.sort_according_to_sentence_length + self.sort_according_to_num_letters + self.sort_according_to_pos) > 1:
-            sys.exit('Too many sorting flags in Preferences')
         if (self.run_contrasts + self.run_POS) > 1:
             sys.exit('In Preferences - either run_contrast or run_POS, not both')
 
@@ -23,31 +18,13 @@ class Settings():
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_479'
+        self.comparisons = [16] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         self.load_line_filtered_resampled_epoch_object = False
+        self.overwrite_existing_output_files = True
 
-        # Comparisons (contrasts):
-        self.comparisons = [3, 4, 5] # List of integers, which defines which comparisons will be executed from the comparison file in Paradigm folder. If set to 'None' then all comparisons in the file are executed.
-
-        # BLOCKS in paradigm to process
-        self.blocks = [1, 3, 5]
-        self.blocks = [2, 4, 6]
-        self.blocks_str = ''.join(str(x) for x in self.blocks)
-
-        if set(self.blocks) & set([2,4,6]): # Which events to add to MNE events array
-            self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'END_WAV_TIMES', 'KEY_PRESS_l_TIMES']
-            self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3, 4]  # Should match the above (event_types_to_extract)
-        else:
-            self.event_types_to_extract = ['FIRST_WORD_TIMES', 'LAST_WORD_TIMES', 'KEY_PRESS_l_TIMES']
-            self.event_numbers_to_assign_to_extracted_event_types = [1, 2, 3]  # Should match the above (event_types_to_extract)
-
-        # Event colors
-        keys = [i+j for i in range(100, 700, 100) for j in range(1,5,1)]
-        values = [c for i in range(1,7,1) for c in ['red', 'green', 'blue', 'k']]
-        self.event_colors = dict(zip(keys,values))
 
         # RECORDINGS/CHANNELS
         # Which channels in the raw CSC files have clear spikes
-        #self.channel = 28 # channel to process time-frequency analyses
         self.channels_with_spikes = [13, 47, 48, 49, 55, 57, 59]
         self.channels_with_spikes = [47, 56]
         if self.patient == 'patient_480':
@@ -74,7 +51,7 @@ class Settings():
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
-        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
@@ -101,21 +78,26 @@ class Params:
         self.tmax = 3 # End time after event [sec]
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
+
+        ###### Frequency bands ##########
         self.iter_freqs = [('High-Gamma', 70, 150)]
         # self.iter_freqs = []
         step = 5
-        for freq in range(4, 146, 1):
-            band = str(freq) + '_to_' + str(freq + step) + 'Hz'
-            self.iter_freqs.append((band, freq, freq + step))
-        self.freq_step = 1  # [Hz] Step in spectrogram
+        # for freq in range(4, 146, 1):
+        #     band = str(freq) + '_to_' + str(freq + step) + 'Hz'
+        #     self.iter_freqs.append((band, freq, freq + step))
+        self.freq_step = 2  # [Hz] Step in spectrogram
         # self.time_step = self.tmax * self.sfreq_raw # Epoch into subsequent segments\
         # self.slice_size = 500 * self.sfreq
+        ##################################
 
-        # Time-frequency
-        self.temporal_resolution = 0.05  # Wavelt's time resolution [sec]
+        ####### Time-frequency ###########
+        self.temporal_resolution = 0.05  # Wavelet's time resolution [sec]
+        self.smooth_time_freq = 50 * 1e-3 * self.downsampling_sfreq  # Size of window for Gaussian smoothing the time-freq results. Zero means no smoothing.
+        self.smooth_time_freq = 0
+        ##################################
 
-        # Paradigm
-
+        ####### Paradigm  #################
         self.SOA = 500  # [msec]
         self.word_ON_duration = 200 # [msec]
         self.word_OFF_duration = 300  # [msec]
@@ -126,3 +108,5 @@ class Params:
         if self.baseline_period > abs(self.tmin)*1000:
             import sys
             sys.exit('Basline period must be longer than tmin. Otherwise, baseline cannot be computed.')
+
+        ###################################

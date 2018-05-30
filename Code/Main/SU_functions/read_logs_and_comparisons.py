@@ -180,28 +180,36 @@ def load_comparisons_and_features(settings):
     return comparison_list, features
 
 
-def extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features):
+def extract_comparison(contrast_names, contrasts, align_to, blocks, union_or_intersection, features, preferences):
     trial_numbers = features['fields'][0][1::]
     stimuli = features['fields'][1][1::]
     features = features['fields'][2::]
 
     comparisons = []
+
+    ### Comparisons
     for i, contrast in enumerate(contrasts):
-        contrast = str(contrast[2:-2]).split('],[')
-        trial_numbers_and_strings = []
-        for j, columns_condition in enumerate(contrast):
-            columns_condition = columns_condition.split(',')
-            columns_condition = [int(s) for s in columns_condition]
-            binary_values_in_columns = [binary_values[1::] for col, binary_values in enumerate(features) if col+3 in columns_condition] # +3: Assumes features in XLS starts at column C
-            if bool(union_or_intersection[i][j]):
-                IX_trials_curr_cond = np.prod(np.asarray(binary_values_in_columns), axis=0) == 1 # AND
-            else:
-                IX_trials_curr_cond = np.sum(np.asarray(binary_values_in_columns), axis=0) > 0 # OR
-            curr_trial_numbers = trial_numbers[IX_trials_curr_cond]
-            curr_stimuli = stimuli[IX_trials_curr_cond]
-            IX_sort = np.argsort(curr_trial_numbers)
-            trial_numbers_and_strings.append({'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
-        comparisons.append([trial_numbers_and_strings, align_to[i], contrast_names[i]])
+
+        if preferences.use_metadata_only:
+            list_of_queries = contrast[1:-1].split(',')
+            list_of_queries = [s.strip() for s in list_of_queries]
+            comparisons.append(list_of_queries)
+        else:
+            contrast = str(contrast[2:-2]).split('],[')
+            trial_numbers_and_strings = []
+            for j, columns_condition in enumerate(contrast):
+                columns_condition = columns_condition.split(',')
+                columns_condition = [int(s) for s in columns_condition]
+                binary_values_in_columns = [binary_values[1::] for col, binary_values in enumerate(features) if col+3 in columns_condition] # +3: Assumes features in XLS starts at column C
+                if bool(union_or_intersection[i][j]):
+                    IX_trials_curr_cond = np.prod(np.asarray(binary_values_in_columns), axis=0) == 1 # AND
+                else:
+                    IX_trials_curr_cond = np.sum(np.asarray(binary_values_in_columns), axis=0) > 0 # OR
+                curr_trial_numbers = trial_numbers[IX_trials_curr_cond]
+                curr_stimuli = stimuli[IX_trials_curr_cond]
+                IX_sort = np.argsort(curr_trial_numbers)
+                trial_numbers_and_strings.append({'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
+            comparisons.append([trial_numbers_and_strings, align_to[i], contrast_names[i]])
 
     return comparisons
 
@@ -211,3 +219,85 @@ def load_POS_tags(settings):
         word2pos = pickle.load(f)
 
     return word2pos
+
+
+def prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences):
+    '''
+
+    :param log_all_blocks: list len = #blocks
+    :param features: numpy
+    :param settings:
+    :param params:
+    :param preferences:
+    :return: metadata: list
+    '''
+    import pandas as pd
+
+    trial_numbers = features['fields'][0][1::]
+    stimuli = features['fields'][1][1::]
+    features = features['fields'][2::]
+    num_blocks = len(log_all_blocks)
+
+    # Create a dict with the following keys:
+    keys = ['chronological_order', 'event_time', 'block', 'sentence_number', 'word_position', 'word_string', 'pos',
+            'num_letters', 'sentence_string', 'sentence_length', 'last_word']
+    keys = keys + [col[0] for col in features if isinstance(col[0], unicode)]
+    metadata = dict([(k, []) for k in keys])
+
+    cnt = 1
+    for block, log in enumerate(log_all_blocks):
+        # Prefix according to visual/auditory
+        if block + 1 in [1, 3, 5]: # Visual
+            prefix = "DISPLAY_TEXT"
+        elif block + 1 in [2, 4, 6]: # Auditory
+            prefix = "AUDIO_PLAYBACK_ONSET"
+
+        # Loop over all words in current log
+        num_words = len(getattr(log, prefix + '_WORDS_ON_TIMES'))
+        for i in range(num_words):
+            metadata['chronological_order'].append(cnt); cnt += 1
+            metadata['event_time'].append((int(getattr(log, 'WORDS_ON_TIMES')[i]) - settings.time0) / 1e6)
+            sentence_number = getattr(log, 'SENTENCE_NUM')[i]
+            metadata['block'].append(block + 1)
+            metadata['sentence_number'].append(sentence_number)
+            metadata['word_position'].append(int(getattr(log, 'WORD_SERIAL_NUM')[i]))
+            word_string = getattr(log, 'WORD_STRING')[i]
+            if word_string[-1] == '?' or word_string[-1] == '.':
+                word_string = word_string[0:-1]
+            word_string = word_string.lower()
+            metadata['word_string'].append(word_string)
+            metadata['pos'].append(word2pos[word_string])
+            metadata['num_letters'].append(getattr(log, 'num_letters')[i])
+
+            # Get features from Excel file
+            IX = np.where(trial_numbers == int(sentence_number))[0]
+            metadata['sentence_string'].append(stimuli[IX][0])
+            metadata['sentence_length'].append(len(stimuli[IX][0].split(' ')))
+            metadata['last_word'].append(metadata['sentence_length'][-1] == int(metadata['word_position'][-1]))
+            [metadata[col[0]].append(col[IX+1][0]) for col in features if isinstance(col[0], unicode)]
+            if metadata['last_word'][-1]: # Add end-of-sentence event after last words. Set its 'word_pos' = -1.
+                metadata['chronological_order'].append(cnt); cnt += 1
+                sentence_number = getattr(log, 'SENTENCE_NUM')[i]
+                t = None
+                if metadata['block'][-1] in [1, 3, 5]:
+                    t = metadata['event_time'][-1] + params.word_ON_duration*1e-3
+                elif metadata['block'][-1] in [2, 4, 6]:
+                    t = (int(getattr(log, 'END_WAV_TIMES')[int(sentence_number)-1]) - settings.time0) / 1e6
+                metadata['event_time'].append(t)
+                metadata['block'].append(block + 1)
+                metadata['sentence_number'].append(sentence_number)
+                metadata['word_position'].append(-1)
+                metadata['word_string'].append('.')
+                metadata['pos'].append('END')
+                metadata['num_letters'].append(getattr(log, 'num_letters')[i])
+
+                # Get features from Excel file
+                IX = np.where(trial_numbers == int(sentence_number))[0]
+                metadata['sentence_string'].append(stimuli[IX][0])
+                metadata['sentence_length'].append(len(stimuli[IX][0].split(' ')))
+                metadata['last_word'].append(False)
+                [metadata[col[0]].append(col[IX + 1][0]) for col in features if isinstance(col[0], unicode)]
+
+    metadata = pd.DataFrame(data=metadata)
+
+    return metadata

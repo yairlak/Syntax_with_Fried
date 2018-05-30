@@ -1,14 +1,27 @@
 
-mylist = ['a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e']
-key1 =   [3, 1, 3, 2, 1, 5, 2, 1, 4, 5]
-key2 =   [2, 2, 1, 2, 1, 2, 1, 1, 2, 1]
-mylist_tuple = [(i, j, k) for (i, j, k) in zip(mylist, key1, key2)]
-from operator import itemgetter
-# mylist_sorted = sorted(mylist, key=lambda x: (key2, key1))
-IX = [i[0] for i in sorted(mylist_tuple, key=itemgetter(1,2))]
-print(IX)
-mylist_sorted = sorted(mylist_tuple, key=itemgetter(1,2))
-print(mylist_sorted)
+import mne
+
+# Load the data from the internet
+path = mne.datasets.kiloword.data_path() + '/kword_metadata-epo.fif'
+epochs = mne.read_epochs(path)
+
+# The metadata exists as a Pandas DataFrame
+print(epochs.metadata.head(10))
+print(epochs.metadata.type())
+
+
+###########################################################################
+
+# mylist = ['a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e']
+# key1 =   [3, 1, 3, 2, 1, 5, 2, 1, 4, 5]
+# key2 =   [2, 2, 1, 2, 1, 2, 1, 1, 2, 1]
+# mylist_tuple = [(i, j, k) for (i, j, k) in zip(mylist, key1, key2)]
+# from operator import itemgetter
+# # mylist_sorted = sorted(mylist, key=lambda x: (key2, key1))
+# IX = [i[0] for i in sorted(mylist_tuple, key=itemgetter(1,2))]
+# print(IX)
+# mylist_sorted = sorted(mylist_tuple, key=itemgetter(1,2))
+# print(mylist_sorted)
 
 
 ########################################################################
