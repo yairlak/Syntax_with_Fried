@@ -2,11 +2,8 @@ Data/
 Figures/
 Output/
 Paradigm/
-<<<<<<< HEAD
 Code/Main/RunScripts/
 Code/Main/Logs/
-=======
-Code/Main/RunScripts
-Code/Main/Logs
 Code/clock_sync/
->>>>>>> 1c2e3e8e2d34f6f07ef23680baefacb6e715ecba
+Code/ariel/
+Code/ariel/arielt/ucla/neuralynx/matlab/clock_sync/

@@ -13,7 +13,7 @@ os.chdir(dname)
 channels = [59]
 
 
-# --------- Read from outside --------
+# --------- Read params from outside --------
 # Get (optional) argument from terminal which defines the channel for gamma analysis
 if len(sys.argv) > 1:
     print 'Channel ' + sys.argv[1]
@@ -26,21 +26,23 @@ settings = load_settings_params.Settings()
 params = load_settings_params.Params()
 preferences = load_settings_params.Preferences()
 
-if preferences.run_contrasts or preferences.use_metadata_only:
-    print('Loading features and comparisons from Excel files...')
-    comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
-    contrast_names = comparison_list['fields'][1][settings.comparisons]
-    contrasts = comparison_list['fields'][2][settings.comparisons]
-    cond_labels = comparison_list['fields'][3][settings.comparisons]
-    cond_labels = [cond_label[1:-1].split(',') for cond_label in cond_labels]
-    align_to = comparison_list['fields'][4][settings.comparisons]
-    blocks = comparison_list['fields'][5][settings.comparisons]
-    sortings = comparison_list['fields'][6][settings.comparisons]
-    sortings = [s.split(',') if isinstance(s, unicode) else [] for s in sortings]
-    union_or_intersection = comparison_list['fields'][7][settings.comparisons]
-    comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, blocks, union_or_intersection, features, preferences)
+# --------------------------------------
+# if preferences.run_contrasts or preferences.use_metadata_only:
+print('Metadata: Loading features and comparisons from Excel files...')
+comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
+contrast_names = comparison_list['fields'][1][settings.comparisons]
+contrasts = comparison_list['fields'][2][settings.comparisons]
+cond_labels = comparison_list['fields'][3][settings.comparisons]
+cond_labels = [cond_label[1:-1].split(',') for cond_label in cond_labels]
+align_to = comparison_list['fields'][4][settings.comparisons]
+blocks = comparison_list['fields'][5][settings.comparisons]
+sortings = comparison_list['fields'][6][settings.comparisons]
+sortings = [s.split(',') if isinstance(s, unicode) else [] for s in sortings]
+union_or_intersection = comparison_list['fields'][7][settings.comparisons]
+comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, blocks, union_or_intersection, features, preferences)
 
-print('Reading log files from experiment...')
+# --------------------------------------------
+print('Logs: Reading log files from experiment...')
 log_all_blocks = []
 for block in range(1, 7):
     log = read_logs_and_comparisons.LogSingleUnit(settings, block) # Get log filename according to block number

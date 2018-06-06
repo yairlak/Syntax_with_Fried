@@ -200,24 +200,37 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
 
 def reproducability(power, power_ave, log_all_blocks, settings, params):
     from scipy import stats
+    from operator import itemgetter
     from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+    sort_according_to_key = ['block', 'sentence_number', 'sentence_length']
+    fields_for_sorting = []
+    for field in sort_according_to_key:
+        fields_for_sorting.append(power.metadata[field])
+    mylist = [(i, j, k, l) for (i, j, k, l) in zip(range(len(fields_for_sorting[0])), fields_for_sorting[0], fields_for_sorting[1], fields_for_sorting[2])]
+    IX = [i[0] for i in sorted(mylist, key=itemgetter(1, 2))]
+    lengths = [i[3] for i in sorted(mylist, key=itemgetter(1, 2))]
+    power_ave = power_ave[IX, :]
 
     # Assumes trials are in chronolgical order, and block size is 152
     num_trials_in_block = 152
-    num_blocks = 3
     time_st = 0
-    time_ed = 2 # [sec]
+    time_ed = 1.5 # [sec]
     IX_timewindow = (power.times > time_st) & (power.times < time_ed)
 
     power_ave_blocks = []
-    for block in range(3):
-        IX_trials_curr_block = log_all_blocks[block].SENTENCE_NUM_ORDER
-        IX_trials_curr_block = [i-1 for i in IX_trials_curr_block]
+    for block in range(len(settings.blocks)):
+        # IX_trials_curr_block = log_all_blocks[block].SENTENCE_NUM_ORDER
+        # IX_trials_curr_block = [i-1 for i in IX_trials_curr_block]
         st = block * 152
         ed = (block + 1) * 152
         curr_block_power = power_ave[st:ed, IX_timewindow]
-        power_ave_blocks.append(curr_block_power[IX_trials_curr_block, :])
-    power_ave_sorted = np.vstack(power_ave_blocks)
+        curr_lengths = lengths[st:ed]
+        mylist = [(i, j) for (i, j) in zip(range(len(curr_lengths)), curr_lengths)]
+        IX = [i[0] for i in sorted(mylist, key=itemgetter(1))]
+
+        power_ave_blocks.append(curr_block_power[IX, :])
+    # power_ave_sorted = np.vstack(power_ave_blocks)
 
     reproducability_matrix = np.zeros([num_trials_in_block, num_trials_in_block])
     for trial_i in range(num_trials_in_block):
@@ -231,7 +244,7 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
 
     file_name = 'reproducability_' + settings.band + '_' + settings.patient + '_channel_' + str(
         settings.channel) + '_Blocks_' + str(
-        settings.blocks) + '_Event_id_' + settings.event_str + '_' + settings.channel_name
+        settings.blocks) + '_Event_id_FIRST_WORD_' + settings.channel_name
 
     # Save to file
     diag = np.diagonal(reproducability_matrix)
@@ -244,8 +257,14 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
 
     fig, axs = plt.subplots(2, 3, figsize=[30, 20])
     im = axs[0, 0].imshow(reproducability_matrix, vmin=-1, vmax=1)
-    axs[0, 0].set_xlabel('Sentence number', fontsize=24)
-    axs[0, 0].set_ylabel('Sentence number', fontsize=24)
+    axs[0, 0].set_xlabel('Sentence length', fontsize=24)
+    axs[0, 0].set_ylabel('Sentence length', fontsize=24)
+    step = 10
+    plt.setp(axs[0, 0],
+             xticks = range(0, len(curr_lengths), step),
+             xticklabels=[str(n) for n in np.asarray(curr_lengths)[IX][0::step]],
+             yticks=range(0, len(curr_lengths), step),
+             yticklabels=[str(n) for n in np.asarray(curr_lengths)[IX][0::step]])
     divider = make_axes_locatable(axs[0, 0])
     cax = divider.append_axes("right", size="2%", pad=0.1)
     cbar = plt.colorbar(im, cax=cax)
@@ -261,8 +280,8 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
                 fontsize=24)
     axs[0, 1].text(-0.9, 4.3, r'$\mu=$' + "%.2f" % np.mean(off_diag) + ',\ $\sigma=$' + "%.2f" % np.std(off_diag),
                 color='g', fontsize=24)
-    axs[0, 1].text(-0.9, 3.8, 'KS, p-value=' + "%.2f" % np.mean(pvalue), color='k', fontsize=24)
-    axs[0, 1].text(-0.9, 3.5, 'KS, D=' + "%.2f" % np.mean(D), color='k', fontsize=24)
+    axs[0, 1].text(-0.9, 3.8, 'KS, p-value=' + "%.4f" % np.mean(pvalue), color='k', fontsize=24)
+    axs[0, 1].text(-0.9, 3.5, 'KS, D=' + "%.4f" % np.mean(D), color='k', fontsize=24)
 
     axs[0, 1].legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0, fontsize=16)
     axs[0, 1].grid(True)
@@ -293,8 +312,8 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
     axs[0, 2].set_ylabel('Normalized counts of permutated trials', fontsize=24)
     axs[0, 2].set_ylim([0, 40])
     # axs[0, 2].set_xlim([-0.5, 0.5])
-    axs[0, 2].text(axs[0, 2].get_xlim()[0] + 0.1*(axs[0, 2].get_xlim()[1]- axs[0, 2].get_xlim()[0]), 38, 'rho (experiment)=' + "%.2f" % actual_mean_rho, color='k', fontsize=24)
-    axs[0, 2].text(axs[0, 2].get_xlim()[0] + 0.1*(axs[0, 2].get_xlim()[1]- axs[0, 2].get_xlim()[0]), 33, 'p-value=' + "%.2f" % p_value, color='k', fontsize=24)
+    axs[0, 2].text(axs[0, 2].get_xlim()[0] + 0.1*(axs[0, 2].get_xlim()[1]- axs[0, 2].get_xlim()[0]), 38, 'rho (experiment)=' + "%.4f" % actual_mean_rho, color='k', fontsize=24)
+    axs[0, 2].text(axs[0, 2].get_xlim()[0] + 0.1*(axs[0, 2].get_xlim()[1]- axs[0, 2].get_xlim()[0]), 33, 'p-value=' + "%.4f" % p_value, color='k', fontsize=24)
 
     axs[0, 2].legend(loc=1, fontsize=24)
     axs[0, 2].grid(True)
@@ -307,7 +326,7 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
             vmin1 = np.nanpercentile(np.vstack(power_ave_blocks[block]), 5)
 
         map = axs[1, block].imshow(np.vstack(power_ave_blocks[block]), vmin=vmin1, vmax=vmax1, cmap='jet', aspect='auto')
-        axs[1, block].set_title('Block ' + str(block+1))
+        axs[1, block].set_title('Block ' + str(settings.blocks[block]))
         step = 100
         plt.setp(axs[1, block], xticks = range(0, power_ave_blocks[block][0].shape[0], step), xticklabels=[str(np.around(n,1)) for n in power.times[IX_timewindow][0::step]])
         axs[1, block].set_xlabel('Time [sec]', fontsize=16)
