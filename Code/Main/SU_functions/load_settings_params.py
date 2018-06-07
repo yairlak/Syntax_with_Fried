@@ -46,7 +46,7 @@ class Settings():
         self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
-        self.path2macro = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/Macro/ChannelsCSC'
+        #self.path2macro = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/Macro/ChannelsCSC'
         #self.path2macro =  os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Macro', 'ChannelsCSC')
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
         # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
