@@ -2,8 +2,8 @@ Data/
 Figures/
 Output/
 Paradigm/
-Code/Main/RunScripts/
-Code/Main/Logs/
+Code/Main_analyses/RunScripts/
+Code/Main_analyses/Logs/
 Code/clock_sync/
 Code/Ariel/
 Code/Ariel/arielt/ucla/neuralynx/matlab/clock_sync/
