@@ -48,14 +48,14 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
 
 
             # Find channel numbers in current probe folder
-            file_types = 'High-Gamma_' + settings.patient + '_*Blocks_*' + '1, 3, 5' + '*_Event_id_FIRST_WORD*' + probe_name + '*length*png'
+            file_types = 'High-Gamma_' + settings.patient + '_*Blocks_*' + '1, 3, 5' + '*_All_trials_END_*' + probe_name + '*length*png'
             images_without_sorting = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, file_types))
             #print(images_without_sorting)
             channels_in_curr_folder = []; micro_macro = []
             for img in images_without_sorting:
                 ch_name = img[img.find('High-Gamma_' + settings.patient) + len('High-Gamma_' + settings.patient) + 9::]
                 channels_in_curr_folder.append(int(ch_name[0:ch_name.find('_')]))
-                if ('GA' in ch_name) or ('GB' in ch_name):
+                if ('GA' in ch_name) or ('GB' in ch_name) or ('GC' in ch_name):
                     micro_macro.append('micro')
                 else:
                     micro_macro.append('macro')
@@ -70,10 +70,10 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
                 event_ids = ['FINAL']
                 for event_id in event_ids:
                     for blocks in ['1, 3, 5', '2, 4, 6']:
-                        if blocks == '1, 3, 5' and event_id == 'FINAL': curr_event_id = 'LAST_WORD'
-                        if blocks == '2, 4, 6' and event_id == 'FINAL': curr_event_id = 'END_WAV'
-
-                        root_name = 'High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks[0:1] + '*_Event_id_' + curr_event_id + '*' + probe_name + '*.ncs_lengthSorted.png'
+                        #if blocks == '1, 3, 5' and event_id == 'FINAL': curr_event_id = 'LAST_WORD'
+                        #if blocks == '2, 4, 6' and event_id == 'FINAL': curr_event_id = 'END_WAV'
+                        curr_event_id = '_All_trials_END_'
+                        root_name = 'High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks[0:1] + '*' + curr_event_id + '*' + probe_name + '*.ncs*sentence_lengthSorted.png'
                         curr_img_name = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, root_name))
                         if len(curr_img_name)> 1:
                             raise('More than a single file name was found for current image.')

@@ -13,10 +13,8 @@ Channel 29, blocks: [1, 3, 5]
 Loading CSC raw data...
 Analyzing high-gamma for channel 29
 Generating MNE raw object for continuous data...
-1 channel names are too long, have been truncated to 15 characters:
-[u'GA3-RIFAC7_0019.ncs']
-Creating RawArray with float64 data, n_channels=1, n_times=126369280
-    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Creating RawArray with float64 data, n_channels=1, n_times=114259968
+    Range : 0 ... 114259967 =      0.000 ...  2856.499 secs
 Ready.
 Line filtering...
 Setting up band-stop filter
@@ -38,16 +36,14 @@ Loading data for 3960 events and 240001 original time points ...
 ('Original sampling rate:', 40000.0, 'Hz')
 ('New sampling rate:', 512.0, 'Hz')
 High-Gamma analyses...
-(0.63543708387476272, 0.42863639399216291)
-(0.63543708387476272, 0.42863639399216291)
+(-0.36160887440638095, 0.53760279218873697)
+(-0.36160887440638095, 0.53760279218873697)
 Channel 29, blocks: [2, 4, 6]
 Loading CSC raw data...
 Analyzing high-gamma for channel 29
 Generating MNE raw object for continuous data...
-1 channel names are too long, have been truncated to 15 characters:
-[u'GA3-RIFAC7_0019.ncs']
-Creating RawArray with float64 data, n_channels=1, n_times=126369280
-    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Creating RawArray with float64 data, n_channels=1, n_times=114259968
+    Range : 0 ... 114259967 =      0.000 ...  2856.499 secs
 Ready.
 Line filtering...
 Setting up band-stop filter
@@ -69,5 +65,5 @@ Loading data for 3960 events and 240001 original time points ...
 ('Original sampling rate:', 40000.0, 'Hz')
 ('New sampling rate:', 512.0, 'Hz')
 High-Gamma analyses...
-(0.68436906877351311, 0.76081362750743664)
-(0.68436906877351311, 0.76081362750743664)
+(0.14214112404035528, 0.86331571849133737)
+(0.14214112404035528, 0.86331571849133737)

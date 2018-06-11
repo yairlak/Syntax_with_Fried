@@ -1,10 +1,4 @@
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/convert_to_mne.py:121: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
-[u'GA2-LSTG3_0019.ncs']
-  info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   11.2s finished
+[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   45.0s finished
 /home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/axes/_axes.py:545: UserWarning: No labelled objects found. Use label='...' kwarg on individual plots.
   warnings.warn("No labelled objects found. "
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/SU_functions/convert_to_mne.py:121: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
-[u'GA2-LSTG3_0019.ncs']
-  info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   11.6s finished
+[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   36.0s finished

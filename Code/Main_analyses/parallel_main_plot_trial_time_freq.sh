@@ -23,7 +23,7 @@ foreach CH ( `seq ${st} ${ed}` )
 
          rm -f $filename_bash
          touch $filename_bash
-	 echo "python2.7 /neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/$filename_py" >> $filename_bash
+	 echo "python2.7 /neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/$filename_py" >> $filename_bash
          
 	 qsub -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log $filename_bash
          

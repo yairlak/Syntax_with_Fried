@@ -18,7 +18,7 @@ class Settings():
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_482'
-        self.comparisons = [8] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
+        self.comparisons = [6, 9] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         self.load_line_filtered_resampled_epoch_object = False
         self.overwrite_existing_output_files = True
 
