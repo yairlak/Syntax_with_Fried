@@ -64,28 +64,59 @@ electrode_names = load_data.electrodes_names(settings)
 #----- RASTERS ------
 if preferences.analyze_micro_single:
     print('Loading spike sorted data (spike clusters)...')
-    spikes, settings, electrode_names, electrode_names_from_raw_files, from_channels = load_data.spike_clusters(settings)
+    spikes, settings, electrode_names_from_raw_files, from_channels = load_data.spike_clusters(settings)
 
     print('Generating MNE raw object for spikes...')
     raw_spikes = convert_to_mne.generate_mne_raw_object_for_spikes(spikes, electrode_names_from_raw_files, settings, params)
 
     # Draw event times of the paradigm
-    fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '_' + str(settings.blocks) + '.png'
+    fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '.png'
     fig_paradigm = mne.viz.plot_events(events_spikes, raw_spikes.info['sfreq'], raw_spikes.first_samp, event_id=event_id, show=False)
     plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
     plt.close(fig_paradigm)
 
     print('Epoching spiking data...')
-    epochs_spikes = mne.Epochs(raw_spikes, events_spikes, event_id, params.tmin, params.tmax, baseline=None, preload=True)
+    epochs_spikes = mne.Epochs(raw_spikes, events_spikes, event_id, params.tmin, params.tmax, metadata=metadata, baseline=None, preload=True)
     print(epochs_spikes)
 
-    event_ids_epochs = epochs_spikes.event_id.keys()
-    for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]:  # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
-        if any([event_str in s for s in event_ids_epochs]):
-            curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-            print('Generate rasters and PSTHs...')
-            settings.events_to_plot = curr_event_id_to_plot
-            analyses.generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences)
+    # event_ids_epochs = epochs_spikes.event_id.keys()
+    # for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]:  # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
+    #     if any([event_str in s for s in event_ids_epochs]):
+    #         curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
+    print('Generate rasters and PSTHs...')
+    # settings.events_to_plot = curr_event_id_to_plot
+    if preferences.use_metadata_only:
+        for contrast_name, comparison, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(contrast_names,
+                                                                                                   comparisons, blocks,
+                                                                                                   align_to, sortings,
+                                                                                                   cond_labels):
+            preferences.sort_according_to_key = [s.strip().encode('ascii') for s in curr_sorting]
+            str_blocks = ['block == {} or '.format(block) for block in eval(curr_blocks)]
+            str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
+            if curr_align_to == 'FIRST':
+                str_align = 'word_position == 1'
+            elif curr_align_to == 'LAST':
+                str_align = 'word_position == sentence_length'
+            elif curr_align_to == 'END':
+                str_align = 'word_position == -1'
+            elif curr_align_to == 'EACH':
+                str_align = 'word_position > 0'
+
+            for query_cond, label_cond in zip(comparison, cond_label):
+                # file_name = str(settings.patient + '_channel_' + str(settings.channel) + '_Blocks_'
+                #                 + curr_blocks + '_' + label_cond + '_' + curr_align_to + '_' + settings.channel_name)
+                # for key_sort in preferences.sort_according_to_key:
+                #     file_name += '_' + key_sort + 'Sorted'
+
+                # IX1 = settings.channel_name.find('_0019')
+                # if IX1 == -1:
+                #     IX1 = settings.channel_name.find('.ncs')
+                # probe_name = settings.channel_name[0:IX1 - 1]
+                # if (not os.path.isfile(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name,
+                #                                     file_name + '.png'))) or settings.overwrite_existing_output_files:
+                query = query_cond + ' and ' + str_align + ' and ' + str_blocks
+
+                analyses.generate_rasters(epochs_spikes[query], query, electrode_names_from_raw_files, from_channels, settings, params, preferences)
 
 # Electrodes (Time-frequency analysis)
 if preferences.analyze_micro_raw:

@@ -5,29 +5,40 @@ import mne
 import matplotlib.pyplot as plt
 import pickle
 import matplotlib.image as mpimg
+from operator import itemgetter
 
-
-def generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences):
+def generate_rasters(epochs_spikes, query, electrode_names_from_raw_files, from_channels, settings, params, preferences):
     for cluster in np.arange(epochs_spikes.info['nchan']):
-        if preferences.sort_according_to_sentence_length:
-            sentences_length = []
-            for log in log_all_blocks:
-                sentences_length = sentences_length + log.sentences_length.values()
-            order = np.argsort(sentences_length)
+
+        # Sort if needed
+        if preferences.sort_according_to_key:
+            fields_for_sorting = []
+            for field in preferences.sort_according_to_key:
+                fields_for_sorting.append(epochs_spikes.metadata[field])
+            if len(fields_for_sorting) == 1:
+                mylist = [(i, j) for (i, j) in zip(range(len(fields_for_sorting[0])), fields_for_sorting[0])]
+                IX = [i[0] for i in sorted(mylist, key=itemgetter(1))]
+            elif len(fields_for_sorting) == 2:
+                mylist = [(i, j, k) for (i, j, k) in zip(range(len(fields_for_sorting[0])), fields_for_sorting[0],
+                                                         fields_for_sorting[1])]
+                IX = [i[0] for i in sorted(mylist, key=itemgetter(1, 2))]
         else:
-            order = None
+            IX = None
 
-        fig = epochs_spikes[settings.events_to_plot].plot_image(cluster, order=order , vmin=0, vmax=1, colorbar=False, show=False)
+        fig = epochs_spikes.plot_image(cluster, order=IX , vmin=0, vmax=1, colorbar=False, show=False)
 
-        if preferences.sort_according_to_sentence_length:
-            fig[0].axes[0].set_yticks(range(0,len(sentences_length), preferences.step))
-            sent_len = np.sort(sentences_length)[::preferences.step]
-            # sent_len = sent_len[::-1]
-            fig[0].axes[0].set_yticklabels(sent_len)
-            plt.setp(fig[0].axes[0], ylabel = 'Sentence length')
+        if preferences.sort_according_to_key:
+            fig[0].axes[0].set_yticks(range(0, len(fields_for_sorting[0]), preferences.step))
+            yticklabels = np.sort(fields_for_sorting[0])[::preferences.step]
+            yticklabels = yticklabels[::-1]
+            fig[0].axes[0].set_yticklabels(yticklabels)
+            plt.setp(fig[0].axes[0], ylabel=preferences.sort_according_to_key[0])
 
-        new_y = fig[0].axes[1].lines[0]._y/epochs_spikes[settings.events_to_plot].events.shape[0]
-        new_y_smoothed = smooth_with_gaussian(new_y, gaussian_width=20*1e-3*params.sfreq_spikes) # smooth with 20ms gaussian
+        sfreq = epochs_spikes.info['sfreq']
+        gaussian_width = 20 * 1e-3
+        mean_spike_count = np.mean(epochs_spikes._data[:,cluster,:], axis=0)
+        new_y_smoothed = smooth_with_gaussian(mean_spike_count, sfreq, gaussian_width = gaussian_width * sfreq)  # smooth with 20ms gaussian
+
         x = fig[0].axes[1].lines[0]._x
 
         fig[0].axes[1].clear()
@@ -37,18 +48,19 @@ def generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_fil
         fig[0].axes[1].axvline(x=0, linestyle='--')
 
         plt.setp(fig[0].axes[1], ylim=[0, params.ylim_PSTH], xlabel = 'Time [sec]', ylabel='spikes / s')
-        IX = settings.events_to_plot[0].find('block')
+        # IX = settings.events_to_plot[0].find('block')
         # fname = 'raster_' + settings.hospital + '_' + settings.patient + '_channel_' + str(from_channels[cluster]) \
         #         + '_cluster_' + str(cluster) + '_blocks_' + str(settings.blocks) + '_' + settings.events_to_plot[0][0:IX-1] + '_lengthSorted_' + \
         #         str(preferences.sort_according_to_sentence_length) + '_' + electrode_names_from_raw_files[cluster] + '.png'
         #         # )
-        fname = 'raster_' + settings.hospital + '_' + settings.patient + '_channel_' + '_cluster_' + str(cluster) + '_blocks_' + str(settings.blocks) + '_' + settings.events_to_plot[0][
-                                                                                         0:IX - 1] + '_lengthSorted_' + \
-                str(preferences.sort_according_to_sentence_length) + '_' + electrode_names_from_raw_files[
-                    cluster] + '.png'
+        fname = 'raster_' + settings.hospital + '_' + settings.patient +  '_' + electrode_names_from_raw_files[cluster] + '_cluster_' + str(cluster) + '_' + query
         # )
+        for key_sort in preferences.sort_according_to_key:
+            fname += '_' + key_sort + 'Sorted'
 
-        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Rasters', fname))
+        if not os.path.exists(os.path.join(settings.path2figures, settings.patient, 'Rasters')):
+            os.makedirs(os.path.join(settings.path2figures, settings.patient, 'Rasters'))
+        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Rasters', fname + '.png'))
 
 
 def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type, params):
@@ -100,7 +112,6 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
 
 def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, file_name, settings, params, preferences):
     from scipy import stats
-    from operator import itemgetter
 
     # Remove 0.2 sec from each side due to boundary effects
     IX_smaller_time_window = (power.times > power.tmin + 0.2) & (power.times < power.tmax - 0.2)  # relevant times
@@ -338,13 +349,14 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
     plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.png'))
 
 
-def smooth_with_gaussian(time_series, gaussian_width = 50, N=1000):
-    # gaussian_width in ms
+def smooth_with_gaussian(time_series, sfreq, gaussian_width = 50, N=1000):
+    # gaussian_width in samples
     # ---------------------
     import math
     from scipy import signal
-    norm_factor = np.sqrt(2 * math.pi * gaussian_width ** 2) # sanity check: norm_factor = gaussian_window.sum()
+    norm_factor = np.sqrt(2 * math.pi * gaussian_width ** 2)/sfreq # sanity check: norm_factor = gaussian_window.sum()
     gaussian_window = signal.general_gaussian(M=N, p=1, sig=gaussian_width) # generate gaussian filter
+    norm_factor = (gaussian_window/sfreq).sum()
     smoothed_time_series = np.convolve(time_series, gaussian_window/norm_factor, mode="full") # smooth
     smoothed_time_series = smoothed_time_series[int(round(N/2)):-(int(round(N/2))-1)] # trim ends
     return smoothed_time_series

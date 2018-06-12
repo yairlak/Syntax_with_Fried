@@ -14,24 +14,21 @@ def generate_spike_csc_cluster_files(data_all_channels_spike_clusters, channel_n
         if ch in channel_numbers:
             curr_channel_clusters = data_all_channels_spike_clusters[ch - 1]
 
-            num_of_spike_clusters = int(np.max(curr_channel_clusters[:, 0]))
-            for cluster in range(num_of_spike_clusters):
-                spike_times_sec = []
-                for spike in range(curr_channel_clusters.shape[0]):
-                    curr_cluster_number = int(curr_channel_clusters[spike][0] - 1)  # Change the ZERO-based indexing
-                    curr_cluster_time = curr_channel_clusters[spike][1]
-                    curr_cluster_time = curr_cluster_time / 1e3  # change to sec as in Ariel's files
-                    if curr_cluster_number == cluster:
-                        spike_times_sec.append(curr_cluster_time)
+            clusters = list(set(curr_channel_clusters[:, 0].astype('int')))
+            for cluster in clusters:
+                curr_cluster_spike_times = curr_channel_clusters[curr_channel_clusters[:, 0] == cluster, 1]
+                curr_cluster_spike_times_in_sec = curr_cluster_spike_times/1e3
 
                 temp_dict = {}
-                temp_dict['spike_times_sec'] = np.asarray(spike_times_sec)
+                temp_dict['spike_times_sec'] = np.asarray(curr_cluster_spike_times_in_sec)
                 temp_dict['time0'] = settings.time0
                 temp_dict['timeend'] = settings.timeend
                 temp_dict['electrode_name'] = electrode_names[ch-1]
                 temp_dict['from_channel'] = ch
 
                 filename_curr_cluster = 'CSC' + str(cnt) + '_cluster.mat'
+                if not os.path.exists(settings.path2output_spike_clusters):
+                    os.makedirs(settings.path2output_spike_clusters)
                 io.savemat(os.path.join(settings.path2output_spike_clusters, filename_curr_cluster), temp_dict)
                 print('Saved:' + filename_curr_cluster)
                 cnt += 1  # To next cluster number in filename_curr_cluster

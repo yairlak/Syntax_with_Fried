@@ -1,0 +1,176 @@
+>> rel_times_to_abs_verify_phg;
+1. /media/linux2/arielt/analysis72/su_analysis/part_a/../:
+CPU time = 00:00:11.45  (11.45 secs., 1 iters.);   15-09-2009 17:48:06
+
+Elapsed time is 11.405212 seconds.
+2. /media/linux2/arielt/analysis74/su_analysis_no_norm3/part_b/../:
+CPU time = 00:00:22.69  (22.69 secs., 2 iters.);   15-09-2009 17:48:18
+
+Elapsed time is 22.546010 seconds.
+3. /media/linux2/arielt/analysis78/su_analysis_no_norm4/part1/../:
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 33: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 34: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 35: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 36: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 37: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 38: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 39: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 40: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 41: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 42: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 43: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 44: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 45: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 46: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 47: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 48: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 49: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 50: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 51: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 52: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 53: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 54: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 55: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 56: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 57: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 58: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 59: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 60: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 61: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 62: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 63: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+/media/linux2/arielt/analysis78/su_analysis_no_norm4, Ch: 64: Incompatible abs and relative times (diff range [33792,  33792] mic.sec.).
+CPU time = 00:00:29.08  (29.08 secs., 3 iters.);   15-09-2009 17:48:24
+
+Elapsed time is 28.683705 seconds.
+4. /media/linux2/arielt/analysis80/su_analysis_no_norm4/part1/../:
+CPU time = 00:00:35.41  (35.41 secs., 4 iters.);   15-09-2009 17:48:32
+
+Elapsed time is 36.694097 seconds.
+5. /media/linux1/arielt/analysis81/su_analysis_no_norm4/part1/../:
+CPU time = 00:00:41.66  (41.66 secs., 5 iters.);   15-09-2009 17:48:48
+
+Elapsed time is 52.837613 seconds.
+6. /media/linux1/arielt/analysis82/su_analysis_no_norm4/part1/../:
+CPU time = 00:00:47.77  (47.77 secs., 6 iters.);   15-09-2009 17:49:03
+
+Elapsed time is 68.087037 seconds.
+7. /media/linux1/arielt/analysis83/su_analysis_no_norm4/part1/../:
+CPU time = 00:00:54.03  (54.03 secs., 7 iters.);   15-09-2009 17:49:18
+
+Elapsed time is 83.414377 seconds.
+8. /media/linux1/arielt/analysis84/su_analysis_no_norm4/part1/../:
+CPU time = 00:01:01.26  (61.26 secs., 8 iters.);   15-09-2009 17:49:35
+
+Elapsed time is 100.274176 seconds.
+9. /media/linux1/arielt/analysis85/su_analysis_no_norm4/part1/../:
+CPU time = 00:01:11.29  (71.29 secs., 9 iters.);   15-09-2009 17:50:02
+
+Elapsed time is 126.499888 seconds.
+10. /media/linux1/arielt/analysis86/su_analysis_no_norm4/part1/../:
+CPU time = 00:01:18.5  (78.5 secs., 10 iters.);   15-09-2009 17:50:22
+
+Elapsed time is 147.049265 seconds.
+11. /media/linux1/arielt/analysis87/su_analysis_no_norm4/part1/../:
+CPU time = 00:01:22.25  (82.25 secs., 11 iters.);   15-09-2009 17:50:35
+
+Elapsed time is 159.582765 seconds.
+12. /media/linux1/arielt/analysis88/su_analysis_no_norm4/part1/../:
+CPU time = 00:01:24.58  (84.58 secs., 12 iters.);   15-09-2009 17:50:42
+
+Elapsed time is 167.175986 seconds.
+13. /media/linux1/arielt/analysis89/su_analysis_no_norm4/part1/../:
+CPU time = 00:01:41.09  (101.09 secs., 13 iters.);   15-09-2009 17:51:21
+
+Elapsed time is 206.324512 seconds.
+14. /media/linux2/arielt/analysis90/su_analysis_no_norm4/part1/../:
+CPU time = 00:02:10.99  (130.99 secs., 14 iters.);   15-09-2009 17:52:31
+
+Elapsed time is 276.186879 seconds.
+15. /media/linux2/arielt/analysis93/part1/../:
+CPU time = 00:02:18.38  (138.38 secs., 15 iters.);   15-09-2009 17:52:52
+
+Elapsed time is 297.012178 seconds.
+16. /media/linux2/arielt/analysis94/part1/../:
+CPU time = 00:02:25.35  (145.35 secs., 16 iters.);   15-09-2009 17:53:12
+
+Elapsed time is 317.202566 seconds.
+17. /media/linux2/arielt/analysis95/part1/../:
+CPU time = 00:02:37.92  (157.92 secs., 17 iters.);   15-09-2009 17:53:46
+
+Elapsed time is 350.727756 seconds.
+18. /media/linux2/arielt/analysis96/part6/../:
+/media/linux2/arielt/analysis96, Ch: 33: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 34: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 35: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 36: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 37: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 38: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 39: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 40: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 41: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 42: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 43: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 44: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 45: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 46: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 47: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 48: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 49: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 50: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 51: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 52: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 53: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 54: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 55: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 56: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 57: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 58: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 59: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 60: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 61: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 62: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 63: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis96, Ch: 64: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+CPU time = 00:05:15.17  (315.17 secs., 18 iters.);   15-09-2009 17:59:12
+
+Elapsed time is 676.864695 seconds.
+19. /media/linux2/arielt/analysis97/su_analysis/part1/../:
+/media/linux2/arielt/analysis97/su_analysis, Ch: 31: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+CPU time = 00:05:30.35  (330.35 secs., 19 iters.);   15-09-2009 17:59:49
+
+Elapsed time is 714.277264 seconds.
+20. /media/linux2/arielt/analysis98/su_analysis/part1/../:
+/media/linux2/arielt/analysis98/su_analysis, Ch: 33: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 34: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 35: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 36: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 37: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 38: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 39: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 40: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 41: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 44: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 45: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 46: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 47: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 48: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 49: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 50: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 51: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 52: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 53: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 54: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 55: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 56: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 57: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 58: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 59: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 60: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 61: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 62: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 63: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+/media/linux2/arielt/analysis98/su_analysis, Ch: 64: Incompatible abs and relative times (diff range [16896,  16896] mic.sec.).
+CPU time = 00:05:36.6  (336.6 secs., 20 iters.);   15-09-2009 18:00:06
+
+Elapsed time is 731.267605 seconds.

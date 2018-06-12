@@ -1,11 +1,11 @@
-import os
+import os, glob
 
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = False
-        self.analyze_micro_raw = True
-        self.run_contrasts = True
+        self.analyze_micro_single = True
+        self.analyze_micro_raw = False
+        self.run_contrasts = False
         self.run_POS = False
         self.use_metadata_only = True
         self.step = 30 # yticklabels step when showing the length of each trial
@@ -18,31 +18,11 @@ class Settings():
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_482'
-        self.comparisons = [6, 9] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
+        self.comparisons = [17, 4, 7, 18, 5, 8] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         self.load_line_filtered_resampled_epoch_object = False
         self.overwrite_existing_output_files = True
 
-
-        # RECORDINGS/CHANNELS
-        # Which channels in the raw CSC files have clear spikes
-        self.channels_with_spikes = [13, 47, 48, 49, 55, 57, 59]
-        self.channels_with_spikes = [47, 56]
-        if self.patient == 'patient_480':
-            self.channels_with_spikes = [6, 7, 13, 19, 20, 23, 26, 28, 33, 37, 38, 39, 40, 43, 47, 51, 55, 56, 57, 62, 65, 68, 70, 71, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94 ,95, 96, 98, 99, 100, 101, 103, 104]
-
-        # Time of the beginning and end of the experiment (BlackRock time0 = 0; In Neurlaynx it is measured compared to 01/01/1970)
-        if self.patient == 'patient_479': # Neuralynx
-            self.time0 =   1489760586848367
-            self.timeend = 1489763746079099
-        if self.patient == 'patient_480': # BlackRock
-            self.time0 =   0
-            self.timeend = 3.313463366666667e+09
-        if self.patient == 'patient_482': # Neuralynx
-            self.time0 =   1493480044627211
-            self.timeend = 1493482901125264
-
-
-        # PATHS
+            # PATHS
         self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
@@ -68,6 +48,27 @@ class Settings():
         self.features_file = 'features_' + self.patient + '.xlsx'
         self.word2pos_file = 'word2POS.pkl'
 
+        # Time of the beginning and end of the experiment (BlackRock time0 = 0; In Neurlaynx it is measured compared to 01/01/1970)
+        if self.patient == 'patient_479': # Neuralynx
+            self.time0 =   1489760586848367
+            self.timeend = 1489763746079099
+            # Which channels in the raw CSC files have clear spikes
+            self.channels_with_spikes = [13, 47, 48, 49, 55, 57, 59]
+
+        if self.patient == 'patient_480': # BlackRock
+            self.time0 =   0
+            self.timeend = 3.313463366666667e+09
+            # Which channels in the raw CSC files have clear spikes
+            self.channels_with_spikes = [6, 7, 13, 19, 20, 23, 26, 28, 33, 37, 38, 39, 40, 43, 47, 51, 55, 56, 57, 62,
+                                         65, 68, 70, 71, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 98,
+                                         99, 100, 101, 103, 104]
+        if self.patient == 'patient_482': # Neuralynx
+            self.time0 =   1493480044627211
+            self.timeend = 1493482901125264
+            # Which channels in the raw CSC files have clear spikes
+            self.channels_with_spikes = [2, 3, 18, 41, 44, 45, 54, 75, 77, 84, 87]
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
 
 class Params:
     def __init__(self):

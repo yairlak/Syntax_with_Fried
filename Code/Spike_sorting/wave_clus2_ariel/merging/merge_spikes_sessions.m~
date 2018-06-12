@@ -1,0 +1,53 @@
+function merge_spikes_sessions(dir1, dir2, ch_list, out_dir)
+% merge_spikes_sessions    Merge the spikes recorded in two sessions.
+%                          dir1 will be followed in time by dir2.  If the
+%                          sampling frequencies in the two sessions were
+%                          not identical, dir2 will be interpolated to
+%                          match dir1.
+%
+%                          merge_spikes_sessions(dir1, dir2, ch_list, out_dir)
+%                          dir1 - string - first directory to merge.
+%                          dir2 - string - second directory to merge.
+%                                          Spikes of dir2 will follow
+%                                          those of dir1 in the merged file.
+%                          ch_list - 1xk - list of channels to merge.
+%                                          Only corresponding channels are
+%                                          merged (i.e., with the same channel
+%                                          ID).
+%                          out_dir -string-output directory.
+%
+%                          See also:   merge_spikes_files, merge_spikes,
+%                                      interp_spikes.
+
+% Author: Ariel Tankus.
+% Created: 14.08.2009.
+
+
+time_separation_ms = 10*1000;    % sep. between the times of the two sessions.
+
+time_offset2_ms = merge_first_last_time_stamps(dir1, dir2, ...
+            time_separation_ms, out_dir);
+
+% ensure events are sync'ed with spike times:
+merge_event_times(dir1, dir2, time_offset2_ms, out_dir);
+dbquit
+dbquit
+clokeyboard
+num_ch = length(ch_list);
+
+fprintf('Merging channel:\n');
+for i=1:num_ch
+    
+    ch = ch_list(i);
+    fprintf('%d ', ch);
+    
+    spikes_file1    = sprintf('%s/CSC%d_spikes.mat', dir1, ch);
+    spikes_file2    = sprintf('%s/CSC%d_spikes.mat', dir2, ch);
+    out_spikes_file = sprintf('%s/CSC%d_spikes.mat', out_dir, ch);
+    
+    merge_spikes_files(spikes_file1, spikes_file2, time_offset2_ms, ...
+            out_spikes_file);
+
+end
+
+fprintf('Make sure to link each part to its corresponding Event.Nev file!\n');

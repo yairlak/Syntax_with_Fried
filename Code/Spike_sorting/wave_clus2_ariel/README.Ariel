@@ -1,0 +1,95 @@
+http://www.vis.caltech.edu/~rodri/Wave_clus/Wave_clus_home.htm
+
+times_CSC contains:
+=-=-=-=-=-=-=-=-=-=
+cluster_class - num_spikes x 2 - [cluster_num, spike_time].
+                                 cluster_num==0 means trash or unclassified
+                                 waveforms.
+                                 spike_time in milliseconds, in Cheetah clock
+                                 (abs time, NOT relative).
+par           - struct         - structure of parameters.
+inspk         - num_spikes x num_features - the features (e.g., wavelet coeffs)
+                                 of each spike.
+spikes        - num_spikes x num_samples - spike waveform (for each spike).
+
+Current settings:
+num_features = 10;
+num_samples = 64;    % #samples in the waveform.
+
+data_ch?.dg_01 contains:  (variable tree in wave_clus{,_load}
+=-=-=-=-=-=-=-=-=-=-=-=-
+data_ch? - num_temperatures x (2+) - for each temperature:
+           [serial_no., temperature, 0?, ?, num_spikes_in_cluster]
+           where: num_spikes_in_cluster is the number of classified spikes
+                        (I.e., #spikes in each of the non-trash clusters).
+
+Current settings:
+number of clusters = 12.
+
+data_ch?.dg_01.lab contains:  (variable clu in wave_clus{,_load}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+data_ch? - num_temperatures x (2+num_spikes) - for each temperature:
+                The maximal allowed num_spikes is 30000, so the array
+                is limited to size:  num_temperatures x 30002.
+           [serial_no., temperature, classes_of_spikes]
+           Classes of spikes:
+            class1=find(clu(temp,3:end)==0);
+            class2=find(clu(temp,3:end)==1);
+            class3=find(clu(temp,3:end)==2);
+            class4=find(clu(temp,3:end)==3);
+            class5=find(clu(temp,3:end)==4);
+           (from ariel_do_clustering_csc.m).
+
+Current settings:
+num_temperatures = 20;
+
+Simulator:
+
+spike_class{1} - contains the ground truth classification of all spikes (cluster
+                 IDs).  Includes overlapping spikes.
+spike_class{2} - is the spike overlapping to another spike? (boolean)
+spike_class{3} - For overlapping spikes, contains the time offset to the next
+                 (overlapping) spikes [#bins].  That is, if the current spike is
+                 at bin i and the next overlapping spike is at bin i+k,
+                 spike_class{3}(i) == k.
+                 This value maybe invalid for the last overlapping spike in a
+                 consecutive sequence of overlapping spikes.
+spike_times{1} - times of spikes.  The time is of 1 bin before the spike began.
+                 [#bins].
+OVERLAP_DATA - 0..7 - binary code for the identity of the spike (3bits) (?).
+
+
+A good example of 3 overlapping spikes:
+spike_class{1}([512, 513, 514])
+in times_C_Easy1_noise005.mat .
+
+---------------------------------------------------------------------------
+Ariel's improved features:
+
+* Automatic display of the saved (may be manual) clustering when loading.
+  Not only does this allow to watch already saved clusters (or the result of
+  the automatic clustering), but also to save intermediate states during the
+  manual clustering to which one may wish to return.
+* Simultaneous display of spike waveforms and wavelet features.
+* Cluster merging.
+* Display of size of class as percentage of total no. of spikes, and its
+  frequency in Hz.
+* Load next file automatically (rather than select each time from the file
+  list).
+* Reload current file (this is now required due to the ability to save
+  intermediate states -- need to go back to saved state).
+* Faster image save + ability to avoid picture saving (not req. due to ability
+  to display saved state).
+* Status line.
+* Comments for each cluster:  The user can write a string to be saved along with
+  the cluster (e.g., "low f.r.").
+* `Fix'ed cluster need not be filtered via min cluster size (for use when fixing
+  a cluster and then changing temperature and min_clus).
+* New strategy for display of spikes (only 1000 are displayed at a time):
+  Select those with min and max values, rather than just the first 1000.
+* Fixed y-axes range:  Added an option for tight scaling of the range of
+  values of the y-axes.  This provides a clearer display when all spikes (not
+  just averages) are displayed.
+* Bug fix: ISI label now denotes 2.5ms refractory period (not 3ms).
+* Bug fix: When displaying all features, needs (n-1) rows (not: n).
+* Internal code improvements for speedup (e.g., removal of evals).

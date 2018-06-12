@@ -109,7 +109,7 @@ def generate_events_array(log_all_blocks, metadata, word2pos, settings, params, 
     events = events[sort_IX, :]
 
     events_spikes = np.copy(events)
-    events_spikes[:, 0] = events_spikes[:, 0] * params.sfreq_spikes / params.downsampling_sfreq
+    events_spikes[:, 0] = events_spikes[:, 0] * params.sfreq_spikes / params.sfreq_raw
     events_spikes = events_spikes.astype(np.int64)
 
     return events, events_spikes, event_id

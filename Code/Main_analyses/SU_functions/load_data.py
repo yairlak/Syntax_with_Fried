@@ -46,11 +46,10 @@ def spike_clusters(settings):
             electrode_names_from_raw_files.append(io.loadmat(cluster)['electrode_name'][0] + ',ch ' + str(io.loadmat(cluster)['from_channel'][0]))
             from_channels.append(io.loadmat(cluster)['from_channel'][0][0])
 
-    electrode_names = cluster_to_electrode_name(settings)
     if not electrode_names_from_raw_files:
-        electrode_names_from_raw_files = electrode_names  # if names from raw files don't exist
+        electrode_names_from_raw_files = cluster_to_electrode_name(settings)
 
-    return data_all, settings, electrode_names, electrode_names_from_raw_files, from_channels
+    return data_all, settings, electrode_names_from_raw_files, from_channels
 
 
 def wave_clus_output_files(settings):
