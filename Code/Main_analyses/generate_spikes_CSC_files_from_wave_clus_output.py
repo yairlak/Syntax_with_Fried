@@ -16,22 +16,23 @@ def generate_spike_csc_cluster_files(data_all_channels_spike_clusters, channel_n
 
             clusters = list(set(curr_channel_clusters[:, 0].astype('int')))
             for cluster in clusters:
-                curr_cluster_spike_times = curr_channel_clusters[curr_channel_clusters[:, 0] == cluster, 1]
-                curr_cluster_spike_times_in_sec = curr_cluster_spike_times/1e3
+                if cluster > 0: # TODO: check if cluster #0 in wave_clus output corresponds to the 'garabage' cluster
+                    curr_cluster_spike_times = curr_channel_clusters[curr_channel_clusters[:, 0] == cluster, 1]
+                    curr_cluster_spike_times_in_sec = curr_cluster_spike_times/1e3
 
-                temp_dict = {}
-                temp_dict['spike_times_sec'] = np.asarray(curr_cluster_spike_times_in_sec)
-                temp_dict['time0'] = settings.time0
-                temp_dict['timeend'] = settings.timeend
-                temp_dict['electrode_name'] = electrode_names[ch-1]
-                temp_dict['from_channel'] = ch
+                    temp_dict = {}
+                    temp_dict['spike_times_sec'] = np.asarray(curr_cluster_spike_times_in_sec)
+                    temp_dict['time0'] = settings.time0
+                    temp_dict['timeend'] = settings.timeend
+                    temp_dict['electrode_name'] = electrode_names[ch-1]
+                    temp_dict['from_channel'] = ch
 
-                filename_curr_cluster = 'CSC' + str(cnt) + '_cluster.mat'
-                if not os.path.exists(settings.path2output_spike_clusters):
-                    os.makedirs(settings.path2output_spike_clusters)
-                io.savemat(os.path.join(settings.path2output_spike_clusters, filename_curr_cluster), temp_dict)
-                print('Saved:' + filename_curr_cluster)
-                cnt += 1  # To next cluster number in filename_curr_cluster
+                    filename_curr_cluster = 'CSC' + str(cnt) + '_cluster.mat'
+                    if not os.path.exists(settings.path2output_spike_clusters):
+                        os.makedirs(settings.path2output_spike_clusters)
+                    io.savemat(os.path.join(settings.path2output_spike_clusters, filename_curr_cluster), temp_dict)
+                    print('Saved:' + filename_curr_cluster)
+                    cnt += 1  # To next cluster number in filename_curr_cluster
         else:
             print(
             'Error: settings.channels_with_spikes contains channels without a corresponding times file from Wave_clus')

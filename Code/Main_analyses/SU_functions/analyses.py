@@ -168,10 +168,20 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
     ax1.tick_params(axis='y', which='both', left='off', labelleft='off', direction='in')
 
     IX_smaller_time_window = (power.times > min(power.times) + 0.2) & (power.times < max(power.times) - 0.2)  # indices to relevant times
-    ax2.plot(power.times[IX_smaller_time_window], np.nanmean(power_ave, axis=0))
+    ax2.plot(power.times[IX_smaller_time_window], stats.zscore(np.nanmean(power_ave, axis=0)))
     ax2.set_xlabel('Time [sec]', fontsize=24)
-    ax2.set_ylabel('Mean activity', fontsize=18)
+    ax2.set_ylabel('Mean activity (zscore)', fontsize=18)
     ax2.set_xlim([np.min(power.times)+0.2, np.max(power.times)-0.2])
+    ax2.axhline(y=3, linestyle='--', linewidth=3, color='g')
+    ax2.axhline(y=-3, linestyle='--', linewidth=3, color='g')
+    ax2.set_ylim([-6, 6])
+
+    # ax2_2 = ax2.twinx()
+    # ax2_2.plot(power.times[IX_smaller_time_window], stats.zscore(np.nanmean(power_ave, axis=0)))
+    # ax2_2.set_ylabel('zscore', color='b')
+    # ax2_2.tick_params('y', colors='b')
+    # ax2_2.axhline(y=3, linestyle='--', linewidth=3, color='b')
+    # ax2_2.axhline(y=-3, linestyle='--', linewidth=3, color='b')
 
     # Add vertical lines
     ax0.axvline(x=0, linestyle='--', linewidth=3, color='k')
