@@ -4,50 +4,12 @@ import os
 import mne
 import matplotlib.pyplot as plt
 import pickle
-import matplotlib.image as mpimg
 from operator import itemgetter
-import load_data, convert_to_mne, analyses
-
-def single_unit_analyses(events_spikes, event_id, metadata, comparisons, settings, params, preferences):
-    print('Loading spike sorted data (spike clusters)...')
-    spikes, settings, electrode_names_from_raw_files, from_channels = load_data.spike_clusters(settings)
-
-    print('Generating MNE raw object for spikes...')
-    raw_spikes = convert_to_mne.generate_mne_raw_object_for_spikes(spikes, electrode_names_from_raw_files, settings,
-                                                                   params)
-
-    print('Epoching spiking data...')
-    epochs_spikes = mne.Epochs(raw_spikes, events_spikes, event_id, params.tmin, params.tmax, metadata=metadata,
-                               baseline=None, preload=True)
-    print(epochs_spikes)
-
-    print('Generate rasters and PSTHs...')
-
-    if preferences.use_metadata_only:
-        for contrast_name, curr_query, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(
-                comparisons['contrast_names'], comparisons['queries'], comparisons['blocks'],
-                comparisons['align_to'], comparisons['sortings'], comparisons['cond_labels']):
-            print('Contrast: ' + contrast_name)
-            preferences.sort_according_to_key = [s.strip().encode('ascii') for s in curr_sorting]
-            str_blocks = ['block == {} or '.format(block) for block in eval(curr_blocks)]
-            str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
-            if curr_align_to == 'FIRST':
-                str_align = 'word_position == 1'
-            elif curr_align_to == 'LAST':
-                str_align = 'word_position == sentence_length'
-            elif curr_align_to == 'END':
-                str_align = 'word_position == -1'
-            elif curr_align_to == 'EACH':
-                str_align = 'word_position > 0'
-
-            for query_cond, label_cond in zip(curr_query, cond_label):
-                query = query_cond + ' and ' + str_align + ' and ' + str_blocks
-                print('Query: ' + query)
-                analyses.generate_rasters(epochs_spikes[query], query, electrode_names_from_raw_files, from_channels,
-                                          settings, params, preferences)
+import load_data, convert_to_mne
+from auxilary_functions import  smooth_with_gaussian
 
 
-def micro_electrodes_analyses(channels, comparisons, events, event_id, settings, params, preferences):
+def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, settings, params, preferences):
     print("Time-frequency analysis of all channels")
     for channel in channels:
         settings.channel = channel
@@ -76,17 +38,9 @@ def micro_electrodes_analyses(channels, comparisons, events, event_id, settings,
         epochs.resample(params.downsampling_sfreq, npad='auto')
         print('New sampling rate:', epochs.info['sfreq'], 'Hz')
 
-        # print('Plot paradigm')
-        # fig_paradigm = mne.viz.plot_events(events_spikes, raw.info['sfreq'], raw.first_samp,
-        #                                    event_id=event_id, show=False)
-        # fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '.png'
-        # plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
-        # plt.close(fig_paradigm)
-
         del raw, raw_CSC_data_in_mat
 
         print('Time-frequency analyses...')
-        event_ids_epochs = epochs.event_id.keys()
         for band, fmin, fmax in params.iter_freqs:
             print('Band: ' + band)
 
@@ -121,89 +75,45 @@ def micro_electrodes_analyses(channels, comparisons, events, event_id, settings,
                                              file_name + '.png'))) or settings.overwrite_existing_output_files:
 
                             query_baseline = query_cond + ' and word_position == 1 and ' + str_blocks
-                            _, _, baseline = analyses.average_high_gamma(epochs[query_baseline], band,
+                            _, _, baseline = average_high_gamma(epochs[query_baseline], band,
                                                                          fmin, fmax, params.freq_step, None,
                                                                          'trial_wise', params)
 
                             query = query_cond + ' and ' + str_align + ' and ' + str_blocks
                             if not curr_align_to == 'EACH':
-                                power, power_ave, _ = analyses.average_high_gamma(epochs[query],
+                                power, power_ave, _ = average_high_gamma(epochs[query],
                                                                                   band,
                                                                                   fmin, fmax, params.freq_step,
                                                                                   baseline,
                                                                                   'trial_wise', params)
                             else:
-                                power, power_ave, _ = analyses.average_high_gamma(epochs[query],
+                                power, power_ave, _ = average_high_gamma(epochs[query],
                                                                                   band,
                                                                                   fmin, fmax, params.freq_step,
                                                                                   [],
                                                                                   'no_baseline', params)
 
-                            power.tmin = epochs.tmin;
-                            power.tmax = epochs.tmax;
-                            power.metadata = epochs[query].metadata
-                            analyses.plot_and_save_high_gamma(power, power_ave, curr_align_to, eval(curr_blocks),
+                            epochs_power = epochs[query].copy()
+                            epochs_power.times = power.times
+                            epochs_power._data = power_ave
+                            # epochs._data = np.expand_dims(power_ave, axis=1)
+                            epochs_power.metadata = epochs[query].metadata
+
+
+                            plot_and_save_high_gamma(epochs_power, curr_align_to, eval(curr_blocks),
                                                               probe_name, file_name,
                                                               settings, params, preferences)
+
+                            file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                                    settings.channel) + '_' + settings.channel_name + '_' + query
+
+                            with open(os.path.join(settings.path2output, settings.patient,
+                                                   'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
+                                pickle.dump([epochs_power, query, settings, params, preferences], f)
+
+                            print('Save to: ' + file_name)
                         else:
                             print('File already exists')
-
-
-
-def generate_rasters(epochs_spikes, query, electrode_names_from_raw_files, from_channels, settings, params, preferences):
-    for cluster in np.arange(epochs_spikes.info['nchan']):
-
-        # Sort if needed
-        if preferences.sort_according_to_key:
-            fields_for_sorting = []
-            for field in preferences.sort_according_to_key:
-                fields_for_sorting.append(epochs_spikes.metadata[field])
-            if len(fields_for_sorting) == 1:
-                mylist = [(i, j) for (i, j) in zip(range(len(fields_for_sorting[0])), fields_for_sorting[0])]
-                IX = [i[0] for i in sorted(mylist, key=itemgetter(1))]
-            elif len(fields_for_sorting) == 2:
-                mylist = [(i, j, k) for (i, j, k) in zip(range(len(fields_for_sorting[0])), fields_for_sorting[0],
-                                                         fields_for_sorting[1])]
-                IX = [i[0] for i in sorted(mylist, key=itemgetter(1, 2))]
-        else:
-            IX = None
-
-        fig = epochs_spikes.plot_image(cluster, order=IX , vmin=0, vmax=1, colorbar=False, show=False)
-
-        if preferences.sort_according_to_key:
-            fig[0].axes[0].set_yticks(range(0, len(fields_for_sorting[0]), preferences.step))
-            yticklabels = np.sort(fields_for_sorting[0])[::preferences.step]
-            yticklabels = yticklabels[::-1]
-            fig[0].axes[0].set_yticklabels(yticklabels)
-            plt.setp(fig[0].axes[0], ylabel=preferences.sort_according_to_key[0])
-
-        sfreq = epochs_spikes.info['sfreq']
-        gaussian_width = 20 * 1e-3
-        mean_spike_count = np.mean(epochs_spikes._data[:,cluster,:], axis=0)
-        new_y_smoothed = smooth_with_gaussian(mean_spike_count, sfreq, gaussian_width = gaussian_width * sfreq)  # smooth with 20ms gaussian
-
-        x = fig[0].axes[1].lines[0]._x
-
-        fig[0].axes[1].clear()
-
-        fig[0].axes[1].plot(x, new_y_smoothed, 'k-')
-        fig[0].axes[1].set_xlim([fig[0].axes[0].get_xlim()[0]/1000, fig[0].axes[0].get_xlim()[1]/1000])
-        fig[0].axes[1].axvline(x=0, linestyle='--')
-
-        plt.setp(fig[0].axes[1], ylim=[0, params.ylim_PSTH], xlabel = 'Time [sec]', ylabel='spikes / s')
-        # IX = settings.events_to_plot[0].find('block')
-        # fname = 'raster_' + settings.hospital + '_' + settings.patient + '_channel_' + str(from_channels[cluster]) \
-        #         + '_cluster_' + str(cluster) + '_blocks_' + str(settings.blocks) + '_' + settings.events_to_plot[0][0:IX-1] + '_lengthSorted_' + \
-        #         str(preferences.sort_according_to_sentence_length) + '_' + electrode_names_from_raw_files[cluster] + '.png'
-        #         # )
-        fname = 'raster_' + settings.hospital + '_' + settings.patient +  '_' + electrode_names_from_raw_files[cluster] + '_cluster_' + str(cluster) + '_' + query
-        # )
-        for key_sort in preferences.sort_according_to_key:
-            fname += '_' + key_sort + 'Sorted'
-
-        if not os.path.exists(os.path.join(settings.path2figures, settings.patient, 'Rasters')):
-            os.makedirs(os.path.join(settings.path2figures, settings.patient, 'Rasters'))
-        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Rasters', fname + '.png'))
 
 
 def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type, params):
@@ -230,8 +140,7 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
         elif baseline_type == 'trial_wise':
             baseline = np.mean(power_ave[:, IX], axis=1) # For baseline: Average over negative times (assuming first word alignment)
             power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
-        # if all("KEY" in s for s in event_id_or_query):
-        #     power_ave_baselined = power_ave
+
     else:
         if baseline_type == 'subtract_average':
             power_ave_baselined = 10 * np.log10(power_ave / baseline)
@@ -253,14 +162,14 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
     return power, power_ave_baselined_smoothed, baseline
 
 
-def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, file_name, settings, params, preferences):
+def plot_and_save_high_gamma(epochs_power, align_to, blocks, probe_name, file_name, settings, params, preferences):
     from scipy import stats
     from sklearn import linear_model
     from sklearn.metrics import r2_score
 
     # Remove 0.2 sec from each side due to boundary effects
-    IX_smaller_time_window = (power.times > power.tmin + 0.2) & (power.times < power.tmax - 0.2)  # relevant times
-    power_ave = power_ave[:, IX_smaller_time_window]
+    IX_smaller_time_window = (epochs_power.times > epochs_power.tmin + 0.2) & (epochs_power.times < epochs_power.tmax - 0.2)  # relevant times
+    power_ave = epochs_power._data[:, IX_smaller_time_window]
     power_ave_zscore = stats.zscore(power_ave)
     power_ave[(power_ave_zscore > 3) | (power_ave_zscore < -3)] = np.NaN
 
@@ -268,7 +177,7 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
     if preferences.sort_according_to_key:
         fields_for_sorting = []
         for field in preferences.sort_according_to_key:
-            fields_for_sorting.append(power.metadata[field])
+            fields_for_sorting.append(epochs_power.metadata[field])
         if len(fields_for_sorting) == 1:
             mylist = [(i, j) for (i, j) in zip(range(len(fields_for_sorting[0])),fields_for_sorting[0])]
             IX = [i[0] for i in sorted(mylist, key=itemgetter(1))]
@@ -281,7 +190,7 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
         power_ave = power_ave[IX, :]
 
     # Indices for special time window for analysis (e.g., 200-500ms after end of sentence)
-    IX = (power.times > params.window_st / 1e3) & (power.times < params.window_ed / 1e3)
+    IX = (epochs_power.times > params.window_st / 1e3) & (epochs_power.times < params.window_ed / 1e3)
 
     # Run a linear regression if sorted according to, e.g., sentence length
     r2_string = ''
@@ -306,7 +215,7 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
     vmax1 = np.nanpercentile(power_ave, 95)
     vmin1 = np.nanpercentile(power_ave, 5)
     map = ax0.imshow(power_ave,
-                     extent=[np.min(power.times)+0.2, np.max(power.times)-0.2, 1, power.data.shape[0] + 1],
+                     extent=[np.min(epochs_power.times)+0.2, np.max(epochs_power.times)-0.2, 1, epochs_power._data.shape[0] + 1],
                      interpolation='nearest',
                      aspect='auto', vmin=vmin1, vmax=vmax1, cmap='jet')
     cbar = plt.colorbar(map, cax=cbaxes)
@@ -329,21 +238,14 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
     ax1.tick_params(axis='y', which='both', left='off', labelleft='off', direction='in')
 
 
-    IX_smaller_time_window = (power.times > min(power.times) + 0.2) & (power.times < max(power.times) - 0.2)  # indices to relevant times
-    ax2.plot(power.times[IX_smaller_time_window], stats.zscore(np.nanmean(power_ave, axis=0)))
+    IX_smaller_time_window = (epochs_power.times > min(epochs_power.times) + 0.2) & (epochs_power.times < max(epochs_power.times) - 0.2)  # indices to relevant times
+    ax2.plot(epochs_power.times[IX_smaller_time_window], stats.zscore(np.nanmean(power_ave, axis=0)))
     ax2.set_xlabel('Time [sec]', fontsize=24)
     ax2.set_ylabel('Mean activity (zscore)', fontsize=18)
-    ax2.set_xlim([np.min(power.times)+0.2, np.max(power.times)-0.2])
+    ax2.set_xlim([np.min(epochs_power.times)+0.2, np.max(epochs_power.times)-0.2])
     ax2.axhline(y=3, linestyle='--', linewidth=3, color='g')
     ax2.axhline(y=-3, linestyle='--', linewidth=3, color='g')
     ax2.set_ylim([-6, 6])
-
-    # ax2_2 = ax2.twinx()
-    # ax2_2.plot(power.times[IX_smaller_time_window], stats.zscore(np.nanmean(power_ave, axis=0)))
-    # ax2_2.set_ylabel('zscore', color='b')
-    # ax2_2.tick_params('y', colors='b')
-    # ax2_2.axhline(y=3, linestyle='--', linewidth=3, color='b')
-    # ax2_2.axhline(y=-3, linestyle='--', linewidth=3, color='b')
 
     # Add vertical lines
     ax0.axvline(x=0, linestyle='--', linewidth=3, color='k')
@@ -375,10 +277,6 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
         os.makedirs(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name))
     fig.savefig(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, file_name + '.png'))
     plt.close(fig)
-
-    # import pickle
-    # with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name + '.pkl'), 'w') as f:
-    #     pickle.dump([power, settings, params, preferences], f)
 
 
 def reproducability(power, power_ave, log_all_blocks, settings, params):
@@ -519,16 +417,3 @@ def reproducability(power, power_ave, log_all_blocks, settings, params):
             # cbar.set_label(label='Power (dB)', size=16)
 
     plt.savefig(os.path.join(settings.path2figures, settings.patient, 'Reproducability', file_name + '.png'))
-
-
-def smooth_with_gaussian(time_series, sfreq, gaussian_width = 50, N=1000):
-    # gaussian_width in samples
-    # ---------------------
-    import math
-    from scipy import signal
-    norm_factor = np.sqrt(2 * math.pi * gaussian_width ** 2)/sfreq # sanity check: norm_factor = gaussian_window.sum()
-    gaussian_window = signal.general_gaussian(M=N, p=1, sig=gaussian_width) # generate gaussian filter
-    norm_factor = (gaussian_window/sfreq).sum()
-    smoothed_time_series = np.convolve(time_series, gaussian_window/norm_factor, mode="full") # smooth
-    smoothed_time_series = smoothed_time_series[int(round(N/2)):-(int(round(N/2))-1)] # trim ends
-    return smoothed_time_series

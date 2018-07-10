@@ -12,7 +12,7 @@ def _get_chance_level(scorer, y_train):
     return chance
 
 
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses
+from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit
 from scipy import io
 import os, glob
 import mne

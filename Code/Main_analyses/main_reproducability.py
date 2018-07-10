@@ -1,4 +1,4 @@
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses
+from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit
 import os, glob
 import mne
 import matplotlib.pyplot as plt
@@ -100,11 +100,11 @@ for channel in channels:
             str_blocks = ['block == {} or '.format(block) for block in blocks]
             str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
             query = 'All_trials == 1 and word_position == 1 and ' + str_blocks
-            power, power_ave, baseline = analyses.average_high_gamma(epochs[query], band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
+            power, power_ave, baseline = analyses_single_unit.average_high_gamma(epochs[query], band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
 
             power.metadata = epochs[query].metadata
             settings.band = band
             # settings.event_str = event_str
             settings.blocks = blocks
-            analyses.reproducability(power, power_ave, log_all_blocks, settings, params)
+            analyses_single_unit.reproducability(power, power_ave, log_all_blocks, settings, params)
 

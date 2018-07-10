@@ -1,4 +1,4 @@
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses
+from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit
 from scipy import io
 import os, glob
 import mne
@@ -78,7 +78,7 @@ if preferences.analyze_micro_single:
     print(epochs_spikes)
 
     print('Generate rasters and PSTHs...')
-    analyses.generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences)
+    analyses_single_unit.generate_rasters(epochs_spikes, log_all_blocks, electrode_names_from_raw_files, from_channels, settings, params, preferences)
 
 # Micro (raw) analysis
 if preferences.analyze_micro_raw:
@@ -120,7 +120,7 @@ if preferences.analyze_micro_raw:
             event_ids_epochs = epochs_resampled.event_id.keys()
             for band, fmin, fmax in params.iter_freqs:
 
-                power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, event_ids_epochs, band,
+                power, power_ave, baseline = analyses_single_unit.average_high_gamma(epochs_resampled, event_ids_epochs, band,
                                                                                      fmin, fmax, params.freq_step, False, 'no_baseline', params)
 
                 epochs_resampled._data = np.expand_dims(power_ave, axis=1)
@@ -192,28 +192,28 @@ if preferences.analyze_macro:
             if any(["WORDS_ON_TIMES" in s for s in event_ids_epochs]):
                 event_str = "WORDS_ON_TIMES"
                 curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
-                power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
-                                                                  fmax, params.freq_step, False, params)
+                power, power_ave, _ = analyses_single_unit.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
+                                                                              fmax, params.freq_step, False, params)
                 file_name = band + '_' + settings.patient + '_channel_' + str(
                     settings.channel) + '_macro_Blocks_' + str(
                     settings.blocks) + '_Event_id_' + event_str + '_' + settings.channel_name + '_lengthSorted_' + str(
                     preferences.sort_according_to_sentence_length) + '_numLettersSorted_' + str(
                     preferences.sort_according_to_num_letters)
-                analyses.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name,
-                                                  settings, params, preferences)
+                analyses_single_unit.plot_and_save_high_gamma(power, power_ave, event_str, log_all_blocks, word2pos, file_name,
+                                                              settings, params, preferences)
 
             # Calculate average power activity
             for event_str in ["FIRST_WORD", "LAST_WORD", "KEY"]:
                 if any([event_str in s for s in event_ids_epochs]):
                     curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
                     if event_str == "FIRST_WORD": # Calculate baseline when alignment is locking to first word.
-                        power, power_ave, baseline = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
+                        power, power_ave, baseline = analyses_single_unit.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, None, params)
                     else:
                         if event_str == "KEY":  # Calculate baseline when alignment is locking to first word.
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
-                                                                                     fmax, params.freq_step, None, params)
+                            power, power_ave, _ = analyses_single_unit.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin,
+                                                                                          fmax, params.freq_step, None, params)
                         else:
-                            power, power_ave, _ = analyses.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, baseline, params)
+                            power, power_ave, _ = analyses_single_unit.average_high_gamma(epochs_resampled, curr_event_id_to_plot, band, fmin, fmax, params.freq_step, baseline, params)
 
                     file_name = band + '_' + settings.patient + '_channel_' + str(
                         settings.channel) + '_macro_Blocks_' + str(

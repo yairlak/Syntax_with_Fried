@@ -1,6 +1,8 @@
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses, generate_plots
+from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit, analyses_electrodes, generate_plots
 import matplotlib.pyplot as plt
 import sys
+import mne
+mne.set_log_level('CRITICAL') # DEBUG, INFO, WARNING, ERROR, or CRITICAL
 plt.switch_backend('agg')
 
 # ---- Get (optional) argument from terminal which defines the channel for gamma analysis
@@ -11,18 +13,15 @@ if len(sys.argv) > 1:
 else:
     channels = range(49, 57)
 
-# ------------ START MAIN --------------
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings()
 params = load_settings_params.Params()
 preferences = load_settings_params.Preferences()
 
-# ----------load and prepare META-DATA---------
 print('Metadata: Loading features and comparisons from Excel files...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
 comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, features, settings, preferences)
 
-# ---------------Experiment LOGS ---------------------
 print('Logs: Reading experiment log files from experiment...')
 log_all_blocks = []
 for block in range(1, 7):
@@ -47,8 +46,8 @@ generate_plots.plot_paradigm_timings(events_spikes, event_id, settings, params)
 
 ##### Single-unit analyses (generate rasters) #####
 if preferences.analyze_micro_single:
-    analyses.single_unit_analyses(events_spikes, event_id, metadata, comparisons, settings, params, preferences)
+    analyses_single_unit.generate_raster_plots(events_spikes, event_id, metadata, comparisons, settings, params, preferences)
 
 ##### Micro and macro electrodes analyses (Generates time-frequency plots) #####
 if preferences.analyze_micro_raw:
-    analyses.micro_electrodes_analyses(channels, comparisons, events, event_id, settings, params, preferences)
+    analyses_electrodes.generate_time_freq_plots(channels, events, event_id, metadata, comparisons, settings, params, preferences)

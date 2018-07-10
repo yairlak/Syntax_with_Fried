@@ -117,7 +117,6 @@ def generate_events_array(log_all_blocks, metadata, word2pos, settings, params, 
 def generate_mne_raw_object(data, settings, params):
     num_channels = data.shape[0]
     ch_types = ['seeg' for s in range(num_channels)]
-    # ch_names = ['sEEG_%s' % s for s in range(num_channels)]
     info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
     raw = mne.io.RawArray(data, info)
     return raw
@@ -126,7 +125,14 @@ def generate_mne_raw_object_for_spikes(spikes, electrode_names, settings, params
     sfreq = params.sfreq_spikes
     num_channels = len(spikes)
     ch_types = ['seeg' for s in range(num_channels)]
-    #ch_names = ['sEEG_%s' % s for s in range(num_channels)]
+
+    # montage = mne.channels.read_montage(kind='filename', ch_names=None, path='datapath', unit='m', transform=False)
+    # print(montage)
+    # raw.set_montage(montage, set_dig=True)
+    # montage = mne.channels.read_montage('standard_1005')
+    # montage.selection = montage.selection[0:len(electrode_names)]
+    # montage.ch_names[0:len(electrode_names)] = electrode_names
+
     info = mne.create_info(ch_names=electrode_names, sfreq=sfreq, ch_types=ch_types)
 
     num_samples = 1+int(sfreq * (settings.timeend - settings.time0)/1e6) # Use same sampling rate as for macro, just for convenience.
