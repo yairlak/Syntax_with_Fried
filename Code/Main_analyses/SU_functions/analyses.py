@@ -112,6 +112,8 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
 
 def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, file_name, settings, params, preferences):
     from scipy import stats
+    from sklearn import linear_model
+    from sklearn.metrics import r2_score
 
     # Remove 0.2 sec from each side due to boundary effects
     IX_smaller_time_window = (power.times > power.tmin + 0.2) & (power.times < power.tmax - 0.2)  # relevant times
@@ -127,11 +129,29 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
         if len(fields_for_sorting) == 1:
             mylist = [(i, j) for (i, j) in zip(range(len(fields_for_sorting[0])),fields_for_sorting[0])]
             IX = [i[0] for i in sorted(mylist, key=itemgetter(1))]
+            mylist_sorted = sorted(mylist, key=itemgetter(1))
         elif len(fields_for_sorting) == 2:
             mylist = [(i, j, k) for (i, j, k) in zip(range(len(fields_for_sorting[0])), fields_for_sorting[0],
                                                fields_for_sorting[1])]
             IX = [i[0] for i in sorted(mylist, key=itemgetter(1, 2))]
+            mylist_sorted = sorted(mylist, key=itemgetter(1, 2))
         power_ave = power_ave[IX, :]
+
+    # Indices for special time window for analysis (e.g., 200-500ms after end of sentence)
+    IX = (power.times > params.window_st / 1e3) & (power.times < params.window_ed / 1e3)
+
+    # Run a linear regression if sorted according to, e.g., sentence length
+    r2_string = ''
+    if preferences.sort_according_to_key:
+        X = np.asarray([tup[1] for tup in mylist_sorted])
+        y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
+        IX_nan = np.isnan(y)
+        X = X[~IX_nan]; y = y[~IX_nan]
+        regr = linear_model.LinearRegression()
+        regr.fit(np.expand_dims(X, 1), y)
+        y_pred = regr.predict(np.expand_dims(X, 1))
+        r2 = r2_score(y, y_pred)
+        r2_string = '%s $ R^2=%1.2f$' % (preferences.sort_according_to_key[0], r2)
 
     # Plot
     fig = plt.figure(figsize=(20, 12))
@@ -159,13 +179,12 @@ def plot_and_save_high_gamma(power, power_ave, align_to, blocks, probe_name, fil
         ax0.set_yticklabels(yticklabels)
         plt.setp(ax0, ylabel=preferences.sort_according_to_key[0])
 
-
-    IX = (power.times > params.window_st / 1e3) & (power.times < params.window_ed / 1e3)
     ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-    ax1.set_xlabel('Mean activity')
+    ax1.set_xlabel('Mean activity\n' + r2_string)
     ax1.set_ylim([1, 1 + power_ave.shape[0]])
     ax1.set_xlim([0, np.nanmean(power_ave) + 3*np.nanstd(power_ave)])
     ax1.tick_params(axis='y', which='both', left='off', labelleft='off', direction='in')
+
 
     IX_smaller_time_window = (power.times > min(power.times) + 0.2) & (power.times < max(power.times) - 0.2)  # indices to relevant times
     ax2.plot(power.times[IX_smaller_time_window], stats.zscore(np.nanmean(power_ave, axis=0)))

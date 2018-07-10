@@ -26,22 +26,13 @@ settings = load_settings_params.Settings()
 params = load_settings_params.Params()
 preferences = load_settings_params.Preferences()
 
-# --------------------------------------
+# ----------META-DATA---------
 # if preferences.run_contrasts or preferences.use_metadata_only:
 print('Metadata: Loading features and comparisons from Excel files...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
-contrast_names = comparison_list['fields'][1][settings.comparisons]
-contrasts = comparison_list['fields'][2][settings.comparisons]
-cond_labels = comparison_list['fields'][3][settings.comparisons]
-cond_labels = [cond_label[1:-1].split(',') for cond_label in cond_labels]
-align_to = comparison_list['fields'][4][settings.comparisons]
-blocks = comparison_list['fields'][5][settings.comparisons]
-sortings = comparison_list['fields'][6][settings.comparisons]
-sortings = [s.split(',') if isinstance(s, unicode) else [] for s in sortings]
-union_or_intersection = comparison_list['fields'][7][settings.comparisons]
-comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, blocks, union_or_intersection, features, preferences)
+comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, features, settings, preferences)
 
-# --------------------------------------------
+# ---------------Experiment LOGS ---------------------
 print('Logs: Reading log files from experiment...')
 log_all_blocks = []
 for block in range(1, 7):
@@ -79,17 +70,12 @@ if preferences.analyze_micro_single:
     epochs_spikes = mne.Epochs(raw_spikes, events_spikes, event_id, params.tmin, params.tmax, metadata=metadata, baseline=None, preload=True)
     print(epochs_spikes)
 
-    # event_ids_epochs = epochs_spikes.event_id.keys()
-    # for event_str in ["FIRST_WORD", "LAST_WORD", "END_WAV_TIMES"]:  # "END_WAV_TIMES"]: #""LAST_WORD"]:#  , "KEY"]:
-    #     if any([event_str in s for s in event_ids_epochs]):
-    #         curr_event_id_to_plot = [s for s in event_ids_epochs if event_str in s]
     print('Generate rasters and PSTHs...')
-    # settings.events_to_plot = curr_event_id_to_plot
+
     if preferences.use_metadata_only:
-        for contrast_name, comparison, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(contrast_names,
-                                                                                                   comparisons, blocks,
-                                                                                                   align_to, sortings,
-                                                                                                   cond_labels):
+        for contrast_name, curr_query, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(comparisons['contrast_names'], comparisons['queries'], comparisons['blocks'],
+                                                                                                   comparisons['align_to'], comparisons['sortings'], comparisons['cond_labels']):
+            print('Contrast: ' + contrast_name)
             preferences.sort_according_to_key = [s.strip().encode('ascii') for s in curr_sorting]
             str_blocks = ['block == {} or '.format(block) for block in eval(curr_blocks)]
             str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
@@ -102,20 +88,9 @@ if preferences.analyze_micro_single:
             elif curr_align_to == 'EACH':
                 str_align = 'word_position > 0'
 
-            for query_cond, label_cond in zip(comparison, cond_label):
-                # file_name = str(settings.patient + '_channel_' + str(settings.channel) + '_Blocks_'
-                #                 + curr_blocks + '_' + label_cond + '_' + curr_align_to + '_' + settings.channel_name)
-                # for key_sort in preferences.sort_according_to_key:
-                #     file_name += '_' + key_sort + 'Sorted'
-
-                # IX1 = settings.channel_name.find('_0019')
-                # if IX1 == -1:
-                #     IX1 = settings.channel_name.find('.ncs')
-                # probe_name = settings.channel_name[0:IX1 - 1]
-                # if (not os.path.isfile(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name,
-                #                                     file_name + '.png'))) or settings.overwrite_existing_output_files:
+            for query_cond, label_cond in zip(curr_query, cond_label):
                 query = query_cond + ' and ' + str_align + ' and ' + str_blocks
-
+                print('Query: ' + query)
                 analyses.generate_rasters(epochs_spikes[query], query, electrode_names_from_raw_files, from_channels, settings, params, preferences)
 
 # Electrodes (Time-frequency analysis)
@@ -162,7 +137,7 @@ if preferences.analyze_micro_raw:
             print('Band: ' + band)
 
             if preferences.use_metadata_only:
-                for contrast_name, comparison, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(contrast_names, comparisons, blocks, align_to, sortings, cond_labels):
+                for contrast_name, curr_query, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(comparisons['contrast_names'], comparisons['queries'], comparisons['blocks'], comparisons['align_to'], comparisons['sortings'], comparisons['cond_labels']):
                     preferences.sort_according_to_key = [s.strip().encode('ascii') for s in curr_sorting]
                     str_blocks = ['block == {} or '.format(block) for block in eval(curr_blocks)]
                     str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
@@ -175,7 +150,7 @@ if preferences.analyze_micro_raw:
                     elif curr_align_to == 'EACH':
                         str_align = 'word_position > 0'
 
-                    for query_cond, label_cond in zip(comparison, cond_label):
+                    for query_cond, label_cond in zip(curr_query, cond_label):
                         file_name = str(band + '_' + settings.patient + '_channel_' + str(settings.channel) + '_Blocks_'
                                         + curr_blocks + '_' + label_cond + '_' + curr_align_to + '_' + settings.channel_name)
                         for key_sort in preferences.sort_according_to_key:
