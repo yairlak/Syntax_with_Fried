@@ -8,7 +8,7 @@ if len(sys.argv) > 1:
     ch = int(sys.argv[1])
     channels = range(ch, ch + 1, 1)
 else:
-    channels = range(49, 52)
+    channels = range(49, 57)
 
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings()

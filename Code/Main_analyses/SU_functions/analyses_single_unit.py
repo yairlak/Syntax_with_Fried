@@ -7,6 +7,8 @@ import pickle
 from operator import itemgetter
 import load_data, convert_to_mne
 from auxilary_functions import  smooth_with_gaussian
+from auxilary_functions import  get_queries
+
 
 def generate_raster_plots(events_spikes, event_id, metadata, comparisons, settings, params, preferences):
     print('Loading spike sorted data (spike clusters)...')
@@ -26,20 +28,9 @@ def generate_raster_plots(events_spikes, event_id, metadata, comparisons, settin
     if preferences.use_metadata_only:
         for i, comparison in enumerate(comparisons):
             print('Contrast: ' + comparison['contrast_name'])
+            queries = get_queries(comparison)
             preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
-            str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
-            str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
-            if comparison['align_to'] == 'FIRST':
-                str_align = 'word_position == 1'
-            elif comparison['align_to'] == 'LAST':
-                str_align = 'word_position == sentence_length'
-            elif comparison['align_to'] == 'END':
-                str_align = 'word_position == -1'
-            elif comparison['align_to'] == 'EACH':
-                str_align = 'word_position > 0'
-
-            for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
-                query = query_cond + ' and ' + str_align + ' and ' + str_blocks
+            for query in queries:
                 print('Query: ' + query)
                 generate_rasters(epochs_spikes[query], query, electrode_names_from_raw_files, from_channels,
                                           settings, params, preferences)

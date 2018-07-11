@@ -17,7 +17,8 @@ class Settings():
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_482'
-        self.comparisons = [16]
+        self.comparisons = [range(8)]
+        self.comparisons = [0, 1]
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
         self.load_line_filtered_resampled_epoch_object = False
@@ -45,7 +46,7 @@ class Settings():
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
-        self.comparisons_file = 'comparisons_' + self.patient + '.xlsx'
+        self.comparisons_file = 'comparisons.xlsx'
         self.features_file = 'features_' + self.patient + '.xlsx'
         self.word2pos_file = 'word2POS.pkl'
 
