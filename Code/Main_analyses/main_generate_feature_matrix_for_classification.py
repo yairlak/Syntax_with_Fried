@@ -10,32 +10,21 @@ from sklearn.svm import LinearSVC
 import sys
 import pickle
 
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+if len(sys.argv) > 1:
+    print 'Channel ' + sys.argv[1]
+    ch = int(sys.argv[1])
+    channels = range(ch, ch + 1, 1)
+else:
+    channels = range(49, 57)
 
-channels_micro = range(1,129,1)
-channels_macro = range(1,2,1)
-
-
-# ------------ START MAIN --------------
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings()
-
-print('Loading parameters...')
 params = load_settings_params.Params()
-
-print('Loading preferences...')
 preferences = load_settings_params.Preferences()
 
-print('Loading features and comparisons...')
+print('Metadata: Loading features and comparisons from Excel files...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
-contrast_names = comparison_list['fields'][1]
-contrasts = comparison_list['fields'][2]
-align_to = comparison_list['fields'][4]
-union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
-if settings.comparisons is not None: comparisons = [cmp for i, cmp in enumerate(comparisons) if i+1 in settings.comparisons]
+comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, features, settings, preferences)
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
@@ -50,13 +39,7 @@ for i, comparison in enumerate(comparisons):
         print('Generating MNE raw object for spikes...')
         raw_spikes = convert_to_mne.generate_mne_raw_object_for_spikes(spikes, electrode_names_from_raw_files, settings, params)
 
-        # Draw event times of the paradigm
-        fname = 'paradigm_events_' + settings.hospital + '_' + settings.patient + '_' + str(settings.blocks) + '.png'
-        fig_paradigm = mne.viz.plot_events(events_spikes, raw_spikes.info['sfreq'], raw_spikes.first_samp, color=color_curr, event_id=event_id, show=False)
-        plt.savefig(os.path.join(settings.path2figures, settings.patient, 'misc', fname))
-        plt.close(fig_paradigm)
-
-        print('Epoching spiking data...')
+                print('Epoching spiking data...')
         epochs_spikes = mne.Epochs(raw_spikes, events_spikes, event_id, params.tmin, params.tmax, baseline=None, preload=True)
         print(epochs_spikes)
 

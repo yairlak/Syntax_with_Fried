@@ -3,23 +3,22 @@ import os, glob
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = False
+        self.analyze_micro_single = True
         self.analyze_micro_raw = True
+        self.save_features_for_classification = True
+
         self.run_contrasts = False
         self.run_POS = False
         self.use_metadata_only = True
         self.step = 100 # yticklabels step when sorting trials according to keys
-        import sys
-        if (self.run_contrasts + self.run_POS) > 1:
-            sys.exit('In Preferences - either run_contrast or run_POS, not both')
 
 class Settings():
     def __init__(self):
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_482'
-        self.comparisons = [4]
-        self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
+        self.comparisons = [16]
+        # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
         self.load_line_filtered_resampled_epoch_object = False
         self.overwrite_existing_output_files = True

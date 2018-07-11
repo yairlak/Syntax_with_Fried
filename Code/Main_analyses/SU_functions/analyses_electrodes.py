@@ -45,24 +45,22 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
             print('Band: ' + band)
 
             if preferences.use_metadata_only:
-                for contrast_name, curr_query, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(
-                        comparisons['contrast_names'], comparisons['queries'], comparisons['blocks'],
-                        comparisons['align_to'], comparisons['sortings'], comparisons['cond_labels']):
-                    preferences.sort_according_to_key = [s.strip().encode('ascii') for s in curr_sorting]
-                    str_blocks = ['block == {} or '.format(block) for block in eval(curr_blocks)]
+                for i, comparison in enumerate(comparisons):
+                    print('Contrast: ' + comparison['contrast_name'])
+                    preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
+                    str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
                     str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
-                    if curr_align_to == 'FIRST':
+                    if comparison['align_to'] == 'FIRST':
                         str_align = 'word_position == 1'
-                    elif curr_align_to == 'LAST':
+                    elif comparison['align_to'] == 'LAST':
                         str_align = 'word_position == sentence_length'
-                    elif curr_align_to == 'END':
+                    elif comparison['align_to'] == 'END':
                         str_align = 'word_position == -1'
-                    elif curr_align_to == 'EACH':
+                    elif comparison['align_to'] == 'EACH':
                         str_align = 'word_position > 0'
 
-                    for query_cond, label_cond in zip(curr_query, cond_label):
-                        file_name = str(band + '_' + settings.patient + '_channel_' + str(settings.channel) + '_Blocks_'
-                                        + curr_blocks + '_' + label_cond + '_' + curr_align_to + '_' + settings.channel_name)
+                    for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
+                        file_name = band + '_' + settings.patient + '_channel_' + str(settings.channel) + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to'] + '_' + settings.channel_name
                         for key_sort in preferences.sort_according_to_key:
                             file_name += '_' + key_sort + 'Sorted'
 
@@ -80,7 +78,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                                                                          'trial_wise', params)
 
                             query = query_cond + ' and ' + str_align + ' and ' + str_blocks
-                            if not curr_align_to == 'EACH':
+                            if not comparison['align_to'] == 'EACH':
                                 power, power_ave, _ = average_high_gamma(epochs[query],
                                                                                   band,
                                                                                   fmin, fmax, params.freq_step,
@@ -93,25 +91,26 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                                                                                   [],
                                                                                   'no_baseline', params)
 
-                            epochs_power = epochs[query].copy()
-                            epochs_power.times = power.times
-                            epochs_power._data = power_ave
-                            # epochs._data = np.expand_dims(power_ave, axis=1)
-                            epochs_power.metadata = epochs[query].metadata
+                            if preferences.save_features_for_classification:
+                                epochs_power = epochs[query].copy()
+                                epochs_power.times = power.times
+                                epochs_power._data = power_ave
+                                # epochs._data = np.expand_dims(power_ave, axis=1)
+                                epochs_power.metadata = epochs[query].metadata
 
 
-                            plot_and_save_high_gamma(epochs_power, curr_align_to, eval(curr_blocks),
-                                                              probe_name, file_name,
-                                                              settings, params, preferences)
+                                plot_and_save_high_gamma(epochs_power, comparison['align_to'], eval(comparison['blocks']),
+                                                                  probe_name, file_name,
+                                                                  settings, params, preferences)
 
-                            file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                                    settings.channel) + '_' + settings.channel_name + '_' + query
+                                file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                                        settings.channel) + '_' + query
 
-                            with open(os.path.join(settings.path2output, settings.patient,
-                                                   'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
-                                pickle.dump([epochs_power, query, settings, params, preferences], f)
+                                with open(os.path.join(settings.path2output, settings.patient,
+                                                       'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
+                                    pickle.dump([epochs_power, query, settings, params, preferences], f)
 
-                            print('Save to: ' + file_name)
+                                print('Save to: ' + file_name)
                         else:
                             print('File already exists')
 

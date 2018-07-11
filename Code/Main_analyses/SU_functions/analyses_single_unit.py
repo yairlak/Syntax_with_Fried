@@ -24,40 +24,39 @@ def generate_raster_plots(events_spikes, event_id, metadata, comparisons, settin
     print('Generate rasters and PSTHs...')
 
     if preferences.use_metadata_only:
-        for contrast_name, curr_query, curr_blocks, curr_align_to, curr_sorting, cond_label in zip(
-                comparisons['contrast_names'], comparisons['queries'], comparisons['blocks'],
-                comparisons['align_to'], comparisons['sortings'], comparisons['cond_labels']):
-            print('Contrast: ' + contrast_name)
-            preferences.sort_according_to_key = [s.strip().encode('ascii') for s in curr_sorting]
-            str_blocks = ['block == {} or '.format(block) for block in eval(curr_blocks)]
+        for i, comparison in enumerate(comparisons):
+            print('Contrast: ' + comparison['contrast_name'])
+            preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
+            str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
             str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
-            if curr_align_to == 'FIRST':
+            if comparison['align_to'] == 'FIRST':
                 str_align = 'word_position == 1'
-            elif curr_align_to == 'LAST':
+            elif comparison['align_to'] == 'LAST':
                 str_align = 'word_position == sentence_length'
-            elif curr_align_to == 'END':
+            elif comparison['align_to'] == 'END':
                 str_align = 'word_position == -1'
-            elif curr_align_to == 'EACH':
+            elif comparison['align_to'] == 'EACH':
                 str_align = 'word_position > 0'
 
-            for query_cond, label_cond in zip(curr_query, cond_label):
+            for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
                 query = query_cond + ' and ' + str_align + ' and ' + str_blocks
                 print('Query: ' + query)
                 generate_rasters(epochs_spikes[query], query, electrode_names_from_raw_files, from_channels,
                                           settings, params, preferences)
 
-                # Save rasters as features for classifcation
-                file_name = 'Feature_matrix_rasters_' + settings.patient + query
-                if not os.path.exists(
-                    os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification')): os.makedirs(
-                    os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification'))
-                with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification',
-                                       file_name + '.pkl'), 'wb') as f:
-                    pickle.dump([epochs_spikes[query], electrode_names_from_raw_files, query, settings, params, preferences], f)
+                if preferences.save_features_for_classification:
+                    # Save rasters as features for classifcation
+                    file_name = 'Feature_matrix_rasters_' + settings.patient + '_' + query
+                    if not os.path.exists(
+                        os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification')): os.makedirs(
+                        os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification'))
+                    with open(os.path.join(settings.path2output, settings.patient, 'feature_matrix_for_classification',
+                                           file_name + '.pkl'), 'wb') as f:
+                        pickle.dump([epochs_spikes[query], electrode_names_from_raw_files, query, settings, params, preferences], f)
 
-                print('Data saved to: ' + os.path.join(settings.path2output, settings.patient,
-                                                       'feature_matrix_for_classification',
-                                                       file_name + '.pkl'))
+                    print('Data saved to: ' + os.path.join(settings.path2output, settings.patient,
+                                                           'feature_matrix_for_classification',
+                                                           file_name + '.pkl'))
 
 
 def generate_rasters(epochs_spikes, query, electrode_names_from_raw_files, from_channels, settings, params, preferences):

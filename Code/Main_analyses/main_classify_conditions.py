@@ -19,7 +19,7 @@ import mne
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import numpy as np
-from mne.decoding import GeneralizationAcrossTime
+from mne.decoding import GeneralizingEstimator
 from sklearn.svm import LinearSVC
 import sys
 import pickle
@@ -43,24 +43,15 @@ band = 'High-Gamma'
 # ------------ START MAIN --------------
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings()
-
-print('Loading parameters...')
 params = load_settings_params.Params()
-
-print('Loading preferences...')
 preferences = load_settings_params.Preferences()
 
-print('Loading features and comparisons...')
+print('Metadata: Loading features and comparisons from Excel files...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
-contrast_names = comparison_list['fields'][1]
-contrasts = comparison_list['fields'][2]
-align_to = comparison_list['fields'][4]
-union_or_intersection = comparison_list['fields'][6]
-comparisons = read_logs_and_comparisons.extract_comparison(contrast_names, contrasts, align_to, union_or_intersection, features)
-if settings.comparisons is not None: comparisons = [cmp for i, cmp in enumerate(comparisons) if i+1 in settings.comparisons]
+comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, features, settings, preferences)
 
 print('Loop over all comparisons: prepare & save data for classification')
-for i, comparison in enumerate(comparisons):
+for comparison in comparisons:
     contrast_name = comparison[2]
     print(contrast_name)
     if preferences.run_contrasts:
