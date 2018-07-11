@@ -1,4 +1,8 @@
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   35.4s finished
-/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/axes/_axes.py:545: UserWarning: No labelled objects found. Use label='...' kwarg on individual plots.
-  warnings.warn("No labelled objects found. "
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   44.8s finished
+[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   12.6s finished
+[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   10.2s finished
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses.py:164: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1842 but corresponding boolean dimension is 2048
+  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
+[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   10.2s finished
+[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   10.2s finished
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses.py:164: RuntimeWarning: Mean of empty slice
+  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))

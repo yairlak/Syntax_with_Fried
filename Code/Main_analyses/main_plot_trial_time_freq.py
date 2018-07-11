@@ -16,7 +16,7 @@ channels = range(49,57)
 # --------- Read params from outside --------
 # Get (optional) argument from terminal which defines the channel for gamma analysis
 if len(sys.argv) > 1:
-    print 'Channel ' + sys.argv[1]
+    print ('Channel ' + sys.argv[1])
     ch = int(sys.argv[1])
     channels = range(ch, ch + 1, 1)
 

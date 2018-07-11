@@ -1,4 +1,1 @@
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   49.4s finished
-/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/axes/_axes.py:545: UserWarning: No labelled objects found. Use label='...' kwarg on individual plots.
-  warnings.warn("No labelled objects found. "
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   34.4s finished
+/opt/torque/mom_priv/jobs/4055725.gabriel.intra.cea.fr.SC: line 1:  6683 Killed                  python2.7 /neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/main_plot_trial_time_freq.py 15
