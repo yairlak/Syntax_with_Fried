@@ -3,7 +3,7 @@ import os, glob
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = True
+        self.analyze_micro_single = False
         self.analyze_micro_raw = True
         self.save_features_for_classification = True
 

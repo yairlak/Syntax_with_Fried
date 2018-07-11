@@ -11,3 +11,22 @@ def smooth_with_gaussian(time_series, sfreq, gaussian_width = 50, N=1000):
     smoothed_time_series = np.convolve(time_series, gaussian_window/norm_factor, mode="full") # smooth
     smoothed_time_series = smoothed_time_series[int(round(N/2)):-(int(round(N/2))-1)] # trim ends
     return smoothed_time_series
+
+
+def get_queries(comparison):
+    str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
+    str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
+    if comparison['align_to'] == 'FIRST':
+        str_align = 'word_position == 1'
+    elif comparison['align_to'] == 'LAST':
+        str_align = 'word_position == sentence_length'
+    elif comparison['align_to'] == 'END':
+        str_align = 'word_position == -1'
+    elif comparison['align_to'] == 'EACH':
+        str_align = 'word_position > 0'
+
+    queries = []
+    for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
+        queries.append(query_cond + ' and ' + str_align + ' and ' + str_blocks)
+
+    return queries

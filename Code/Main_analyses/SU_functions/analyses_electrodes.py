@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import pickle
 from operator import itemgetter
 import load_data, convert_to_mne
-from auxilary_functions import  smooth_with_gaussian
+from auxilary_functions import smooth_with_gaussian
+from auxilary_functions import get_queries
 
 
 def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, settings, params, preferences):
@@ -47,6 +48,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
             if preferences.use_metadata_only:
                 for i, comparison in enumerate(comparisons):
                     print('Contrast: ' + comparison['contrast_name'])
+                    # queries = get_queries(comparison)
                     preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
                     str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
                     str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
@@ -95,14 +97,13 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                                 epochs_power = epochs[query].copy()
                                 epochs_power.times = power.times
                                 epochs_power._data = power_ave
-                                # epochs._data = np.expand_dims(power_ave, axis=1)
                                 epochs_power.metadata = epochs[query].metadata
 
 
                                 plot_and_save_high_gamma(epochs_power, comparison['align_to'], eval(comparison['blocks']),
                                                                   probe_name, file_name,
                                                                   settings, params, preferences)
-
+                                epochs_power._data = np.expand_dims(power_ave, axis=1) # To be compatible with MNE functions: add a middle singelton dimenstion for number of channels
                                 file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
                                         settings.channel) + '_' + query
 
