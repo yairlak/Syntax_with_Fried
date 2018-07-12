@@ -180,36 +180,53 @@ def load_comparisons_and_features(settings):
     return comparison_list, features
 
 
-def extract_comparison(contrast_names, contrasts, align_to, blocks, union_or_intersection, features, preferences):
+def extract_comparison(comparison_list, features, settings, preferences):
     trial_numbers = features['fields'][0][1::]
     stimuli = features['fields'][1][1::]
     features = features['fields'][2::]
+    contrast_names = comparison_list['fields'][1][settings.comparisons]
 
     comparisons = []
 
     ### Comparisons
-    for i, contrast in enumerate(contrasts):
-
+    for i, contrast_name in enumerate(contrast_names):
         if preferences.use_metadata_only:
-            list_of_queries = contrast[1:-1].split(',')
-            list_of_queries = [s.strip() for s in list_of_queries]
-            comparisons.append(list_of_queries)
+            curr_dict = {}
+            curr_dict['contrast_name'] = contrast_name
+            curr_dict['contrast'] = comparison_list['fields'][2][settings.comparisons][i]
+            curr_query = curr_dict['contrast'][1:-1].split(',')
+            curr_query = [s.strip() for s in curr_query]
+            curr_dict['query'] = curr_query
+            cond_labels = comparison_list['fields'][3][settings.comparisons][i]
+            curr_dict['cond_labels'] = cond_labels[1:-1].split(',')
+            curr_dict['align_to'] = comparison_list['fields'][4][settings.comparisons][i]
+            curr_dict['blocks'] = comparison_list['fields'][5][settings.comparisons][i]
+            sortings = comparison_list['fields'][6][settings.comparisons][i]
+            if isinstance(sortings, unicode):
+                curr_dict['sorting'] = sortings.split(',')
+            else:
+                curr_dict['sorting'] = []
+            curr_dict['union_or_intersection'] = comparison_list['fields'][7][settings.comparisons][i]
+
+            comparisons.append(curr_dict)
         else:
-            contrast = str(contrast[2:-2]).split('],[')
-            trial_numbers_and_strings = []
-            for j, columns_condition in enumerate(contrast):
-                columns_condition = columns_condition.split(',')
-                columns_condition = [int(s) for s in columns_condition]
-                binary_values_in_columns = [binary_values[1::] for col, binary_values in enumerate(features) if col+3 in columns_condition] # +3: Assumes features in XLS starts at column C
-                if bool(union_or_intersection[i][j]):
-                    IX_trials_curr_cond = np.prod(np.asarray(binary_values_in_columns), axis=0) == 1 # AND
-                else:
-                    IX_trials_curr_cond = np.sum(np.asarray(binary_values_in_columns), axis=0) > 0 # OR
-                curr_trial_numbers = trial_numbers[IX_trials_curr_cond]
-                curr_stimuli = stimuli[IX_trials_curr_cond]
-                IX_sort = np.argsort(curr_trial_numbers)
-                trial_numbers_and_strings.append({'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
-            comparisons.append([trial_numbers_and_strings, align_to[i], contrast_names[i]])
+            print('!!!!!!XXXXXXXX!!!!!!!!!')
+            # contrast = str(contrast[2:-2]).split('],[')
+            # trial_numbers_and_strings = []
+            # for j, columns_condition in enumerate(contrast):
+            #     columns_condition = columns_condition.split(',')
+            #     columns_condition = [int(s) for s in columns_condition]
+            #     binary_values_in_columns = [binary_values[1::] for col, binary_values in enumerate(features) if col+3 in columns_condition] # +3: Assumes features in XLS starts at column C
+            #     if bool(union_or_intersection[i][j]):
+            #         IX_trials_curr_cond = np.prod(np.asarray(binary_values_in_columns), axis=0) == 1 # AND
+            #     else:
+            #         IX_trials_curr_cond = np.sum(np.asarray(binary_values_in_columns), axis=0) > 0 # OR
+            #     curr_trial_numbers = trial_numbers[IX_trials_curr_cond]
+            #     curr_stimuli = stimuli[IX_trials_curr_cond]
+            #     IX_sort = np.argsort(curr_trial_numbers)
+            #     trial_numbers_and_strings.append({'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
+            # queries.append([trial_numbers_and_strings, align_to[i], contrast_names[i]])
+
 
     return comparisons
 

@@ -1,6 +1,0 @@
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:    9.8s finished
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:    9.7s finished
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses.py:164: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1842 but corresponding boolean dimension is 2048
-  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:    9.9s finished
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:    9.8s finished

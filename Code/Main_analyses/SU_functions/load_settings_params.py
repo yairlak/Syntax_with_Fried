@@ -3,22 +3,23 @@ import os, glob
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = False
+        self.analyze_micro_single = False 
         self.analyze_micro_raw = True
+        self.save_features_for_classification = True
+
         self.run_contrasts = False
         self.run_POS = False
         self.use_metadata_only = True
         self.step = 100 # yticklabels step when sorting trials according to keys
-        import sys
-        if (self.run_contrasts + self.run_POS) > 1:
-            sys.exit('In Preferences - either run_contrast or run_POS, not both')
+
 
 class Settings():
     def __init__(self):
         # PATIENT:
         self.hospital = 'UCLA'
-        self.patient = 'patient_482'
-        self.comparisons = [6, 9] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
+        self.patient = 'patient_479'
+        self.comparisons = [range(6)]
+        # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
         self.load_line_filtered_resampled_epoch_object = False
         self.overwrite_existing_output_files = True
@@ -27,11 +28,7 @@ class Settings():
         self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
-        #self.path2macro = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/Macro/ChannelsCSC'
-        #self.path2macro =  os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Macro', 'ChannelsCSC')
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
-        # self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
-        self.path2rawdata_mat = '/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/' + self.patient + '/ChannelsCSC'
         self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
@@ -45,7 +42,7 @@ class Settings():
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
-        self.comparisons_file = 'comparisons_' + self.patient + '.xlsx'
+        self.comparisons_file = 'comparisons.xlsx'
         self.features_file = 'features_' + self.patient + '.xlsx'
         self.word2pos_file = 'word2POS.pkl'
 

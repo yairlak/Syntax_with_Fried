@@ -1,4 +1,4 @@
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, analyses
+from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, analyses_single_unit
 from scipy import io
 import os
 import numpy as np
