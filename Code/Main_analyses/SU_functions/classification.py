@@ -11,8 +11,7 @@ import numpy as np
 plt.switch_backend('agg')
 
 
-def get_multichannel_epochs_for_all_current_conditions(comparison, settings, preferences):
-    queries = auxilary_functions.get_queries(comparison)
+def get_multichannel_epochs_for_all_current_conditions(comparison, queries, settings, preferences):
     epochs_all_queries = []
     for q, query in enumerate(queries):
         for p, patient in enumerate(settings.patients):
@@ -69,10 +68,10 @@ def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     train_times["start"] = -2.5
     train_times["stop"] = 2.5
     train_times["step"] = 0.01
-    test_times = {}
-    test_times["start"] = -1.0
-    test_times["stop"] = 1.05
-    test_times["step"] = 0.01
+    # test_times = {}
+    # test_times["start"] = -1.0
+    # test_times["stop"] = 1.05
+    # test_times["step"] = 0.01
 
     epochs_all_queries.crop(train_times["start"], train_times["stop"])
     epochs_all_queries.decimate(decim=10)
@@ -116,6 +115,64 @@ def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     plt.colorbar(im, ax=ax)
 
     file_name = 'GeneralizingEstimator_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
+    plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
+    plt.close()
+    print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
+
+
+def plot_generalizing_estimator_cross_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparison, settings):
+    train_times = {}
+    train_times["start"] = -2.5
+    train_times["stop"] = 2.5
+    train_times["step"] = 0.01
+
+    epochs_all_queries.crop(train_times["start"], train_times["stop"])
+    epochs_all_queries.decimate(decim=10)
+    epochs_all_queries_to_generalize.crop(train_times["start"], train_times["stop"])
+    epochs_all_queries_to_generalize.decimate(decim=10)
+
+    X = epochs_all_queries.get_data()  # MEG signals: n_epochs, n_channels, n_times
+    y = epochs_all_queries.events[:, 2]  # target: Audio left or right
+
+    # Define a classifier for GAT
+    clf = make_pipeline(StandardScaler(), LinearSVC())
+    # Define the Temporal Generalization object
+    time_gen = GeneralizingEstimator(clf, n_jobs=-2, scoring='roc_auc')
+    # Fit model
+    time_gen.fit(X, y)
+    # Score on other modality
+    X = epochs_all_queries_to_generalize.get_data()  # MEG signals: n_epochs, n_channels, n_times
+    y = epochs_all_queries_to_generalize.events[:, 2]  # target: Audio left or right
+    scores = time_gen.score(X, y)
+
+
+    # Plot the diagonal
+    fig, ax = plt.subplots()
+    ax.plot(epochs_all_queries.times, np.diag(scores), label='score')
+    ax.axhline(.5, color='k', linestyle='--', label='chance')
+    ax.set_xlabel('Times')
+    ax.set_ylabel('AUC')
+    ax.legend()
+    ax.axvline(.0, color='k', linestyle='-')
+    ax.set_title('Decoding over time')
+
+    file_name = 'SlidingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
+    plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
+    plt.close()
+    print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
+
+    # Plot the full GAT matrix
+    fig, ax = plt.subplots(1, 1)
+    im = ax.imshow(scores, interpolation='lanczos', origin='lower', cmap='RdBu_r',
+                   extent=epochs_all_queries.times[[0, -1, 0, -1]], vmin=0., vmax=1.)
+    ax.set_xlabel('Testing Time (s)')
+    ax.set_ylabel('Training Time (s)')
+    ax.set_title('Temporal Generalization')
+    ax.axvline(0, color='k')
+    ax.axhline(0, color='k')
+    plt.colorbar(im, ax=ax)
+
+    file_name = 'GeneralizingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
