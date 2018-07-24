@@ -1,13 +1,17 @@
 from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit, analyses_electrodes, generate_plots
 import matplotlib.pyplot as plt
-import sys
+import os, sys
 import mne
 mne.set_log_level('CRITICAL') # DEBUG, INFO, WARNING, ERROR, or CRITICAL
 plt.switch_backend('agg')
 
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 # ---- Get (optional) argument from terminal which defines the channel for gamma analysis
 if len(sys.argv) > 1:
-    print 'Channel ' + sys.argv[1]
+    print ('Channel ' + sys.argv[1])
     ch = int(sys.argv[1])
     channels = range(ch, ch + 1, 1)
 else:

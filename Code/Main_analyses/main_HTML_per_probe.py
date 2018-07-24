@@ -1,8 +1,8 @@
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, analyses_single_unit
+from SU_functions import load_settings_params
 from scipy import io
 import os, glob
-import mne
-import matplotlib.pyplot as plt
+#import mne
+#import matplotlib.pyplot as plt
 import numpy as np
 
 # Patient 479

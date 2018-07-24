@@ -1,4 +1,0 @@
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   42.7s finished
-/home/yl254115/anaconda2/lib/python2.7/site-packages/matplotlib/axes/_axes.py:545: UserWarning: No labelled objects found. Use label='...' kwarg on individual plots.
-  warnings.warn("No labelled objects found. "
-[Parallel(n_jobs=4)]: Done   1 out of   1 | elapsed:   53.8s finished
