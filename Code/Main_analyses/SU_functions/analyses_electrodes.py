@@ -63,7 +63,9 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                         str_align = 'word_position > 0'
 
                     for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
-                        file_name = band + '_' + settings.patient + '_channel_' + str(settings.channel) + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to'] + '_' + settings.channel_name
+                        file_name_root = band + '_' + settings.patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
+                        file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
+
                         for key_sort in preferences.sort_according_to_key:
                             file_name += '_' + key_sort + 'Sorted'
 
@@ -71,6 +73,12 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                         if IX1 == -1:
                             IX1 = settings.channel_name.find('.ncs')
                         probe_name = settings.channel_name[0:IX1 - 1]
+
+                        with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'w') as f:
+                            stimuli_of_curr_query = list(set(list(metadata.query(query_cond)['sentence_string'])))
+                            stimuli_of_curr_query = [l+'\n' for l in stimuli_of_curr_query]
+                            f.writelines(stimuli_of_curr_query)
+
                         if (not os.path.isfile(
                                 os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name,
                                              file_name + '.png'))) or settings.overwrite_existing_output_files:

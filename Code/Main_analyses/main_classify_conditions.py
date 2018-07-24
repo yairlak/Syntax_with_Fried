@@ -36,5 +36,5 @@ print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
     settings.patients = patients
     settings.channels = channels
-    epochs_all_queries = classification.get_multichannel_epochs_for_all_current_conditions(comparison, settings, preferences)
+    epochs_all_queries, stimuli_of_curr_query = classification.get_multichannel_epochs_for_all_current_conditions(comparison, settings, preferences)
     classification.plot_generalizing_estimator(epochs_all_queries, comparison, settings)
