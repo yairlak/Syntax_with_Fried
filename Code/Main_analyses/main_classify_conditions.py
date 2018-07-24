@@ -21,7 +21,7 @@ else:
     comp = 0
 
 print('Loading settings, params and preferences...')
-settings = load_settings_params.Settings()
+settings = load_settings_params.Settings('patient_479')
 params = load_settings_params.Params()
 preferences = load_settings_params.Preferences()
 

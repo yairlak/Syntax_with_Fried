@@ -1,5 +1,5 @@
 Traceback (most recent call last):
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/main_plot_trial_time_freq.py", line 57, in <module>
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/main_plot_trial_time_freq.py", line 59, in <module>
     analyses_electrodes.generate_time_freq_plots(channels, events, event_id, metadata, comparisons, settings, params, preferences)
   File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py", line 18, in generate_time_freq_plots
     raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)

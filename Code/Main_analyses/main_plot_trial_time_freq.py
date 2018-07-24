@@ -14,11 +14,13 @@ if len(sys.argv) > 1:
     print ('Channel ' + sys.argv[1])
     ch = int(sys.argv[1])
     channels = range(ch, ch + 1, 1)
+    patient = sys.argv[2]
 else:
     channels = range(49, 57)
+    patient = 'patient_479'
 
 print('Loading settings, params and preferences...')
-settings = load_settings_params.Settings()
+settings = load_settings_params.Settings(patient)
 params = load_settings_params.Params()
 preferences = load_settings_params.Preferences()
 

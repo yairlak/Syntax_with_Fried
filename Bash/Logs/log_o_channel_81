@@ -7,47 +7,6 @@ Preparing meta-data
 Generating event object for MNE from log data...
 Loading electrode names for all channels...
 Plottoing paradigm timings
-Loading spike sorted data (spike clusters)...
-Generating MNE raw object for spikes...
-Epoching spiking data...
-<Epochs  |   3960 events (all good), -2 - 2 sec, baseline off, ~424.1 MB, data loaded, with metadata,
- 'block_1': 660
- 'block_2': 660
- 'block_3': 660
- 'block_4': 660
- 'block_5': 660
- 'block_6': 660>
-Generate rasters and PSTHs...
-Contrast: Question_vs_declarative_V
-Query: Declarative == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Declarative == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5).pkl
-Query: Question==1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Question==1 and word_position == -1 and (block == 1 or block == 3 or block == 5).pkl
-Contrast: Question_vs_declarative_A
-Query: Declarative == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Declarative == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6).pkl
-Query: Question==1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Question==1 and word_position == -1 and (block == 2 or block == 4 or block == 6).pkl
-Contrast: Embedding_vs_longSentences_V
-Query: Embedding == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Embedding == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5).pkl
-Query: sentence_length == 5 and Embedding == 0 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_sentence_length == 5 and Embedding == 0 and word_position == -1 and (block == 1 or block == 3 or block == 5).pkl
-Contrast: Embedding_vs_longSentences_A
-Query: Embedding == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Embedding == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6).pkl
-Query: sentence_length == 5 and Embedding == 0 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_sentence_length == 5 and Embedding == 0 and word_position == -1 and (block == 2 or block == 4 or block == 6).pkl
-Contrast: NP_vs_Pronoun_V
-Query: NP == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_NP == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5).pkl
-Query: Pronoun == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Pronoun == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5).pkl
-Contrast: NP_vs_Pronoun_A
-Query: NP == 1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_NP == 1 and word_position == 1 and (block == 2 or block == 4 or block == 6).pkl
-Query: Pronoun == 1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
-Data saved to: ../../Output/patient_482/feature_matrix_for_classification/Feature_matrix_rasters_patient_482_Pronoun == 1 and word_position == 1 and (block == 2 or block == 4 or block == 6).pkl
 Time-frequency analysis of all channels
 Loading CSC raw data...
 Analyzing high-gamma for channel 81
@@ -65,4 +24,35 @@ Epoching data...
 ('New sampling rate:', 512.0, 'Hz')
 Time-frequency analyses...
 Band: High-Gamma
-Contrast: Question_vs_declarative_V
+Contrast: Singular_vs_Plural_full_NP_[1, 3, 5]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_full_NP_[1, 3, 5]_END
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_full_NP_[2, 4, 6]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_full_NP_[2, 4, 6]_END
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[1, 3, 5]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[1, 3, 5]_END
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[2, 4, 6]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[2, 4, 6]_END
+['chronological_order']
+File already exists
+File already exists

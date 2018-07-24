@@ -24,13 +24,35 @@ Epoching data...
 ('New sampling rate:', 512.0, 'Hz')
 Time-frequency analyses...
 Band: High-Gamma
-Contrast: All_trials_V
-['sentence_length']
-Baseline: trial-wise
-Saving as - ../../Figures/patient_479/HighGamma/High-Gamma_patient_479_channel_20_Blocks_[1, 3, 5]_All_trials_END_GA2-LSTG5_0019.ncs_sentence_lengthSorted.png
-Save to: Feature_matrix_High-Gamma_patient_479_channel_20_All_trials == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Contrast: All_trials_A
-['sentence_length']
-Baseline: trial-wise
-Saving as - ../../Figures/patient_479/HighGamma/High-Gamma_patient_479_channel_20_Blocks_[2, 4, 6]_All_trials_END_GA2-LSTG5_0019.ncs_sentence_lengthSorted.png
-Save to: Feature_matrix_High-Gamma_patient_479_channel_20_All_trials == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
+Contrast: Singular_vs_Plural_full_NP_[1, 3, 5]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_full_NP_[1, 3, 5]_END
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_full_NP_[2, 4, 6]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_full_NP_[2, 4, 6]_END
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[1, 3, 5]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[1, 3, 5]_END
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[2, 4, 6]_FIRST
+['chronological_order']
+File already exists
+File already exists
+Contrast: Singular_vs_Plural_pronoun_[2, 4, 6]_END
+['chronological_order']
+File already exists
+File already exists
