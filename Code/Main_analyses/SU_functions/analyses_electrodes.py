@@ -50,6 +50,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                     print('Contrast: ' + comparison['contrast_name'])
                     # queries = get_queries(comparison)
                     preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
+                    print(preferences.sort_according_to_key)
                     str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
                     str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
                     if comparison['align_to'] == 'FIRST':
@@ -193,7 +194,7 @@ def plot_and_save_high_gamma(epochs_power, align_to, blocks, probe_name, file_na
     IX = (epochs_power.times > params.window_st / 1e3) & (epochs_power.times < params.window_ed / 1e3)
 
     # Run a linear regression if sorted according to, e.g., sentence length
-    r2_string = ''
+    r2_string = 'No regression calc'
     if preferences.sort_according_to_key:
         X = np.asarray([tup[1] for tup in mylist_sorted])
         y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.

@@ -24,45 +24,13 @@ Epoching data...
 ('New sampling rate:', 512.0, 'Hz')
 Time-frequency analyses...
 Band: High-Gamma
-Contrast: Question_vs_declarative_V
+Contrast: All_trials_V
+['sentence_length']
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[1, 3, 5]_Declarative_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Declarative == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
+Saving as - ../../Figures/patient_479/HighGamma/High-Gamma_patient_479_channel_60_Blocks_[1, 3, 5]_All_trials_END_GB3-RPMTG6_0019.ncs_sentence_lengthSorted.png
+Save to: Feature_matrix_High-Gamma_patient_479_channel_60_All_trials == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
+Contrast: All_trials_A
+['sentence_length']
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[1, 3, 5]_ Question_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Question==1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Contrast: Question_vs_declarative_A
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[2, 4, 6]_Declarative_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Declarative == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[2, 4, 6]_ Question_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Question==1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Contrast: Embedding_vs_longSentences_V
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[1, 3, 5]_embedding_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Embedding == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[1, 3, 5]_ long_sentence_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_sentence_length == 5 and Embedding == 0 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Contrast: Embedding_vs_longSentences_A
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[2, 4, 6]_embedding_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Embedding == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[2, 4, 6]_ long_sentence_END_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_sentence_length == 5 and Embedding == 0 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Contrast: NP_vs_Pronoun_V
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[1, 3, 5]_NP_FIRST_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_NP == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[1, 3, 5]_ Pronoun_FIRST_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Pronoun == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
-Contrast: NP_vs_Pronoun_A
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[2, 4, 6]_NP_FIRST_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_NP == 1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_channel_60_Blocks_[2, 4, 6]_ Pronoun_FIRST_GB4-LIO4.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_60_Pronoun == 1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
+Saving as - ../../Figures/patient_479/HighGamma/High-Gamma_patient_479_channel_60_Blocks_[2, 4, 6]_All_trials_END_GB3-RPMTG6_0019.ncs_sentence_lengthSorted.png
+Save to: Feature_matrix_High-Gamma_patient_479_channel_60_All_trials == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6)

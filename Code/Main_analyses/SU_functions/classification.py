@@ -8,6 +8,8 @@ from sklearn.preprocessing import StandardScaler
 from mne.decoding import (SlidingEstimator, GeneralizingEstimator,
                           cross_val_multiscore, LinearModel, get_coef)
 import numpy as np
+plt.switch_backend('agg')
+
 
 def get_multichannel_epochs_for_all_current_conditions(comparison, settings, preferences):
     queries = auxilary_functions.get_queries(comparison)
@@ -15,21 +17,23 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, settings, pre
     for q, query in enumerate(queries):
         for p, patient in enumerate(settings.patients):
             # High-gamma features
-            for c, channel in enumerate(settings.channels):
+            for c, channel in enumerate(settings.channels[p]):
                 settings.channel = channel
                 if preferences.analyze_micro_raw:
                     band = 'High-Gamma'
                     print('contrast: ' + comparison['contrast_name'] + '; ' + band + '; channel ' + str(channel) + '; ' + patient)
-
-
                     file_name = 'Feature_matrix_' + band + '_' + patient + '_channel_' + str(
                         settings.channel) + '_' + query
                     with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
                                                file_name + '.pkl'), 'rb') as f:
                         curr_data = pickle.load(f)
+                        #print(curr_data[0].events.shape[0])
                         if c == 0 and p==0:
                             epochs_all_channels = curr_data[0]
+                            events_shared_for_all_patients = curr_data[0].events
+                            #info_shared_for_all_channels
                         else:
+                            curr_data[0].events = events_shared_for_all_patients
                             epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
             # Single-unit features
             if preferences.analyze_micro_single:
@@ -44,14 +48,15 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, settings, pre
         epochs_all_channels.event_id[comparison['cond_labels'][q]] = q
         epochs_all_queries.append(epochs_all_channels)
     epochs_all_queries = mne.concatenate_epochs(epochs_all_queries)
-
+    print(epochs_all_queries)
+    
     return epochs_all_queries
 
 
 def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     train_times = {}
-    train_times["start"] = -1.0
-    train_times["stop"] = 1.05
+    train_times["start"] = -2.5
+    train_times["stop"] = 2.5
     train_times["step"] = 0.01
     test_times = {}
     test_times["start"] = -1.0
@@ -83,9 +88,10 @@ def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     ax.axvline(.0, color='k', linestyle='-')
     ax.set_title('Decoding over time')
 
-    file_name = 'SlidingEstimator_' + comparison['contrast_name']
-    plt.savefig(os.path.join(settings.path2figures, file_name + '.png'))
+    file_name = 'SlidingEstimator_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
+    plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
+    print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
 
     # Plot the full GAT matrix
     fig, ax = plt.subplots(1, 1)
@@ -98,6 +104,7 @@ def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     ax.axhline(0, color='k')
     plt.colorbar(im, ax=ax)
 
-    file_name = 'GeneralizingEstimator_' + comparison['contrast_name']
-    plt.savefig(os.path.join(settings.path2figures, file_name + '.png'))
+    file_name = 'GeneralizingEstimator_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
+    plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
+    print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
