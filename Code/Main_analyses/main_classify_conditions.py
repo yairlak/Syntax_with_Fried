@@ -37,5 +37,9 @@ for i, comparison in enumerate(comparisons):
     print(comparison['contrast_name'])
     settings.patients = patients
     settings.channels = channels
-    epochs_all_queries, stimuli_of_curr_query = classification.get_multichannel_epochs_for_all_current_conditions(comparison, settings, preferences)
+    queries, queries_generalize_to = auxilary_functions.get_queries(comparison)
+    epochs_all_queries, stimuli_of_curr_query = classification.get_multichannel_epochs_for_all_current_conditions(comparison, queries, settings, preferences)
     classification.plot_generalizing_estimator(epochs_all_queries, comparison, settings)
+    if comparison['generalize_to']:
+        epochs_all_queries_to_generalize, _ = classification.get_multichannel_epochs_for_all_current_conditions(comparison, queries_generalize_to, settings, preferences)
+        classification.plot_generalizing_estimator(epochs_all_queries, epochs_all_queries_to_generalize, comparison, settings)

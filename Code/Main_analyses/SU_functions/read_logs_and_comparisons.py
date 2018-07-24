@@ -193,7 +193,8 @@ def extract_comparison(comparison_list, features, settings, preferences):
         if preferences.use_metadata_only:
             blocks_list = comparison_list['fields'][5][settings.comparisons][i].split(';')
             align_to_list = comparison_list['fields'][4][settings.comparisons][i].split(';')
-            for blocks in blocks_list:
+            generalize_to = comparison_list['fields'][8][settings.comparisons][i].split(';')
+            for b, blocks in enumerate(blocks_list):
                 for align_to in align_to_list:
                     curr_dict = {}
                     curr_dict['contrast_name'] = contrast_name + '_' + str(blocks) + '_' + align_to
@@ -205,6 +206,7 @@ def extract_comparison(comparison_list, features, settings, preferences):
                     curr_dict['cond_labels'] = cond_labels[1:-1].split(',')
                     curr_dict['align_to'] = align_to
                     curr_dict['blocks'] = blocks
+                    curr_dict['generalize_to'] = generalize_to[b]
                     sortings = comparison_list['fields'][6][settings.comparisons][i]
                     if isinstance(sortings, unicode):
                         curr_dict['sorting'] = sortings.split(',')
