@@ -32,6 +32,13 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, settings, pre
                             epochs_all_channels = curr_data[0]
                             events_shared_for_all_patients = curr_data[0].events
                             #info_shared_for_all_channels
+
+                            # collect stimuli info
+                            stimuli_of_curr_query = []
+                            label_cond = comparison['cond_labels'][q]
+                            file_name_root = band + '_' + patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
+                            with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'r') as f:
+                                stimuli_of_curr_query.append(f.readlines())
                         else:
                             curr_data[0].events = events_shared_for_all_patients
                             epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
@@ -47,10 +54,14 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, settings, pre
         epochs_all_channels.event_id = {}
         epochs_all_channels.event_id[comparison['cond_labels'][q]] = q
         epochs_all_queries.append(epochs_all_channels)
+
+
+
     epochs_all_queries = mne.concatenate_epochs(epochs_all_queries)
     print(epochs_all_queries)
+    print(stimuli_of_curr_query)
     
-    return epochs_all_queries
+    return epochs_all_queries, stimuli_of_curr_query
 
 
 def plot_generalizing_estimator(epochs_all_queries, comparison, settings):

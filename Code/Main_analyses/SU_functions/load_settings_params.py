@@ -18,7 +18,7 @@ class Settings():
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = patient
-        self.comparisons = [range(12,14)]
+        self.comparisons = [range(14)]
         #self.comparisons = [0, 1]
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]

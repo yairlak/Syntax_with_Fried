@@ -7,7 +7,7 @@ os.chdir(dname)
 
 patients = ['patient_479', 'patient_482']
 channels = [range(1, 129), range(1, 77)]
-
+channels = [range(1, 3), range(1, 3)]
 #patients = ['patient_482']
 #channels = [range(1, 77)]
 
@@ -34,7 +34,8 @@ comparisons = [comparison for i, comparison in enumerate(comparisons) if i == co
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
+    print(comparison['contrast_name'])
     settings.patients = patients
     settings.channels = channels
-    epochs_all_queries = classification.get_multichannel_epochs_for_all_current_conditions(comparison, settings, preferences)
+    epochs_all_queries, stimuli_of_curr_query = classification.get_multichannel_epochs_for_all_current_conditions(comparison, settings, preferences)
     classification.plot_generalizing_estimator(epochs_all_queries, comparison, settings)
