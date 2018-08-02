@@ -27,6 +27,7 @@ preferences = load_settings_params.Preferences()
 print('Metadata: Loading features and comparisons from Excel files...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
 comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, features, settings, preferences)
+comparisons = [comp for c, comp in enumerate(comparisons) if c in settings.comparisons] # run only a subset of comparisons
 
 print('Logs: Reading experiment log files from experiment...')
 log_all_blocks = []

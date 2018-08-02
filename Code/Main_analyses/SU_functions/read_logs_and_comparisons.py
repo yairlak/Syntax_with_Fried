@@ -185,7 +185,7 @@ def extract_comparison(comparison_list, features, settings, preferences):
     trial_numbers = features['fields'][0][1::]
     stimuli = features['fields'][1][1::]
     features = features['fields'][2::]
-    contrast_names = comparison_list['fields'][0][settings.comparisons]
+    contrast_names = comparison_list['fields'][0]
 
     comparisons = []
 
@@ -194,30 +194,30 @@ def extract_comparison(comparison_list, features, settings, preferences):
         if preferences.use_metadata_only:
             # blocks_list = comparison_list['fields'][5][settings.comparisons][i].split(';')
             # align_to_list = comparison_list['fields'][4][settings.comparisons][i].split(';')
-            blocks = comparison_list['fields'][4][settings.comparisons][i]
-            align_to = comparison_list['fields'][3][settings.comparisons][i]
-            generalize_to_modality = comparison_list['fields'][7][settings.comparisons][i]
-            generalize_to_contrast = comparison_list['fields'][8][settings.comparisons][i]
+            blocks = comparison_list['fields'][4][i]
+            align_to = comparison_list['fields'][3][i]
+            generalize_to_modality = comparison_list['fields'][7][i]
+            generalize_to_contrast = comparison_list['fields'][8][i]
             # for b, blocks in enumerate(blocks_list):
             #     for align_to in align_to_list:
             curr_dict = {}
             curr_dict['contrast_name'] = contrast_name + '_' + str(blocks) + '_' + align_to
-            curr_dict['contrast'] = comparison_list['fields'][1][settings.comparisons][i]
+            curr_dict['contrast'] = comparison_list['fields'][1][i]
             curr_query = curr_dict['contrast'][1:-1].split(',')
             curr_query = [s.strip() for s in curr_query]
             curr_dict['query'] = curr_query
-            cond_labels = comparison_list['fields'][2][settings.comparisons][i]
+            cond_labels = comparison_list['fields'][2][i]
             curr_dict['cond_labels'] = cond_labels[1:-1].split(',')
             curr_dict['align_to'] = align_to
             curr_dict['blocks'] = blocks
-            curr_dict['generalize_to_modality'] = generalize_to_modality
+            curr_dict['generalize_to_blocks'] = generalize_to_modality
             curr_dict['generalize_to_contrast'] = generalize_to_contrast
-            sortings = comparison_list['fields'][5][settings.comparisons][i]
+            sortings = comparison_list['fields'][5][i]
             if isinstance(sortings, unicode):
                 curr_dict['sorting'] = sortings.split(',')
             else:
                 curr_dict['sorting'] = []
-            curr_dict['union_or_intersection'] = comparison_list['fields'][6][settings.comparisons][i]
+            curr_dict['union_or_intersection'] = comparison_list['fields'][6][i]
 
             comparisons.append(curr_dict)
 
