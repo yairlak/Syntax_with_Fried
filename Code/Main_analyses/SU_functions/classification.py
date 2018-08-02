@@ -120,7 +120,7 @@ def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
 
 
-def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparison, settings):
+def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparison, comparison_to_generalize, settings):
     train_times = {}
     train_times["start"] = -2.5
     train_times["stop"] = 2.5
@@ -156,7 +156,7 @@ def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all
     ax.axvline(.0, color='k', linestyle='-')
     ax.set_title('Decoding over time')
 
-    file_name = 'SlidingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to'] + '_genrealize_to_' + comparison['generalize_to']
+    file_name = 'SlidingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_to_' + comparison_to_generalize['contrast_name']
     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
@@ -172,7 +172,7 @@ def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all
     ax.axhline(0, color='k')
     plt.colorbar(im, ax=ax)
 
-    file_name = 'GeneralizingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to'] + '_genrealize_to_' + comparison['generalize_to']
+    file_name = 'GeneralizingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_to_' + comparison_to_generalize['contrast_name']
     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))

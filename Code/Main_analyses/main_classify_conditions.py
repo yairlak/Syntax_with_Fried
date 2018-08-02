@@ -18,7 +18,7 @@ if len(sys.argv) > 1:
     print 'comparison ' + sys.argv[1]
     comp = int(sys.argv[1])-1
 else:
-    comp = 107
+    comp = 0
 
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings('patient_479')
@@ -61,4 +61,4 @@ if (not cond1_isnan) or (not cond2_isnan):
     if not queries_generalize_to == queries:
         print('Generalization across modality and/or contrast: %s --> %s' % (comparisons_to_run['contrast_name'], comparison_to_generalize['contrast_name']))
         epochs_all_queries_to_generalize, _ = classification.get_multichannel_epochs_for_all_current_conditions(comparisons_to_run, queries_generalize_to, settings, preferences)
-        classification.plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparisons_to_run, settings)
+        classification.plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparisons_to_run, comparison_to_generalize, settings)
