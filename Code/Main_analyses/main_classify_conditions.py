@@ -7,7 +7,7 @@ os.chdir(dname)
 
 patients = ['patient_479', 'patient_482']
 channels = [range(1, 129), range(1, 77)]
-channels = [range(1, 3), range(1, 3)]
+#channels = [range(1, 3), range(1, 3)]
 #patients = ['patient_482']
 #channels = [range(1, 77)]
 
@@ -15,7 +15,7 @@ channels = [range(1, 3), range(1, 3)]
 #channels = [range(1, 129)]
 
 if len(sys.argv) > 1:
-    print 'Channel ' + sys.argv[1]
+    print 'comparison ' + sys.argv[1]
     comp = int(sys.argv[1])-1
 else:
     comp = 0
@@ -42,4 +42,4 @@ for i, comparison in enumerate(comparisons):
     classification.plot_generalizing_estimator(epochs_all_queries, comparison, settings)
     if comparison['generalize_to']:
         epochs_all_queries_to_generalize, _ = classification.get_multichannel_epochs_for_all_current_conditions(comparison, queries_generalize_to, settings, preferences)
-        classification.plot_generalizing_estimator(epochs_all_queries, epochs_all_queries_to_generalize, comparison, settings)
+        classification.plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparison, settings)

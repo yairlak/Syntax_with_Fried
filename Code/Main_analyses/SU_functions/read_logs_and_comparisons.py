@@ -1,5 +1,6 @@
 import numpy as np
 import pickle, os
+import math
 
 class LogSingleUnit:
     def __init__(self, settings, block):
@@ -193,7 +194,11 @@ def extract_comparison(comparison_list, features, settings, preferences):
         if preferences.use_metadata_only:
             blocks_list = comparison_list['fields'][5][settings.comparisons][i].split(';')
             align_to_list = comparison_list['fields'][4][settings.comparisons][i].split(';')
-            generalize_to = comparison_list['fields'][8][settings.comparisons][i].split(';')
+            if comparison_list['fields'][8][settings.comparisons][i]==comparison_list['fields'][8][settings.comparisons][i]: # check if not NaN 
+                print(comparison_list['fields'][8][settings.comparisons][i])
+                generalize_to = comparison_list['fields'][8][settings.comparisons][i].split(';')
+            else:
+                generalize_to = []
             for b, blocks in enumerate(blocks_list):
                 for align_to in align_to_list:
                     curr_dict = {}
@@ -206,7 +211,10 @@ def extract_comparison(comparison_list, features, settings, preferences):
                     curr_dict['cond_labels'] = cond_labels[1:-1].split(',')
                     curr_dict['align_to'] = align_to
                     curr_dict['blocks'] = blocks
-                    curr_dict['generalize_to'] = generalize_to[b]
+                    if generalize_to:
+                        curr_dict['generalize_to'] = generalize_to[b]
+                    else:
+                        curr_dict['generalize_to'] = []
                     sortings = comparison_list['fields'][6][settings.comparisons][i]
                     if isinstance(sortings, unicode):
                         curr_dict['sorting'] = sortings.split(',')
