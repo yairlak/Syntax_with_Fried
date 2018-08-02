@@ -9,8 +9,8 @@ set GROUP = $1
 #mkdir -p /tmp/Logs
 #mkdir -p /RunScripts
 
-set st = `expr $GROUP \* 40 - 40 + 1`
-set ed = `expr $GROUP \* 40`
+set st = `expr $GROUP \* 60 - 60 + 1`
+set ed = `expr $GROUP \* 60`
 
 foreach COMP ( `seq ${st} ${ed}` )
          set filename_bash=RunScripts/run_classication_$COMP.sh

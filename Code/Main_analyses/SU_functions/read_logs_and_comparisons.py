@@ -1,5 +1,6 @@
 import numpy as np
 import pickle, os
+import math
 
 class LogSingleUnit:
     def __init__(self, settings, block):
@@ -219,6 +220,7 @@ def extract_comparison(comparison_list, features, settings, preferences):
             curr_dict['union_or_intersection'] = comparison_list['fields'][6][settings.comparisons][i]
 
             comparisons.append(curr_dict)
+
         else:
             print('!!!!!!XXXXXXXX!!!!!!!!!')
             # contrast = str(contrast[2:-2]).split('],[')

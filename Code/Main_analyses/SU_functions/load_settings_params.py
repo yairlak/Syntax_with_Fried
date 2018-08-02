@@ -14,7 +14,7 @@ class Preferences:
 
 
 class Settings():
-    def __init__(self):
+    def __init__(self, patient):
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = 'patient_479'
@@ -23,7 +23,7 @@ class Settings():
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
         self.load_line_filtered_resampled_epoch_object = False
-        self.overwrite_existing_output_files = True
+        self.overwrite_existing_output_files = False
 
         # PATHS
         self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)

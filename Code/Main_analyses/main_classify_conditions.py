@@ -7,7 +7,7 @@ os.chdir(dname)
 
 patients = ['patient_479', 'patient_482']
 channels = [range(1, 129), range(1, 77)]
-
+#channels = [range(1, 3), range(1, 3)]
 #patients = ['patient_482']
 #channels = [range(1, 77)]
 
@@ -15,13 +15,13 @@ channels = [range(1, 129), range(1, 77)]
 #channels = [range(1, 129)]
 
 if len(sys.argv) > 1:
-    print 'Channel ' + sys.argv[1]
+    print 'comparison ' + sys.argv[1]
     comp = int(sys.argv[1])-1
 else:
     comp = 0
 
 print('Loading settings, params and preferences...')
-settings = load_settings_params.Settings()
+settings = load_settings_params.Settings('patient_479')
 params = load_settings_params.Params()
 preferences = load_settings_params.Preferences()
 
@@ -34,6 +34,7 @@ comparisons = [comparison for i, comparison in enumerate(comparisons) if i == co
 
 print('Loop over all comparisons: prepare & save data for classification')
 for i, comparison in enumerate(comparisons):
+    print(comparison['contrast_name'])
     settings.patients = patients
     settings.channels = channels
     queries, queries_generalize_to = auxilary_functions.get_queries(comparison)
