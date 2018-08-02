@@ -40,7 +40,7 @@ settings.channels = channels
 
 queries = auxilary_functions.get_queries(comparisons_to_run)
 epochs_all_queries, stimuli_of_curr_query = classification.get_multichannel_epochs_for_all_current_conditions(comparison, queries, settings, preferences)
-classification.plot_generalizing_estimator(epochs_all_queries, comparison, settings)
+classification.plot_generalizing_estimator(epochs_all_queries, comparison, comp, settings)
 
 # Generalize across modality and/or contrast:
 cond1_isnan = comparisons_to_run['generalize_to_blocks'] != comparisons_to_run['generalize_to_blocks']
@@ -61,4 +61,4 @@ if (not cond1_isnan) or (not cond2_isnan):
     if not queries_generalize_to == queries:
         print('Generalization across modality and/or contrast: %s --> %s' % (comparisons_to_run['contrast_name'], comparison_to_generalize['contrast_name']))
         epochs_all_queries_to_generalize, _ = classification.get_multichannel_epochs_for_all_current_conditions(comparisons_to_run, queries_generalize_to, settings, preferences)
-        classification.plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparisons_to_run, comparison_to_generalize, settings)
+        classification.plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparisons_to_run, comparison_to_generalize, comp, settings)

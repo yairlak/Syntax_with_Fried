@@ -63,7 +63,7 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, queries, sett
     return epochs_all_queries, stimuli_of_curr_query
 
 
-def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
+def plot_generalizing_estimator(epochs_all_queries, comparison, comp, settings):
     train_times = {}
     train_times["start"] = -2.5
     train_times["stop"] = 2.5
@@ -98,7 +98,7 @@ def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     ax.axvline(.0, color='k', linestyle='-')
     ax.set_title('Decoding over time')
 
-    file_name = 'SlidingEstimator_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
+    file_name = 'SlidingEstimator_' + str(comp) + '_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
@@ -114,13 +114,13 @@ def plot_generalizing_estimator(epochs_all_queries, comparison, settings):
     ax.axhline(0, color='k')
     plt.colorbar(im, ax=ax)
 
-    file_name = 'GeneralizingEstimator_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
+    file_name = 'GeneralizingEstimator_' + str(comp) + '_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
 
 
-def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparison, comparison_to_generalize, settings):
+def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparison, comparison_to_generalize, comp, settings):
     train_times = {}
     train_times["start"] = -2.5
     train_times["stop"] = 2.5
@@ -156,7 +156,7 @@ def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all
     ax.axvline(.0, color='k', linestyle='-')
     ax.set_title('Decoding over time')
 
-    file_name = 'SlidingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_to_' + comparison_to_generalize['contrast_name']
+    file_name = 'SlidingEstimatorAcrossModalities_' + str(comp) + '_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_' + comparison_to_generalize['contrast_name']
     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
@@ -172,7 +172,7 @@ def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all
     ax.axhline(0, color='k')
     plt.colorbar(im, ax=ax)
 
-    file_name = 'GeneralizingEstimatorAcrossModalities_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_to_' + comparison_to_generalize['contrast_name']
+    file_name = 'GeneralizingEstimatorAcrossModalities_' + str(comp) + '_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_' + comparison_to_generalize['contrast_name']
     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
     plt.close()
     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
