@@ -10,6 +10,8 @@ read PATIENT
 echo "Which group of channels to run (1: 1-64, 2: 65-128, ...)?"
 read GROUP
 
+qstat -q
+
 echo "Choose queue (1: Unicog_long, 2: Global_long, 3: Unicog_short, 4: Global_short)"
 read QUEUE
 
@@ -34,7 +36,7 @@ fi
 for CH in $(seq $((1+($GROUP-1)*64)) $(($GROUP*64)))
 do
          path2script='/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/'
-         filename_bash=RunScripts/bash_channel_$CH.sh
+         filename_bash='RunScripts/bash_channel_'$CH'.sh'
 	 filename_py='main_plot_trial_time_freq.py '$CH' '$PATIENT
 	 output_log='Logs/log_o_channel_'$CH
 	 error_log='Logs/log_e_channel_'$CH
