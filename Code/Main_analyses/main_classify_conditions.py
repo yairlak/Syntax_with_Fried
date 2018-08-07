@@ -16,9 +16,9 @@ channels = [range(1, 129), range(1, 77)]
 
 if len(sys.argv) > 1:
     print 'comparison ' + sys.argv[1]
-    comp = int(sys.argv[1])-1
+    comp = int(sys.argv[1])
 else:
-    comp = 0
+    comp = 80
 
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings('patient_479')
@@ -39,6 +39,7 @@ settings.patients = patients
 settings.channels = channels
 
 queries = auxilary_functions.get_queries(comparisons_to_run)
+print(queries)
 epochs_all_queries, stimuli_of_curr_query = classification.get_multichannel_epochs_for_all_current_conditions(comparison, queries, settings, preferences)
 classification.plot_generalizing_estimator(epochs_all_queries, comparison, comp, settings)
 

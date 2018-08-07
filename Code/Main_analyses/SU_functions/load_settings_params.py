@@ -17,7 +17,7 @@ class Settings():
     def __init__(self, patient):
         # PATIENT:
         self.hospital = 'UCLA'
-        self.patient = 'patient_479'
+        self.patient = 'patient_493'
         self.comparisons = range(81, 108)
         #self.comparisons = [0, 1]
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
@@ -66,6 +66,13 @@ class Settings():
             self.timeend = 1493482901125264
             # Which channels in the raw CSC files have clear spikes
             self.channels_with_spikes = [2, 3, 18, 41, 44, 45, 54, 75, 77, 84, 87]
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+        if self.patient == 'patient_482': # Neuralynx
+            self.time0 =   1520590966262873
+            self.timeend = 1520594033849941
+            # Which channels in the raw CSC files have clear spikes
+            self.channels_with_spikes = []
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
 
