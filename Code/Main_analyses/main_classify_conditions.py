@@ -16,7 +16,7 @@ channels = [range(1, 129), range(1, 77)]
 
 if len(sys.argv) > 1:
     print 'comparison ' + sys.argv[1]
-    comp = int(sys.argv[1])-1
+    comp = int(sys.argv[1])
 else:
     comp = 107
 
@@ -40,7 +40,7 @@ settings.channels = channels
 
 queries = auxilary_functions.get_queries(comparisons_to_run)
 epochs_all_queries, stimuli_of_curr_query = classification.get_multichannel_epochs_for_all_current_conditions(comparisons_to_run, queries, settings, preferences)
-classification.plot_generalizing_estimator(epochs_all_queries, comparison, comp, settings)
+classification.plot_generalizing_estimator(epochs_all_queries, comparisons_to_run, comp, settings)
 
 # Generalize across modality and/or contrast:
 cond1_isnan = comparisons_to_run['generalize_to_blocks'] != comparisons_to_run['generalize_to_blocks']
@@ -50,7 +50,7 @@ if (not cond1_isnan) or (not cond2_isnan):
 
     if not cond2_isnan:
         j = int(comparisons_to_run['generalize_to_contrast'])
-        comparison_to_generalize = [comp for c, comp in enumerate(all_comparisons_in_xls) if c == j][0] # pop the relevant comparison
+        comparison_to_generalize = [comparison for c, comparison in enumerate(all_comparisons_in_xls) if c == j][0] # pop the relevant comparison
         queries_generalize_to = auxilary_functions.get_queries(comparison_to_generalize)
     else:
         comparison_to_generalize = comparisons_to_run.copy()
