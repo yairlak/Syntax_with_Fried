@@ -3,8 +3,8 @@ import os, glob
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = False 
-        self.analyze_micro_raw = True
+        self.analyze_micro_single = True
+        self.analyze_micro_raw = False
         self.save_features_for_classification = True
 
         self.run_contrasts = False
@@ -17,8 +17,8 @@ class Settings():
     def __init__(self, patient):
         # PATIENT:
         self.hospital = 'UCLA'
-        self.patient = 'patient_493'
-        self.comparisons = range(81, 108)
+        self.patient = 'patient_479'
+        self.comparisons = range(5)
         #self.comparisons = [0, 1]
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]

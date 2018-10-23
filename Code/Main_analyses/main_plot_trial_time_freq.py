@@ -45,8 +45,8 @@ metadata = read_logs_and_comparisons.prepare_metadata(log_all_blocks, features, 
 print('Generating event object for MNE from log data...')
 events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences)
 
-print('Loading electrode names for all channels...')
-electrode_names = load_data.electrodes_names(settings)
+#print('Loading electrode names for all channels...')
+#electrode_names = load_data.electrodes_names(settings)
 
 print('Plottoing paradigm timings')
 generate_plots.plot_paradigm_timings(events_spikes, event_id, settings, params)

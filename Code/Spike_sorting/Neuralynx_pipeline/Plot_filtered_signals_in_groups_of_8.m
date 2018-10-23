@@ -1,9 +1,10 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_482';
+patient = 'patient_493';
 probes_names = {'rEC', 'rMH', 'RA', 'rSTGa', 'rAIP', 'rMC', 'rSTG', 'rIF', 'rSO', 'rSP', 'rOP', 'rIG', 'LMH', 'LP'}; % Patient 480
 probes_names = {'lEC', 'laH', 'lA', 'lpHG', 'lSTG', 'lIP', 'lO', 'lIO', 'rEC', 'raH', 'rIO'}; % Patient 482
+probes_names = {'rEC', 'rAH', 'rA', 'rFSG', 'lEC', 'laH', 'lA', 'lpHG', 'rOF', 'lOF'}; % Patient 493
 
 
 base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
@@ -15,8 +16,8 @@ addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions')
 
 
 %% !!! sampling rate !!!! - make sure it's correct
-sr = 30000; 
-channels = 1:112;
+sr = 40000; 
+channels = 1:80;
 not_neuroport = 1;
 
 %%
@@ -38,7 +39,7 @@ for channel = channels
     line([0, ed],[thrmax, thrmax], 'color', 'r', 'linewidth', 5)
     line([0,ed],[-thrmax, -thrmax], 'color', 'r', 'linewidth', 5)
     xlim([0, ed])
-    ylim([-150, 150])
+    ylim([-1000, 1000])
     ylabel(sprintf('Ch %i', channel), 'fontsize', 12)
     cnt = cnt + 1;
     
