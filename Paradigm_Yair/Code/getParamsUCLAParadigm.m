@@ -47,9 +47,6 @@ for i =1:params.numWAVs
     params.shortenedWAVnames{i} = params.WAVnames{i}(1:end-4);   %remove '.wav'
 end
 uniqueWAVnames = unique(params.shortenedWAVnames);
-for i =1:params.numWAVs
-    params.stimCode(i) = find(strcmp(uniqueWAVnames,params.shortenedWAVnames{i}));
-end
 
 params.text_filename = dir(fullfile(params.Visualpath, 'stimuli_*.txt'));
 params.text_filename = params.text_filename(1).name;
@@ -58,7 +55,7 @@ params.text_filename = params.text_filename(1).name;
 params.numTrials = params.numWAVs * params.numPerWAV;
 
 params.patientChannel=1;  %audio channel number to patient
-params.TTLChannel=2;    %channel number for square wave TTL to show when stimulus is running
+params.TTLChannel=2;      %channel number for square wave TTL to show when stimulus is running
 
 subject = inputdlg({'Enter subject number'},...
     'Subject Number',1,{''});

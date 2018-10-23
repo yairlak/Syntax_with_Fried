@@ -1,16 +1,16 @@
-function run_visual_block(fid, stimuli_words, trialList, cumTrial, triggers, b, win, params)
+function run_visual_block(block, stimuli_words, VisualTrialOrder, fid_log, win, triggers, cumTrial, params, events)
 audioStopTime   = -inf;
 
 
 for trial=1:length(stimuli_words)
   cumTrial=cumTrial+1;
-  stimulus=trialList(trial);
+  stimulus=VisualTrialOrder(trial);
 
   
   %Echo status
-  ['Block: ' num2str(b)]
+  ['Block: ' num2str(block)]
   ['Trial: ' num2str(trial)]
-  ['Stimulus: ' num2str(params.stimCode(stimulus)) ' = ' stimuli_words{stimulus}]
+  ['Stimulus: ' stimuli_words{stimulus}]
   
 
   % %%%%%%% DRAW FIXATION BEFORE SENTENCE (duration: params.fixation_duration)
@@ -42,13 +42,12 @@ for trial=1:length(stimuli_words)
       
       
       % %%%%%%% WRITE TO LOG
-      fprintf(fid,[gettimestamp '\t'...
+      fprintf(fid_log,[gettimestamp '\t'...
               'Stim\t' ...
-              num2str(b) '\t' ...
+              num2str(block) '\t' ...
               num2str(trial) '\t' ...
-              num2str(params.stimCode(stimulus)) '\t' ...   %same code for '40Hz' and '40Hz-2'
-              num2str(stimulus) '\t' ...   %different code for '40Hz' and '40Hz-2'
-              params.shortenedWAVnames{stimulus} '\t' ...  %'40Hz-2.wav' becomes '40Hz'
+              num2str(stimulus) '\t' ... % Stimulus serial number in original stimulus text file
+              params.shortenedWAVnames{stimulus} '\t' ...  %
               word{1} '\t' ...
               num2str(text_onset) '\t' ...
               num2str(text_offset) '\r\n' ...

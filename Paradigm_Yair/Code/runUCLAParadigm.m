@@ -29,8 +29,8 @@ params.portB = 1;
 %################################################################
 triggers = 0;
 
-
-%% Initialising TTL hardware
+%%
+% %%%%%%% INITIALISING TTL HARDWARE
 [sio, dio, DaqDOut, hwline, laststim] = initialize_TTL_hardware(params, events);
 
 % Mark the beginning of the experiment with NINE consective '255' triggers separated by 0.1 sec
@@ -52,13 +52,15 @@ subses=['S' num2str(params.subject) '_' num2str(params.session)];
 
 % %%%%%% OPEN LOG
 timestamp = gettimestamp();
-fid=createLogFileUCLAParadigm(params.defaultpath,subses,timestamp); % 10 fields
+fid_log=createLogFileUCLAParadigm(params.defaultpath,subses,timestamp); % 10 fields
 endlogline='\t\t\t\t\t\t\t\t\t\t\r\n';
 copyfile(fullfile(params.defaultpath, 'runUCLAParadigm.m'),fullfile(params.defaultpath, '..', 'Logs', sprintf('runUCLAParadigm_%s_%s.m',timestamp,subses))); % copy code used for running to the log folder
 copyfile(fullfile(params.defaultpath, 'getParamsUCLAParadigm.m'), fullfile(params.defaultpath, '..', 'Logs', sprintf('getParamsUCLAParadigm_%s_%s.m',timestamp,subses)))
 
 % %%%%%% LOAD STIMULI
-[stimuli_words, WAVstimulus, stimArr] = load_stimuli(params, timestamp, subses);
+[stimuli_words, stimuli_wavs] = load_stimuli(params, timestamp, subses);
+stimDur = cellfun(@(x) size(x, 1), stimuli_wavs, 'UniformOutput', false);  %in samples
+WAVTTL  = cellfun(ones(1,stimDur(i));
 
 % %%%%%% INIT AUDIO
 InitializePsychSound(1);
@@ -113,7 +115,7 @@ for block = 1:6
   
     % %%%%%% BLOCK TYPE (odd blocks are visual; even auditory)
     if block == 1; grandStart = GetSecs; end
-    params.block = block;
+    
     if mod(block, 2) == 0
         params.block_type = 'auditory';
     else
@@ -127,14 +129,14 @@ for block = 1:6
     end
 
     % %%%%%%% RANDOMIZE TRIAL LIST
-    AudioTrialList=stimArr(randperm(length(stimArr)));
-    VisualTrialList=randperm(length(stimuli_words));
+    AudioTrialOrder=stimArr(randperm(length(stimuli_wavs)));
+    VisualTrialOrder=randperm(length(stimuli_words));
 
     % %%%%%% LOOP OVER STIMULI
     if strcmp(params.block_type, 'visual')
-      run_visual_block(fid, stimuli_words, VisualTrialList, cumTrial, triggers, location, params.block, win, rect, params)
+      run_visual_block(block, stimuli_words, VisualTrialOrder, fid_log, win, triggers, cumTrial, params, events)
     elseif strcmp(params.block_type, 'auditory')
-      run_auditory_block(fid, win, RightChannel, WAVstimulus, AudioTrialList, cumTrial, triggers, location, params.block, pahandle, params)
+      run_auditory_block(fid_log, win, RightChannel, WAVstimulus, AudioTrialOrder, cumTrial, triggers, location, block, pahandle, params)
     end
 end
 

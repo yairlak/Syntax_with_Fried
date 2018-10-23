@@ -1,4 +1,4 @@
-function run_auditory_block(fid, win, RightChannel, WAVstimulus, trialList, cumTrial, triggers, location, b, pahandle, params)
+function run_auditory_block(fid, win, stimuli_wavs, trialList, cumTrial, triggers, b, pahandle, params, events)
 audioStopTime   = -inf;
 
 
@@ -11,17 +11,12 @@ for trial=1:params.numTrials+params.numSilents
   
   clear wavedata;
   if (stimulus)
-      wavedata(params.patientChannel,:) = WAVstimulus{stimulus}(:,params.patientChannel);
-      if RightChannel=='Ones'
-          wavedata(params.TTLChannel,:) = WAVTTL{stimulus};
-      elseif RightChannel=='Stim'
-          wavedata(params.TTLChannel,:) = wavedata(params.patientChannel,:);
-      else
-          error('incorrect RightChannel setting');
-      end
+      wavedata(params.patientChannel,:) = stimuli_wavs{stimulus}(:,params.patientChannel);
+      wavedata(params.TTLChannel,:) = wavedata(params.patientChannel,:);
   else
       wavedata(1:2,:) = zeros(2,params.freq*params.nullStimDur);  %Not actually loading null wav
   end
+  
   PsychPortAudio('FillBuffer', pahandle, wavedata);
   while GetSecs-fixation_onset<params.fixation_duration_audio  %Wait before trial
   end
