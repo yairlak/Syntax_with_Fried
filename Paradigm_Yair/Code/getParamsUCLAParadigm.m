@@ -68,14 +68,13 @@ params.subject=subject{1};
 
 params.session=str2double(session);
 
-events.StartVisualTrial = 10;
-events.EndVisualTrial = 20;
+events.StartVisualTrial = 100;
+events.EndVisualTrial = 101;
+events.StartVisualWord = 110;
+events.EndVisualWord = 111;
 
-events.StartVisualWord = 30;
-events.EndVisualWord = 40;
-
-events.StartAudio = 50;
-events.EndAudio   = 60;
+events.StartAudio = 200;
+events.EndAudio   = 201;
 
 events.StartFixation = 100;
 events.EndFixation = 110;

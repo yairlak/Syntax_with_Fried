@@ -1,94 +1,80 @@
-function run_auditory_block(fid, win, stimuli_wavs, trialList, cumTrial, triggers, b, pahandle, params, events)
+function run_auditory_block(block, stimuli_wavs, AudioTrialOrder, fid_log, win, triggers, cumTrial, params, events, pahandle)
 audioStopTime   = -inf;
 
 
 for trial=1:params.numTrials+params.numSilents
-  cumTrial=cumTrial+1;
-  stimulus=trialList(trial);   %different value for e.g. 40Hz-2 and 40Hz
-
+  
+  % %%%%%% DRAW FIXATION
   DrawFormattedText2(['<color=' params.font_color '><font=' params.font_name '><size=' num2str(params.font_size) '>+'], 'win', win, 'sx', 'center', 'sy', 'center', 'xalign', 'center', 'yalign', 'center', 'xlayout', 'center');
   fixation_onset = Screen('Flip', win);  
   
+  cumTrial=cumTrial+1;
+  stimulus=AudioTrialOrder(trial);
   clear wavedata;
   if (stimulus)
       wavedata(params.patientChannel,:) = stimuli_wavs{stimulus}(:,params.patientChannel);
       wavedata(params.TTLChannel,:) = wavedata(params.patientChannel,:);
   else
-      wavedata(1:2,:) = zeros(2,params.freq*params.nullStimDur);  %Not actually loading null wav
+      wavedataslow(1:2,:) = zeros(2,params.freq*params.nullStimDur);  %Not actually loading null wav
   end
-  
-  PsychPortAudio('FillBuffer', pahandle, wavedata);
-  while GetSecs-fixation_onset<params.fixation_duration_audio  %Wait before trial
-  end
-
-
   %Echo status
-  ['Block: ' num2str(b)]
+  ['Block: ' num2str(block)]
   ['Trial: ' num2str(trial)]
   if (stimulus)
-      ['Stimulus: ' num2str(params.stimCode(stimulus)) ' = ' params.WAVnames{stimulus}]
+      ['Stimulus: ' num2str(stimulus) ' = ' params.WAVnames{stimulus}]
   else
       ['Stimulus: ' num2str(stimulus) ' = Null']
   end
 
+  PsychPortAudio('FillBuffer', pahandle, wavedata);
+  while GetSecs-fixation_onset<params.fixation_duration_audio  %Wait before trial
+  end
+  fixation_offset = Screen('Flip', win);
+  % %%%%%%% WRITE TO LOG
+    fprintf(fid_log,[gettimestamp '\t'...
+          'Fix\t' ...
+          num2str(block) '\t' ...
+          num2str(trial) '\t' ...
+          num2str(0) '\t' ... % Stimulus serial number in original stimulus text file
+          '' '\t' ...  %
+          '+' '\t' ...
+          num2str(fixation_onset) '\t' ...
+          num2str(fixation_offset) '\r\n' ...
+          ]); % write to log file
+      
+  
 
-  % Start audio playback immediately (0) and wait for the playback to start, return onset timestamp.
+  % %%%%%%% START AUDIO AND SEND TRIGGER AT START AND END
   audioOnset = PsychPortAudio('Start', pahandle, 1, 0, 1); % it takes ~15ms to start the sound
   if triggers
-      if stimulus
-          if triggers && strcmp(location,'TLVMC'), fwrite(sio,eventStartAudio+params.stimCode(stimulus)); WaitSecs(ttlwait); fwrite(sio,eventreset); end
-          if triggers && strcmp(location,'UCLA'), DaqDOut(dio,portA,eventStartAudio+params.stimCode(stimulus)); WaitSecs(ttlwait); DaqDOut(dio,portA,eventreset); end
-      else
-          %send 'Null' code
-          if triggers && strcmp(location,'TLVMC'), fwrite(sio,eventStartAudio); WaitSecs(ttlwait); fwrite(sio,eventreset); end
-          if triggers && strcmp(location,'UCLA'), DaqDOut(dio,portA,eventStartAudio); WaitSecs(ttlwait); DaqDOut(dio,portA,eventreset); end
-      end
+      send_trigger(triggers, sio, dio, params, events, 'StartAudio', 0)
   end
-
   % Wait for playback to stop:
   [~, ~, ~, audioStopTime]=PsychPortAudio('Stop', pahandle,1);
   if triggers
-      if stimulus
-          if triggers && strcmp(location,'TLVMC'), fwrite(sio,eventEndAudio+params.stimCode(stimulus)); WaitSecs(ttlwait); fwrite(sio,eventreset); end
-          if triggers && strcmp(location,'UCLA'), DaqDOut(dio,portA,eventEndAudio+params.stimCode(stimulus)); WaitSecs(ttlwait); DaqDOut(dio,portA,eventreset); end
-      else
-          if triggers && strcmp(location,'TLVMC'), fwrite(sio,eventEndAudio); WaitSecs(ttlwait); fwrite(sio,eventreset); end
-          if triggers && strcmp(location,'UCLA'), DaqDOut(dio,portA,eventEndAudio); WaitSecs(ttlwait); DaqDOut(dio,portA,eventreset); end
-      end          
+      send_trigger(triggers, sio, dio, params, events, 'EndAudio', 0)
   end
 
+  % %%%%%%% CLEAR-UP (buffer and screen)
   PsychPortAudio('DeleteBuffer',[],1); % clear the buffer
   fixation_offset = Screen('Flip', win); % Remove fixation +
   
-  %write to CVS logfile
-  if (stimulus)
-      fprintf(fid,[gettimestamp '\t'...
-          'Stim\t' ...
-          num2str(b) '\t' ...
-          num2str(trial) '\t' ...
-          num2str(params.stimCode(stimulus)) '\t' ...   %same code for '40Hz' and '40Hz-2'
-          num2str(stimulus) '\t' ...   %different code for '40Hz' and '40Hz-2'
-          params.shortenedWAVnames{stimulus} '\t' ...  %'40Hz-2.wav' becomes '40Hz'
-          params.WAVnames{stimulus} '\t' ...
-          num2str(audioOnset) '\t' ...
-          num2str(audioStopTime) '\r\n' ...
-          ]); % write to log file
-  else
-      fprintf(fid,[gettimestamp '\t'...
-          'Stim\t' ...
-          num2str(b) '\t' ...
-          num2str(trial) '\t' ...
-          num2str(stimulus) '\t' ...   %stim code
-          num2str(stimulus) '\t' ...
-          'Null' '\t' ...
-          'Null' '\t' ...
-          num2str(audioOnset) '\t' ...
-          num2str(audioStopTime) '\r\n' ...
-          ]); % write to log file
-  end
+  % %%%%%%% WRITE TO LOG
+  fprintf(fid_log,[gettimestamp '\t'...
+      'Stim\t' ...
+      num2str(block) '\t' ...
+      num2str(trial) '\t' ...
+      num2str(stimulus) '\t' ...   %different code for '40Hz' and '40Hz-2'
+      params.shortenedWAVnames{stimulus} '\t' ...  %'40Hz-2.wav' becomes '40Hz'
+      params.WAVnames{stimulus} '\t' ...
+      num2str(audioOnset) '\t' ...
+      num2str(audioStopTime) '\r\n' ...
+      ]); % write to log file
+
   
-  while GetSecs-audioStopTime<params.ISI_audio %Wait before showing next sentencesw
-  end
+  % %%%%%% WAIT ISI
+    while GetSecs-audioStopTime<params.ISI_audio %Wait before showing next sentencesw
+    end
 
 
 end  %trial

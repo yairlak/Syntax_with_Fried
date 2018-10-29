@@ -1,4 +1,4 @@
-function [sio, dio, DaqDOut, hwline, laststim] = initialize_TTL_hardware(params, events)
+function [sio, dio, DaqDOut, hwline, laststim] = initialize_TTL_hardware(triggers, params, events)
 sio=[]; dio=[]; DaqDOut=[]; hwline=[]; laststim=[];
 
 if triggers && strcmp(params.location,'TLVMC')

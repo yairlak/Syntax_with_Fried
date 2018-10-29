@@ -9,7 +9,7 @@
 clear all; close all; clc
 addpath('functions')
 KbName('UnifyKeyNames')
-events, params = getParamsUCLAParadigm;
+[params, events] = getParamsUCLAParadigm();
 
 %RightChannel='Ones';  %'Ones' implies all values are 1
 RightChannel='Stim';  %'Stim' implies that we send the same stimulus to
@@ -31,11 +31,11 @@ triggers = 0;
 
 %%
 % %%%%%%% INITIALISING TTL HARDWARE
-[sio, dio, DaqDOut, hwline, laststim] = initialize_TTL_hardware(params, events);
+[sio, dio, DaqDOut, hwline, laststim] = initialize_TTL_hardware(triggers, params, events);
 
 % Mark the beginning of the experiment with NINE consective '255' triggers separated by 0.1 sec
 for i=1:9
-    send_trigger(sio, dio, params, events, 'event255', 0.1)
+    send_trigger(triggers, sio, dio, params, events, 'event255', 0.1)
 end
 
 % Running on PTB-3? Abort otherwise.
@@ -60,7 +60,7 @@ copyfile(fullfile(params.defaultpath, 'getParamsUCLAParadigm.m'), fullfile(param
 % %%%%%% LOAD STIMULI
 [stimuli_words, stimuli_wavs] = load_stimuli(params, timestamp, subses);
 stimDur = cellfun(@(x) size(x, 1), stimuli_wavs, 'UniformOutput', false);  %in samples
-WAVTTL  = cellfun(ones(1,stimDur(i));
+% WAVTTL  = cellfun(ones(1,stimDur(i));
 
 % %%%%%% INIT AUDIO
 InitializePsychSound(1);
@@ -109,10 +109,16 @@ for block = 1:6
         end
     end
     
-    % %%%%%% DRAW FIXATION
+    
+    % %%%%%% BLOCK START: mark a new block with four 255 triggers separated 200ms from each other
+    for i=1:4
+        send_trigger(triggers, sio, dio, params, events, 'event255', 0.2)
+    end
+    
+    % %%%%%% DRAW FIRST FIXATION 
     DrawFormattedText2(['<color=' params.font_color '><font=' params.font_name '><size=' num2str(params.font_size) '>+'], 'win', win, 'sx', 'center', 'sy', 'center', 'xalign', 'center', 'yalign', 'center', 'xlayout', 'center');
-    Screen('Flip', win);  
-  
+    Screen('Flip', win);
+    
     % %%%%%% BLOCK TYPE (odd blocks are visual; even auditory)
     if block == 1; grandStart = GetSecs; end
     
@@ -122,21 +128,15 @@ for block = 1:6
         params.block_type = 'visual';
     end
     
-    
-    % %%%%%% BLOCK START: mark a new block with four 255 triggers separated 200ms from each other
-    for i=1:4
-        send_trigger(sio, dio, params, events, 'event255', 0.2)
-    end
-
     % %%%%%%% RANDOMIZE TRIAL LIST
-    AudioTrialOrder=stimArr(randperm(length(stimuli_wavs)));
+    AudioTrialOrder=randperm(length(stimuli_wavs));
     VisualTrialOrder=randperm(length(stimuli_words));
 
     % %%%%%% LOOP OVER STIMULI
     if strcmp(params.block_type, 'visual')
       run_visual_block(block, stimuli_words, VisualTrialOrder, fid_log, win, triggers, cumTrial, params, events)
     elseif strcmp(params.block_type, 'auditory')
-      run_auditory_block(fid_log, win, RightChannel, WAVstimulus, AudioTrialOrder, cumTrial, triggers, location, block, pahandle, params)
+      run_auditory_block(block, stimuli_wavs, AudioTrialOrder, fid_log, win, triggers, cumTrial, params, events, pahandle)
     end
 end
 

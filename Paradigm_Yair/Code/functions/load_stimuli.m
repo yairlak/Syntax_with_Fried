@@ -13,7 +13,7 @@ for i=1:params.numWAVs
      if Fs(i)~=params.freq
          warning(sprintf('WAV file sample rate not %d Hz', params.freq));
      end
-     stimuli_wav{i}(:,:) = audioread(wav_filename);
+     stimuli_wavs{i}(:,:) = audioread(wav_filename);
 end
      
 
