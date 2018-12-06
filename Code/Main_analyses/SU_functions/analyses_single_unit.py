@@ -5,9 +5,9 @@ import mne
 import matplotlib.pyplot as plt
 import pickle
 from operator import itemgetter
-import load_data, convert_to_mne
-from auxilary_functions import  smooth_with_gaussian
-from auxilary_functions import  get_queries
+from SU_functions import load_data, convert_to_mne
+from SU_functions.auxilary_functions import  smooth_with_gaussian
+from SU_functions.auxilary_functions import  get_queries
 
 
 def generate_raster_plots(events_spikes, event_id, metadata, comparisons, settings, params, preferences):

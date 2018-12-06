@@ -3,8 +3,8 @@ import os, glob
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = True
-        self.analyze_micro_raw = False
+        self.analyze_micro_single = False
+        self.analyze_micro_raw = True
         self.save_features_for_classification = True
 
         self.run_contrasts = False
@@ -17,8 +17,8 @@ class Settings():
     def __init__(self, patient):
         # PATIENT:
         self.hospital = 'UCLA'
-        self.patient = 'patient_479'
-        self.comparisons = range(5)
+        self.patient = patient
+        # self.comparisons = range(5)
         #self.comparisons = [0, 1]
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
@@ -81,19 +81,20 @@ class Params:
         self.sfreq_raw = 40000 # Data sampling frequency [Hz]
         self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]
-        self.tmin = -2  # Start time before event [sec], should be negative
-        self.tmax = 2 # End time after event [sec]
+        self.tmin = -0.51  # Start time before event [sec], should be negative
+        self.tmax = 1 # End time after event [sec]
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
 
         ###### Frequency bands ##########
-        self.iter_freqs = [('High-Gamma', 70, 150)]
+        # self.iter_freqs = [('High-Gamma', 70, 150)]
+        self.iter_freqs = [('High-Gamma', 1000, 20000)]
         # self.iter_freqs = []
         step = 5
         # for freq in range(4, 146, 1):
         #     band = str(freq) + '_to_' + str(freq + step) + 'Hz'
         #     self.iter_freqs.append((band, freq, freq + step))
-        self.freq_step = 2  # [Hz] Step in spectrogram
+        self.freq_step = 1000  # [Hz] Step in spectrogram
         # self.time_step = self.tmax * self.sfreq_raw # Epoch into subsequent segments\
         # self.slice_size = 500 * self.sfreq
         ##################################

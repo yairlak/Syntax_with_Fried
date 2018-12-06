@@ -1,12 +1,12 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_479';
+patient = 'patient_482';
 recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
 
-base_folder = ['/home/yl254115/Projects/single_unit_syntax_pipeline/Data/UCLA/', patient];
-base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
+base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
+% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
 output_path = fullfile(base_folder,'ChannelsCSC');
 
 mkdir(output_path);
@@ -36,6 +36,7 @@ switch recording_system
             idx=1;
             for ncs_file_name=ncs_files'
                 file_name = ncs_file_name.name;
+                fprintf('%s\n', file_name)
                 ncs_file = fullfile(base_folder,'Raw',file_name);
 %                 ncs_file = fullfile(base_folder,file_name);
                 fprintf('CSC of channnel %d...',idx);

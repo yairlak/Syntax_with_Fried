@@ -222,23 +222,7 @@ def extract_comparison(comparison_list, features, settings, preferences):
             comparisons.append(curr_dict)
 
         else:
-            print('!!!!!!XXXXXXXX!!!!!!!!!')
-            # contrast = str(contrast[2:-2]).split('],[')
-            # trial_numbers_and_strings = []
-            # for j, columns_condition in enumerate(contrast):
-            #     columns_condition = columns_condition.split(',')
-            #     columns_condition = [int(s) for s in columns_condition]
-            #     binary_values_in_columns = [binary_values[1::] for col, binary_values in enumerate(features) if col+3 in columns_condition] # +3: Assumes features in XLS starts at column C
-            #     if bool(union_or_intersection[i][j]):
-            #         IX_trials_curr_cond = np.prod(np.asarray(binary_values_in_columns), axis=0) == 1 # AND
-            #     else:
-            #         IX_trials_curr_cond = np.sum(np.asarray(binary_values_in_columns), axis=0) > 0 # OR
-            #     curr_trial_numbers = trial_numbers[IX_trials_curr_cond]
-            #     curr_stimuli = stimuli[IX_trials_curr_cond]
-            #     IX_sort = np.argsort(curr_trial_numbers)
-            #     trial_numbers_and_strings.append({'trial_numbers':curr_trial_numbers[IX_sort], 'stimuli':curr_stimuli[IX_sort]})
-            # queries.append([trial_numbers_and_strings, align_to[i], contrast_names[i]])
-
+            print('Metadata is not used')
 
     return comparisons
 

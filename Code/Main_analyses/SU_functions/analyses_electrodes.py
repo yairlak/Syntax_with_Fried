@@ -24,8 +24,9 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
         print('Generating MNE raw object for continuous data...')
         raw = convert_to_mne.generate_mne_raw_object(raw_CSC_data_in_mat, settings, params)
 
-        print('Line filtering...')
-        raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
+        if channel>0: # if not microphone
+            print('Line filtering...')
+            raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 
         print('Epoching data...')
         if preferences.use_metadata_only:
@@ -35,16 +36,101 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
             epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, baseline=None, preload=True)
         print(epochs)
 
-        print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
-        epochs.resample(params.downsampling_sfreq, npad='auto')
-        print('New sampling rate:', epochs.info['sfreq'], 'Hz')
+        if channel>0:
+            print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
+            epochs.resample(params.downsampling_sfreq, npad='auto')
+            print('New sampling rate:', epochs.info['sfreq'], 'Hz')
 
-        del raw, raw_CSC_data_in_mat
+            del raw, raw_CSC_data_in_mat
 
-        print('Time-frequency analyses...')
-        for band, fmin, fmax in params.iter_freqs:
-            print('Band: ' + band)
+            print('Time-frequency analyses...')
+            for band, fmin, fmax in params.iter_freqs:
+                print('Band: ' + band)
 
+                if preferences.use_metadata_only:
+                    for i, comparison in enumerate(comparisons):
+                        print('Contrast: ' + comparison['contrast_name'])
+                        # queries = get_queries(comparison)
+                        preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
+                        print(preferences.sort_according_to_key)
+                        str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
+                        str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
+                        if comparison['align_to'] == 'FIRST':
+                            str_align = 'word_position == 1'
+                        elif comparison['align_to'] == 'LAST':
+                            str_align = 'word_position == sentence_length'
+                        elif comparison['align_to'] == 'END':
+                            str_align = 'word_position == -1'
+                        elif comparison['align_to'] == 'EACH':
+                            str_align = 'word_position > 0'
+
+                        for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
+                            file_name_root = band + '_' + settings.patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
+                            file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
+
+                            for key_sort in preferences.sort_according_to_key:
+                                file_name += '_' + key_sort + 'Sorted'
+
+                            IX1 = settings.channel_name.find('_0019')
+                            if IX1 == -1:
+                                IX1 = settings.channel_name.find('.ncs')
+                            probe_name = settings.channel_name[0:IX1 - 1]
+
+                            with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'w') as f:
+                                stimuli_of_curr_query = list(set(list(metadata.query(query_cond)['sentence_string'])))
+                                stimuli_of_curr_query = [l+'\n' for l in stimuli_of_curr_query]
+                                f.writelines(stimuli_of_curr_query)
+
+                            if (not os.path.isfile(
+                                    os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name,
+                                                 file_name + '.png'))) or settings.overwrite_existing_output_files:
+
+                                query_baseline = query_cond + ' and word_position == 1 and ' + str_blocks
+                                _, _, baseline = average_high_gamma(epochs[query_baseline], band,
+                                                                             fmin, fmax, params.freq_step, None,
+                                                                             'trial_wise', params)
+
+                                query = query_cond + ' and ' + str_align + ' and ' + str_blocks
+                                if not comparison['align_to'] == 'EACH':
+                                    power, power_ave, _ = average_high_gamma(epochs[query],
+                                                                                      band,
+                                                                                      fmin, fmax, params.freq_step,
+                                                                                      baseline,
+                                                                                      'trial_wise', params)
+                                else:
+                                    power, power_ave, _ = average_high_gamma(epochs[query],
+                                                                                      band,
+                                                                                      fmin, fmax, params.freq_step,
+                                                                                      [],
+                                                                                      'no_baseline', params)
+
+                                if preferences.save_features_for_classification:
+                                    epochs_power = epochs[query].copy()
+                                    epochs_power.times = power.times
+                                    epochs_power._data = power_ave
+                                    epochs_power.metadata = epochs[query].metadata
+
+
+                                    plot_and_save_high_gamma(epochs_power, comparison['align_to'], eval(comparison['blocks']),
+                                                                      probe_name, file_name,
+                                                                      settings, params, preferences)
+                                    epochs_power._data = np.expand_dims(power_ave, axis=1) # To be compatible with MNE functions: add a middle singelton dimenstion for number of channels
+                                    file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
+                                            settings.channel) + '_' + query
+
+                                    with open(os.path.join(settings.path2output, settings.patient,
+                                                           'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
+                                        pickle.dump([epochs_power, query, settings, params, preferences], f)
+
+                                    print('Save to: ' + file_name)
+                            else:
+                                print('File already exists')
+        elif channel==0:
+            print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
+            epochs.resample(params.downsampling_sfreq, npad='auto')
+            print('New sampling rate:', epochs.info['sfreq'], 'Hz')
+
+            del raw, raw_CSC_data_in_mat
             if preferences.use_metadata_only:
                 for i, comparison in enumerate(comparisons):
                     print('Contrast: ' + comparison['contrast_name'])
@@ -63,7 +149,8 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                         str_align = 'word_position > 0'
 
                     for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
-                        file_name_root = band + '_' + settings.patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
+                        file_name_root = settings.patient + '_Blocks_' + comparison[
+                            'blocks'] + '_' + label_cond + '_' + comparison['align_to']
                         file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
 
                         for key_sort in preferences.sort_according_to_key:
@@ -74,56 +161,38 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                             IX1 = settings.channel_name.find('.ncs')
                         probe_name = settings.channel_name[0:IX1 - 1]
 
-                        with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'w') as f:
+                        with open(os.path.join(settings.path2output, settings.patient, 'HighGamma',
+                                               file_name_root + '.txt'), 'w') as f:
                             stimuli_of_curr_query = list(set(list(metadata.query(query_cond)['sentence_string'])))
-                            stimuli_of_curr_query = [l+'\n' for l in stimuli_of_curr_query]
+                            stimuli_of_curr_query = [l + '\n' for l in stimuli_of_curr_query]
                             f.writelines(stimuli_of_curr_query)
 
                         if (not os.path.isfile(
                                 os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name,
                                              file_name + '.png'))) or settings.overwrite_existing_output_files:
 
-                            query_baseline = query_cond + ' and word_position == 1 and ' + str_blocks
-                            _, _, baseline = average_high_gamma(epochs[query_baseline], band,
-                                                                         fmin, fmax, params.freq_step, None,
-                                                                         'trial_wise', params)
 
                             query = query_cond + ' and ' + str_align + ' and ' + str_blocks
-                            if not comparison['align_to'] == 'EACH':
-                                power, power_ave, _ = average_high_gamma(epochs[query],
-                                                                                  band,
-                                                                                  fmin, fmax, params.freq_step,
-                                                                                  baseline,
-                                                                                  'trial_wise', params)
-                            else:
-                                power, power_ave, _ = average_high_gamma(epochs[query],
-                                                                                  band,
-                                                                                  fmin, fmax, params.freq_step,
-                                                                                  [],
-                                                                                  'no_baseline', params)
+                            mic = epochs[query].get_data()
+                            mic = np.squeeze(mic)
+                            mic2 = np.power(mic, 2)
 
-                            if preferences.save_features_for_classification:
-                                epochs_power = epochs[query].copy()
-                                epochs_power.times = power.times
-                                epochs_power._data = power_ave
-                                epochs_power.metadata = epochs[query].metadata
+                            epochs_mic = epochs[query].copy()
+                            epochs_mic._data = mic2
+                            epochs_mic.metadata = epochs[query].metadata
 
+                            plot_and_save_high_gamma(epochs_mic, comparison['align_to'], eval(comparison['blocks']),
+                                                     probe_name, file_name,
+                                                     settings, params, preferences)
+                            # mic_rms = []
+                            # window = np.ones(10) / float(10)
+                            # for rw in range(mic2.shape[0]):
+                            #     vec = np.sqrt(np.convolve(mic2[rw, :], window, 'valid'))
+                            #     mic_rms[rw, :] = vec
+                            # print(mic_rms.shape)
 
-                                plot_and_save_high_gamma(epochs_power, comparison['align_to'], eval(comparison['blocks']),
-                                                                  probe_name, file_name,
-                                                                  settings, params, preferences)
-                                epochs_power._data = np.expand_dims(power_ave, axis=1) # To be compatible with MNE functions: add a middle singelton dimenstion for number of channels
-                                file_name = 'Feature_matrix_' + band + '_' + settings.patient + '_channel_' + str(
-                                        settings.channel) + '_' + query
-
-                                with open(os.path.join(settings.path2output, settings.patient,
-                                                       'feature_matrix_for_classification', file_name + '.pkl'), 'wb') as f:
-                                    pickle.dump([epochs_power, query, settings, params, preferences], f)
-
-                                print('Save to: ' + file_name)
                         else:
                             print('File already exists')
-
 
 def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type, params):
     freqs = np.arange(fmin, fmax, fstep)
