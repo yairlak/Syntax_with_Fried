@@ -5,8 +5,13 @@ import re
 
 # Raw data
 def micro_electrodes_raw(settings):
-    CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'CSC' + str(settings.channel) + '.mat'))
+    if settings.channel > 0:
+        CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'CSC' + str(settings.channel) + '.mat'))
+    elif settings.channel == 0:
+        CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'MICROPHONE_2.mat'))
+    print(CSC_file)
     data_all = io.loadmat(CSC_file[0])['data']
+    print('channel-data loaded')
     if 'file_name' in io.loadmat(CSC_file[0]).keys():
         settings.channel_name = io.loadmat(CSC_file[0])['file_name'][0]
     else:

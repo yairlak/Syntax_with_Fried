@@ -5,9 +5,14 @@ patient = 'patient_493';
 % recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
 
+<<<<<<< HEAD
 % base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
 base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
+=======
+base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
+% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
+>>>>>>> 53fa704ad0f6f69e3e0afe860395a33a4a700590
 output_path = fullfile(base_folder,'ChannelsCSC');
 
 mkdir(output_path);
@@ -29,14 +34,15 @@ ModeArray=[]; %all.
 switch recording_system
         case 'Neuralynx'
             % Extract time0 and timeend from NEV file
-            %nev_filename = fullfile(base_folder, 'nev_files', 'Events.nev');
-            %[TimeStamps, EventIDs, Nttls, Extras, EventStrings] = Nlx2MatEV_v3(nev_filename, FieldSelection, ExtractHeader, ExtractMode, ModeArray);
+            nev_filename = fullfile(base_folder, 'nev_files', 'Events.nev');
+%             [TimeStamps, EventIDs, Nttls, Extras, EventStrings] = Nlx2MatEV_v3(nev_filename, FieldSelection, ExtractHeader, ExtractMode, ModeArray);
             
             % Extract raw data and save into MAT files
             ncs_files = dir([base_folder '/Raw/*.ncs']);
             idx=1;
             for ncs_file_name=ncs_files'
                 file_name = ncs_file_name.name;
+                fprintf('%s\n', file_name)
                 ncs_file = fullfile(base_folder,'Raw',file_name);
 %                 ncs_file = fullfile(base_folder,file_name);
                 fprintf('CSC of channnel %d...',idx);
@@ -65,5 +71,20 @@ switch recording_system
 end
 save(fullfile(base_folder, 'electrodes_info_names.mat'), 'electrodes_info')
 
+<<<<<<< HEAD
+=======
+%% !!! sampling rate !!!! - make sure it's correct
+sr = 40000; 
+% channels = 1:(idx-1); %idx=130 for UCLA patient 479
+channels = [13, 47, 48, 49, 55, 57, 59];
+channels = 1:70;
+% channels = [62];
+not_neuroport = 1;
+%% get all csc and produce scs_spikes according to filter and threshold parameters  
+Get_spikes_CSC_notch2k_ariel_mat (channels, fullfile(base_folder, 'ChannelsCSC'), not_neuroport, sr) 
+
+%% only for wave_clus use
+ariel_do_clustering_csc(output_path, channels, sr) 
+>>>>>>> 53fa704ad0f6f69e3e0afe860395a33a4a700590
 
 

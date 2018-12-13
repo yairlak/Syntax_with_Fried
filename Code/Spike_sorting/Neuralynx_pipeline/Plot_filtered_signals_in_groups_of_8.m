@@ -1,11 +1,16 @@
 clear; close all; clc;
 
 %%
+<<<<<<< HEAD
 patient = 'patient_480';
+=======
+patient = 'patient_493';
+>>>>>>> 53fa704ad0f6f69e3e0afe860395a33a4a700590
 probes_names = {'rEC', 'rMH', 'RA', 'rSTGa', 'rAIP', 'rMC', 'rSTG', 'rIF', 'rSO', 'rSP', 'rOP', 'rIG', 'LMH', 'LP'}; % Patient 480
 
 patient = 'patient_482';
 probes_names = {'lEC', 'laH', 'lA', 'lpHG', 'lSTG', 'lIP', 'lO', 'lIO', 'rEC', 'raH', 'rIO'}; % Patient 482
+probes_names = {'rEC', 'rAH', 'rA', 'rFSG', 'lEC', 'laH', 'lA', 'lpHG', 'rOF', 'lOF'}; % Patient 493
 
 patient = 'patient_493'
 probes_names = {'rEC', 'rAH', 'rA', 'rFSG', 'lEC', 'laH', 'lA', 'lpHG', 'rOF', 'lOF'}; % Patient 493
@@ -20,7 +25,11 @@ addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions')
 
 %% !!! sampling rate !!!! - make sure it's correct
 sr = 40000; 
+<<<<<<< HEAD
 channels = 4:83;
+=======
+channels = 1:80;
+>>>>>>> 53fa704ad0f6f69e3e0afe860395a33a4a700590
 not_neuroport = 1;
 
 %%
@@ -42,7 +51,7 @@ for channel = channels
     line([0, ed],[thrmax, thrmax], 'color', 'r', 'linewidth', 5)
     line([0,ed],[-thrmax, -thrmax], 'color', 'r', 'linewidth', 5)
     xlim([0, ed])
-    ylim([-150, 150])
+    ylim([-1000, 1000])
     ylabel(sprintf('Ch %i', channel), 'fontsize', 12)
     cnt = cnt + 1;
     
