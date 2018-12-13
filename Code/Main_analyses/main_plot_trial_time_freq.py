@@ -1,15 +1,16 @@
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne
+import os, sys
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+print(os.getcwd())
 from SU_functions import analyses_single_unit, analyses_electrodes, generate_plots
+from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne
 from SU_functions import *
 import matplotlib.pyplot as plt
-import os, sys
 import mne
 mne.set_log_level('CRITICAL') # DEBUG, INFO, WARNING, ERROR, or CRITICAL
 plt.switch_backend('agg')
 
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
 
 # ---- Get (optional) argument from terminal which defines the channel for gamma analysis
 if len(sys.argv) > 1:
@@ -47,8 +48,8 @@ metadata = read_logs_and_comparisons.prepare_metadata(log_all_blocks, features, 
 print('Generating event object for MNE from log data...')
 events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences)
 
-print('Loading electrode names for all channels...')
-electrode_names = load_data.electrodes_names(settings)
+#print('Loading electrode names for all channels...')
+#electrode_names = load_data.electrodes_names(settings)
 
 print('Plottoing paradigm timings')
 generate_plots.plot_paradigm_timings(events_spikes, event_id, settings, params)

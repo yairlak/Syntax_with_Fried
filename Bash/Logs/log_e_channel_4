@@ -1,8 +1,8 @@
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:208: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1842 but corresponding boolean dimension is 2048
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:212: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1842 but corresponding boolean dimension is 2048
   y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:243: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1842 but corresponding boolean dimension is 2048
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:212: RuntimeWarning: Mean of empty slice
+  y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:247: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1842 but corresponding boolean dimension is 2048
   ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:208: RuntimeWarning: Mean of empty slice
-  y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:243: RuntimeWarning: Mean of empty slice
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:247: RuntimeWarning: Mean of empty slice
   ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))

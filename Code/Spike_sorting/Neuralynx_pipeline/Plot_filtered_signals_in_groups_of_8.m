@@ -1,13 +1,17 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_482';
+patient = 'patient_480';
 probes_names = {'rEC', 'rMH', 'RA', 'rSTGa', 'rAIP', 'rMC', 'rSTG', 'rIF', 'rSO', 'rSP', 'rOP', 'rIG', 'LMH', 'LP'}; % Patient 480
+
+patient = 'patient_482';
 probes_names = {'lEC', 'laH', 'lA', 'lpHG', 'lSTG', 'lIP', 'lO', 'lIO', 'rEC', 'raH', 'rIO'}; % Patient 482
 
+patient = 'patient_493'
+probes_names = {'rEC', 'rAH', 'rA', 'rFSG', 'lEC', 'laH', 'lA', 'lpHG', 'rOF', 'lOF'}; % Patient 493
 
 base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
-% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient];
+base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
 output_path = fullfile(base_folder,'ChannelsCSC');
 
 % mkdir(output_path);
@@ -15,8 +19,8 @@ addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions')
 
 
 %% !!! sampling rate !!!! - make sure it's correct
-sr = 30000; 
-channels = 1:112;
+sr = 40000; 
+channels = 4:83;
 not_neuroport = 1;
 
 %%
@@ -24,7 +28,7 @@ cnt = 1; group = 1;
 f = figure('visible', 'off', 'color', [1 1 1], 'units', 'normalized', 'position', [0 0 1 1]);
 for channel = channels
 %     fprtinf('Processing channel %i\n', channel)
-    load(fullfile(output_path, ['Signal_filtered_', num2str(channel)]));
+    load(fullfile(output_path, ['Signal_filtered_', num2str(channel), '.mat']));
     ed = 100; % in sec
     yy = xf_detect(1:ed*sr);
     xx = (1:length(yy))/sr;

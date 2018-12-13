@@ -4,7 +4,7 @@ import os, glob
 class Preferences:
     def __init__(self):
         self.analyze_micro_single = False 
-        self.analyze_micro_raw = True
+        self.analyze_micro_raw = True 
         self.save_features_for_classification = True
 
         self.run_contrasts = False
@@ -18,12 +18,12 @@ class Settings():
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = patient
-        self.comparisons = range(81, 108)
+        self.comparisons = range(108)
         #self.comparisons = [0, 1]
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
         self.load_line_filtered_resampled_epoch_object = False
-        self.overwrite_existing_output_files = False
+        self.overwrite_existing_output_files = True
 
         # PATHS
         self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)
@@ -72,7 +72,6 @@ class Settings():
             self.time0 =   1520590966262873
             self.timeend = 1520594033849941
             # Which channels in the raw CSC files have clear spikes
-            self.channels_with_spikes = []
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
 

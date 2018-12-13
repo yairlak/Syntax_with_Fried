@@ -23,9 +23,10 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, queries, sett
                     print('contrast: ' + comparison['contrast_name'] + '; ' + band + '; channel ' + str(channel) + '; ' + patient)
                     file_name = 'Feature_matrix_' + band + '_' + patient + '_channel_' + str(
                         settings.channel) + '_' + query
-                    with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
+                    if os.path.isfile(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification', file_name + '.pkl')):
+                        with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
                                                file_name + '.pkl'), 'rb') as f:
-                        curr_data = pickle.load(f)
+                            curr_data = pickle.load(f)
                         #print(curr_data[0].events.shape[0])
                         if c == 0 and p==0:
                             epochs_all_channels = curr_data[0]
@@ -41,6 +42,8 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, queries, sett
                         else:
                             curr_data[0].events = events_shared_for_all_patients
                             epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
+                    else:
+                        print('!!!!!! file does not exist: ' + file_name + '!!!!!!!') 
             # Single-unit features
             if preferences.analyze_micro_single:
                 print('contrast: ' + comparison['contrast_name'] + '; Single-units channel ' + str(channel) + '; ' + patient)
