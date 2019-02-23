@@ -1,12 +1,13 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_479';
-recording_system = 'BlackRock';
+patient = 'patient_487';
+% recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
 
-base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
-% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
+% base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
+% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
+base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
 output_path = fullfile(base_folder,'ChannelsCSC');
 
 mkdir(output_path);
@@ -69,14 +70,14 @@ save(fullfile(base_folder, 'electrodes_info_names.mat'), 'electrodes_info')
 %% !!! sampling rate !!!! - make sure it's correct
 sr = 40000; 
 % channels = 1:(idx-1); %idx=130 for UCLA patient 479
-channels = [13, 47, 48, 49, 55, 57, 59];
-channels = 1:70;
+%channels = [13, 47, 48, 49, 55, 57, 59];
+%channels = 1:70;
 % channels = [62];
 not_neuroport = 1;
 %% get all csc and produce scs_spikes according to filter and threshold parameters  
-Get_spikes_CSC_notch2k_ariel_mat (channels, fullfile(base_folder, 'ChannelsCSC'), not_neuroport, sr) 
+%Get_spikes_CSC_notch2k_ariel_mat (channels, fullfile(base_folder, 'ChannelsCSC'), not_neuroport, sr) 
 
 %% only for wave_clus use
-ariel_do_clustering_csc(output_path, channels, sr) 
+%ariel_do_clustering_csc(output_path, channels, sr) 
 
 

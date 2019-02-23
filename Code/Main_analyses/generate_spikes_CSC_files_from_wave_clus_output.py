@@ -11,6 +11,7 @@ import numpy as np
 def generate_spike_csc_cluster_files(data_all_channels_spike_clusters, channel_numbers, electrode_names, settings):
     cnt = 1
     for i, ch in enumerate(settings.channels_with_spikes):
+        print('Channel %i'%ch)
         if ch in channel_numbers:
             curr_channel_clusters = data_all_channels_spike_clusters[ch - 1]
 
@@ -37,12 +38,14 @@ def generate_spike_csc_cluster_files(data_all_channels_spike_clusters, channel_n
             print(
             'Error: settings.channels_with_spikes contains channels without a corresponding times file from Wave_clus')
 
+patient = 'patient_479'
+
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 print('Loading settings...')
-settings = load_settings_params.Settings()
+settings = load_settings_params.Settings(patient)
 
 print('Loading data...')
 data_all_channels_spike_clusters, channel_numbers, settings = load_data.wave_clus_output_files(settings)

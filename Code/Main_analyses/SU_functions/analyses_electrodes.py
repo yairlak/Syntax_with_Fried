@@ -5,9 +5,9 @@ import mne
 import matplotlib.pyplot as plt
 import pickle
 from operator import itemgetter
-import load_data, convert_to_mne
-from auxilary_functions import smooth_with_gaussian
-from auxilary_functions import get_queries
+from SU_functions import load_data, convert_to_mne
+from SU_functions.auxilary_functions import smooth_with_gaussian
+from SU_functions.auxilary_functions import get_queries
 
 
 def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, settings, params, preferences):
@@ -16,7 +16,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
         settings.channel = channel
         print('Loading CSC raw data...')
         raw_CSC_data_in_mat, settings = load_data.micro_electrodes_raw(settings)
-        print 'Analyzing high-gamma for channel ' + str(channel)
+        print('Analyzing high-gamma for channel ' + str(channel))
         # Line filter and resample, or load from file
         file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(
             channel) + '_line_filtered_resampled-epo'
@@ -51,7 +51,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                     for i, comparison in enumerate(comparisons):
                         print('Contrast: ' + comparison['contrast_name'])
                         # queries = get_queries(comparison)
-                        preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
+                        preferences.sort_according_to_key = [s.strip() for s in comparison['sorting']]
                         print(preferences.sort_according_to_key)
                         str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
                         str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
@@ -65,7 +65,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                             str_align = 'word_position > 0'
 
                         for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
-                            # If pos in query then add double quotes (") around value, e.g. (pos==VB --> pos =="VB")
+                            # If part-of-sppech (pos) is found in query then add double quotes (") around value, e.g. (pos==VB --> pos =="VB"). Otherwise pandas expects a variable.
                             new_query_cond = ''
                             i = 0
                             while i < len(query_cond):
@@ -85,11 +85,15 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                             for key_sort in preferences.sort_according_to_key:
                                 file_name += '_' + key_sort + 'Sorted'
 
-                            IX1 = settings.channel_name.find('_0019')
+                            if settings.patient == 'patient_493':
+                                find_str = '_0016'
+                            else:
+                                find_str = '_0019'
+                            IX1 = settings.channel_name.find(find_str)
                             if IX1 == -1:
                                 IX1 = settings.channel_name.find('.ncs')
                             probe_name = settings.channel_name[0:IX1 - 1]
-
+                           
                             with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'w') as f:
                                 stimuli_of_curr_query = list(set(list(metadata.query(query_cond)['sentence_string'])))
                                 stimuli_of_curr_query = [l+'\n' for l in stimuli_of_curr_query]
@@ -150,7 +154,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                     print('Contrast: ' + comparison['contrast_name'])
                     # queries = get_queries(comparison)
                     preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
-                    print(preferences.sort_according_to_key)
+                    print('Sorting: ' + '_'.join(preferences.sort_according_to_key))
                     str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
                     str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
                     if comparison['align_to'] == 'FIRST':
@@ -163,15 +167,17 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                         str_align = 'word_position > 0'
 
                     for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
-                        file_name_root = settings.patient + '_Blocks_' + comparison[
-                            'blocks'] + '_' + label_cond + '_' + comparison['align_to']
-                        file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
+                        file_name_root = band + '_' + settings.patient + '_channel_'+ str(settings.channel) + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
+                        file_name = file_name_root + '_' + settings.channel_name
 
                         for key_sort in preferences.sort_according_to_key:
                             file_name += '_' + key_sort + 'Sorted'
 
-                        IX1 = settings.channel_name.find('_0019')
-                        if IX1 == -1:
+                        if settings.patient == 'patient_479':
+                            IX1 = settings.channel_name.find('_0019')
+                        elif settings.patient == 'patient_493':
+                            IX1 = settings.channel_name.find('_0016')
+                        else:
                             IX1 = settings.channel_name.find('.ncs')
                         probe_name = settings.channel_name[0:IX1 - 1]
 

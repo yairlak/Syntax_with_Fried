@@ -1,21 +1,21 @@
+/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses
 Channel 50
 Loading settings, params and preferences...
 Metadata: Loading features and comparisons from Excel files...
-[2, 4, 6];[1, 3, 5]
-[2, 4, 6];[1, 3, 5]
 Logs: Reading experiment log files from experiment...
 Loading POS tags for all words in the lexicon
 Preparing meta-data
 Generating event object for MNE from log data...
-Loading electrode names for all channels...
 Plottoing paradigm timings
 Time-frequency analysis of all channels
 Loading CSC raw data...
+['../../Data/UCLA/patient_487/ChannelsCSC/CSC50.mat']
+channel-data loaded
 Analyzing high-gamma for channel 50
 Generating MNE raw object for continuous data...
 Line filtering...
 Epoching data...
-<Epochs  |   3960 events (all good), -2 - 2 sec, baseline off, ~4.72 GB, data loaded, with metadata,
+<Epochs  |   3960 events (all good), -0.51 - 1 sec, baseline off, ~1.78 GB, data loaded, with metadata,
  'block_1': 660
  'block_2': 660
  'block_3': 660
@@ -26,67 +26,31 @@ Epoching data...
 ('New sampling rate:', 512.0, 'Hz')
 Time-frequency analyses...
 Band: High-Gamma
-Contrast: Male_vs_Female_full_NP_[1, 3, 5]_FIRST
-['chronological_order']
+Contrast: All_trials_[1, 3, 5]_FIRST
+[u'chronological_order']
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_Male_full_NP_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and NP==1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
+Saving as - ../../Figures/patient_487/HighGamma/High-Gamma_patient_487_Blocks_[1, 3, 5]_All_trials_FIRST__channel_50GB3-LA2.ncs_chronological_orderSorted.png
+Save to: Feature_matrix_High-Gamma_patient_487_channel_50_All_trials == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
+Contrast: All_trials_[2, 4, 6]_FIRST
+[u'chronological_order']
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_ Female_full_NP_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and NP==1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
-Contrast: Male_vs_Female_full_NP_[1, 3, 5]_END
-['chronological_order']
+Saving as - ../../Figures/patient_487/HighGamma/High-Gamma_patient_487_Blocks_[2, 4, 6]_All_trials_FIRST__channel_50GB3-LA2.ncs_chronological_orderSorted.png
+Save to: Feature_matrix_High-Gamma_patient_487_channel_50_All_trials == 1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
+Contrast: All_trials_[1, 3, 5]_END
+[u'sentence_length']
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_Male_full_NP_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and NP==1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
+Saving as - ../../Figures/patient_487/HighGamma/High-Gamma_patient_487_Blocks_[1, 3, 5]_All_trials_END__channel_50GB3-LA2.ncs_sentence_lengthSorted.png
+Save to: Feature_matrix_High-Gamma_patient_487_channel_50_All_trials == 1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
+Contrast: All_trials_[2, 4, 6]_END
+[u'sentence_length']
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_ Female_full_NP_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and NP==1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Contrast: Male_vs_Female_full_NP_[2, 4, 6]_FIRST
-['chronological_order']
+Saving as - ../../Figures/patient_487/HighGamma/High-Gamma_patient_487_Blocks_[2, 4, 6]_All_trials_END__channel_50GB3-LA2.ncs_sentence_lengthSorted.png
+Save to: Feature_matrix_High-Gamma_patient_487_channel_50_All_trials == 1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
+Contrast: Question_vs_declarative_[1, 3, 5]_FIRST
+[u'chronological_order']
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_Male_full_NP_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and NP==1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
+Saving as - ../../Figures/patient_487/HighGamma/High-Gamma_patient_487_Blocks_[1, 3, 5]_Declarative_FIRST__channel_50GB3-LA2.ncs_chronological_orderSorted.png
+Save to: Feature_matrix_High-Gamma_patient_487_channel_50_Declarative == 1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
 Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_ Female_full_NP_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and NP==1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
-Contrast: Male_vs_Female_full_NP_[2, 4, 6]_END
-['chronological_order']
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_Male_full_NP_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and NP==1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_ Female_full_NP_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and NP==1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Contrast: Male_vs_Female_pronoun_[1, 3, 5]_FIRST
-['chronological_order']
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_Male_pronoun_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and Pronoun==1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_ Female_pronoun_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and Pronoun==1 and word_position == 1 and (block == 1 or block == 3 or block == 5)
-Contrast: Male_vs_Female_pronoun_[1, 3, 5]_END
-['chronological_order']
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_Male_pronoun_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and Pronoun==1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[1, 3, 5]_ Female_pronoun_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and Pronoun==1 and word_position == -1 and (block == 1 or block == 3 or block == 5)
-Contrast: Male_vs_Female_pronoun_[2, 4, 6]_FIRST
-['chronological_order']
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_Male_pronoun_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and Pronoun==1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_ Female_pronoun_FIRST__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and Pronoun==1 and word_position == 1 and (block == 2 or block == 4 or block == 6)
-Contrast: Male_vs_Female_pronoun_[2, 4, 6]_END
-['chronological_order']
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_Male_pronoun_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Male==1 and Pronoun==1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
-Baseline: trial-wise
-Saving as - ../../Figures/patient_482/HighGamma/High-Gamma_patient_482_Blocks_[2, 4, 6]_ Female_pronoun_END__channel_50GB3-LO2.ncs_chronological_orderSorted.png
-Save to: Feature_matrix_High-Gamma_patient_482_channel_50_Female==1 and Pronoun==1 and word_position == -1 and (block == 2 or block == 4 or block == 6)
+Saving as - ../../Figures/patient_487/HighGamma/High-Gamma_patient_487_Blocks_[1, 3, 5]_ Question_FIRST__channel_50GB3-LA2.ncs_chronological_orderSorted.png
+Save to: Feature_matrix_High-Gamma_patient_487_channel_50_Question==1 and word_position == 1 and (block == 1 or block == 3 or block == 5)

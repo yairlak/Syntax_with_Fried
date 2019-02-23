@@ -1,4 +1,4 @@
-from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit
+from SU_functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit, analyses_electrodes
 import os, glob
 import mne
 import matplotlib.pyplot as plt
@@ -10,33 +10,26 @@ import pickle
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-channels = range(48,50)
-# channels = [59] # 18, 46, 59
-#channels_micro = range(1,130,1)
-#channels_micro = [1, 2, 18, 46, 59] # 18, 46, 59
-#channels_micro = range(1,89,1)
-# channels_micro = [59] # 18, 46, 59
-# channels_macro = range(1,2,1)
 
-
-# ------------ START MAIN --------------
-print('Loading settings, params and preferences...')
-settings = load_settings_params.Settings()
-# Get (optional) argument from terminal which defines the channel for gamma analysis
+# ---- Get (optional) argument from terminal which defines the channel for gamma analysis
 if len(sys.argv) > 1:
-    print('Channel ' + sys.argv[1])
+    print ('Channel ' + sys.argv[1])
     ch = int(sys.argv[1])
     channels = range(ch, ch + 1, 1)
-    channels = range(ch, ch + 1, 1)
+    patient = sys.argv[2]
+else:
+    channels = range(49, 57)
+    patient = 'patient_479'
 
-print('Loading parameters...')
+print('Loading settings, params and preferences...')
+settings = load_settings_params.Settings(patient)
 params = load_settings_params.Params()
-
-print('Loading preferences...')
 preferences = load_settings_params.Preferences()
 
 print('Metadata: Loading features and comparisons from Excel files...')
 comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
+comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, features, settings, preferences)
+comparisons = [comp for c, comp in enumerate(comparisons) if c in settings.comparisons] # run only a subset of comparisons
 
 print('Logs: Reading log files from experiment...')
 log_all_blocks = []
@@ -100,11 +93,15 @@ for channel in channels:
             str_blocks = ['block == {} or '.format(block) for block in blocks]
             str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
             query = 'All_trials == 1 and word_position == 1 and ' + str_blocks
-            power, power_ave, baseline = analyses_single_unit.average_high_gamma(epochs[query], band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
+            power, power_ave, baseline = analyses_electrodes.average_high_gamma(epochs[query], band, fmin, fmax, params.freq_step, None, 'trial_wise', params)
 
             power.metadata = epochs[query].metadata
             settings.band = band
             # settings.event_str = event_str
             settings.blocks = blocks
-            analyses_single_unit.reproducability(power, power_ave, log_all_blocks, settings, params)
+            analyses_electrodes.reproducability(power, power_ave, log_all_blocks, settings, params)
+
+
+
+
 

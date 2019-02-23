@@ -20,13 +20,6 @@ def micro_electrodes_raw(settings):
 
 
 def macro_electrodes(settings):
-    # if settings.patient == 'patient_479':
-    #     from neo import io as neoIO
-    #     import quantities as pq
-    #     import matplotlib.pyplot as plt
-    #     NIO = neoIO.NeuralynxIO('/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/patient_479/Macro', True)
-        # settings.time0 = NIO._timestamp_limits[0][0]
-        # settings.timeend = NIO._timestamp_limits[0][1]
 
 
     CSC_file = glob.glob(os.path.join(settings.path2macro, 'CSC' + str(settings.channel_macro) + '.mat'))
@@ -47,6 +40,7 @@ def spike_clusters(settings):
         data_all.append(io.loadmat(cluster)['spike_times_sec'])
         settings.time0 = io.loadmat(cluster)['time0'][0,0]
         settings.timeend = io.loadmat(cluster)['timeend'][0,0]
+        #print(io.loadmat(cluster).keys())
         if 'from_channel' in io.loadmat(cluster).keys():
             electrode_names_from_raw_files.append(io.loadmat(cluster)['electrode_name'][0] + ',ch ' + str(io.loadmat(cluster)['from_channel'][0]))
             from_channels.append(io.loadmat(cluster)['from_channel'][0][0])

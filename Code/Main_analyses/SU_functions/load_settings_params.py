@@ -40,8 +40,9 @@ class Settings():
         self.path2output = os.path.join('..', '..', 'Output')
 
         # Files info
-        self.log_name_beginning = 'new_events_log_in_cheetah_clock_block'
-        self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
+        self.log_name_beginning = 'new_events_log_in_cheetah_clock_part'
+        #self.log_name_beginning = 'new_events_log_in_cheetah_clock_block'
+        #self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
@@ -70,11 +71,16 @@ class Settings():
             self.channels_with_spikes = [2, 3, 18, 41, 44, 45, 54, 75, 77, 84, 87]
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+        if self.patient == 'patient_487': # Neuralynx
+            self.time0 =   1502557237931999
+            self.timeend = 1502557237931999
+            # Which channels in the raw CSC files have clear spikes
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_493': # Neuralynx
             self.time0 =   1520590966262873
             self.timeend = 1520594033849941
             # Which channels in the raw CSC files have clear spikes
-            self.channels_with_spikes = []
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
 

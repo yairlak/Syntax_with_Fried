@@ -5,11 +5,11 @@ import os, glob
 #import matplotlib.pyplot as plt
 import numpy as np
 
-# Patient 479
+patient='patient_479'
 
 
 print('Loading settings...')
-settings = load_settings_params.Settings()
+settings = load_settings_params.Settings(patient)
 
 print('Loading parameters...')
 params = load_settings_params.Params()
@@ -22,6 +22,7 @@ directory = os.path.join(settings.path2figures, settings.patient, 'HighGamma')
 probe_names = [os.path.join(directory, o) for o in os.listdir(directory) if os.path.isdir(os.path.join(directory,o))]
 probe_names = [os.path.basename(f) for f in probe_names]
 probe_names.sort()
+print('probe names found: ', probe_names)
 
 with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w') as f:
     # Beginning of file
@@ -29,17 +30,14 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
     f.write('<title> Analyses per probe </title>\n')
     f.write('</head>\n')
     f.write('<body>\n')
-
-    #
     for probe_name in probe_names:
         HTML_probe_filename = probe_name + '.html'
         if probe_name == 'videos':
             f.write('<a href="%s" title="%s"> %s</a><br><br>' % ('HighGamma/videos', probe_name, probe_name))
         else:
             f.write('<a href="%s" title="%s"> %s</a><br><br>' % (HTML_probe_filename, probe_name, probe_name))
-
-        print(probe_name)
-	with open(os.path.join(settings.path2figures, settings.patient, probe_name + '.html'), 'w') as f_probe:
+        #print(probe_name)
+        with open(os.path.join(settings.path2figures, settings.patient, probe_name + '.html'), 'w') as f_probe:
             # Beginning of probe file
             f_probe.write('<head>\n')
             f_probe.write('<title> %s </title>\n' % probe_name)
@@ -50,30 +48,44 @@ with open(os.path.join(settings.path2figures, settings.patient, file_name), 'w')
             # Find channel numbers in current probe folder
             file_types = 'High-Gamma_' + settings.patient + '_*Blocks_*' + '1, 3, 5' + '*_All_trials_END_*' + probe_name + '*length*png'
             images_without_sorting = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, file_types))
-            #print(images_without_sorting)
+            #print('\n'.join([l for l in images_without_sorting]))
             channels_in_curr_folder = []; micro_macro = []
             for img in images_without_sorting:
-                ch_name = img[img.find('High-Gamma_' + settings.patient) + len('High-Gamma_' + settings.patient) + 9::]
-                channels_in_curr_folder.append(int(ch_name[0:ch_name.find('_')]))
-                if ('GA' in ch_name) or ('GB' in ch_name) or ('GC' in ch_name):
-                    micro_macro.append('micro')
+                #print(img)
+                img_filename = os.path.basename(img)
+                print(img_filename)
+	        IXs = [img_filename.find('GA'), img_filename.find('GB'), img_filename.find('GC'), img_filename.find('GD')] 
+	        IX = [ele for ele in IXs if ele>-1]
+	        if len(IX) > 1: sys.stderr('error in finding channel name. more than one fit')
+                if len(IX) > 0:
+	            IX = IX[0]
+	            ch_name = img_filename[IX:img_filename.find('.ncs')]
+	        #ch_name = img[img.find('High-Gamma_' + settings.patient) + len('High-Gamma_' + settings.patient) + 9::]
+	        #channels_in_curr_folder.append(int(ch_name[0:ch_name.find('_')]))
+	            ch_num = int(img_filename[(img_filename.find('_channel_')+9):IX])
+	            print(ch_name, ch_num)
+	            channels_in_curr_folder.append(ch_num)
+	            if ('GA' in ch_name) or ('GB' in ch_name) or ('GC' in ch_name):
+	                micro_macro.append('micro')
+	            else:
+	                micro_macro.append('macro')
                 else:
-                    micro_macro.append('macro')
+                    sys.stderr('error in finding channel name. no matches found')
             channels_in_curr_folder = [(ch, mic_mac) for (ch, mic_mac) in sorted(zip(channels_in_curr_folder, micro_macro))]
-
-	    print(channels_in_curr_folder)	
+	    #print(channels_in_curr_folder)	
             # embed images
             for channel, micro_or_macro in channels_in_curr_folder:
                 print('Channel ' + str(channel))
                 f_probe.write('<font_size="22"> Channel %s (%s) </font>\n' % (str(channel), micro_or_macro) )
                 f_probe.write('<br>\n')
-                event_ids = ['FINAL']
+                event_ids = ['END']
                 for event_id in event_ids:
                     for blocks in ['1, 3, 5', '2, 4, 6']:
                         #if blocks == '1, 3, 5' and event_id == 'FINAL': curr_event_id = 'LAST_WORD'
                         #if blocks == '2, 4, 6' and event_id == 'FINAL': curr_event_id = 'END_WAV'
                         curr_event_id = '_All_trials_END_'
-                        root_name = 'High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks[0:1] + '*' + curr_event_id + '*' + probe_name + '*.ncs*sentence_lengthSorted.png'
+                        #root_name = 'High-Gamma_' + settings.patient + '_channel_' + str(channel) + '*_Blocks_*' + blocks[0:1] + '*' + curr_event_id + '*' + probe_name + '*.ncs*sentence_lengthSorted.png'
+                        root_name = 'High-Gamma_' + settings.patient +'*_Blocks_*' + blocks[0:1] + '*' + curr_event_id + '*' +  '_channel_' + str(channel) + probe_name + '*.ncs*sentence_lengthSorted.png'
                         curr_img_name = glob.glob(os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name, root_name))
                         if len(curr_img_name)> 1:
                             raise('More than a single file name was found for current image.')

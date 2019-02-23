@@ -3,10 +3,10 @@ import os.path as op
 from neo import io
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
-patient = 'patient_487'
 recording_system = 'Neuralynx'
-settings = load_settings_params.Settings(patient)
+settings = load_settings_params.Settings(sys.argv[1])
 session_folder = op.join(settings.path2patient_folder, 'Raw')
 
 if recording_system == 'Neuralynx':

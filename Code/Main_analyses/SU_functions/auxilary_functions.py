@@ -28,6 +28,20 @@ def get_queries(comparison):
 
     queries = []
     for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
+        # If pos in query then add double quotes (") around value, e.g. (pos==VB --> pos =="VB")
+        new_query_cond = ''
+        i = 0
+        while i < len(query_cond):
+            if query_cond[i:i + len('pos==')] == 'pos==':
+                reminder = query_cond[i + len('pos==')::]
+                temp_list = reminder.split(" ", 1)
+                new_query_cond = new_query_cond + 'pos=="' + temp_list[0] + '" '
+                i = i + 6 + len(temp_list[0])
+            else:
+                new_query_cond += query_cond[i]
+                i += 1
+            query_cond = new_query_cond
+
         queries.append(query_cond + ' and ' + str_align + ' and ' + str_blocks)
 
     return queries

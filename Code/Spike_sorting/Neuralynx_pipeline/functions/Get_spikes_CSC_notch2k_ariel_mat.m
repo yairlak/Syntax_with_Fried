@@ -14,7 +14,7 @@ end
 %    % make gap_inds relative to filled-in time stamps:
 %    gap_inds(2:end) = gap_inds(2:end) + cumsum(gap_lens);
 
-handles.par.detection = 'neg';              %type of threshold
+handles.par.detection = 'pos';              %type of threshold
 handles.par.stdmin = 5;                     %minimum threshold
 handles.par.stdmax = 50;                    %maximum threshold
 handles.par.interpolation = 'y';            %interpolation for alignment
