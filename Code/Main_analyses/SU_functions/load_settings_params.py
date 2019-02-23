@@ -12,18 +12,20 @@ class Preferences:
         self.use_metadata_only = True
         self.step = 100 # yticklabels step when sorting trials according to keys
 
+        # Classification
+        self.classification_use_single_unit_data = False
+        self.classification_use_micro_LFP_data = True
+        self.classification_use_marco_LFP_data = False
+
 
 class Settings():
     def __init__(self, patient):
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = patient
-        # self.comparisons = range(5)
-        #self.comparisons = [0, 1]
-        # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
-        # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
+        self.comparisons = range(110,111)
         self.load_line_filtered_resampled_epoch_object = False
-        self.overwrite_existing_output_files = False
+        self.overwrite_existing_output_files = False # --- !!!!!! -----
 
         # PATHS
         self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)

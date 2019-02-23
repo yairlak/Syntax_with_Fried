@@ -14,7 +14,6 @@ parser.add_argument('-p', '--patient', type=str, help='Patient, e.g., patient_47
 parser.add_argument('-c', '--channel', type=int, action='append', help='Which channels to analyze')
 parser.add_argument('-b', '--block', type=int, action='append', help='Which blocks to analyze')
 parser.add_argument('-n', '--comparison', type=int, action='append', help='Which comparisons from the paragism to contrast')
-parser.add_argument('--do-ablation', action='store_true', default=False)
 
 # Argparse
 args = parser.parse_args()

@@ -1,7 +1,7 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_482';
+patient = 'patient_479';
 recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
 
@@ -25,6 +25,7 @@ ExtractMode = 1;
 ModeArray=[]; %all.
 
 %%
+%
 switch recording_system
         case 'Neuralynx'
             % Extract time0 and timeend from NEV file

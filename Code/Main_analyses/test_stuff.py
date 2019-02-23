@@ -1,16 +1,29 @@
+import pandas as pd
 
-import mne
+#create sample data
+data = {'model': ['Lisa', 'Lisa 2', 'Macintosh 128K', 'Macintosh 512K'],
+        'launched': [1983,1984,1984,1984],
+        'discontinued': [1986, 1985, 1984, 1986]}
 
-# Load the data from the internet
-path = mne.datasets.kiloword.data_path() + '/kword_metadata-epo.fif'
-epochs = mne.read_epochs(path)
+df = pd.DataFrame(data, columns = ['model', 'launched', 'discontinued'])
+print(df)
+str = 'model=="Lisa" or model=="Lisa 2" or model=="Macintosh 128K"'
+str = unicode(str)
+print(str)
+print(type(str))
+df = df.query(str)
+print(df)
 
-# The metadata exists as a Pandas DataFrame
-print(epochs.metadata.head(10))
-print(epochs.metadata.type())
-
-
-###########################################################################
+# # Load the data from the internet
+# path = mne.datasets.kiloword.data_path() + '/kword_metadata-epo.fif'
+# epochs = mne.read_epochs(path)
+#
+# # The metadata exists as a Pandas DataFrame
+# print(epochs.metadata.head(10))
+# print(epochs.metadata.type())
+#
+#
+# ###########################################################################
 
 # mylist = ['a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e']
 # key1 =   [3, 1, 3, 2, 1, 5, 2, 1, 4, 5]

@@ -1,113 +1,37 @@
-import os
 import numpy as np
 import mne
 
 
-def generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences):
-    # Initialize arrays
-    # events = np.empty((0, 3))
-    event_id = dict()
+def generate_events_array(metadata, params):
+    '''
 
-    if preferences.use_metadata_only:
-        event_numbers = 100 * metadata['block'].values  # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
-        event_type_names = ['block_' + str(i) for i in metadata['block'].values]
-        event_id = dict([(event_type_name, event_number) for event_type_name, event_number in zip(event_type_names, event_numbers)])
-        event_number = np.expand_dims(event_numbers, axis=1)
+    :param metadata: (pandas dataframe) num_words X num_features; all words across all stimuli
+    :param params: (object) general parameters
+    :return:
+    '''
 
-        curr_times = params.sfreq_raw * metadata['event_time'].values
-        curr_times = np.expand_dims(curr_times, axis=1)
+    # First column of events object
+    curr_times = params.sfreq_raw * metadata['event_time'].values
+    curr_times = np.expand_dims(curr_times, axis=1)
 
-        num_events = len(curr_times)
-        second_column = np.zeros((num_events, 1))
-        events = np.hstack((curr_times, second_column, event_number))
-        # events = np.vstack((events, curr_array))
+    # Second column
+    second_column = np.zeros((len(curr_times), 1))
 
-    else:
-        for block, log in enumerate(log_all_blocks):
-            block_number = settings.blocks[block]
-            # Add all event times from log to events object.
+    # Third column
+    event_numbers = 100 * metadata['block'].values  # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
+    event_type_names = ['block_' + str(i) for i in metadata['block'].values]
+    event_numbers = np.expand_dims(event_numbers, axis=1)
 
-            if not preferences.run_contrasts:
-                if preferences.run_POS:
-                    # First reduce the number of classes by lumping together fine syntactic cagtegories into a single categ
-                    simpler_syn_categories = ['NN', 'VB', 'PRP', 'WP', 'JJ', 'RB', 'DT', 'IN', 'MD']
-                    syntactic_categories_simpler = {}
-                    for word, categ in word2pos.items():
-                        for simpler_syn_categ in simpler_syn_categories:
-                            if simpler_syn_categ in categ:
-                                syntactic_categories_simpler[word] = simpler_syn_categ
-                                break
-
-                    # Extract word_onset times for each syntactic category
-                    for i, syn_categ in enumerate(simpler_syn_categories):
-                        event_number = i + 100 * (block_number)  # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
-                        event_type_name = syn_categ + '_block_' + str(block_number)
-                        event_id[event_type_name] = event_number
-                        curr_times = getattr(log, 'WORDS_ON_TIMES')
-                        curr_times = np.asarray(curr_times, dtype=float)
-                        curr_times = params.sfreq_raw * (curr_times - settings.time0) / 1e6  # Subtract the beginning of the recording and convert to samples
-                        curr_times = np.expand_dims(curr_times, axis=1)
-
-                        words = [w[0:-1].lower() if w[-1] == '?' or w[-1] == '.' else w.lower() for w in getattr(log, 'WORD_STRING')]
-                        IX_curr_syn_categ = [j for j, w in enumerate(words) if syntactic_categories_simpler[w] == syn_categ]
-                        curr_times = curr_times[IX_curr_syn_categ]
-
-                        num_events = len(curr_times)
-                        second_column = np.zeros((num_events, 1))
-                        third_column = event_number * np.ones((num_events, 1))
-                        curr_array = np.hstack((curr_times, second_column, third_column))
-
-                        events = np.vstack((events, curr_array))
-
-                        curr_times = None; second_column = None; third_column = None; curr_array = None
-
-                else:
-                    for i, event_type in enumerate(settings.event_types_to_extract):
-                        if hasattr(log, event_type):
-                            event_number = settings.event_numbers_to_assign_to_extracted_event_types[i] + 100 * (block_number) # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
-                            event_type_name = event_type + '_block_' + str(block_number)
-                            event_id[event_type_name] = event_number
-                            curr_times = getattr(log, event_type)
-                            curr_times = np.asarray(curr_times, dtype=float)
-                            curr_times = params.sfreq_raw * (curr_times - settings.time0)/1e6 # Subtract the beginning of the recording and convert to samples
-                            curr_times = np.expand_dims(curr_times, axis=1)
-
-                            num_events = len(curr_times)
-                            second_column = np.zeros((num_events, 1))
-                            third_column = event_number * np.ones((num_events, 1))
-                            curr_array = np.hstack((curr_times, second_column, third_column))
-
-                            events = np.vstack((events, curr_array))
-
-                        curr_times = None; second_column = None; third_column = None; curr_array = None
-            else: # Run contrasts
-                for j, cond in enumerate(comparison[0]):
-                    # if hasattr(log, event_type): # Assumes LAST_WORD
-                    event_number = j + 100 * (block_number)  # For each block, the event_ids are ordered within a range of 100 numbers block1: 101-201, block2: 201-300, etc.
-                    event_type_name = comparison[1] + '_' + str(j) + '_block_' + str(block_number)
-                    event_id[event_type_name] = event_number
-                    align_to = comparison[1] # FIRST_WORD_TIMES or LAST_WORD_TIMES
-                    curr_times = getattr(log, align_to)
-                    curr_times = np.asarray(curr_times, dtype=float)
-                    IX_contrast_sentences = [IX-1 for IX in log.SENTENCE_NUM_ORDER if IX in cond['trial_numbers']]
-                    curr_times = curr_times[IX_contrast_sentences]
-                    curr_times = params.sfreq_raw * (curr_times - settings.time0) / 1e6  # Subtract the beginning of the recording and convert to samples
-                    curr_times = np.expand_dims(curr_times, axis=1)
-
-                    num_events = len(curr_times)
-                    second_column = np.zeros((num_events, 1))
-                    third_column = event_number * np.ones((num_events, 1))
-                    curr_array = np.hstack((curr_times, second_column, third_column))
-
-                    events = np.vstack((events, curr_array))
-
-                    curr_times = None; second_column = None; third_column = None; curr_array = None
-
-    # Change to integer and sort events object
+    # EVENT object: concatenate all three columns together (then change to int and sort)
+    events = np.hstack((curr_times, second_column, event_numbers))
     events = events.astype(int)
     sort_IX = np.argsort(events[:, 0], axis=0)
     events = events[sort_IX, :]
 
+    # EVENT_ID dictionary: mapping block names to event numbers
+    event_id = dict([(event_type_name, event_number[0]) for event_type_name, event_number in zip(event_type_names, event_numbers)])
+
+    # Generate another event object for single-unit data (which has a different sampling rate)
     events_spikes = np.copy(events)
     events_spikes[:, 0] = events_spikes[:, 0] * params.sfreq_spikes / params.sfreq_raw
     events_spikes = events_spikes.astype(np.int64)

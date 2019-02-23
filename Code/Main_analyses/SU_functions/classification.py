@@ -61,6 +61,66 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, queries, sett
     return epochs_all_queries, stimuli_of_curr_query
 
 
+def get_multichannel_epochs_for_all_current_conditions_from_all_trials(comparison, queries, settings, preferences):
+    epochs_all_queries = []
+    for q, query in enumerate(queries):
+        for p, patient in enumerate(settings.patients):
+            # High-gamma features
+            for c, channel in enumerate(settings.channels[p]):
+                settings.channel = channel
+                if preferences.analyze_micro_raw:
+                    band = 'High-Gamma'
+                    print('contrast: ' + comparison['contrast_name'] + '; ' + band + '; channel ' + str(channel) + '; ' + patient)
+                    file_name = 'Feature_matrix_' + band + '_' + patient + '_channel_' + str(
+                        settings.channel) + '_' + 'All_trials' #ALL_TRIALS
+                    # file_name = 'Feature_matrix_' + band + '_' + patient + '_channel_' + str(
+                    #     settings.channel) + '_' + query
+                    with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
+                                               file_name + '.pkl'), 'rb') as f:
+                        curr_data = pickle.load(f)
+                        #print(curr_data[0].events.shape[0])
+                        if c == 0 and p==0: # initialize epochs and events objects at the first patient-channel
+
+                            # ---- generate the epochs object -----
+                            # 1. Get query
+                            # 2. Extract reduced epochs object based on query
+                            # 3. Get shared events for all patients
+                            # 4. Extract sentence/word stimuli
+
+
+                            #epochs_all_channels = curr_data[0]
+                            #events_shared_for_all_patients = curr_data[0].events
+                            #info_shared_for_all_channels
+
+                            # collect stimuli info
+                            stimuli_of_curr_query = []
+                            label_cond = comparison['cond_labels'][q]
+                            file_name_root = band + '_' + patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
+                            with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'r') as f:
+                                stimuli_of_curr_query.append(f.readlines())
+                        else:
+                            #curr_data[0].events = events_shared_for_all_patients
+                            epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
+            # Single-unit features
+            if preferences.analyze_micro_single:
+                print('contrast: ' + comparison['contrast_name'] + '; Single-units channel ' + str(channel) + '; ' + patient)
+                file_name = 'Feature_matrix_rasters_' + settings.patient + '_' + query
+                with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
+                                       file_name + '.pkl'), 'rb') as f:
+                    curr_data = pickle.load(f)
+                epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
+        epochs_all_channels.events[:, 2] = q
+        epochs_all_channels.event_id = {}
+        epochs_all_channels.event_id[comparison['cond_labels'][q]] = q
+        epochs_all_queries.append(epochs_all_channels)
+        print(stimuli_of_curr_query)
+
+    epochs_all_queries = mne.concatenate_epochs(epochs_all_queries)
+    print(epochs_all_queries)
+
+    return epochs_all_queries, stimuli_of_curr_query
+
+
 def plot_generalizing_estimator(epochs_all_queries, comparison, comp, settings):
     train_times = {}
     train_times["start"] = -2.5

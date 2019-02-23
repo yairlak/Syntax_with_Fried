@@ -16,7 +16,7 @@ if len(sys.argv) > 1:
     channels = range(ch, ch + 1, 1)
     patient = sys.argv[2]
 else:
-    channels = range(49, 57)
+    channels = range(1, 2)
     patient = 'patient_479'
 
 print('Loading settings, params and preferences...')
@@ -43,7 +43,7 @@ print('Preparing meta-data')
 metadata = read_logs_and_comparisons.prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences)
 
 print('Generating event object for MNE from log data...')
-events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences)
+events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
 
 #print('Loading electrode names for all channels...')
 #electrode_names = load_data.electrodes_names(settings)

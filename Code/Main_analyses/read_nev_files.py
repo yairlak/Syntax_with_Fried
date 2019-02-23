@@ -4,8 +4,9 @@ from neo import io
 import matplotlib.pyplot as plt
 import numpy as np
 
-recording_system = 'BlackRock'
-settings = load_settings_params.Settings('Practice')
+patient = 'patient_487'
+recording_system = 'Neuralynx'
+settings = load_settings_params.Settings(patient)
 session_folder = op.join(settings.path2patient_folder, 'Raw')
 
 if recording_system == 'Neuralynx':
