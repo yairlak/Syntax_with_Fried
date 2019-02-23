@@ -51,7 +51,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                     for i, comparison in enumerate(comparisons):
                         print('Contrast: ' + comparison['contrast_name'])
                         # queries = get_queries(comparison)
-                        preferences.sort_according_to_key = [s.strip().encode('ascii') for s in comparison['sorting']]
+                        preferences.sort_according_to_key = [s.strip() for s in comparison['sorting']]
                         print(preferences.sort_according_to_key)
                         str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
                         str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
@@ -65,17 +65,36 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                             str_align = 'word_position > 0'
 
                         for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
+                            # If part-of-sppech (pos) is found in query then add double quotes (") around value, e.g. (pos==VB --> pos =="VB"). Otherwise pandas expects a variable.
+                            new_query_cond = ''
+                            i = 0
+                            while i < len(query_cond):
+                                if query_cond[i:i + len('pos==')] == 'pos==':
+                                    reminder = query_cond[i + len('pos==')::]
+                                    temp_list = reminder.split(" ", 1)
+                                    new_query_cond = new_query_cond + 'pos=="' + temp_list[0] + '" '
+                                    i = i + 6 + len(temp_list[0])
+                                else:
+                                    new_query_cond += query_cond[i]
+                                    i += 1
+                            query_cond = new_query_cond
+
+
                             file_name_root = band + '_' + settings.patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
                             file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
 
                             for key_sort in preferences.sort_according_to_key:
                                 file_name += '_' + key_sort + 'Sorted'
 
-                            IX1 = settings.channel_name.find('_0019')
+                            if settings.patient == 'patient_493':
+                                find_str = '_0016'
+                            else:
+                                find_str = '_0019'
+                            IX1 = settings.channel_name.find(find_str)
                             if IX1 == -1:
                                 IX1 = settings.channel_name.find('.ncs')
                             probe_name = settings.channel_name[0:IX1 - 1]
-
+                           
                             with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'w') as f:
                                 stimuli_of_curr_query = list(set(list(metadata.query(query_cond)['sentence_string'])))
                                 stimuli_of_curr_query = [l+'\n' for l in stimuli_of_curr_query]
@@ -149,15 +168,8 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                         str_align = 'word_position > 0'
 
                     for query_cond, label_cond in zip(comparison['query'], comparison['cond_labels']):
-<<<<<<< HEAD
                         file_name_root = band + '_' + settings.patient + '_channel_'+ str(settings.channel) + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
                         file_name = file_name_root + '_' + settings.channel_name
-                        #file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
-=======
-                        file_name_root = settings.patient + '_Blocks_' + comparison[
-                            'blocks'] + '_' + label_cond + '_' + comparison['align_to']
-                        file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
->>>>>>> 53fa704ad0f6f69e3e0afe860395a33a4a700590
 
                         for key_sort in preferences.sort_according_to_key:
                             file_name += '_' + key_sort + 'Sorted'

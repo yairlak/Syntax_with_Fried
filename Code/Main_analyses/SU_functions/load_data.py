@@ -20,13 +20,6 @@ def micro_electrodes_raw(settings):
 
 
 def macro_electrodes(settings):
-    # if settings.patient == 'patient_479':
-    #     from neo import io as neoIO
-    #     import quantities as pq
-    #     import matplotlib.pyplot as plt
-    #     NIO = neoIO.NeuralynxIO('/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/patient_479/Macro', True)
-        # settings.time0 = NIO._timestamp_limits[0][0]
-        # settings.timeend = NIO._timestamp_limits[0][1]
 
 
     CSC_file = glob.glob(os.path.join(settings.path2macro, 'CSC' + str(settings.channel_macro) + '.mat'))

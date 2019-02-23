@@ -57,6 +57,7 @@ def get_multichannel_epochs_for_all_current_conditions(comparison, queries, sett
         epochs_all_channels.event_id[comparison['cond_labels'][q]] = q
         epochs_all_queries.append(epochs_all_channels)
         print(stimuli_of_curr_query)
+        print(epochs_all_channels.tmin)
 
     epochs_all_queries = mne.concatenate_epochs(epochs_all_queries)
     print(epochs_all_queries)

@@ -3,13 +3,8 @@ import os, glob
 
 class Preferences:
     def __init__(self):
-<<<<<<< HEAD
-        self.analyze_micro_single = False 
-        self.analyze_micro_raw = True 
-=======
         self.analyze_micro_single = False
         self.analyze_micro_raw = True
->>>>>>> 53fa704ad0f6f69e3e0afe860395a33a4a700590
         self.save_features_for_classification = True
 
         self.run_contrasts = False
@@ -23,11 +18,8 @@ class Settings():
         # PATIENT:
         self.hospital = 'UCLA'
         self.patient = patient
-<<<<<<< HEAD
-        self.comparisons = range(108)
-=======
-        # self.comparisons = range(5)
->>>>>>> 53fa704ad0f6f69e3e0afe860395a33a4a700590
+        #self.comparisons = range(114)
+        self.comparisons = range(5)
         #self.comparisons = [0, 1]
         # self.comparisons = [4, 7, 18, 5, 8, 12, 15, 17] # List of int:  defines which comparisons to execute from xls. If set to 'None' then all comparisons in the file are executed.
         # self.comparisons = [0, 1, 2, 3, 23, 24, 25, 26, 27, 28, 29, 30]
@@ -47,8 +39,9 @@ class Settings():
         self.path2output = os.path.join('..', '..', 'Output')
 
         # Files info
-        self.log_name_beginning = 'new_events_log_in_cheetah_clock_block'
-        self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
+        self.log_name_beginning = 'new_events_log_in_cheetah_clock_part'
+        #self.log_name_beginning = 'new_events_log_in_cheetah_clock_block'
+        #self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
@@ -75,6 +68,12 @@ class Settings():
             self.timeend = 1493482901125264
             # Which channels in the raw CSC files have clear spikes
             self.channels_with_spikes = [2, 3, 18, 41, 44, 45, 54, 75, 77, 84, 87]
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+        if self.patient == 'patient_487': # Neuralynx
+            self.time0 =   1502557237931999
+            self.timeend = 1502557237931999
+            # Which channels in the raw CSC files have clear spikes
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_493': # Neuralynx

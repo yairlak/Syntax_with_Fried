@@ -5,14 +5,16 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-patients = ['patient_479', 'patient_482', 'patient_493']
-channels = [range(1, 129), range(1, 77), range(1, 81)]
+#patients = ['patient_479', 'patient_482', 'patient_493']
+patients = ['patient_479', 'patient_482']
+channels = [range(1, 71), range(1, 77)]
+#channels = [range(1, 129), range(1, 77), range(1, 81)]
 #channels = [range(1, 3), range(1, 3)]
 #patients = ['patient_482']
 #channels = [range(1, 77)]
 
 #patients = ['patient_479']
-#channels = [range(1, 129)]
+#channels = [range(1, 71)]
 
 if len(sys.argv) > 1:
     print 'comparison ' + sys.argv[1]
