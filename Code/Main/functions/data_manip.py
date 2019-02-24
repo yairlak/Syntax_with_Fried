@@ -1,5 +1,4 @@
 import os, glob
-from tqdm import tqdm
 import numpy as np
 import mne
 from scipy import io

@@ -1,3 +1,9 @@
+import os, glob
+import numpy as np
+import mne
+from scipy import io
+from functions import convert_to_mne
+
 def compute_time_freq(channel_num, channel_name, channel_data, events, event_id, metadata, settings, params):
     print('Analyzing high-gamma for channel ' + str(channel_num))
     file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(channel_num) + '_line_filtered_resampled-epo'
