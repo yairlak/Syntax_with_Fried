@@ -79,7 +79,6 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                                     i += 1
                             query_cond = new_query_cond
 
-
                             file_name_root = band + '_' + settings.patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
                             file_name = file_name_root + '_' + '_channel_' + str(settings.channel) + settings.channel_name
 

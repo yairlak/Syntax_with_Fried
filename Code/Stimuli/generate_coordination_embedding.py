@@ -3,57 +3,13 @@ import numpy as np
 from tqdm import tqdm
 import argparse
 import pickle
+import lexicon *
 
 parser = argparse.ArgumentParser(description='Stimulus generator: cooridnation vs. embedding')
 parser.add_argument('-n', '--num-samples', type=int, default=1, help='How many sentences to sample from each sentence type')
 parser.add_argument('-r', '--num-random', type=int, default=10000, help='How many random sentences to generate before filtering')
 parser.add_argument('-o', '--output', type=str, default='coordination_embedding.pkl', help='Path to output pickle file')
 args = parser.parse_args()
-
-subjects = ['he', 'she', 'they', 'the boy', 'the girl', 'the boys', 'the man', 'the men', 'the woman', 'the women']
-verbs_mental = ['think', 'thinks', 'believe', 'believes', 'know', 'knows']
-verbs = ['cry', 'cries', 'sneeze', 'sneezes']
-
-
-subject_features = {'he':['pronoun', 'singular', 'male'],
-                    'the boy':['full-noun', 'singular', 'male'],
-                    'she':['pronoun', 'singular', 'female'],
-                    'the girl':['full-noun', 'singular', 'female'],
-                    'the girls':['full-noun', 'plural', 'female'],
-                    'they':['pronoun', 'plural', ''],
-                    'the boys':['full-noun', 'plural', 'male'],
-                    'the man':['full-noun', 'singular', 'male'],
-                    'the men':['full-noun', 'plural', 'male'],
-                    'the woman':['full-noun', 'singular', 'female'],
-                    'the women':['full-noun', 'plural', 'female'],
-                    }
-
-verb_features = {'think':['mental', 'plural', 'present'],
-                 'thinks':['mental', 'singular', 'present'],
-                 'believe':['mental', 'plural', 'present'],
-                 'believes':['mental', 'singular', 'present'],
-                 'know': ['mental', 'plural', 'present'],
-                 'knows': ['mental', 'singular', 'present'],
-                 'cry':['unergative', 'plural', 'present'],
-                 'cries':['unergative', 'singular', 'present'],
-                 'sneeze': ['unergative', 'plural', 'present'],
-                 'sneezes': ['unergative', 'singular', 'present'],
-                 }
-
-features_to_numbers = {'':0,
-                       'pronoun':1,
-                       'full-noun':2,
-                       'singular':1,
-                       'plural':2,
-                       'male':1,
-                       'female':2,
-                       'mental': 1,
-                       'unergative':2,
-                       'present':2,
-                       'and': 1,
-                       'that':2
-                       }
-
 
 stimuli = []; features = []
 for trial in tqdm(range(args.num_random)):

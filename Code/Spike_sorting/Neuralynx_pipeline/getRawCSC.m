@@ -26,6 +26,7 @@ ExtractMode = 1;
 ModeArray=[]; %all.
 
 %%
+%
 switch recording_system
         case 'Neuralynx'
             % Extract time0 and timeend from NEV file
