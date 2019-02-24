@@ -1,8 +1,10 @@
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:298: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 567 but corresponding boolean dimension is 773
-  y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:298: RuntimeWarning: Mean of empty slice
-  y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:333: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 567 but corresponding boolean dimension is 773
-  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:333: RuntimeWarning: Mean of empty slice
-  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/main_plot_trial_time_freq.py", line 63, in <module>
+    analyses_electrodes.generate_time_freq_plots(channels, events, event_id, metadata, comparisons, settings, params, preferences)
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py", line 110, in generate_time_freq_plots
+    'trial_wise', params)
+  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py", line 232, in average_high_gamma
+    power_ave = np.squeeze(np.average(power.data, axis=2))
+  File "/home/yl254115/anaconda2/lib/python2.7/site-packages/numpy/lib/function_base.py", line 1111, in average
+    scl = avg.dtype.type(a.size/avg.size)
+ZeroDivisionError: division by zero
