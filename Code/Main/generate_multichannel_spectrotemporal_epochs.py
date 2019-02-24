@@ -27,6 +27,7 @@ for block in range(1, 7):
     log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
     log_all_blocks.append(log.read_and_parse_log(settings))
 del log, block
+print(log_all_blocks)
 
 print('Loading POS tags for all words in the lexicon')
 word2pos = read_logs_and_features.load_POS_tags(settings)
@@ -39,6 +40,7 @@ events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata,
 
 print('Analyze channels')
 channel_nums = data_manip.get_channel_nums(settings.path2rawdata_mat) if not args.channels else args.channels
+channel_nums.sort()
 for c, channel_num in enumerate(channel_nums):
     channel_data, channel_name = data_manip.load_channelsCSC_data(settings.path2rawdata_mat, channel_num)
     settings.channel_name = channel_name
