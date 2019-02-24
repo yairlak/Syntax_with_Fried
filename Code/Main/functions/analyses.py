@@ -1,33 +1,3 @@
-from __future__ import division
-import numpy as np
-import os, glob
-import mne
-import matplotlib.pyplot as plt
-import pickle
-from operator import itemgetter
-from scipy import io
-from functions import convert_to_mne
-# from SU_functions.auxilary_functions import smooth_with_gaussian
-# from SU_functions.auxilary_functions import get_queries
-
-
-def get_channel_nums(path2channelsCSC):
-    CSC_files = glob.glob(os.path.join(path2channelsCSC, 'CSC*.mat'))
-    return [int(os.path.basename(s)[3:-4]) for s in CSC_files]
-
-
-def load_channelsCSC_data(path2channelsCSC, channel):
-    CSC_file = glob.glob(os.path.join(path2channelsCSC, 'CSC' + str(channel) + '.mat'))
-    print(CSC_file)
-    channel_data = io.loadmat(CSC_file[0])['data']
-    print('channel-data loaded')
-    if 'file_name' in io.loadmat(CSC_file[0]).keys():
-        channel_name = io.loadmat(CSC_file[0])['file_name'][0]
-    else:
-        channel_name = 'Channel_'+str(channel)
-    return channel_data, channel_name
-
-
 def compute_time_freq(channel_num, channel_name, channel_data, events, event_id, metadata, settings, params):
     print('Analyzing high-gamma for channel ' + str(channel_num))
     file_name_epochs = 'micro_' + settings.hospital + '_' + settings.patient + '_channel_' + str(channel_num) + '_line_filtered_resampled-epo'

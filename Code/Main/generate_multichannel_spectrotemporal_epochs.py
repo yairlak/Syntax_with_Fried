@@ -1,5 +1,5 @@
 import argparse, os
-from functions import load_settings_params, read_logs_and_features, convert_to_mne, data
+from functions import load_settings_params, read_logs_and_features, convert_to_mne, data_manip, analyses
 
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
@@ -38,12 +38,14 @@ print('Generating event object for MNE from log data...')
 events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
 
 print('Analyze channels')
-channel_nums = data.get_channel_nums(settings.path2rawdata_mat) if not args.channels else args.channels
+channel_nums = data_manip.get_channel_nums(settings.path2rawdata_mat) if not args.channels else args.channels
 for c, channel_num in enumerate(channel_nums):
-    channel_data, channel_name = data.load_channelsCSC_data(settings.path2rawdata_mat, channel_num)
+    channel_data, channel_name = data_manip.load_channelsCSC_data(settings.path2rawdata_mat, channel_num)
     settings.channel_name = channel_name
-    epochs_power_curr_channel = data.compute_time_freq(channel_num, channel_name, channel_data, events, event_id, metadata, settings, params)
+    epochs_power_curr_channel = analyses.compute_time_freq(channel_num, channel_name, channel_data, events, event_id, metadata, settings, params)
     epochs_power_all_channels = epochs_power_curr_channel.copy() if c == 0 else epochs_power_all_channels.add_channels([epochs_power_curr_channel])
 
-
-print('d')
+# Save epochs object to drive
+filename = args.patient + '-epo.fif'
+epochs_power_all_channels.save(os.path.join(path2epochs, filename))
+print('Epochs object saved to: ' + os.path.join(path2epochs, filename))
