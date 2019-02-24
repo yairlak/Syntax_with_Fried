@@ -47,7 +47,7 @@ class Settings():
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
         self.comparisons_file = 'comparisons.xlsx'
-        self.features_file = 'features_' + self.patient + '.xlsx'
+        self.features_file = 'features.xlsx'
         self.word2pos_file = 'word2POS.pkl'
 
         # Time of the beginning and end of the experiment (BlackRock time0 = 0; In Neurlaynx it is measured compared to 01/01/1970)
@@ -89,19 +89,20 @@ class Params:
         self.sfreq_raw = 40000 # Data sampling frequency [Hz]
         self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]
-        self.tmin = -2.5  # Start time before event [sec], should be negative
+        self.tmin = -0.51  # Start time before event [sec], should be negative
         self.tmax = 1 # End time after event [sec]
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
 
         ###### Frequency bands ##########
-        self.iter_freqs = [('High-Gamma', 70, 150)]
+        # self.iter_freqs = [('High-Gamma', 70, 150)]
+        self.iter_freqs = [('High-Gamma', 1000, 20000)]
         # self.iter_freqs = []
         step = 5
         # for freq in range(4, 146, 1):
         #     band = str(freq) + '_to_' + str(freq + step) + 'Hz'
         #     self.iter_freqs.append((band, freq, freq + step))
-        self.freq_step = 5  # [Hz] Step in spectrogram
+        self.freq_step = 1000  # [Hz] Step in spectrogram
         # self.time_step = self.tmax * self.sfreq_raw # Epoch into subsequent segments\
         # self.slice_size = 500 * self.sfreq
         ##################################
