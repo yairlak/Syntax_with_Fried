@@ -42,7 +42,7 @@ class Settings():
         # Files info
         self.log_name_beginning = 'new_events_log_in_cheetah_clock_part'
         #self.log_name_beginning = 'new_events_log_in_cheetah_clock_block'
-        #self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
+        self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
