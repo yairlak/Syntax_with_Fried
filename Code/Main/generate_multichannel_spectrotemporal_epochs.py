@@ -16,7 +16,6 @@ args = parser.parse_args()
 
 # Paths
 # path2data = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'ChannelsCSC')
-filename = args.patient + '-tfr.h5' if not args.out_fn else args.out_fn
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
 if not os.path.exists(path2epochs):
     os.makedirs(path2epochs)
@@ -68,5 +67,6 @@ for c, channel_num in enumerate(channel_nums):
 
 # Save epochs object to drive
 del epochsTFR_channel
+filename = args.patient + '-tfr.h5' if not args.out_fn else args.out_fn
 epochsTFR_all_channels.save(os.path.join(path2epochs, filename), overwrite=True)
 print('Epochs object saved to: ' + os.path.join(path2epochs, filename))
