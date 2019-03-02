@@ -1,16 +1,9 @@
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:298: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1586 but corresponding boolean dimension is 1792
-  y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:333: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 1; dimension is 1586 but corresponding boolean dimension is 1792
-  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:298: RuntimeWarning: Mean of empty slice
-  y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
-/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py:333: RuntimeWarning: Mean of empty slice
-  ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
-Traceback (most recent call last):
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/main_plot_trial_time_freq.py", line 63, in <module>
-    analyses_electrodes.generate_time_freq_plots(channels, events, event_id, metadata, comparisons, settings, params, preferences)
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py", line 118, in generate_time_freq_plots
-    'trial_wise', params)
-  File "/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main_analyses/SU_functions/analyses_electrodes.py", line 248, in average_high_gamma
-    power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
-ValueError: operands could not be broadcast together with shapes (21,1792) (22,1) 
+usage: plot_epochs_ERPs.py [-h] [-patient PATIENT]
+                           [-block {visual,auditory,1,2,3,4,5,6,}]
+                           [-align {first,last,end}] [-filename FILENAME]
+                           [--sort-key SORT_KEY] [--query QUERY]
+                           [--queries-to-compare QUERIES_TO_COMPARE QUERIES_TO_COMPARE]
+                           [-SOA SOA] [-word-ON-duration WORD_ON_DURATION]
+                           [-y-tick-step Y_TICK_STEP] [-window-st WINDOW_ST]
+                           [-window-ed WINDOW_ED]
+plot_epochs_ERPs.py: error: argument -block: invalid choice: 'v' (choose from 'visual', 'auditory', '1', '2', '3', '4', '5', '6', [])

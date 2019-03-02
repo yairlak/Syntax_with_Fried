@@ -1,0 +1,313 @@
+Loading settings, params and preferences...
+Metadata: Loading features and comparisons from Excel files...
+Logs: Reading experiment log files from experiment...
+[<functions.read_logs_and_features.LogSingleUnit object at 0x7f18cb916f60>, <functions.read_logs_and_features.LogSingleUnit object at 0x7f18c3ad9b70>, <functions.read_logs_and_features.LogSingleUnit object at 0x7f18c3a1d6a0>, <functions.read_logs_and_features.LogSingleUnit object at 0x7f18c3a32278>, <functions.read_logs_and_features.LogSingleUnit object at 0x7f18c3a92358>, <functions.read_logs_and_features.LogSingleUnit object at 0x7f18c3ab9588>]
+Loading POS tags for all words in the lexicon
+Preparing meta-data
+Generating event object for MNE from log data...
+Analyze channels
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC1.mat']
+channel-data loaded
+Analyzing high-gamma for channel 1
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC2.mat']
+channel-data loaded
+Analyzing high-gamma for channel 2
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC3.mat']
+channel-data loaded
+Analyzing high-gamma for channel 3
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC4.mat']
+channel-data loaded
+Analyzing high-gamma for channel 4
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC5.mat']
+channel-data loaded
+Analyzing high-gamma for channel 5
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC6.mat']
+channel-data loaded
+Analyzing high-gamma for channel 6
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC7.mat']
+channel-data loaded
+Analyzing high-gamma for channel 7
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC8.mat']
+channel-data loaded
+Analyzing high-gamma for channel 8
+Generating MNE raw object for continuous data...
+1 channel names are too long, have been truncated to 15 characters:
+['GA1-LAH1_0019.ncs']
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC9.mat']
+channel-data loaded
+Analyzing high-gamma for channel 9
+Generating MNE raw object for continuous data...
+1 channel names are too long, have been truncated to 15 characters:
+['GA1-LAH2_0019.ncs']
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC10.mat']
+channel-data loaded
+Analyzing high-gamma for channel 10
+Generating MNE raw object for continuous data...
+1 channel names are too long, have been truncated to 15 characters:
+['GA1-LAH3_0019.ncs']
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 1.2 sec, baseline off, ~4.96 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+['../../Data/UCLA/patient_479/ChannelsCSC/CSC11.mat']
+channel-data loaded
+Analyzing high-gamma for channel 11
+Generating MNE raw object for continuous data...
+1 channel names are too long, have been truncated to 15 characters:
+['GA1-LAH4_0019.ncs']
+Creating RawArray with float64 data, n_channels=1, n_times=126369280
+    Range : 0 ... 126369279 =      0.000 ...  3159.232 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 264001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 168001 original time points ...
+0 bad epochs dropped

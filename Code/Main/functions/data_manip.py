@@ -4,8 +4,9 @@ import mne
 from scipy import io
 
 def get_channel_nums(path2channelsCSC):
-    CSC_files = glob.glob(os.path.join(path2channelsCSC, 'CSC?.mat')) + glob.glob(os.path.join(path2channelsCSC, 'CSC??.mat')) + glob.glob(os.path.join(path2channelsCSC, 'CSC???.mat'))
-    print([os.path.basename(s)[3:-4] for s in CSC_files])
+    CSC_files = glob.glob(os.path.join(path2channelsCSC, 'CSC?.mat')) + \
+                glob.glob(os.path.join(path2channelsCSC, 'CSC??.mat')) + \
+                glob.glob(os.path.join(path2channelsCSC, 'CSC???.mat'))
     return [int(os.path.basename(s)[3:-4]) for s in CSC_files]
 
 

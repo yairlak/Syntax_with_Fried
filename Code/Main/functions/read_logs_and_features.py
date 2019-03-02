@@ -127,11 +127,11 @@ class LogSingleUnit:
                 setattr(self, event_type + '_l_TIMES', list_of_key_press_times)
                 event_types_added.append(event_type + '_l_TIMES')
 
-#                sentences_start, sentences_end, sentences_length = get_sentences_start_end_length(self.SENTENCE_NUM_ORDER, settings)
-#                setattr(self, 'sentences_start', sentences_start)
-#                setattr(self, 'sentences_end', sentences_end)
-#                setattr(self, 'sentences_length', sentences_length)
-#
+                # sentences_start, sentences_end, sentences_length = get_sentences_start_end_length(self.SENTENCE_NUM_ORDER, settings)
+                # setattr(self, 'sentences_start', sentences_start)
+                # setattr(self, 'sentences_end', sentences_end)
+                # setattr(self, 'sentences_length', sentences_length)
+
             else:
                 setattr(self, event_type + '_TIMES', [i[0] for i in log_content if event_type == i[1]])
                 event_types_added.append(event_type + '_TIMES')
@@ -203,7 +203,7 @@ def extract_comparison(comparison_list, features, settings, preferences):
             curr_dict['generalize_to_blocks'] = generalize_to_modality
             curr_dict['generalize_to_contrast'] = generalize_to_contrast
             sortings = comparison_list['fields'][5][i]
-            if isinstance(sortings, unicode):
+            if isinstance(sortings, str):
                 curr_dict['sorting'] = sortings.split(',')
             else:
                 curr_dict['sorting'] = []
