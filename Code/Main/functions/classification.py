@@ -5,43 +5,67 @@ import numpy as np
 plt.switch_backend('agg')
 
 
-def prepare_data_for_GAT(patients, picks_all_patients, query_classes_train, query_classes_test, root_path, epochs_fname = '-epo.fif'):
+def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_train, query_classes_test, root_path):
+    '''
+
+    :param patients:
+    :param hospitals:
+    :param picks_all_patients:
+    :param query_classes_train:
+    :param query_classes_test:
+    :param root_path:
+    :param epochs_fname:
+    :return:
+    1. times
+    2. X_trainy_query
+    3. y_train_query
+    4. X_test_query
+    5. y_test_query
+    '''
     # Times
     train_times = {}
     train_times["start"] = -0.5
-    train_times["stop"] = 0.9
-    train_times["step"] = 0.01
+    train_times["stop"] = 0.5
+    # train_times["step"] = 0.01
+
 
     X_train = []; y_train = []; X_test = []; y_test = []
-    for patient, picks in zip(patients, picks_all_patients):
-        print('Loading epochs object', patient)
-        epochs_fname = patient + epochs_fname
-        epochs = mne.read_epochs(os.path.join(root_path, 'Data', patient, 'Epochs', epochs_fname))
-        
-        # Train set
-        for q, query_class_train in enumerate(query_classes_train):
-            epochs_class_train = epochs[query_class_train]
-            epochs_class_train.crop(train_times["start"], train_times["stop"])
-            #epochs_class1_train.decimate(decim=10)
-            X_train.append(epochs_class_train.get_data())  # signals: n_epochs, n_channels, n_times
-            num_samples_curr_class = X_train[q].shape[0]
-            y_train.append((q+1) * np.ones(num_samples_curr_class).astype(int))  # targets
-            print('Number of samples in training class %i : %i' % (q+1, num_samples_curr_class))
+    for q, query_class_train in enumerate(query_classes_train):
+        data_all_channels = []
+        for patient, hospital, picks in zip(patients, hospitals, picks_all_patients):
+            for ch in picks:
+                print('Loading epochs object', patient)
+                epochs_fname = patient + '_ch_' + str(ch) + '-tfr.h5'
+                path2epochs = os.path.join(root_path, 'Data', hospital, patient, 'Epochs', epochs_fname)
+                epochsTFR = mne.time_frequency.read_tfrs(path2epochs)[0]
+                epochs_class_train = epochsTFR[query_class_train]
+                epochs_class_train.crop(train_times["start"], train_times["stop"])
+                curr_data = np.squeeze(np.average(epochs_class_train.data, axis=2))
+                data_all_channels.append(curr_data)
 
-        # Test set
-        if query_classes_test is not None:
-            for q, query_class_test in enumerate(query_classes_test):
-                epochs_class_test = epochs[query_class_test]
-                epochs_class_test.crop(train_times["start"], train_times["stop"])
-                #epochs_class1_test.decimate(decim=10)
-                X_test.append(epochs_class_test.get_data())  # signals: n_epochs, n_channels, n_times
-                num_samples_curr_class = X_test[q].shape[0]
-                y_test.append((q+1) * np.ones(num_samples_curr_class).astype(int))  # targets
-                print('Number of samples in test class %i : %i' % (q+1, num_samples_curr_class))
-            X_test = np.vstack(X_test)
-            y_test = np.hstack(y_test)
-        else: # no test queries (generalization across time only, not conditions)
-            X_test = None; y_test = None
+        data_all_channels = np.dstack(data_all_channels) # signals: n_epochs, n_times, n_channels
+        data_all_channels = np.swapaxes(data_all_channels, 1, 2) # Swap dimensions
+        X_train.append(data_all_channels) #  signals: n_epochs, n_channels, n_times
+
+        num_samples_curr_class = X_train[q].shape[0]
+        y_train.append((q+1) * np.ones(num_samples_curr_class).astype(int))  # targets
+        print('Number of samples in training class %i : %i' % (q+1, num_samples_curr_class))
+
+    # Test set
+    if query_classes_test is not None:
+        for q, query_class_test in enumerate(query_classes_test):
+            epochs_class_test = epochsTFR[query_class_test]
+            epochs_class_test.crop(train_times["start"], train_times["stop"])
+            #epochs_class1_test.decimate(decim=10)
+            curr_data = np.squeeze(np.average(epochs_class_test.data[:, ch, :, :], axis=1))
+            X_test.append(curr_data)  # signals: n_epochs, n_channels, n_times
+            num_samples_curr_class = X_test[q].shape[0]
+            y_test.append((q+1) * np.ones(num_samples_curr_class).astype(int))  # targets
+            print('Number of samples in test class %i : %i' % (q+1, num_samples_curr_class))
+        X_test = np.vstack(X_test)
+        y_test = np.hstack(y_test)
+    else: # no test queries (generalization across time only, not conditions)
+        X_test = None; y_test = None
 
     return epochs_class_train[0].times, np.vstack(X_train), np.hstack(y_train), X_test, y_test
 

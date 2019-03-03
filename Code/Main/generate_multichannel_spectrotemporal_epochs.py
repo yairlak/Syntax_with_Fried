@@ -5,17 +5,26 @@ import numpy as np
 
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='patient_479', help='Patient string')
-parser.add_argument('-channels', nargs = 1, action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
-parser.add_argument('-tmin', default=-2, type=int, help='Patient string')
+parser.add_argument('-patient', default='479', help='Patient string')
+parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default=1.2, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
 args = parser.parse_args()
+print(args.channels)
 
 #TODO: add log to power
+args.patient = 'patient_' + args.patient
 
+# Set current working directory to that of script
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 # Paths
+<<<<<<< HEAD
 # path2data = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'ChannelsCSC')
+=======
+>>>>>>> a867ddf2ab757cf019b2f38c161ad794213241df
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
 if not os.path.exists(path2epochs):
     os.makedirs(path2epochs)
@@ -36,6 +45,7 @@ for block in range(1, 7):
     log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
     log_all_blocks.append(log.read_and_parse_log(settings))
 del log, block
+print(log_all_blocks)
 
 print('Loading POS tags for all words in the lexicon')
 word2pos = read_logs_and_features.load_POS_tags(settings)
@@ -67,6 +77,7 @@ for c, channel_num in enumerate(channel_nums):
 
 # Save epochs object to drive
 del epochsTFR_channel
-filename = args.patient + '-tfr.h5' if not args.out_fn else args.out_fn
+ch_str = '_ch_' + '_'.join(args.channels) if args.channels else ''
+filename = args.patient + ch_str + '-tfr.h5' if not args.out_fn else args.out_fn
 epochsTFR_all_channels.save(os.path.join(path2epochs, filename), overwrite=True)
 print('Epochs object saved to: ' + os.path.join(path2epochs, filename))

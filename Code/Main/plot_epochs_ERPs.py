@@ -2,15 +2,16 @@ import argparse, os
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy import percentile
 from sklearn import linear_model
 from sklearn.metrics import r2_score
 from operator import itemgetter
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='patient_479', help='Patient string')
+parser.add_argument('-patient', default='479', help='Patient string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
 parser.add_argument('-align', choices=['first','last', 'end'], default='first', help='Block type')
-parser.add_argument('-filename', default='patient_479_all_channels-epo.fif', help='output filename (if empty list [] then will be assigned based on patient name)')
+parser.add_argument('-filename', default='patient_479_ch_40-tfr.h5', help='Input filename (if empty list [] then will be assigned based on patient name)')
 parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
 parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
@@ -21,6 +22,7 @@ parser.add_argument('-window-st', default=0, help='Regression start-time window 
 parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
 # parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[("word_position==1 and block in [2, 4, 6]", "word_position==-1 and block in [2, 4, 6]")], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 args = parser.parse_args()
+args.patient = 'patient_' + args.patient
 print(args)
 
 if args.block and args.align:
@@ -40,7 +42,12 @@ if args.block and args.align:
             align_str = "word_position == -1"
         args.query = align_str + ' and ' + block_str
 
+# Set current working directory to that of script
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
+# 
 plt.close('all')
 filename = args.patient + '-tfr.h5' if not args.filename else args.filename
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
@@ -48,12 +55,11 @@ path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
 if not os.path.exists(path2figures):
     os.makedirs(path2figures)
 
-print('Loading epochs object')
-# epochs_fname = os.path.join(args.path2epochs, patient + '-epo.fif')
+print('Loading epochs object: ' + path2epochs)
 epochsTFR = mne.time_frequency.read_tfrs(path2epochs)
 epochsTFR = epochsTFR[0][args.query]
 epochsTFR.crop(min(epochsTFR.times) + 0.1, max(epochsTFR.times) - 0.1)
-epochsTFR.apply_baseline((None, None), 'zscore')
+#epochsTFR.apply_baseline((None, None), 'zscore')
 print(epochsTFR)
 
 for ch, ch_name in enumerate(epochsTFR.ch_names):
@@ -61,6 +67,23 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
     fig = plt.subplots(figsize=(10, 10))
     IX_ch = mne.pick_channels(epochsTFR.ch_names, [ch_name])[0]
     power_ave = np.squeeze(np.average(epochsTFR.data[:, IX_ch, :, :], axis=1))
+    # calculate interquartile range
+    q25, q75 = percentile(power_ave.flatten(), 25), percentile(power_ave.flatten(), 75)
+    iqr = q75 - q25
+    print('Percentiles: 25th=%.3f, 75th=%.3f, IQR=%.3f' % (q25, q75, iqr))
+    # calculate the outlier cutoff
+    cut_off = iqr * 1.5
+    lower, upper = np.asarray(q25 - cut_off), np.asarray(q75 + cut_off)
+    print(lower, upper)
+    # Put NaNs 
+    power_ave[power_ave > upper] = np.nan
+    power_ave[power_ave < lower] = np.nan
+    print(power_ave)
+    print('Identified outliers: %d' % np.sum(power_ave > upper))
+    print('Identified outliers: %d' % np.sum(power_ave < lower))
+    # zscore data
+    power_ave -= np.nanmean(power_ave)
+    power_ave = power_ave / np.nanstd(power_ave)
 
     # Sort if needed
     if not args.sort_key:
@@ -83,6 +106,7 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
         # Run a linear regression if sorted according to, e.g., sentence length
         IX = (epochsTFR.times > args.window_st / 1e3) & (epochsTFR.times < args.window_ed / 1e3)
         X = np.asarray([tup[1] for tup in mylist_sorted])
+        print(power_ave[:, IX].shape)
         y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
         IX_nan = np.isnan(y)
         X, y = X[~IX_nan], y[~IX_nan]
@@ -101,7 +125,7 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
 
     im = ax0.imshow(power_ave,
                      interpolation='nearest',
-                     aspect='auto', vmin=-3, vmax=3, cmap='viridis')
+                     aspect='auto', vmin=-0.5, vmax=0.5, cmap='viridis')
     cbar = plt.colorbar(im, cax=cbaxes)
     cbar.set_label(label='z-score of power)', size=22)
 
@@ -127,9 +151,9 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
     ax2.set_xlabel('Time [sec]', fontsize=24)
     ax2.set_ylabel('Mean activity (zscore)', fontsize=18)
     ax2.set_xlim([np.min(epochsTFR.times) + 0.2, np.max(epochsTFR.times) - 0.2])
-    ax2.axhline(y=3, linestyle='--', linewidth=3, color='g')
-    ax2.axhline(y=-3, linestyle='--', linewidth=3, color='g')
-    ax2.set_ylim([-6, 6])
+    #ax2.axhline(y=3, linestyle='--', linewidth=3, color='g')
+    #ax2.axhline(y=-3, linestyle='--', linewidth=3, color='g')
+    ax2.set_ylim([-3, 3])
     #
     # # Add vertical lines
     ax0.axvline(x=0, linestyle='--', linewidth=3, color='k')
@@ -151,10 +175,10 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
             ax2.axvline(x=(-2 * args.SOA - args.word_ON_duration) * 1e-3, linestyle='--', linewidth=1, color='b')
 
     # Plot
-    filename_base = 'high_gamma_epochs_ch_' + str(ch + 1) + '_' + ch_name + '_' + args.query
+    filename_base = 'high_gamma_epochs_ch_' + ch_name + '_' + args.query
     filename_base += '_' + '_'.join(args.sort_key)
     plt.savefig(os.path.join(path2figures, filename_base + '.png'))
-    print('fig saved to: ' + os.path.join(path2figures, filename))
+    print('fig saved to: ' + os.path.join(path2figures, filename_base + '.png'))
     plt.close('All')
 
     if not args.queries_to_compare:
