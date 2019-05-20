@@ -1,0 +1,48 @@
+function shifted_times_CSC = time_shift_peak(times_CSC, ch, sub_cl, new_peak_bins)
+% time_shift_peak    Correct alignment of peak of spike cluster.
+%                    This is for cases where a whole cluster was aligned to
+%                    the non-main peak, so the whole cluster is shifted by
+%                    the same time lag.  The beginning or end of the spike
+%                    waveform are interpolated (so data is lost in the
+%                    process).
+%
+%                    new_peak_bins - 1x1 - Bin number (#sampling points)
+%                                          where the new peak occurs. The
+%                                          new bin will be shifted to the
+%                                          location to which all peaks are
+%                                          aligned (i.e., par.w_pre).
+
+% Author: Ariel Tankus.
+% Created: 20.03.2010.
+
+
+shifted_times_CSC = times_CSC;
+
+inds = find(times_CSC.cluster_class(:, 1) == sub_cl);
+
+if (length(times_CSC.par.w_pre) == 1)
+    time_shift_bins = times_CSC.par.w_pre - new_peak_bins;
+else
+    time_shift_bins = times_CSC.par.w_pre(ch) - new_peak_bins;
+end
+if (time_shift_bins >= 0)
+    % push spikes rightward:
+    shifted_times_CSC.spikes(inds, :) = ...
+        [times_CSC.spikes(inds, 1)*ones(1, time_shift_bins), ...
+         times_CSC.spikes(inds, 1:(end-time_shift_bins))];
+else
+    % push spikes leftward:
+    shifted_times_CSC.spikes(inds, :) = ...
+        [times_CSC.spikes(inds, (1-time_shift_bins):end), ...
+         times_CSC.spikes(inds, end)*ones(1, -time_shift_bins)];
+end
+
+% shift peak times:
+if (length(times_CSC.par.sr) == 1)
+    shifted_times_CSC.cluster_class(inds, 2) = ...
+        times_CSC.cluster_class(inds, 2) - ...
+        time_shift_bins./times_CSC.par.sr.*1000;
+else
+    shifted_times_CSC.cluster_class(inds, 2) = times_CSC.cluster_class(inds, 2) +...
+        time_shift_bins./times_CSC.par.sr(ch).*1000;
+end

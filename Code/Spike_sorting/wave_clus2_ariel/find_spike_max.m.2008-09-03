@@ -1,0 +1,30 @@
+function [index, nspk] = find_spike_max(xf, xaux)
+% find_spike_max    
+
+% Author: Ariel Tankus.
+% Created: 02.09.2008.
+
+
+% consecutive indices:
+cons_inds = (diff(xaux) == 1);
+[enter_inds, exit_inds] = get_entry_exit_inds(cons_inds');
+% the exit point is actually the last index of xaux in a consecutive sequence.
+keyboard
+nspk = 0;
+index = [];
+
+for i=1:length(enter_inds)
+    cur_xf = xf(xaux(enter_inds(i)):xaux(exit_inds(i)));
+    
+    if (length(cur_xf) == 2)
+        [max_xf, peaks] = max(cur_xf);
+    else
+        % search local maxima:
+        d = sign(diff(cur_xf));
+        peaks = [strfind(d, [1, -1]), strfind(d, [1, 0])];
+        peaks = sort(peaks) + 1;   % +1: to get the exact peak index in xaux.
+    end
+    
+    nspk = nspk + length(peaks);
+    index = [index, peaks + xaux(enter_inds(i)) - 1];
+end

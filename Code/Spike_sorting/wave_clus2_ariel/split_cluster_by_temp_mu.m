@@ -1,0 +1,59 @@
+function [cluster_class, spikes, inspk, par, comments] = ...
+    split_cluster_by_temp_mu(ch)
+% split_cluster_by_temp_all    
+
+% Author: Ariel Tankus.
+% Created: 25.10.2009.
+
+
+temp = 18;
+[success, err_msg, classes, index, spikes, par, clu, tree, inspk, ...
+         comments] = batch_load_csc_pre_clustered(ch);
+if (~success)
+    fprintf(err_msg);
+    cluster_class = zeros(0, 2);
+    return;
+end
+
+% save original clustering, s.t. single units classification does not change:
+orig_classes      = classes;
+uniq_orig_classes = unique(orig_classes);
+num_orig_classes  = length(uniq_orig_classes);
+orig_comments     = comments;
+su_classes = [0; find(strcmp(comments, 'su')) - 1];  % 1: add trash cluster.
+                                                     % Do no split trash into
+                                                     % new classes. 
+num_su     = length(su_classes);
+
+[classes, index, spikes, inspk, par, comments] = split_cluster_by_temp(temp, ...
+    classes, index, spikes, par, clu, tree, inspk, comments);
+
+% restore single units to original state:
+new_classes = zeros(size(orig_classes));
+counter = 0;
+comments = {};
+for i=1:num_su
+    cur_class_inds = (orig_classes == su_classes(i));
+    new_classes(cur_class_inds) = counter;
+    classes(cur_class_inds)     = 0;     % erase spike from split by temp.
+    counter = counter + 1;
+    if (su_classes(i) == 0)
+        comments{counter} = '';
+    else
+        comments{counter} = 'su';
+    end
+end
+
+% copy remaining classes (after temperature split) to new array:
+temp_classes = setdiff(unique(classes), 0);
+num_temp_classes = length(temp_classes);
+for i=1:num_temp_classes
+    cur_class_inds = (classes == temp_classes(i));
+    new_classes(cur_class_inds) = counter;
+    counter = counter + 1;
+    comments{counter} = 'mu';   % mark all sub-clusters as 'mu' because
+                                % they came from multiunits.  The user
+                                % can later change this mark manually.
+end
+
+cluster_class = [new_classes', index'];

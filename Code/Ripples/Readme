@@ -1,0 +1,7 @@
+This folder contains scripts that allow for ripple detections and extraction. You can extract ripples from all channels of a given patient, or specify a ROI to do so. 
+
+The main function that one needs to call is the "rippletriggeredSignal.m". The paths need to be adjusted as it was written to run locally. The function was written by Fanis and is very well documented and explained.
+
+The "Plotting_Ripples.m" is a function that plots and saves each individual ripple for a given channel. 
+
+The "Store_events" is an extended script that allows for plotting the distribution of events over all channels, identifying significant channels given a threshold of event (at the moment, arbitraty), plotting the groups of significant channels and seeing their corresponding areas. It also allows the user to select a number of regions that she would like to investigate and see the corresponding events. This script is still under development so it lacks heavy commenting, 

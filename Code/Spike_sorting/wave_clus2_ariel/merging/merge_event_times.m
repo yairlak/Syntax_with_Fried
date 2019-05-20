@@ -1,0 +1,38 @@
+function merge_event_times(dir1, dir2, time_offset2_ms, out_dir)
+% merge_event_times    Merge the event times of two files.
+
+% Author: Ariel Tankus.
+% Created: 15.08.2009.
+
+
+cur_wd = pwd;
+
+%TTL_per_bit1 = load_nev_multi(sprintf('%s/Events.Nev', dir1));
+%TTL_per_bit2 = load_nev_multi(sprintf('%s/Events.Nev', dir2));
+cd(dir1);
+TTL_per_bit1 = load_nev_multi;
+cd(dir2);
+TTL_per_bit2 = load_nev_multi;
+
+len_TTL1 = length(TTL_per_bit1);
+len_TTL2 = length(TTL_per_bit2);
+
+TTL_per_bit = {};
+for i=1:max(len_TTL1, len_TTL2)
+
+    if (i <= len_TTL1)
+        if (i <= len_TTL2)
+            TTL_per_bit{i} = sort([TTL_per_bit1{i}, ...
+                                   TTL_per_bit2{i} + time_offset2_ms*1000]);
+        else
+            TTL_per_bit{i} = TTL_per_bit1{i};
+        end
+    else
+        TTL_per_bit{i} = TTL_per_bit2{i} + time_offset2_ms;
+    end
+
+end
+
+cd(out_dir);
+print_TTL_per_bit(TTL_per_bit);
+cd(cur_wd);

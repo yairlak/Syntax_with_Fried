@@ -1,0 +1,187 @@
+function Get_spikes_CSC_notch2k_ariel_mat(channels, param_set_name);
+% function Get_spikes_CSC(channel,TimeStamps)
+% Gets spikes from all channels in the .mat file channels. This batch is
+% to be used with Neuralynx data.
+% Saves spikes and spike times.
+
+% Modified: 23.07.2009 (Ariel, Roy & Omri).  Order of ellip filter
+%                      changed from 2 to 4.
+
+if nargin <1
+    load channels
+end
+if (nargin < 2)
+    param_set_name = 'UCLA';
+end
+
+%    % make gap_inds relative to filled-in time stamps:
+%    gap_inds(2:end) = gap_inds(2:end) + cumsum(gap_lens);
+
+switch (param_set_name)
+  case 'TASMC'
+    handles = TASMC_default_params();
+
+  case 'UCLA'
+    handles = UCLA_default_params();
+
+  case 'STN'
+    handles = STN_default_params();
+    
+  case 'Spike2'
+    handles = Spike2_default_params();
+    
+  otherwise
+    error('Unknown parameter set: %s', param_set_name);
+end
+
+%load('CSC1.mat');
+load('electrode_info.mat');
+samp_interval_micsec = 1E6./samp_freq_hz;  % sampling interval in microsec.
+
+if (exist('time0', 'var'))
+    if (length(time0) > 1)
+        TimeStamps = cell(length(channels), 1);
+        for k=1:length(channels)
+            ch = channels(k);
+            TimeStamps{k} = time0(ch):samp_interval_micsec(ch):timeend(ch);
+%            if (size(TimeStamps{k}, 2) ~= length(data))
+%                error(['Time0, timeend and data mismatch (time0=%g; timeend=%g; ' ...
+%                       'length(TimeStamps)=%d; length(data)=%d); dt=%g us.\n'], ...
+%                      time0(ch), timeend(ch), length(TimeStamps{k}), length(data), ...
+%                      period(ch).*1000);
+%            end
+        end
+    else
+        TimeStamps = {time0:samp_interval_micsec:timeend};
+%        if (size(TimeStamps, 2) ~= length(data))
+%            error(['Time0, timeend and data mismatch (time0=%g; timeend=%g; ' ...
+%                   'length(TimeStamps)=%d; length(data)=%d); dt=%g us.\n'], ...
+%                  time0, timeend, size(TimeStamps, 2), length(data), ...
+%                  samp_interval_micsec);
+%        end
+    end
+else
+    TimeStamps ={0:samp_interval_micsec:((length(data)-1).*samp_interval_micsec)};
+    %Find the starting of the recording:
+    time0 = TimeStamps(1);
+    timeend = TimeStamps(end);
+end
+
+% Get sampling frequency:
+sr = samp_freq_hz;      % ARIEL: sampling rate in Hz.
+
+% ARIEL: sr/1000 = #samples in 1ms.
+% ARIEL: #samples in refrectory period (`ref') is taken as 1.5 this #.
+%        (i.e., #samples in 1.5ms).
+ref = floor(1.5 *sr/1000);       %minimum refractory period (in ms)
+handles.par.ref = ref;
+handles.par.sr = sr;
+[handles.par.w_pre, handles.par.w_post] = w_pre_post_by_sr(sr);
+
+%lts = length(TimeStamps);
+handles.par.segments = ceil((timeend - time0) ./ ...
+            (handles.par.segments_length * 1e6 * 60));
+
+for k=1:length(channels)
+
+    tic
+
+    channel = channels(k)
+    
+    if (length(time0) > 1)
+        ts_ind = k;
+    else
+        ts_ind = 1;
+    end
+    
+    %That's for cutting the data into pieces
+    segmentLength = floor (length(TimeStamps{ts_ind})./handles.par.segments(ts_ind));
+    tsmin_ind = 1 : segmentLength :length(TimeStamps{ts_ind});
+    tsmin_ind = tsmin_ind(1: handles.par.segments);
+    tsmax_ind = tsmin_ind - 1;
+    tsmax_ind = tsmax_ind(2:end);
+    tsmax_ind = [tsmax_ind, length(TimeStamps{ts_ind})];
+    recmax=tsmax_ind;
+    recmin=tsmin_ind;
+    tsmin = TimeStamps{ts_ind}(int64(tsmin_ind));
+    tsmax = TimeStamps{ts_ind}(int64(tsmax_ind));
+    %clear TimeStamps;
+
+    index_all  = [];
+    spikes_all = [];
+
+    BadFrequenciesAccum          = cell(1, length(tsmin));
+    BadFrequenciesThresholdAccum = NaN(1, length(tsmin));
+
+    HighVoltageIndsAll  = [];
+    HighVoltageTimesAll = [];
+
+    load(sprintf('CSC%d.mat', channel));
+
+    for j=1:length(tsmin)
+        % LOAD CSC DATA
+        x = -double(data(recmin(j):recmax(j))).*handles.par.bit_resolution/1000;
+        
+        % detect and filter out bad frequencies:
+        [BadFrequencies, BadFrequenciesThreshold] = GetBadFrequencies(x, sr(ts_ind));
+        BadFrequenciesAccum{j} = BadFrequencies;
+        BadFrequenciesThresholdAccum(j) = BadFrequenciesThreshold;
+        for bf_index = 1:length(BadFrequencies)
+            if ((bf_index == 1) || (BadFrequencies(bf_index) - ...
+                BadFrequencies(bf_index-1) >= handles.par.notch_filter_half_width))
+                fprintf(['Channel %d, chunk %d/%d: Filtering frequency ', ...
+                         '%.2f .\n'], channel, j, length(tsmin), ... 
+                        BadFrequencies(bf_index));
+                [b,a]=ellip(2,0.5,20,[BadFrequencies(bf_index)-handles.par.notch_filter_half_width, BadFrequencies(bf_index)+handles.par.notch_filter_half_width]*2/sr(ts_ind),'stop');
+                x=filtfilt(b,a,x);
+            else
+                % No point in a separate filter for the current frequency, as
+                % it has already been filter due to the previous one, which
+                % was close enough to the current:
+                fprintf(['Channel %d, chunk %d/%d: Skipping frequency ', ...
+                         '%.2f .\n'], channel, j, length(tsmin), ...
+                        BadFrequencies(bf_index));
+            end
+            
+        end
+        HighVoltageInds     = find(x > handles.par.high_voltage_thresh);
+        if (~isempty(HighVoltageInds))
+            HighVoltageIndsAll  = [HighVoltageInds, HighVoltageIndsAll + ...
+                                                    tsmin_ind(j) - 1];
+            HighVoltageTimes    = (HighVoltageInds-1)*1e6/sr(ts_ind)+tsmin(j);
+            HighVoltageTimesAll = [HighVoltageTimesAll, HighVoltageTimes];
+        end
+        
+        % SPIKE DETECTION WITH AMPLITUDE THRESHOLDING
+        [spikes,thr,index] = amp_detect(x,handles.par,ts_ind);       %detection with amp. thresh.
+        % ARIEL: was: index=index*1e6/sr+tsmin(j);
+        % The above is a bug, which shifts all spike times by 1 sample (i.e.,
+        % by 36 microsec.):  The index begins from 1, so the if the spike
+        % occurred on the first time stamp, it would be assigned the time
+        % stamp of: 1*1e6/27777+tsmin(j) = 36+tsmin(j), instead of tsmin(j):
+%       ARIEL: Comment out, 24.07.2009:
+%        index=(index-1)*1e6/sr+tsmin(j);
+        if (~isempty(index))
+            index = index + recmin(j) - 1;
+        end
+        index_all = [index_all index];
+        spikes_all = [spikes_all; spikes];
+    end
+
+%    index = (index_all-time0)/1000;
+%    HighVoltageTimesAll = (HighVoltageTimesAll - time0) ./ 1000;
+    index = TimeStamps{ts_ind}(index_all) ./ 1000;
+    HighVoltageTimesAll = HighVoltageTimesAll ./ 1000;
+    spikes = spikes_all;
+    save(['CSC', num2str(channel), '_spikes'], 'spikes', 'index');
+    save(sprintf('BadFrequencies%d.mat', channel), 'BadFrequenciesAccum', ...
+         'BadFrequenciesThresholdAccum');
+    save(sprintf('HighVoltageTimes%d.mat', channel), 'HighVoltageTimesAll', ...
+         'HighVoltageIndsAll');
+    fprintf('Detected %d cases of too-high voltage.\n', ...
+            length(HighVoltageTimesAll));
+    toc
+
+    clear data;
+    
+end   

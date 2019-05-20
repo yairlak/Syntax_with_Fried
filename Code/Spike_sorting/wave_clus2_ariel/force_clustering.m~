@@ -1,0 +1,25 @@
+function [classes, par] = force_clustering(classes, par, spikes, inspk)
+% force_clustering    
+
+% Author: Ariel Tankus.
+% Created: 25.10.2009.
+
+
+switch par.force_feature
+ case 'spk' 
+  f_in  = spikes(find(classes~=0),:);
+  f_out = spikes(find(classes==0),:);
+ case 'wav'
+  if isempty(inspk)
+      inspk = wave_features_batch(spikes, par);     % Extract spike features.
+  end
+  f_in  = inspk(find(classes~=0),:);
+  f_out = inspk(find(classes==0),:);
+end
+class_in = classes(find(classes~=0));
+class_out = force_membership_wc(f_in, class_in, f_out, par);
+keyboard
+classes(find(classes==0)) = class_out;
+
+%par = unfix_all(handle
+s, par);

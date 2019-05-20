@@ -1,0 +1,18 @@
+Steps to follow with a new patient data:
+
+1. to list files on box: 'rclone lsd box:'
+
+2. Put the raw files in 'Raw' subfolder of patient folder. Make sure that only a single event file (nev) exist (the one with the larger file size)
+
+3. To get time0 and timeEnd, run read_nev_files.py e.g. 'python read_nev_files.py patient_487'. Add these times to 'load_setting_params'
+
+4. Run generate_new_logs_from_onset_times.m on logs (this will add events for each word also for the auditory blocks based on word time onsets of the stimuli)
+
+5. To transform raw to mat files, run: Spike_sorting/Neuralynx_pipeline/getRawCSC.m
+matlab -nodisplay -nojvm 
+
+6. Make sure the features.xls file is in /Paradigm
+
+7. Make sure that in function/load_settings_params.py all is well defined (prefix of log files, e.g., mouse_cheatha..part1)
+
+8. Run script from Bash/ folder.
