@@ -1,0 +1,50 @@
+Event	Block	Trial	StimNum	WordNum	StimulusName	Time
+GrandStart					---	7940.6496	
+BlockStart	1	0	0		-	7940.6564	
+Fix	1	1	0		+	7941.5298
+StimVisualOn	1	1	1	1	he	7942.1964
+StimVisualOff	1	1	1	1		7942.4671
+StimVisualOn	1	1	1	2	smiles	7942.7292
+StimVisualOff	1	1	1	2		7942.9996
+Fix	1	2	0		+	7944.2655
+StimVisualOn	1	2	2	1	who	7944.9014
+StimVisualOff	1	2	2	1		7945.168
+StimVisualOn	1	2	2	2	hugs	7945.4324
+StimVisualOff	1	2	2	2		7945.6999
+StimVisualOn	1	2	2	3	the	7945.9637
+StimVisualOff	1	2	2	3		7946.2321
+StimVisualOn	1	2	2	4	friend?	7946.4988
+StimVisualOff	1	2	2	4		7946.7649
+Fix	1	3	0		+	7948.0321
+StimVisualOn	1	3	3	1	Which	7948.6662
+StimVisualOff	1	3	3	1		7948.9315
+StimVisualOn	1	3	3	2	man	7949.1974
+StimVisualOff	1	3	3	2		7949.4644
+StimVisualOn	1	3	3	3	did	7949.7348
+StimVisualOff	1	3	3	3		7949.9972
+StimVisualOn	1	3	3	4	they	7950.2674
+StimVisualOff	1	3	3	4		7950.5304
+StimVisualOn	1	3	3	5	hear?	7950.7969
+StimVisualOff	1	3	3	5		7951.0657
+Fix	1	4	0		+	7952.3314
+StimVisualOn	1	4	4	1	The	7952.9668
+StimVisualOff	1	4	4	1		7953.2327
+StimVisualOn	1	4	4	2	cook	7953.4998
+StimVisualOff	1	4	4	2		7953.766
+StimVisualOn	1	4	4	3	prepared	7954.0332
+StimVisualOff	1	4	4	3		7954.2982
+StimVisualOn	1	4	4	4	the	7954.5682
+StimVisualOff	1	4	4	4		7954.8325
+StimVisualOn	1	4	4	5	meal	7955.0987
+StimVisualOff	1	4	4	5		7955.3666
+Fix	1	5	0		+	7956.6337
+KeyPress	1	5	5			7954.2125	
+StimVisualOn	1	5	5	1	he	7957.2689
+StimVisualOff	1	5	5	1		7957.5343
+KeyPress	1	5	5			7954.2125	
+StimVisualOn	1	5	5	2	showered	7957.7985
+StimVisualOff	1	5	5	2		7958.0654
+BlockStart	2	0	0		-	7965.8631	
+Fix	2	1	0		+	7966.7342
+StimAudioOn	2	1	2		2.wav	7967.4708
+StimAudioOff	2	1	2			7968.8927

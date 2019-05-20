@@ -1,0 +1,75 @@
+Event	Block	Trial	StimNum	WordNum	StimulusName	Time
+GrandStart					---	5236.9128	
+BlockStart	1	0	0		-	5237.7347	
+Fix	1	1	0		+	5238.6235
+StimVisualOn	1	1	1	1	he	5239.2596
+StimVisualOff	1	1	1	1		5239.5274
+StimVisualOn	1	1	1	2	smiles	5239.7952
+StimVisualOff	1	1	1	2		5240.0608
+Fix	1	2	0		+	5241.3235
+StimVisualOn	1	2	3	1	Which	5241.9605
+StimVisualOff	1	2	3	1		5242.2276
+StimVisualOn	1	2	3	2	man	5242.4941
+StimVisualOff	1	2	3	2		5242.7612
+StimVisualOn	1	2	3	3	did	5243.0281
+StimVisualOff	1	2	3	3		5243.2936
+StimVisualOn	1	2	3	4	they	5243.5605
+StimVisualOff	1	2	3	4		5243.8271
+StimVisualOn	1	2	3	5	hear?	5244.0936
+StimVisualOff	1	2	3	5		5244.3612
+Fix	1	3	0		+	5245.6258
+StimVisualOn	1	3	2	1	who	5246.2618
+StimVisualOff	1	3	2	1		5246.5275
+StimVisualOn	1	3	2	2	hugs	5246.7951
+StimVisualOff	1	3	2	2		5247.0613
+StimVisualOn	1	3	2	3	the	5247.3264
+StimVisualOff	1	3	2	3		5247.5952
+StimVisualOn	1	3	2	4	friend?	5247.8631
+StimVisualOff	1	3	2	4		5248.1279
+Fix	1	4	0		+	5249.3918
+StimVisualOn	1	4	5	1	he	5250.0288
+StimVisualOff	1	4	5	1		5250.2955
+StimVisualOn	1	4	5	2	showered	5250.5637
+StimVisualOff	1	4	5	2		5250.8282
+Fix	1	5	0		+	5252.0922
+StimVisualOn	1	5	4	1	The	5252.7296
+StimVisualOff	1	5	4	1		5252.9955
+StimVisualOn	1	5	4	2	cook	5253.2629
+StimVisualOff	1	5	4	2		5253.5276
+StimVisualOn	1	5	4	3	prepared	5253.7974
+StimVisualOff	1	5	4	3		5254.0618
+StimVisualOn	1	5	4	4	the	5254.3295
+StimVisualOff	1	5	4	4		5254.5962
+StimVisualOn	1	5	4	5	meal	5254.8625
+StimVisualOff	1	5	4	5		5255.1289
+BlockStart	2	0	0		-	5273.8952	
+Fix	2	1	0		+	5274.7646
+StimAudioOn	2	1	3		3.wav	5275.506
+StimAudioOff	2	1	3			5276.9982
+Fix	2	2	0		+	5278.0155
+StimAudioOn	2	2	5		5.wav	5278.6392
+StimAudioOff	2	2	5			5280.1021
+Fix	2	3	0		+	5281.1158
+StimAudioOn	2	3	1		1.wav	5281.7376
+StimAudioOff	2	3	1			5282.6126
+Fix	2	4	0		+	5283.6328
+StimAudioOn	2	4	2		2.wav	5284.257
+StimAudioOff	2	4	2			5285.6789
+Fix	2	5	0		+	5286.7011
+StimAudioOn	2	5	4		4.wav	5287.3235
+StimAudioOff	2	5	4			5288.3801
+BlockStart	3	0	0		-	5331.4144	
+Fix	3	1	0		+	5332.2877
+StimVisualOn	3	1	4	1	The	5332.9264
+StimVisualOff	3	1	4	1		5333.1905
+StimVisualOn	3	1	4	2	cook	5333.4579
+StimVisualOff	3	1	4	2		5333.7245
+StimVisualOn	3	1	4	3	prepared	5333.9877
+StimVisualOff	3	1	4	3		5334.2586
+StimVisualOn	3	1	4	4	the	5334.5242
+StimVisualOff	3	1	4	4		5334.7911
+StimVisualOn	3	1	4	5	meal	5335.0588
+StimVisualOff	3	1	4	5		5335.324
+Fix	3	2	0		+	5336.5881
+StimVisualOn	3	2	1	1	he	5337.2253
+StimVisualOff	3	2	1	1		5337.4931

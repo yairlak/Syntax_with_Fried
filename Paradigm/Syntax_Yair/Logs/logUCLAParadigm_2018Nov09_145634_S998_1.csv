@@ -1,0 +1,127 @@
+Event	Block	Trial	StimNum	WordNum	StimulusName	Time
+GrandStart					---	5401.7354	
+BlockStart	1	0	0		-	5401.745	
+Fix	1	1	0		+	5402.6365
+StimVisualOn	1	1	3	1	Which	5403.3005
+StimVisualOff	1	1	3	1		5403.5704
+StimVisualOn	1	1	3	2	man	5403.8361
+StimVisualOff	1	1	3	2		5404.1039
+StimVisualOn	1	1	3	3	did	5404.3704
+StimVisualOff	1	1	3	3		5404.6371
+StimVisualOn	1	1	3	4	they	5404.9043
+StimVisualOff	1	1	3	4		5405.1703
+StimVisualOn	1	1	3	5	hear?	5405.437
+StimVisualOff	1	1	3	5		5405.7036
+Fix	1	2	0		+	5406.9677
+StimVisualOn	1	2	5	1	he	5407.605
+StimVisualOff	1	2	5	1		5407.8713
+StimVisualOn	1	2	5	2	showered	5408.1395
+StimVisualOff	1	2	5	2		5408.4039
+Fix	1	3	0		+	5409.6692
+StimVisualOn	1	3	2	1	who	5410.3055
+StimVisualOff	1	3	2	1		5410.5717
+StimVisualOn	1	3	2	2	hugs	5410.8368
+StimVisualOff	1	3	2	2		5411.1044
+StimVisualOn	1	3	2	3	the	5411.3721
+StimVisualOff	1	3	2	3		5411.6384
+StimVisualOn	1	3	2	4	friend?	5411.9068
+StimVisualOff	1	3	2	4		5412.172
+Fix	1	4	0		+	5413.4367
+StimVisualOn	1	4	1	1	he	5414.0721
+StimVisualOff	1	4	1	1		5414.3383
+StimVisualOn	1	4	1	2	smiles	5414.6057
+StimVisualOff	1	4	1	2		5414.8725
+Fix	1	5	0		+	5416.1379
+StimVisualOn	1	5	4	1	The	5416.7724
+StimVisualOff	1	5	4	1		5417.0393
+StimVisualOn	1	5	4	2	cook	5417.3058
+StimVisualOff	1	5	4	2		5417.5725
+StimVisualOn	1	5	4	3	prepared	5417.8394
+StimVisualOff	1	5	4	3		5418.1056
+StimVisualOn	1	5	4	4	the	5418.3732
+StimVisualOff	1	5	4	4		5418.6396
+StimVisualOn	1	5	4	5	meal	5418.9058
+StimVisualOff	1	5	4	5		5419.1733
+BlockStart	2	0	0		-	5429.8865	
+Fix	2	1	0		+	5430.7581
+StimAudioOn	2	1	1		1.wav	5431.4988
+StimAudioOff	2	1	1			5432.3738
+Fix	2	2	0		+	5433.3919
+StimAudioOn	2	2	5		5.wav	5434.0138
+StimAudioOff	2	2	5			5435.4767
+Fix	2	3	0		+	5436.4924
+StimAudioOn	2	3	2		2.wav	5437.1136
+StimAudioOff	2	3	2			5438.5355
+Fix	2	4	0		+	5439.5589
+StimAudioOn	2	4	4		4.wav	5440.1801
+StimAudioOff	2	4	4			5441.2368
+Fix	2	5	0		+	5442.2599
+StimAudioOn	2	5	3		3.wav	5442.8809
+StimAudioOff	2	5	3			5444.3731
+BlockStart	3	0	0		-	5463.8227	
+Fix	3	1	0		+	5464.693
+StimVisualOn	3	1	1	1	he	5465.3301
+StimVisualOff	3	1	1	1		5465.5963
+StimVisualOn	3	1	1	2	smiles	5465.8633
+StimVisualOff	3	1	1	2		5466.1289
+Fix	3	2	0		+	5467.3948
+StimVisualOn	3	2	3	1	Which	5468.0302
+StimVisualOff	3	2	3	1		5468.2956
+StimVisualOn	3	2	3	2	man	5468.5629
+StimVisualOff	3	2	3	2		5468.8306
+StimVisualOn	3	2	3	3	did	5469.0964
+StimVisualOff	3	2	3	3		5469.3647
+StimVisualOn	3	2	3	4	they	5469.6284
+StimVisualOff	3	2	3	4		5469.8978
+StimVisualOn	3	2	3	5	hear?	5470.1641
+StimVisualOff	3	2	3	5		5470.4307
+Fix	3	3	0		+	5471.6936
+StimVisualOn	3	3	4	1	The	5472.3322
+StimVisualOff	3	3	4	1		5472.597
+StimVisualOn	3	3	4	2	cook	5472.864
+StimVisualOff	3	3	4	2		5473.1298
+StimVisualOn	3	3	4	3	prepared	5473.3971
+StimVisualOff	3	3	4	3		5473.6652
+StimVisualOn	3	3	4	4	the	5473.9315
+StimVisualOff	3	3	4	4		5474.1978
+StimVisualOn	3	3	4	5	meal	5474.4649
+StimVisualOff	3	3	4	5		5474.7304
+Fix	3	4	0		+	5475.9955
+StimVisualOn	3	4	5	1	he	5476.6333
+StimVisualOff	3	4	5	1		5476.8983
+StimVisualOn	3	4	5	2	showered	5477.1641
+StimVisualOff	3	4	5	2		5477.4307
+Fix	3	5	0		+	5478.6946
+StimVisualOn	3	5	2	1	who	5479.3326
+StimVisualOff	3	5	2	1		5479.5978
+StimVisualOn	3	5	2	2	hugs	5479.8649
+StimVisualOff	3	5	2	2		5480.1319
+StimVisualOn	3	5	2	3	the	5480.3994
+StimVisualOff	3	5	2	3		5480.6648
+StimVisualOn	3	5	2	4	friend?	5480.9301
+StimVisualOff	3	5	2	4		5481.1999
+BlockStart	4	0	0		-	5485.551	
+Fix	4	1	0		+	5486.416
+StimAudioOn	4	1	1		1.wav	5487.0395
+StimAudioOff	4	1	1			5487.9145
+Fix	4	2	0		+	5488.9324
+StimAudioOn	4	2	4		4.wav	5489.556
+StimAudioOff	4	2	4			5490.6126
+Fix	4	3	0		+	5491.6331
+StimAudioOn	4	3	2		2.wav	5492.2553
+StimAudioOff	4	3	2			5493.6772
+Fix	4	4	0		+	5494.7026
+StimAudioOn	4	4	3		3.wav	5495.3232
+StimAudioOff	4	4	3			5496.8154
+Fix	4	5	0		+	5497.8353
+StimAudioOn	4	5	5		5.wav	5498.4579
+StimAudioOff	4	5	5			5499.9208
+BlockStart	5	0	0		-	5515.0071	
+Fix	5	1	0		+	5515.8841
+StimVisualOn	5	1	1	1	he	5516.5186
+StimVisualOff	5	1	1	1		5516.7884
+StimVisualOn	5	1	1	2	smiles	5517.0544
+StimVisualOff	5	1	1	2		5517.3227
+Fix	5	2	0		+	5518.5862
+StimVisualOn	5	2	4	1	The	5519.2214
+StimVisualOff	5	2	4	1		5519.4879

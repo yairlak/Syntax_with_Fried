@@ -1,7 +1,6 @@
 Data/
 Figures/
 Output/
-Paradigm/
 Code/Main_analyses/RunScripts/
 Code/Main_analyses/Logs/
 Code/clock_sync/
@@ -9,12 +8,7 @@ Code/Ariel/
 Code/Ariel/arielt/ucla/neuralynx/matlab/clock_sync/
 Bash/RunScripts/
 Bash/Logs/
-<<<<<<< HEAD
-Paradigm_Yair/Stimuli
-Paradigm_Yair/Logs
-=======
 Bash/Logs_GAT/
 Paradigm_Yair/Stimuli
 Paradigm_Yair/Logs
 *.log
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e

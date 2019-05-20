@@ -1,0 +1,6 @@
+Event	Block	Trial	StimNum	WordNum	StimulusName	Time
+GrandStart					---	5765.2639	
+BlockStart	1	0	0		-	5765.2736	
+Fix	1	1	0		+	5766.1617
+StimVisualOn	1	1	4	1	The	5766.8275
+StimVisualOff	1	1	4	1		5767.0957
