@@ -7,7 +7,7 @@ Patient data should be organized in subfolders as described in the tree example 
 - The transformed raw into mat files are in /hospital/patient/ChannelsCSC
 - Epochs are spike_clusters are subfolders containing extracted features, later used for decoding analyses and ERSPs.
 
-'''bash
+```bash
 Data/
 └── UCLA
     ├── patient_479
@@ -47,4 +47,4 @@ Data/
         └── Raw
 
 
-'''
+```
