@@ -5,7 +5,7 @@ import numpy as np
 
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='479', help='Patient string')
+parser.add_argument('-patient', default='487', help='Patient string')
 parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default=1.2, type=int, help='Patient string')
@@ -21,10 +21,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 # Paths
-<<<<<<< HEAD
 # path2data = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'ChannelsCSC')
-=======
->>>>>>> a867ddf2ab757cf019b2f38c161ad794213241df
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
 if not os.path.exists(path2epochs):
     os.makedirs(path2epochs)

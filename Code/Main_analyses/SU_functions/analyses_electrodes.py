@@ -144,8 +144,12 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                             else:
                                 print('File already exists')
         elif channel==0:
+            fmin_mic = 300 # vowel freuqency band
+            fmax_mic = 1400 # vowel freuqency band
+            fmic_freq_step = 500 # vowel freuqency band
+            band = 'HighGamma'
             print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
-            epochs.resample(params.downsampling_sfreq, npad='auto')
+            # epochs.resample(params.downsampling_sfreq, npad='auto')
             print('New sampling rate:', epochs.info['sfreq'], 'Hz')
 
             del raw, raw_CSC_data_in_mat
@@ -181,6 +185,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                             IX1 = settings.channel_name.find('.ncs')
                         probe_name = settings.channel_name[0:IX1 - 1]
 
+                        # os.makedirs(os.path.join(settings.path2output, settings.patient, 'HighGamma'))
                         with open(os.path.join(settings.path2output, settings.patient, 'HighGamma',
                                                file_name_root + '.txt'), 'w') as f:
                             stimuli_of_curr_query = list(set(list(metadata.query(query_cond)['sentence_string'])))
@@ -191,19 +196,43 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                                 os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name,
                                              file_name + '.png'))) or settings.overwrite_existing_output_files:
 
+                            query_baseline = query_cond + ' and word_position == 1 and ' + str_blocks
+                            _, _, baseline = average_high_gamma(epochs[query_baseline], band,
+                                                                fmin_mic, fmax_mic, fmic_freq_step, None,
+                                                                'trial_wise', params)
 
                             query = query_cond + ' and ' + str_align + ' and ' + str_blocks
-                            mic = epochs[query].get_data()
-                            mic = np.squeeze(mic)
-                            mic2 = np.power(mic, 2)
 
-                            epochs_mic = epochs[query].copy()
-                            epochs_mic._data = mic2
-                            epochs_mic.metadata = epochs[query].metadata
+                            power, power_ave, _ = average_high_gamma(epochs[query],
+                                                                     band,
+                                                                     fmin_mic, fmax_mic, fmic_freq_step,
+                                                                     baseline,
+                                                                     'trial_wise', params)
 
-                            plot_and_save_high_gamma(epochs_mic, comparison['align_to'], eval(comparison['blocks']),
+                            # power, power_ave, _ = average_high_gamma(epochs[query],
+                            #                                              band,
+                            #                                              fmin_mic, fmax_mic, fmic_freq_step,
+                            #                                              [],
+                            #                                              'no_baseline', params)
+                            epochs_power = epochs[query].copy()
+                            epochs_power.times = power.times
+                            epochs_power._data = power_ave
+                            epochs_power.metadata = epochs[query].metadata
+
+                            plot_and_save_high_gamma(epochs_power, comparison['align_to'], eval(comparison['blocks']),
                                                      probe_name, file_name,
                                                      settings, params, preferences)
+                            # mic = epochs[query].get_data()
+                            # mic = np.squeeze(mic)
+                            # mic2 = np.power(mic, 2)
+                            #
+                            # epochs_mic = epochs[query].copy()
+                            # epochs_mic._data = mic2
+                            # epochs_mic.metadata = epochs[query].metadata
+                            #
+                            # plot_and_save_high_gamma(epochs_mic, comparison['align_to'], eval(comparison['blocks']),
+                            #                          probe_name, file_name,
+                            #                          settings, params, preferences)
                             # mic_rms = []
                             # window = np.ones(10) / float(10)
                             # for rw in range(mic2.shape[0]):
@@ -268,6 +297,7 @@ def plot_and_save_high_gamma(epochs_power, align_to, blocks, probe_name, file_na
     # Remove 0.2 sec from each side due to boundary effects
     IX_smaller_time_window = (epochs_power.times > epochs_power.tmin + 0.2) & (epochs_power.times < epochs_power.tmax - 0.2)  # relevant times
     power_ave = epochs_power._data[:, IX_smaller_time_window]
+    power_ave = np.log10(power_ave)
     power_ave_zscore = stats.zscore(power_ave)
     power_ave[(power_ave_zscore > 3) | (power_ave_zscore < -3)] = np.NaN
 

@@ -40,14 +40,15 @@ class Settings():
         self.path2output = os.path.join('..', '..', 'Output')
 
         # Files info
-        #self.log_name_beginning = 'new_events_log_in_cheetah_clock_part'
+        self.log_name_beginning = 'new_events_log_in_cheetah_clock_part'
         #self.log_name_beginning = 'new_events_log_in_cheetah_clock_block'
-        self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
+        #self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
         self.comparisons_file = 'comparisons.xlsx'
-        self.features_file = 'features_' + self.patient + '.xlsx'
+        # self.features_file = 'features_' + self.patient + '.xlsx'
+        self.features_file = 'features.xlsx'
         self.word2pos_file = 'word2POS.pkl'
 
         # Time of the beginning and end of the experiment (BlackRock time0 = 0; In Neurlaynx it is measured compared to 01/01/1970)
@@ -72,30 +73,58 @@ class Settings():
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_487': # Neuralynx
-            self.time0 =   1502557237931999
-            self.timeend = 1502557237931999
+            self.time0 =   1502557237932011
+            self.timeend = 1502557245176808
             # Which channels in the raw CSC files have clear spikes
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_493': # Neuralynx
-            self.time0 =   1520590966262873
-            self.timeend = 1520594033849941
+            self.time0 =   1520590966262885
+            self.timeend = 1520590969078884
+            # Which channels in the raw CSC files have clear spikes
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+        if self.patient == 'patient_502': # Neuralynx
+            self.time0 = 1544197879836945
+            self.timeend = 1544201196027613
+            # Which channels in the raw CSC files have clear spikes
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+        if self.patient == 'patient_505': # Neuralynx
+            self.time0 = 1552403091357879
+            self.timeend = 1552405988561685
             # Which channels in the raw CSC files have clear spikes
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
 
+
 class Params:
-    def __init__(self):
-        self.sfreq_raw = 40000 # Data sampling frequency [Hz]
+    def __init__(self, patient):
+        self.patient = patient
+        if self.patient == 'patient_479': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_480': # BlackRock
+            self.sfreq_raw = 0  # Data sampling frequency [Hz]
+        if self.patient == 'patient_482': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_487': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_493': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_502': # Neuralynx
+            self.sfreq_raw = 32000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_505': # Neuralynx
+            self.sfreq_raw = 32000  # Data sampling frequency [Hz]
+
         self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]
-        self.tmin = -2.5  # Start time before event [sec], should be negative
-        self.tmax = 1 # End time after event [sec]
+        self.tmin = -0.5  # Start time before event [sec], should be negative
+        self.tmax = 1.3 # End time after event [sec]
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
 
         ###### Frequency bands ##########
-        self.iter_freqs = [('High-Gamma', 70, 150)]
+        self.iter_freqs = [('High-Gamma', 100, 200)]
         # self.iter_freqs = []
         step = 5
         # for freq in range(4, 146, 1):

@@ -10,10 +10,10 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 parser = argparse.ArgumentParser(description='Microphone ERPs')
-parser.add_argument('-p', '--patient', type=str, help='Patient, e.g., patient_479, patient_482')
-parser.add_argument('-c', '--channel', type=int, action='append', help='Which channels to analyze')
-parser.add_argument('-b', '--block', type=int, action='append', help='Which blocks to analyze')
-parser.add_argument('-n', '--comparison', type=int, action='append', help='Which comparisons from the paragism to contrast')
+parser.add_argument('-p', '--patient', type=str, default='patient_502', help='Patient, e.g., patient_479, patient_482')
+parser.add_argument('-c', '--channel', type=int, default=[0], action='append', help='Which channels to analyze')
+parser.add_argument('-b', '--block', type=int, default=[2, 4, 6], action='append', help='Which blocks to analyze')
+parser.add_argument('-n', '--comparison', type=int, default=[1, 4, 5, 6, 7, 8, 9, 10], action='append', help='Which comparisons from the paragism to contrast')
 
 # Argparse
 args = parser.parse_args()
@@ -23,7 +23,7 @@ blocks = args.block
 
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings(patient)
-params = load_settings_params.Params()
+params = load_settings_params.Params(patient)
 preferences = load_settings_params.Preferences()
 
 settings.comparisons = args.comparison
@@ -34,10 +34,10 @@ comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, feat
 comparisons = [comp for c, comp in enumerate(comparisons) if c in settings.comparisons] # run only a subset of comparisons
 
 print('Logs: Reading experiment log files from experiment...')
-log_all_blocks = []
+log_all_blocks = {}
 for block in blocks:
     log = read_logs_and_comparisons.LogSingleUnit(settings, block) # Get log filename according to block number
-    log_all_blocks.append(log.read_and_parse_log(settings))
+    log_all_blocks[block] = log.read_and_parse_log(settings)
 del log, block
 
 print('Loading POS tags for all words in the lexicon')
@@ -47,7 +47,8 @@ print('Preparing meta-data')
 metadata = read_logs_and_comparisons.prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences)
 
 print('Generating event object for MNE from log data...')
-events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences)
+# events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences)
+events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
 
 #print('Loading electrode names for all channels...')
 #electrode_names = load_data.electrodes_names(settings)

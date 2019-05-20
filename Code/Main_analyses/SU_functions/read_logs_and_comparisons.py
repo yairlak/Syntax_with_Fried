@@ -259,11 +259,11 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
     metadata = dict([(k, []) for k in keys])
 
     cnt = 1
-    for block, log in enumerate(log_all_blocks):
+    for block, log in log_all_blocks.items():
         # Prefix according to visual/auditory
-        if block + 1 in [1, 3, 5]: # Visual
+        if block in [1, 3, 5]: # Visual
             prefix = "DISPLAY_TEXT"
-        elif block + 1 in [2, 4, 6]: # Auditory
+        elif block in [2, 4, 6]: # Auditory
             prefix = "AUDIO_PLAYBACK_ONSET"
 
         # Loop over all words in current log
@@ -272,7 +272,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
             metadata['chronological_order'].append(cnt); cnt += 1
             metadata['event_time'].append((int(getattr(log, 'WORDS_ON_TIMES')[i]) - settings.time0) / 1e6)
             sentence_number = getattr(log, 'SENTENCE_NUM')[i]
-            metadata['block'].append(block + 1)
+            metadata['block'].append(block)
             metadata['sentence_number'].append(sentence_number)
             metadata['word_position'].append(int(getattr(log, 'WORD_SERIAL_NUM')[i]))
             word_string = getattr(log, 'WORD_STRING')[i]
@@ -299,7 +299,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
                 elif metadata['block'][-1] in [2, 4, 6]:
                     t = (int(getattr(log, 'END_WAV_TIMES')[int(sentence_number)-1]) - settings.time0) / 1e6
                 metadata['event_time'].append(t)
-                metadata['block'].append(block + 1)
+                metadata['block'].append(block)
                 metadata['sentence_number'].append(sentence_number)
                 metadata['word_position'].append(-1)
                 metadata['word_string'].append('.')

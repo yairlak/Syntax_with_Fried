@@ -24,8 +24,8 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     '''
     # Times
     train_times = {}
-    train_times["start"] = -0.5
-    train_times["stop"] = 0.5
+    train_times["start"] = -0.1
+    train_times["stop"] = 0.1
     # train_times["step"] = 0.01
 
 
@@ -33,7 +33,12 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     for q, query_class_train in enumerate(query_classes_train):
         data_all_channels = []
         for patient, hospital, picks in zip(patients, hospitals, picks_all_patients):
-            for ch in picks:
+            if picks == 'all':
+                import glob
+                epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*.h5'))
+                channels = [int(filename[filename.find('_ch_')+4:filename.find('-tfr.h5')]) for filename in epochs_filenames]
+
+            for ch in channels:
                 print('Loading epochs object', patient)
                 epochs_fname = patient + '_ch_' + str(ch) + '-tfr.h5'
                 path2epochs = os.path.join(root_path, 'Data', hospital, patient, 'Epochs', epochs_fname)
