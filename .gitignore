@@ -22,3 +22,4 @@ Paradigm_Yair/Logs
 *.nse
 *.nde
 *.wav
+!*events_log_in_cheetah_clock_part*.log

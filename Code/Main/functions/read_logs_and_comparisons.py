@@ -142,7 +142,7 @@ class LogSingleUnit:
 
 def get_sentences_start_end_length(SENTENCE_NUM_ORDER, settings):
     # Load text containing all sentences
-    with open(os.path.join(settings.path2patient_folder, settings.stimuli_text_file), 'r') as f:
+    with open(os.path.join(settings.path2stimuli, settings.stimuli_text_file), 'r') as f:
         stimuli_sentences = f.readlines()
     sentences_length = [len(s.split(' ')) for s in stimuli_sentences]
     IX = [i-1 for i in SENTENCE_NUM_ORDER] # shift to count from zero
