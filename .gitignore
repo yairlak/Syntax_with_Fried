@@ -1,4 +1,3 @@
-Data/
 Figures/
 Output/
 Code/Main_analyses/RunScripts/
@@ -12,3 +11,14 @@ Bash/Logs_GAT/
 Paradigm_Yair/Stimuli
 Paradigm_Yair/Logs
 *.log
+*.ncs
+*.mat
+*.h5
+*.png
+*.fig
+*.zip
+*.pdf
+*.nev
+*.nse
+*.nde
+*.wav

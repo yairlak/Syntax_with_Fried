@@ -1,0 +1,25 @@
+clear; close all; clc
+
+%%
+% load('Copy_of_electrodes_info_names.mat')
+% 
+% electrodes_info_new = {};
+% for i = (length(electrodes_info)+1):-1:1
+%     if i < 76
+%         electrodes_info_new{i} = electrodes_info{i};
+%     elseif i == 76
+%         electrodes_info_new{i} = 'GC2-RAH4.ncs';
+%     else
+%         electrodes_info_new{i} = electrodes_info{i-1};
+%     end
+% end
+% 
+% electrodes_info = electrodes_info_new;
+% save('electrodes_info_names.mat', 'electrodes_info')
+
+for i = (length(electrodes_info)+1):-1:1
+    if i>76
+        old_file_name ['CSC'+num2
+        movefile(fullfile('ChannelsCSC', old_file_name), fullfile('ChannelsCSC', new_file_name))
+    end
+end

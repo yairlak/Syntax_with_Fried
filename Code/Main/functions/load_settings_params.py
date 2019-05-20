@@ -25,7 +25,7 @@ class Settings():
         self.patient = patient
         self.comparisons = range(110,111)
         self.load_line_filtered_resampled_epoch_object = False
-        self.overwrite_existing_output_files = False # --- !!!!!! -----
+        self.overwrite_existing_output_files = True # --- !!!!!! -----
 
         # PATHS
         self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)
@@ -115,8 +115,8 @@ class Params:
 
         self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]
-        self.tmin = -2.5  # Start time before event [sec], should be negative
-        self.tmax = 1 # End time after event [sec]
+        self.tmin = -0.5  # Start time before event [sec], should be negative
+        self.tmax = 1.2 # End time after event [sec]
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
 

@@ -147,9 +147,9 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
             fmin_mic = 300 # vowel freuqency band
             fmax_mic = 1400 # vowel freuqency band
             fmic_freq_step = 500 # vowel freuqency band
-            band = 'HighGamma'
+            band = 'Speech'
             print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
-            # epochs.resample(params.downsampling_sfreq, npad='auto')
+            epochs.resample(3000, npad='auto')
             print('New sampling rate:', epochs.info['sfreq'], 'Hz')
 
             del raw, raw_CSC_data_in_mat
@@ -252,10 +252,16 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
     # -------------------------------
     # n_cycles = freq[0] / freqs * 3.14
     # n_cycles = freqs / 2.
-    n_cycles = 7 # Fieldtrip's default
-    if band == 'High-Gamma': n_cycles = 20
 
-    power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_jobs=4, average=False, n_cycles=n_cycles,
+    if band == 'High-Gamma':
+        n_cycles = 20
+    elif band == 'Speech':
+        n_cycles = 7
+    else:
+        n_cycles = 7  # Fieldtrip's default
+
+
+    power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_jobs=-2, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
     power_ave = np.squeeze(np.average(power.data, axis=2))
     # Baseline data
@@ -276,7 +282,7 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
             power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
             print("Baseline: trial-wise")
         elif baseline_type == 'no_baseline':
-            power_ave_baselined = power_ave  # don't apply any baseline
+            power_ave_baselined = 10 * np.log10(power_ave)  # don't apply any baseline
 
     # Gaussian smooth of time-freq results if chosen:
     if params.smooth_time_freq > 0:
@@ -297,7 +303,6 @@ def plot_and_save_high_gamma(epochs_power, align_to, blocks, probe_name, file_na
     # Remove 0.2 sec from each side due to boundary effects
     IX_smaller_time_window = (epochs_power.times > epochs_power.tmin + 0.2) & (epochs_power.times < epochs_power.tmax - 0.2)  # relevant times
     power_ave = epochs_power._data[:, IX_smaller_time_window]
-    power_ave = np.log10(power_ave)
     power_ave_zscore = stats.zscore(power_ave)
     power_ave[(power_ave_zscore > 3) | (power_ave_zscore < -3)] = np.NaN
 
