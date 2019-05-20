@@ -32,7 +32,11 @@ class Settings():
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
+<<<<<<< HEAD
         self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+=======
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC', 'micro')
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
         self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
@@ -41,7 +45,12 @@ class Settings():
 
         # Files info
         self.log_name_beginning = 'new_events_log_in_cheetah_clock_part'
+<<<<<<< HEAD
         ############self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part' # To homogenize,  REPLACE ALL mouse BY events
+=======
+        #self.log_name_beginning = 'new_events_log_in_cheetah_clock_block'
+        #self.log_name_beginning = 'new_mouse_recording_in_cheetah_clock_part'
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
@@ -82,6 +91,7 @@ class Settings():
             # Which channels in the raw CSC files have clear spikes
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+<<<<<<< HEAD
 
 class Params:
     def __init__(self):
@@ -89,12 +99,51 @@ class Params:
         self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]
         self.tmin = -0.51  # Start time before event [sec], should be negative
+=======
+        if self.patient == 'patient_502': # Neuralynx
+            self.time0 = 1544197879836945
+            self.timeend = 1544197879836945
+            # Which channels in the raw CSC files have clear spikes
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+        if self.patient == 'patient_505': # Neuralynx
+            self.time0 = 1552403091357879  
+            self.timeend = 1552405988561685
+            # Which channels in the raw CSC files have clear spikes
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+
+class Params:
+    def __init__(self, patient):
+        self.patient = patient
+        if self.patient == 'patient_479': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_480': # BlackRock
+            self.sfreq_raw = 0  # Data sampling frequency [Hz]
+        if self.patient == 'patient_482': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_487': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_493': # Neuralynx
+            self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_502': # Neuralynx
+            self.sfreq_raw = 32000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_505': # Neuralynx
+            self.sfreq_raw = 32000  # Data sampling frequency [Hz]
+
+        self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
+        self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]
+        self.tmin = -2.5  # Start time before event [sec], should be negative
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
         self.tmax = 1 # End time after event [sec]
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
 
         ###### Frequency bands ##########
+<<<<<<< HEAD
         # self.iter_freqs = [('High-Gamma', 70, 150)]
+=======
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
         self.iter_freqs = [('High-Gamma', 70, 150)]
         # self.iter_freqs = []
         step = 5

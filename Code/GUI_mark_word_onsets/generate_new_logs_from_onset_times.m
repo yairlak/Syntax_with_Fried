@@ -1,9 +1,15 @@
 clear all; close all; clc
 
 %% Which log to regenerate
+<<<<<<< HEAD
 path2logs = fullfile('..', '..', 'Data', 'UCLA', 'patient_502', 'Logs');
 % log_file_name = 'events_log_in_cheetah_clock_block6.log'; %For EN_02, choose even numbers for AUDIO (part2, part4, part6)
 log_file_name = 'events_log_in_cheetah_clock_part1.log';
+=======
+path2logs = fullfile('..', '..', 'Data', 'UCLA', 'patient_505', 'Logs');
+% log_file_name = 'events_log_in_cheetah_clock_block6.log'; %For EN_02, choose even numbers for AUDIO (part2, part4, part6)
+log_file_name = 'events_log_in_cheetah_clock_part6.log';
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 
 %% Load onset-times file (same order as the sentences in the file below)
 file_name = 'English_stimuli_word_onsets 1 to 152.txt';
@@ -64,4 +70,8 @@ while ~feof(fid_old)
 end
 fclose('all');
 
+<<<<<<< HEAD
 %%
+=======
+%%
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e

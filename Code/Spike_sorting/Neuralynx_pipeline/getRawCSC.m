@@ -1,6 +1,7 @@
 clear; close all; clc;
 
 %%
+<<<<<<< HEAD
 patient = 'patient_487';
 % recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
@@ -9,6 +10,17 @@ base_folder = ['/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fri
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
 output_path = fullfile(base_folder,'ChannelsCSC');
+=======
+patient = 'patient_502';
+micro_macro = 'micro'; % micro/macro
+% recording_system = 'BlackRock';
+recording_system = 'Neuralynx';
+
+% base_folder = ['/home/yl254115/Projects/single_unit_syntax/Data/UCLA/', patient];
+% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
+base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
+output_path = fullfile(base_folder,'ChannelsCSC', micro_macro);
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 
 mkdir(output_path);
 addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions'))
@@ -34,12 +46,21 @@ switch recording_system
 %             [TimeStamps, EventIDs, Nttls, Extras, EventStrings] = Nlx2MatEV_v3(nev_filename, FieldSelection, ExtractHeader, ExtractMode, ModeArray);
             
             % Extract raw data and save into MAT files
+<<<<<<< HEAD
             ncs_files = dir([base_folder '/Raw/*.ncs']);
             idx=1;
             for ncs_file_name=ncs_files'
                 file_name = ncs_file_name.name;
                 fprintf('%s\n', file_name)
                 ncs_file = fullfile(base_folder,'Raw',file_name);
+=======
+            ncs_files = dir([base_folder '/Raw/' micro_macro '/*.ncs']);
+            idx=1;
+            for ncs_file_name=ncs_files'
+                file_name = ncs_file_name.name;
+                ncs_file = fullfile(base_folder,'Raw', micro_macro, file_name);
+                fprintf('%s\n', ncs_file)
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 %                 ncs_file = fullfile(base_folder,file_name);
                 fprintf('CSC of channnel %d...',idx);
                 [Timestamps, ChannelNumbers, SampleFrequencies, NumberOfValidSamples, Samples, Header] = Nlx2MatCSC_v3(ncs_file,[1 1 1 1 1],1,1,1);

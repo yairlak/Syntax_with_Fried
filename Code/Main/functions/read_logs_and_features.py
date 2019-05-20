@@ -142,7 +142,11 @@ class LogSingleUnit:
 
 def get_sentences_start_end_length(SENTENCE_NUM_ORDER, settings):
     # Load text containing all sentences
+<<<<<<< HEAD
     with open(os.path.join(settings.path2patient_folder, settings.stimuli_text_file), 'r') as f:
+=======
+    with open(os.path.join(settings.path2stimuli, settings.stimuli_text_file), 'r') as f:
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
         stimuli_sentences = f.readlines()
     sentences_length = [len(s.split(' ')) for s in stimuli_sentences]
     IX = [i-1 for i in SENTENCE_NUM_ORDER] # shift to count from zero
@@ -249,11 +253,19 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
     metadata = dict([(k, []) for k in keys])
 
     cnt = 1
+<<<<<<< HEAD
     for block, log in enumerate(log_all_blocks):
         # Prefix according to visual/auditory
         if block + 1 in [1, 3, 5]: # Visual
             prefix = "DISPLAY_TEXT"
         elif block + 1 in [2, 4, 6]: # Auditory
+=======
+    for block, log in log_all_blocks.items():
+        # Prefix according to visual/auditory
+        if block in [1, 3, 5]: # Visual
+            prefix = "DISPLAY_TEXT"
+        elif block in [2, 4, 6]: # Auditory
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
             prefix = "AUDIO_PLAYBACK_ONSET"
 
         # Loop over all words in current log
@@ -262,7 +274,11 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
             metadata['chronological_order'].append(cnt); cnt += 1
             metadata['event_time'].append((int(getattr(log, 'WORDS_ON_TIMES')[i]) - settings.time0) / 1e6)
             sentence_number = getattr(log, 'SENTENCE_NUM')[i]
+<<<<<<< HEAD
             metadata['block'].append(block + 1)
+=======
+            metadata['block'].append(block)
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
             metadata['sentence_number'].append(sentence_number)
             metadata['word_position'].append(int(getattr(log, 'WORD_SERIAL_NUM')[i]))
             word_string = getattr(log, 'WORD_STRING')[i]
@@ -289,7 +305,11 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
                 elif metadata['block'][-1] in [2, 4, 6]:
                     t = (int(getattr(log, 'END_WAV_TIMES')[int(sentence_number)-1]) - settings.time0) / 1e6
                 metadata['event_time'].append(t)
+<<<<<<< HEAD
                 metadata['block'].append(block + 1)
+=======
+                metadata['block'].append(block)
+>>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
                 metadata['sentence_number'].append(sentence_number)
                 metadata['word_position'].append(-1)
                 metadata['word_string'].append('.')
