@@ -115,7 +115,7 @@ class Params:
 
         self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]
-        self.tmin = -0.5  # Start time before event [sec], should be negative
+        self.tmin = -0.6  # Start time before event [sec], should be negative
         self.tmax = 1.2 # End time after event [sec]
         self.ylim_PSTH = 20 # maximal frequency to present in PSTH [Hz]
         self.downsampling_sfreq = 512
