@@ -10,10 +10,10 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 parser = argparse.ArgumentParser(description='Microphone ERPs')
-parser.add_argument('-p', '--patient', type=str, default='patient_479', help='Patient, e.g., patient_479, patient_482')
+parser.add_argument('-p', '--patient', type=str, default='patient_505', help='Patient, e.g., patient_479, patient_482')
 parser.add_argument('-c', '--channel', type=int, default=[0], action='append', help='Which channels to analyze')
-parser.add_argument('-b', '--block', type=int, default=[2, 4, 6], action='append', help='Which blocks to analyze')
-parser.add_argument('-n', '--comparison', type=int, default=[], action='append', help='Which comparisons from the paragism to contrast - usually choose 1 for all trials and blocks')
+parser.add_argument('-b', '--block', type=int, default=[1, 2, 3, 4, 5, 6], action='append', help='Which blocks to analyze')
+parser.add_argument('-n', '--comparison', type=int, default=[1], action='append', help='Which comparisons from the paragism to contrast - usually choose 1 for all trials and blocks')
 
 # Argparse
 args = parser.parse_args()

@@ -17,8 +17,8 @@ function clock_sync(is_eeg, mouse_basename, cheetah_bit, ...
 % Author: Ariel Tankus.
 % Created: 24.04.2009.
 
-addpath(genpath("../../"))
-addpath(genpath("../../../../../Spike_sorting/Neuralynx_pipeline/"))
+addpath(genpath('../../'))
+addpath(genpath('../../../../../Spike_sorting/Neuralynx_pipeline/'))
 
 if (nargin < 1)
   is_eeg = false;
