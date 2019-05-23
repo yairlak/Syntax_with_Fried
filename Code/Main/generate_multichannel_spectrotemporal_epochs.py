@@ -5,23 +5,14 @@ import numpy as np
 
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-<<<<<<< HEAD
-parser.add_argument('-patient', default='487', help='Patient string')
-parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
-=======
 parser.add_argument('-patient', default='479', help='Patient string')
 parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default=1.2, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
 args = parser.parse_args()
-<<<<<<< HEAD
-print(args.channels)
-=======
 print(args)
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 
 #TODO: add log to power
 args.patient = 'patient_' + args.patient
@@ -31,21 +22,13 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 # Paths
-<<<<<<< HEAD
-# path2data = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'ChannelsCSC')
-=======
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
 if not os.path.exists(path2epochs):
     os.makedirs(path2epochs)
 
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings(args.patient)
-<<<<<<< HEAD
-params = load_settings_params.Params()
-=======
 params = load_settings_params.Params(args.patient)
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 preferences = load_settings_params.Preferences()
 params.tmin=settings.tmin if not args.tmin else args.tmin
 params.tmax=settings.tmax if not args.tmax else args.tmax
@@ -54,17 +37,10 @@ print('Metadata: Loading features and comparisons from Excel files...')
 features = read_logs_and_features.load_features(settings)
 
 print('Logs: Reading experiment log files from experiment...')
-<<<<<<< HEAD
-log_all_blocks = []
-for block in range(1, 7):
-    log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
-    log_all_blocks.append(log.read_and_parse_log(settings))
-=======
 log_all_blocks = {}
 for block in args.blocks:
     log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
     log_all_blocks[block] = log.read_and_parse_log(settings)
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 del log, block
 print(log_all_blocks)
 

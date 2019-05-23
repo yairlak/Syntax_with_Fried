@@ -127,10 +127,10 @@ class LogSingleUnit:
                 setattr(self, event_type + '_l_TIMES', list_of_key_press_times)
                 event_types_added.append(event_type + '_l_TIMES')
 
-                sentences_start, sentences_end, sentences_length = get_sentences_start_end_length(self.SENTENCE_NUM_ORDER, settings)
-                setattr(self, 'sentences_start', sentences_start)
-                setattr(self, 'sentences_end', sentences_end)
-                setattr(self, 'sentences_length', sentences_length)
+                # sentences_start, sentences_end, sentences_length = get_sentences_start_end_length(self.SENTENCE_NUM_ORDER, settings)
+                # setattr(self, 'sentences_start', sentences_start)
+                # setattr(self, 'sentences_end', sentences_end)
+                # setattr(self, 'sentences_length', sentences_length)
 
             else:
                 setattr(self, event_type + '_TIMES', [i[0] for i in log_content if event_type == i[1]])
@@ -157,18 +157,8 @@ def get_sentences_start_end_length(SENTENCE_NUM_ORDER, settings):
     return sentences_start, sentences_end, sentences_length
 
 
-def load_comparisons_and_features(settings):
+def load_features(settings):
     import pandas
-
-    # Read comparison file ('xlsx')
-    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, settings.comparisons_file))
-    headers = sheet.columns
-    fields = []
-    for i, header in enumerate(headers):
-        fields.append(sheet[header].values)
-        comparison_list = {'headers':headers, 'fields':fields}
-
-    del sheet, headers
 
     # Read features file ('xlsx')
     sheet = pandas.read_excel(os.path.join(settings.path2stimuli, settings.features_file))
@@ -178,7 +168,7 @@ def load_comparisons_and_features(settings):
         fields.append(sheet[header].values)
     features = {'headers': headers, 'fields': fields}
 
-    return comparison_list, features
+    return features
 
 
 def extract_comparison(comparison_list, features, settings, preferences):
@@ -213,7 +203,7 @@ def extract_comparison(comparison_list, features, settings, preferences):
             curr_dict['generalize_to_blocks'] = generalize_to_modality
             curr_dict['generalize_to_contrast'] = generalize_to_contrast
             sortings = comparison_list['fields'][5][i]
-            if isinstance(sortings, unicode):
+            if isinstance(sortings, str):
                 curr_dict['sorting'] = sortings.split(',')
             else:
                 curr_dict['sorting'] = []
@@ -254,7 +244,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
     # Create a dict with the following keys:
     keys = ['chronological_order', 'event_time', 'block', 'sentence_number', 'word_position', 'word_string', 'pos',
             'num_letters', 'sentence_string', 'sentence_length', 'last_word']
-    keys = keys + [col[0] for col in features if isinstance(col[0], unicode)]
+    keys = keys + [col[0] for col in features if isinstance(col[0], str)]
     #keys = keys + [col[0] for col in features]
     metadata = dict([(k, []) for k in keys])
 
@@ -288,7 +278,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
             metadata['sentence_string'].append(stimuli[IX][0])
             metadata['sentence_length'].append(len(stimuli[IX][0].split(' ')))
             metadata['last_word'].append(metadata['sentence_length'][-1] == int(metadata['word_position'][-1]))
-            [metadata[col[0]].append(col[IX+1][0]) for col in features if isinstance(col[0], unicode)]
+            [metadata[col[0]].append(col[IX+1][0]) for col in features if isinstance(col[0], str)]
             #[metadata[col[0]].append(col[IX+1][0]) for col in features]
             if metadata['last_word'][-1]: # Add end-of-sentence event after last words. Set its 'word_pos' = -1.
                 metadata['chronological_order'].append(cnt); cnt += 1
@@ -311,8 +301,33 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
                 metadata['sentence_string'].append(stimuli[IX][0])
                 metadata['sentence_length'].append(len(stimuli[IX][0].split(' ')))
                 metadata['last_word'].append(False)
-                [metadata[col[0]].append(col[IX + 1][0]) for col in features if isinstance(col[0], unicode)]
+                [metadata[col[0]].append(col[IX + 1][0]) for col in features if isinstance(col[0], str)]
 
     metadata = pd.DataFrame(data=metadata)
 
     return metadata
+
+
+def load_comparisons_and_features(settings):
+    import pandas
+
+    # Read comparison file ('xlsx')
+    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, settings.comparisons_file))
+    headers = sheet.columns
+    fields = []
+    for i, header in enumerate(headers):
+        fields.append(sheet[header].values)
+        comparison_list = {'headers':headers, 'fields':fields}
+
+    del sheet, headers
+
+    # Read features file ('xlsx')
+    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, settings.features_file))
+    headers = sheet.columns
+    fields = []
+    for i, header in enumerate(headers):
+        fields.append(sheet[header].values)
+    features = {'headers': headers, 'fields': fields}
+    
+    return comparison_list, features
+

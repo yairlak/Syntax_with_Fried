@@ -1,4 +1,4 @@
-from functions import load_settings_params, load_data, read_logs_and_comparisons, convert_to_mne, analyses_single_unit, analyses_electrodes, generate_plots
+from functions import load_settings_params, load_data, read_logs_and_features, convert_to_mne, analyses_single_unit, analyses_electrodes, generate_plots
 import matplotlib.pyplot as plt
 import os, sys, argparse
 import mne
@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(description='Microphone ERPs')
 parser.add_argument('-p', '--patient', type=str, default='patient_505', help='Patient, e.g., patient_479, patient_482')
 parser.add_argument('-c', '--channel', type=int, default=[0], action='append', help='Which channels to analyze')
 parser.add_argument('-b', '--block', type=int, default=[1, 2, 3, 4, 5, 6], action='append', help='Which blocks to analyze')
-parser.add_argument('-n', '--comparison', type=int, default=[1], action='append', help='Which comparisons from the paragism to contrast - usually choose 1 for all trials and blocks')
+parser.add_argument('-n', '--comparisons', type=int, default=[1], action='append', help='Which comparisons from the paragism to contrast - usually choose 1 for all trials and blocks')
 
 # Argparse
 args = parser.parse_args()
@@ -26,25 +26,25 @@ settings = load_settings_params.Settings(patient)
 params = load_settings_params.Params(patient)
 preferences = load_settings_params.Preferences()
 
-settings.comparisons = args.comparison
+settings.comparisons = args.comparisons
 
 print('Metadata: Loading features and comparisons from Excel files...')
-comparison_list, features = read_logs_and_comparisons.load_comparisons_and_features(settings)
-comparisons = read_logs_and_comparisons.extract_comparison(comparison_list, features, settings, preferences)
+comparison_list, features = read_logs_and_features.load_comparisons_and_features(settings)
+comparisons = read_logs_and_features.extract_comparison(comparison_list, features, settings, preferences)
 comparisons = [comp for c, comp in enumerate(comparisons) if c in settings.comparisons] # run only a subset of comparisons
 
 print('Logs: Reading experiment log files from experiment...')
 log_all_blocks = {}
 for block in blocks:
-    log = read_logs_and_comparisons.LogSingleUnit(settings, block) # Get log filename according to block number
+    log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
     log_all_blocks[block] = log.read_and_parse_log(settings)
 del log, block
 
 print('Loading POS tags for all words in the lexicon')
-word2pos = read_logs_and_comparisons.load_POS_tags(settings)
+word2pos = read_logs_and_features.load_POS_tags(settings)
 
 print('Preparing meta-data')
-metadata = read_logs_and_comparisons.prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences)
+metadata = read_logs_and_features.prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences)
 
 print('Generating event object for MNE from log data...')
 # events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences)

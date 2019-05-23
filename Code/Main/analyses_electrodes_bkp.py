@@ -152,19 +152,14 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
             epochs.resample(3000, npad='auto')
             print('New sampling rate:', epochs.info['sfreq'], 'Hz')
 
-            band = "HighGamma"
-            print('Original sampling rate:', epochs.info['sfreq'], 'Hz')
-            epochs.resample(params.downsampling_sfreq, npad='auto')
-            print('New sampling rate:', epochs.info['sfreq'], 'Hz')
-
             del raw, raw_CSC_data_in_mat
             if preferences.use_metadata_only:
                 for i, comparison in enumerate(comparisons):
                     print('Contrast: ' + comparison['contrast_name'])
                     # queries = get_queries(comparison)
-                    preferences.sort_according_to_key = [s.strip() for s in comparison['sorting']]
-                    #preferences.sort_according_to_key = [s.strip().encode('ascii').decode("utf-8") for s in comparison['sorting']]
-                    print('Sorting: ' + ';'.join(preferences.sort_according_to_key))
+                    preferences.sort_according_to_key = [str(s.strip().encode('ascii')) for s in comparison['sorting']]
+                    print(preferences.sort_according_to_key)
+                    print('Sorting: ' + '_'.join(preferences.sort_according_to_key))
                     str_blocks = ['block == {} or '.format(block) for block in eval(comparison['blocks'])]
                     str_blocks = '(' + ''.join(str_blocks)[0:-4] + ')'
                     if comparison['align_to'] == 'FIRST':
@@ -191,6 +186,7 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                             IX1 = settings.channel_name.find('.ncs')
                         probe_name = settings.channel_name[0:IX1 - 1]
 
+                        os.makedirs(os.path.join(settings.path2output, settings.patient, 'HighGamma'), exist_ok=True)
                         with open(os.path.join(settings.path2output, settings.patient, 'HighGamma',
                                                file_name_root + '.txt'), 'w') as f:
                             stimuli_of_curr_query = list(set(list(metadata.query(query_cond)['sentence_string'])))
@@ -201,19 +197,43 @@ def generate_time_freq_plots(channels, events, event_id, metadata, comparisons, 
                                 os.path.join(settings.path2figures, settings.patient, 'HighGamma', probe_name,
                                              file_name + '.png'))) or settings.overwrite_existing_output_files:
 
+                            query_baseline = query_cond + ' and word_position == 1 and ' + str_blocks
+                            _, _, baseline = average_high_gamma(epochs[query_baseline], band,
+                                                                fmin_mic, fmax_mic, fmic_freq_step, None,
+                                                                'trial_wise', params)
 
                             query = query_cond + ' and ' + str_align + ' and ' + str_blocks
-                            mic = epochs[query].get_data()
-                            mic = np.squeeze(mic)
-                            mic2 = np.power(mic, 2)
 
-                            epochs_mic = epochs[query].copy()
-                            epochs_mic._data = mic2
-                            epochs_mic.metadata = epochs[query].metadata
+                            power, power_ave, _ = average_high_gamma(epochs[query],
+                                                                     band,
+                                                                     fmin_mic, fmax_mic, fmic_freq_step,
+                                                                     baseline,
+                                                                     'trial_wise', params)
 
-                            plot_and_save_high_gamma(epochs_mic, comparison['align_to'], eval(comparison['blocks']),
+                            # power, power_ave, _ = average_high_gamma(epochs[query],
+                            #                                              band,
+                            #                                              fmin_mic, fmax_mic, fmic_freq_step,
+                            #                                              [],
+                            #                                              'no_baseline', params)
+                            epochs_power = epochs[query].copy()
+                            epochs_power.times = power.times
+                            epochs_power._data = power_ave
+                            epochs_power.metadata = epochs[query].metadata
+
+                            plot_and_save_high_gamma(epochs_power, comparison['align_to'], eval(comparison['blocks']),
                                                      probe_name, file_name,
                                                      settings, params, preferences)
+                            # mic = epochs[query].get_data()
+                            # mic = np.squeeze(mic)
+                            # mic2 = np.power(mic, 2)
+                            #
+                            # epochs_mic = epochs[query].copy()
+                            # epochs_mic._data = mic2
+                            # epochs_mic.metadata = epochs[query].metadata
+                            #
+                            # plot_and_save_high_gamma(epochs_mic, comparison['align_to'], eval(comparison['blocks']),
+                            #                          probe_name, file_name,
+                            #                          settings, params, preferences)
                             # mic_rms = []
                             # window = np.ones(10) / float(10)
                             # for rw in range(mic2.shape[0]):
@@ -233,10 +253,16 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
     # -------------------------------
     # n_cycles = freq[0] / freqs * 3.14
     # n_cycles = freqs / 2.
-    n_cycles = 7 # Fieldtrip's default
-    if band == 'High-Gamma': n_cycles = 20
 
-    power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_jobs=4, average=False, n_cycles=n_cycles,
+    if band == 'High-Gamma':
+        n_cycles = 20
+    elif band == 'Speech':
+        n_cycles = 7
+    else:
+        n_cycles = 7  # Fieldtrip's default
+
+
+    power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_jobs=-2, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
     power_ave = np.squeeze(np.average(power.data, axis=2))
     # Baseline data
@@ -257,7 +283,7 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
             power_ave_baselined = 10 * np.log10(power_ave / baseline[:, None])
             print("Baseline: trial-wise")
         elif baseline_type == 'no_baseline':
-            power_ave_baselined = power_ave  # don't apply any baseline
+            power_ave_baselined = 10 * np.log10(power_ave)  # don't apply any baseline
 
     # Gaussian smooth of time-freq results if chosen:
     if params.smooth_time_freq > 0:
@@ -284,7 +310,6 @@ def plot_and_save_high_gamma(epochs_power, align_to, blocks, probe_name, file_na
     # Sort if needed
     if preferences.sort_according_to_key:
         fields_for_sorting = []
-        print(len(preferences.sort_according_to_key))
         for field in preferences.sort_according_to_key:
             fields_for_sorting.append(epochs_power.metadata[field])
         if len(fields_for_sorting) == 1:
@@ -299,12 +324,11 @@ def plot_and_save_high_gamma(epochs_power, align_to, blocks, probe_name, file_na
         power_ave = power_ave[IX, :]
 
     # Indices for special time window for analysis (e.g., 200-500ms after end of sentence)
-    IX = (epochs_power.times[IX_smaller_time_window] > params.window_st / 1e3) & (epochs_power.times[IX_smaller_time_window] < params.window_ed / 1e3)
+    IX = (epochs_power.times > params.window_st / 1e3) & (epochs_power.times < params.window_ed / 1e3)
 
     # Run a linear regression if sorted according to, e.g., sentence length
     r2_string = 'No regression calc'
     if preferences.sort_according_to_key:
-        print(power_ave, power_ave.shape, len(IX))
         X = np.asarray([tup[1] for tup in mylist_sorted])
         y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
         IX_nan = np.isnan(y)
