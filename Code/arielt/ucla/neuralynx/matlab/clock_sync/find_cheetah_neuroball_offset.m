@@ -35,6 +35,9 @@ filter_delta_thresh = 5000;     % microseconds.  If TTLs were
                                 % sent/arrived within a time interval
                                 % shorter than this, they are removed.
 
+% Yair
+filter_delta_thresh = delta_thresh;
+
 d_cheetah   = diff(cheetah_times_relative);
 d_neuroball = diff(neuroball_times_relative);
 

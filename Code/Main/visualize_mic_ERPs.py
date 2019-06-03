@@ -2,6 +2,8 @@ from functions import load_settings_params, load_data, read_logs_and_features, c
 import matplotlib.pyplot as plt
 import os, sys, argparse
 import mne
+from pprint import pprint
+
 mne.set_log_level('CRITICAL') # DEBUG, INFO, WARNING, ERROR, or CRITICAL
 plt.switch_backend('agg')
 
@@ -28,6 +30,10 @@ preferences = load_settings_params.Preferences()
 
 settings.comparisons = args.comparisons
 
+pprint(preferences.__dict__)
+pprint(settings.__dict__)
+pprint(params.__dict__)
+
 print('Metadata: Loading features and comparisons from Excel files...')
 comparison_list, features = read_logs_and_features.load_comparisons_and_features(settings)
 comparisons = read_logs_and_features.extract_comparison(comparison_list, features, settings, preferences)
@@ -49,9 +55,6 @@ metadata = read_logs_and_features.prepare_metadata(log_all_blocks, features, wor
 print('Generating event object for MNE from log data...')
 # events, events_spikes, event_id = convert_to_mne.generate_events_array(log_all_blocks, metadata, word2pos, settings, params, preferences)
 events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
-
-#print('Loading electrode names for all channels...')
-#electrode_names = load_data.electrodes_names(settings)
 
 print('Plottoing paradigm timings')
 generate_plots.plot_paradigm_timings(events_spikes, event_id, settings, params)

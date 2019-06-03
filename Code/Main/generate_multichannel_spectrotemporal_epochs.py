@@ -2,15 +2,16 @@ import argparse, os
 from functions import load_settings_params, read_logs_and_features, convert_to_mne, data_manip, analyses
 from mne.io import _merge_info
 import numpy as np
-
+from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='479', help='Patient string')
+parser.add_argument('-patient', default='502', help='Patient string')
 parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
-parser.add_argument('-tmax', default=1.2, type=int, help='Patient string')
+parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
+parser.add_argument('--iter-freqs', default=[], help="frequency band in load_setting_params iter_freqs = [('High-Gamma', 70, 150)]")
 args = parser.parse_args()
 print(args)
 
@@ -32,6 +33,11 @@ params = load_settings_params.Params(args.patient)
 preferences = load_settings_params.Preferences()
 params.tmin=settings.tmin if not args.tmin else args.tmin
 params.tmax=settings.tmax if not args.tmax else args.tmax
+
+if args.iter_freqs:
+    params.iter_freqs = eval(args.iter_freqs)
+
+pprint(preferences.__dict__); pprint(settings.__dict__); pprint(params.__dict__)
 
 print('Metadata: Loading features and comparisons from Excel files...')
 features = read_logs_and_features.load_features(settings)

@@ -27,9 +27,9 @@ def compute_time_freq(channel_num, channel_name, channel_data, events, event_id,
     del raw, channel_data
 
     print('Time-frequency analyses...')
-    band, fmin, fmax = params.iter_freqs[0]
+    band, fmin, fmax, fstep = params.iter_freqs[0]
     print('Band: ' + band)
-    epochsTFR = average_high_gamma(epochs, band, fmin, fmax, params.freq_step, [], 'no_baseline', params)
+    epochsTFR = average_high_gamma(epochs, band, fmin, fmax, fstep, [], 'no_baseline', params)
     epochsTFR.metadata = metadata
 
     return epochsTFR

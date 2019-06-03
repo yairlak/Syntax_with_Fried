@@ -32,8 +32,8 @@ class Settings():
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
-        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
-        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC', 'micro')
+        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC', 'micro')
         #self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
@@ -84,7 +84,7 @@ class Settings():
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_502': # Neuralynx
             self.time0 = 1544197879836945
-            self.timeend = 1544197879836945
+            self.timeend = 1544201196027613
             # Which channels in the raw CSC files have clear spikes
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
@@ -121,14 +121,7 @@ class Params:
         self.downsampling_sfreq = 512
 
         ###### Frequency bands ##########
-        self.iter_freqs = [('High-Gamma', 70, 150)]
-        step = 5
-        # for freq in range(4, 146, 1):
-        #     band = str(freq) + '_to_' + str(freq + step) + 'Hz'
-        #     self.iter_freqs.append((band, freq, freq + step))
-        self.freq_step = 5  # [Hz] Step in spectrogram
-        # self.time_step = self.tmax * self.sfreq_raw # Epoch into subsequent segments\
-        # self.slice_size = 500 * self.sfreq
+        self.iter_freqs = [('High-Gamma', 70, 150, 5)] # (Band-name, min_freq, max_freq, step_freq); the last indicates
         ##################################
 
         ####### Time-frequency ###########

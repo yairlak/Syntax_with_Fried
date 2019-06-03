@@ -15,6 +15,8 @@ parser.add_argument('-filename', default='patient_479_ch_40-tfr.h5', help='Input
 parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
 parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
+parser.add_argument('-tmin', default=None, type=float, help='crop window')
+parser.add_argument('-tmax', default=None, type=float, help='crop window')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
 parser.add_argument('-y-tick-step', default=20, help='If sorted by key, set the yticklabels density')
@@ -23,6 +25,8 @@ parser.add_argument('-window-ed', default=200, help='Regression end-time window 
 # parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[("word_position==1 and block in [2, 4, 6]", "word_position==-1 and block in [2, 4, 6]")], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 args = parser.parse_args()
 args.patient = 'patient_' + args.patient
+if isinstance(args.sort_key, str):
+    args.sort_key = eval(args.sort_key)
 print(args)
 
 if args.block and args.align:
@@ -58,7 +62,10 @@ if not os.path.exists(path2figures):
 print('Loading epochs object: ' + path2epochs)
 epochsTFR = mne.time_frequency.read_tfrs(path2epochs)
 epochsTFR = epochsTFR[0][args.query]
-epochsTFR.crop(min(epochsTFR.times) + 0.1, max(epochsTFR.times) - 0.1)
+if args.tmin is not None and args.tmax is not None:
+    epochsTFR.crop(args.tmin, args.tmax)
+else:
+    epochsTFR.crop(min(epochsTFR.times) + 0.1, max(epochsTFR.times) - 0.1)
 #epochsTFR.apply_baseline((None, None), 'zscore')
 print(epochsTFR)
 

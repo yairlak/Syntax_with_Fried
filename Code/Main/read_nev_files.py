@@ -1,4 +1,4 @@
-from SU_functions import load_settings_params
+from functions import load_settings_params
 import os.path as op
 from neo import io
 import matplotlib.pyplot as plt
@@ -7,7 +7,7 @@ import sys
 
 recording_system = 'Neuralynx'
 settings = load_settings_params.Settings(sys.argv[1])
-session_folder = op.join(settings.path2patient_folder, 'Raw')
+session_folder = op.join(settings.path2patient_folder, 'Raw', 'nev_files')
 print(session_folder)
 
 if recording_system == 'Neuralynx':
