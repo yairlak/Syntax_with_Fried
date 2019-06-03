@@ -5,8 +5,8 @@ import numpy as np
 
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='479', help='Patient string')
-parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('-patient', default='505', help='Patient string')
+parser.add_argument('-channels', action='append', default=['0'], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default=1.2, type=int, help='Patient string')
