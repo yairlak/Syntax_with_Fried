@@ -2,13 +2,10 @@
 echo "Which patient to run (e.g., 479, 482)?"
 read PATIENT
 
-echo "From channel (integer)?"
+echo "Channel numbers (separated by spaces, e.g., 5 33 40)?"
 read CH_FROM
 
-echo "To channel (integer)?"
-read CH_TO
-
-for CH in $(seq $CH_FROM $CH_TO)
+for CH in ${CH_FROM[@]}
 do
      path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/'
      

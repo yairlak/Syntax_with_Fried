@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import os, pickle
-=======
 import sys, os, pickle
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,18 +8,6 @@ plt.switch_backend('agg')
 def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_train, query_classes_test, root_path):
     '''
 
-<<<<<<< HEAD
-    :param patients:
-    :param hospitals:
-    :param picks_all_patients:
-    :param query_classes_train:
-    :param query_classes_test:
-    :param root_path:
-    :param epochs_fname:
-    :return:
-    1. times
-    2. X_trainy_query
-=======
     :param patients: (list) 
     :param hospitals: (list) same len as patients
     :param picks_all_patients: (list of channel numbers or 'all') same len as patients
@@ -33,7 +17,6 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     :return:
     1. times
     2. X_train_query
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
     3. y_train_query
     4. X_test_query
     5. y_test_query
@@ -41,56 +24,6 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     # Times
     train_times = {}
     train_times["start"] = -0.1
-<<<<<<< HEAD
-    train_times["stop"] = 0.1
-    # train_times["step"] = 0.01
-
-
-    X_train = []; y_train = []; X_test = []; y_test = []
-    for q, query_class_train in enumerate(query_classes_train):
-        data_all_channels = []
-        for patient, hospital, picks in zip(patients, hospitals, picks_all_patients):
-            if picks == 'all':
-                import glob
-                epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*.h5'))
-                channels = [int(filename[filename.find('_ch_')+4:filename.find('-tfr.h5')]) for filename in epochs_filenames]
-
-            for ch in channels:
-                print('Loading epochs object', patient)
-                epochs_fname = patient + '_ch_' + str(ch) + '-tfr.h5'
-                path2epochs = os.path.join(root_path, 'Data', hospital, patient, 'Epochs', epochs_fname)
-                epochsTFR = mne.time_frequency.read_tfrs(path2epochs)[0]
-                epochs_class_train = epochsTFR[query_class_train]
-                epochs_class_train.crop(train_times["start"], train_times["stop"])
-                curr_data = np.squeeze(np.average(epochs_class_train.data, axis=2))
-                data_all_channels.append(curr_data)
-
-        data_all_channels = np.dstack(data_all_channels) # signals: n_epochs, n_times, n_channels
-        data_all_channels = np.swapaxes(data_all_channels, 1, 2) # Swap dimensions
-        X_train.append(data_all_channels) #  signals: n_epochs, n_channels, n_times
-
-        num_samples_curr_class = X_train[q].shape[0]
-        y_train.append((q+1) * np.ones(num_samples_curr_class).astype(int))  # targets
-        print('Number of samples in training class %i : %i' % (q+1, num_samples_curr_class))
-
-    # Test set
-    if query_classes_test is not None:
-        for q, query_class_test in enumerate(query_classes_test):
-            epochs_class_test = epochsTFR[query_class_test]
-            epochs_class_test.crop(train_times["start"], train_times["stop"])
-            #epochs_class1_test.decimate(decim=10)
-            curr_data = np.squeeze(np.average(epochs_class_test.data[:, ch, :, :], axis=1))
-            X_test.append(curr_data)  # signals: n_epochs, n_channels, n_times
-            num_samples_curr_class = X_test[q].shape[0]
-            y_test.append((q+1) * np.ones(num_samples_curr_class).astype(int))  # targets
-            print('Number of samples in test class %i : %i' % (q+1, num_samples_curr_class))
-        X_test = np.vstack(X_test)
-        y_test = np.hstack(y_test)
-    else: # no test queries (generalization across time only, not conditions)
-        X_test = None; y_test = None
-
-    return epochs_class_train[0].times, np.vstack(X_train), np.hstack(y_train), X_test, y_test
-=======
     train_times["stop"] = 0.9
     # train_times["step"] = 0.01
 
@@ -111,6 +44,7 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
                 epochs_fname = patient + '_ch_' + str(ch) + '-tfr.h5'
                 path2epochs = os.path.join(root_path, 'Data', hospital, patient, 'Epochs', epochs_fname)
                 epochsTFR = mne.time_frequency.read_tfrs(path2epochs)[0]
+                print(epochsTFR)
                 for q, query_class_train in enumerate(query_classes_train):
                     epochs_class_train = epochsTFR[query_class_train]
                     epochs_class_train.crop(train_times["start"], train_times["stop"])
@@ -156,7 +90,6 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
 
 
     return epochs_class_train[0].times, X_train, y_train, X_test, y_test
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 
 
 def train_test_GAT(X_train, y_train, X_test, y_test):

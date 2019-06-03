@@ -3,17 +3,7 @@ import mne
 from functions import classification
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-<<<<<<< HEAD
-#parser.add_argument('-r', '--root-path', default='/neurospin/unicog/protocols/intracranial/TIMIT_syntax/', help='Path to parent project folder')
-parser.add_argument('-r', '--root-path', default='/home/yl254115/Projects/single_unit_syntax', help='Path to parent project folder. If empty list then assumes epochsTFRs are stored in Data/UCLA/patient/Epochs')
-#parser.add_argument('--query-class-train', default="word_string in ['END'] and num_words == 3", help='Metadata query (e.g., word_position==1)')
-parser.add_argument('--train-queries', action='append', default=['word_position==1 and block in [2, 4, 6]', 'word_position==-1 and block in [2, 4, 6]'], help='Metadata query for training classes(e.g., word_position==1),\n metadata is word-based (events are word onsets) and contains the following keys:\n\nevent_time (in samples)\n\nsentence_number (integer)\n\nsentence_string (although each event corresponds to a word, the entire string of the sentence is stored for each event)\n\nword_position (integer representing the word position; -1 for the end of the sentence)\n\nword_string (str)\n\n pos (str: RBR, NN, TO, VB, VBZ, RBS, IN, VBN, PRP, POS, CD, VBP, PDT, WRB, JJR, NNP, MD, WP, RB, EX, PRP$, JJS, VBD, NNS, JJ, RP, DT, VBG, LS, WDT, CC, UH, FW\nnum_words (although each event corresponds to a word, the num_words of the entire sentence is stored for each event)\nlast_word (True/False)\n')
-parser.add_argument('--test-queries', action='append', default=None, help="Metadata query for generalization test (e.g., word_position==1, word_string in ['END']")
-parser.add_argument('-p', '--patients', action='append', default=['patient_479', 'patient_487'], help='patient label (e.g., 479, 487)')
-parser.add_argument('-s', '--hospitals', action='append', default=['UCLA', 'UCLA'], help='list of hospital per patient')
-parser.add_argument('-k', '--picks', action='append', default=['all', 'all'], help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
-=======
-parser.add_argument('-r', '--root-path', default='/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/', help='Path to parent project folder')
+parser.add_argument('-r', '--root-path', default='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', help='Path to parent project folder')
 #parser.add_argument('-r', '--root-path', default='/home/yl254115/Projects/single_unit_syntax', help='Path to parent project folder. If empty list then assumes epochsTFRs are stored in Data/UCLA/patient/Epochs')
 #parser.add_argument('--query-class-train', default="word_string in ['END'] and num_words == 3", help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--train-queries', action='append', help='Metadata query for training classes(e.g., word_position==1),\n metadata is word-based (events are word onsets) and contains the following keys:\n\nevent_time (in samples)\n\nsentence_number (integer)\n\nsentence_string (although each event corresponds to a word, the entire string of the sentence is stored for each event)\n\nword_position (integer representing the word position; -1 for the end of the sentence)\n\nword_string (str)\n\n pos (str: RBR, NN, TO, VB, VBZ, RBS, IN, VBN, PRP, POS, CD, VBP, PDT, WRB, JJR, NNP, MD, WP, RB, EX, PRP$, JJS, VBD, NNS, JJ, RP, DT, VBG, LS, WDT, CC, UH, FW\nnum_words (although each event corresponds to a word, the num_words of the entire sentence is stored for each event)\nlast_word (True/False)\n')
@@ -21,7 +11,6 @@ parser.add_argument('--test-queries', action='append', default=None, help="Metad
 parser.add_argument('-p', '--patients', action='append', help='patient label (e.g., 479, 487)')
 parser.add_argument('-s', '--hospitals', action='append', help='list of hospital per patient')
 parser.add_argument('-k', '--picks', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 
 print(mne.__version__)
 args = parser.parse_args()
@@ -37,12 +26,6 @@ times, X_train_query, y_train_query, X_test_query, y_test_query = classification
                                                                        args.train_queries, args.test_queries,
                                                                        args.root_path)
 
-<<<<<<< HEAD
-=======
-
-print(X_train_query.shape)
-print(y_train_query.shape)
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
 # 2. Train-test GAT
 time_gen, scores = classification.train_test_GAT(X_train_query, y_train_query, X_test_query, y_test_query)
 
