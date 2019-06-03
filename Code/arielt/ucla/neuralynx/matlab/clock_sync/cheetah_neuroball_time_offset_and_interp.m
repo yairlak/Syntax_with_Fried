@@ -19,7 +19,7 @@ if (is_eeg)
     delta_thresh = 3000;   % EEG accuracy is 1/200Hz = 5ms, so matches have
                            % lower quality.
 else
-    delta_thresh = 1500;
+    delta_thresh = 1000;
 end
 
 [cheetah_times_relative, paradigm_times_relative] = ...

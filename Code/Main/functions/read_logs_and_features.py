@@ -243,7 +243,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
 
     # Create a dict with the following keys:
     keys = ['chronological_order', 'event_time', 'block', 'sentence_number', 'word_position', 'word_string', 'pos',
-            'num_letters', 'sentence_string', 'sentence_length', 'last_word']
+            'num_letters', 'sentence_string', 'sentence_length', 'last_word', 'All_trials']
     keys = keys + [col[0] for col in features if isinstance(col[0], str)]
     #keys = keys + [col[0] for col in features]
     metadata = dict([(k, []) for k in keys])
@@ -259,6 +259,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
         # Loop over all words in current log
         num_words = len(getattr(log, prefix + '_WORDS_ON_TIMES'))
         for i in range(num_words):
+            metadata['All_trials'].append(1)
             metadata['chronological_order'].append(cnt); cnt += 1
             metadata['event_time'].append((int(getattr(log, 'WORDS_ON_TIMES')[i]) - settings.time0) / 1e6)
             sentence_number = getattr(log, 'SENTENCE_NUM')[i]
@@ -281,6 +282,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
             [metadata[col[0]].append(col[IX+1][0]) for col in features if isinstance(col[0], str)]
             #[metadata[col[0]].append(col[IX+1][0]) for col in features]
             if metadata['last_word'][-1]: # Add end-of-sentence event after last words. Set its 'word_pos' = -1.
+                metadata['All_trials'].append(1)
                 metadata['chronological_order'].append(cnt); cnt += 1
                 sentence_number = getattr(log, 'SENTENCE_NUM')[i]
                 t = None
