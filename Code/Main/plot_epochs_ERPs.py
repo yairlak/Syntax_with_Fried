@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='Generate plots for TIMIT experimen
 parser.add_argument('-patient', default='479', help='Patient string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
 parser.add_argument('-align', choices=['first','last', 'end'], default='first', help='Block type')
-parser.add_argument('-filename', default='patient_479_ch_40-tfr.h5', help='Input filename (if empty list [] then will be assigned based on patient name)')
+parser.add_argument('-filename', default='patient_505_ch_0-tfr.h5', help='Input filename (if empty list [] then will be assigned based on patient name)')
 parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
 parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
