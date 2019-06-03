@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 parser = argparse.ArgumentParser(description='Synchronize triggers channel and paradigm logs.')
-parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_505/Logs/505/", help="Path to triggers file")
-# parser.add_argument('--log-file', default="../../Data/UCLA/patient_505/Logs/505/events_log_2019-03-12_15-18-08.log", help="Path to triggers file")
-parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_505/Raw/Events.nev", help="Path to triggers file")
-parser.add_argument('--block', type=int, default=[], help='Block number for which sync is performed')
+parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_502/Logs/raw/", help="Path to triggers file")
+parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_502/Raw/nev_files/Events_0003.nev", help="Path to triggers file")
 args = parser.parse_args()
 print(args)
 
@@ -70,10 +68,10 @@ def find_beginning_of_blocks(d_times_ttl, d_events_ttl):
 if recording_system == 'Neuralynx':
     NIO = io.NeuralynxIO(os.path.dirname(args.ttl_file))
     time0, timeend = NIO._timestamp_limits[0]
-    events = NIO._nev_memmap['Events']
+    print('time0, timeend = ', time0, timeend)
+    events = NIO._nev_memmap[os.path.basename(args.ttl_file)[:-4]]
     times_ttl = [float(e[3]) for e in events]
     event_nums_ttl = [float(e[5]) for e in events]
-    print('time0, timeend = ', time0, timeend)
 elif recording_system == 'BlackRock':
     pass
     # NIO = io.BlackrockIO(op.join(session_folder, 'Yair_practice_2018Nov09001.nev'))

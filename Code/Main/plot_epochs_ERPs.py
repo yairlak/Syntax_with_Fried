@@ -6,13 +6,14 @@ from numpy import percentile
 from sklearn import linear_model
 from sklearn.metrics import r2_score
 from operator import itemgetter
+from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='505', help='Patient string')
+parser.add_argument('-patient', default='502', help='Patient string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
 parser.add_argument('-align', choices=['first','last', 'end'], default='first', help='Block type')
-parser.add_argument('-filename', default='patient_505_ch_0-tfr.h5', help='Input filename (if empty list [] then will be assigned based on patient name)')
-parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
+parser.add_argument('-channel', default=0, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
+parser.add_argument('--sort-key', default=['chronological_order'], help='Keys to sort according')
 parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 parser.add_argument('-tmin', default=None, type=float, help='crop window')
@@ -27,7 +28,6 @@ args = parser.parse_args()
 args.patient = 'patient_' + args.patient
 if isinstance(args.sort_key, str):
     args.sort_key = eval(args.sort_key)
-print(args)
 
 if args.block and args.align:
     if args.query:
@@ -45,6 +45,7 @@ if args.block and args.align:
         elif args.align == 'end':
             align_str = "word_position == -1"
         args.query = align_str + ' and ' + block_str
+pprint(args)
 
 # Set current working directory to that of script
 abspath = os.path.abspath(__file__)
@@ -53,7 +54,10 @@ os.chdir(dname)
 
 # 
 plt.close('all')
-filename = args.patient + '-tfr.h5' if not args.filename else args.filename
+if not isinstance(args.channel, int):
+    filename = args.patient + '-tfr.h5'
+else:
+    filename = args.patient + '_ch_' + str(args.channel) + '-tfr.h5'
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
 path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
 if not os.path.exists(path2figures):
@@ -61,13 +65,13 @@ if not os.path.exists(path2figures):
 
 print('Loading epochs object: ' + path2epochs)
 epochsTFR = mne.time_frequency.read_tfrs(path2epochs)
+print(epochsTFR[0])
 epochsTFR = epochsTFR[0][args.query]
 if args.tmin is not None and args.tmax is not None:
     epochsTFR.crop(args.tmin, args.tmax)
 else:
     epochsTFR.crop(min(epochsTFR.times) + 0.1, max(epochsTFR.times) - 0.1)
 #epochsTFR.apply_baseline((None, None), 'zscore')
-print(epochsTFR)
 
 for ch, ch_name in enumerate(epochsTFR.ch_names):
     # Plot all trials and ERP for args.query
@@ -85,7 +89,6 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
     # Put NaNs 
     power_ave[power_ave > upper] = np.nan
     power_ave[power_ave < lower] = np.nan
-    print(power_ave)
     print('Identified outliers: %d' % np.sum(power_ave > upper))
     print('Identified outliers: %d' % np.sum(power_ave < lower))
     # zscore data
@@ -113,7 +116,6 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
         # Run a linear regression if sorted according to, e.g., sentence length
         IX = (epochsTFR.times > args.window_st / 1e3) & (epochsTFR.times < args.window_ed / 1e3)
         X = np.asarray([tup[1] for tup in mylist_sorted])
-        print(power_ave[:, IX].shape)
         y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
         IX_nan = np.isnan(y)
         X, y = X[~IX_nan], y[~IX_nan]
@@ -157,7 +159,7 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
     ax2.plot(epochsTFR.times, np.nanmean(power_ave, axis=0))
     ax2.set_xlabel('Time [sec]', fontsize=24)
     ax2.set_ylabel('Mean activity (zscore)', fontsize=18)
-    ax2.set_xlim([np.min(epochsTFR.times) + 0.2, np.max(epochsTFR.times) - 0.2])
+    ax2.set_xlim([np.min(epochsTFR.times), np.max(epochsTFR.times)])
     #ax2.axhline(y=3, linestyle='--', linewidth=3, color='g')
     #ax2.axhline(y=-3, linestyle='--', linewidth=3, color='g')
     ax2.set_ylim([-3, 3])

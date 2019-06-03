@@ -1,0 +1,21 @@
+conda activate mne
+
+1.
+sync_log_and_recordings: launch to have the nev files and paradigm output logs synced. May required manual help. 
+
+
+
+2. Analyze Microphone
+- First put Microphone mat file in /Channels/micro and name it CSC0.mat
+
+- Then, run
+python generate_multichannel_spectrotemporal_epochs.py -channels 0 -patient 502 --iter-freq "[('Speech', 100, 250, 100)]"
+which will generate the epochsTFR file in Epochs/.
+
+- Finall, to generate the fig, launch:
+python plot_epochs_ERPs.py --sort-key "['chronological_order']" -tmin "-0.1" -tmax 1.1
+
+
+3. Micro electrodes
+
+
