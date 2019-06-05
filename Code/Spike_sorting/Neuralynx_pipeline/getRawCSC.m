@@ -1,6 +1,7 @@
 clear; close all; clc;
 
 %%
+<<<<<<< HEAD
 patient = 'patient_504';
 recording_system = 'BlackRock';
 %recording_system = 'Neuralynx';
@@ -8,6 +9,15 @@ recording_system = 'BlackRock';
 % base_folder = ['/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fried/Data/UCLA/', patient];
 base_folder = ['/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/', patient, '/Raw'];
 
+=======
+patient = 'patient_505';
+% recording_system = 'BlackRock';
+recording_system = 'Neuralynx';
+
+base_folder = ['/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fried/Data/UCLA/', patient];
+% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
+% base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
+>>>>>>> 2946d755b26a7fd417a05956b6fed501e900e322
 output_path = fullfile(base_folder,'ChannelsCSC');
 
 mkdir(output_path);
@@ -68,7 +78,7 @@ end
 save(fullfile(base_folder, 'electrodes_info_names.mat'), 'electrodes_info')
 
 %% !!! sampling rate !!!! - make sure it's correct
-sr = 40000; 
+% sr = 40000; 
 % channels = 1:(idx-1); %idx=130 for UCLA patient 479
 %channels = [13, 47, 48, 49, 55, 57, 59];
 %channels = 1:70;

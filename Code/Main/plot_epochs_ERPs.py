@@ -18,16 +18,22 @@ parser.add_argument('--query', default=[], help='Metadata query (e.g., word_posi
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 parser.add_argument('-tmin', default=None, type=float, help='crop window')
 parser.add_argument('-tmax', default=None, type=float, help='crop window')
+parser.add_argument('-baseline', default=None, type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
 parser.add_argument('-y-tick-step', default=20, help='If sorted by key, set the yticklabels density')
 parser.add_argument('-window-st', default=0, help='Regression start-time window [msec]')
 parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
+parser.add_argument('--baseline-mode', choices=['mean', 'ratio', 'logratio', 'percent', 'zscore', 'zlogratio'], default='zscore', help='Type of baseline method')
+parser.add_argument('--remove-outliers', action="store_false", default=True, help='Remove outliers based on percentile 25 and 75')
+
 # parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[("word_position==1 and block in [2, 4, 6]", "word_position==-1 and block in [2, 4, 6]")], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 args = parser.parse_args()
 args.patient = 'patient_' + args.patient
 if isinstance(args.sort_key, str):
     args.sort_key = eval(args.sort_key)
+if isinstance(args.baseline, str):
+    args.baseline = eval(args.baseline)
 
 if args.block and args.align:
     if args.query:
@@ -37,6 +43,8 @@ if args.block and args.align:
             block_str = 'block in [1, 3, 5]'
         elif args.block == 'auditory':
             block_str = 'block in [2, 4, 6]'
+        else:
+            block_str = 'block in [%s]' % args.block
 
         if args.align == 'first':
             align_str = "word_position == 1"
@@ -71,7 +79,9 @@ if args.tmin is not None and args.tmax is not None:
     epochsTFR.crop(args.tmin, args.tmax)
 else:
     epochsTFR.crop(min(epochsTFR.times) + 0.1, max(epochsTFR.times) - 0.1)
-#epochsTFR.apply_baseline((None, None), 'zscore')
+
+# Apply BASELINE
+epochsTFR.apply_baseline(args.baseline, mode=args.baseline_mode, verbose=True)
 
 for ch, ch_name in enumerate(epochsTFR.ch_names):
     # Plot all trials and ERP for args.query
@@ -79,21 +89,19 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
     IX_ch = mne.pick_channels(epochsTFR.ch_names, [ch_name])[0]
     power_ave = np.squeeze(np.average(epochsTFR.data[:, IX_ch, :, :], axis=1))
     # calculate interquartile range
-    q25, q75 = percentile(power_ave.flatten(), 25), percentile(power_ave.flatten(), 75)
-    iqr = q75 - q25
-    print('Percentiles: 25th=%.3f, 75th=%.3f, IQR=%.3f' % (q25, q75, iqr))
+    if args.remove_outliers:
+        q25, q75 = percentile(power_ave.flatten(), 25), percentile(power_ave.flatten(), 75)
+        iqr = q75 - q25
+        print('Percentiles: 25th=%.3f, 75th=%.3f, IQR=%.3f' % (q25, q75, iqr))
     # calculate the outlier cutoff
-    cut_off = iqr * 1.5
-    lower, upper = np.asarray(q25 - cut_off), np.asarray(q75 + cut_off)
-    print(lower, upper)
+        cut_off = iqr * 1.5
+        lower, upper = np.asarray(q25 - cut_off), np.asarray(q75 + cut_off)
+        print(lower, upper)
     # Put NaNs 
-    power_ave[power_ave > upper] = np.nan
-    power_ave[power_ave < lower] = np.nan
-    print('Identified outliers: %d' % np.sum(power_ave > upper))
-    print('Identified outliers: %d' % np.sum(power_ave < lower))
-    # zscore data
-    power_ave -= np.nanmean(power_ave)
-    power_ave = power_ave / np.nanstd(power_ave)
+        power_ave[power_ave > upper] = np.nan
+        power_ave[power_ave < lower] = np.nan
+        print('Identified outliers: %d' % np.sum(power_ave > upper))
+        print('Identified outliers: %d' % np.sum(power_ave < lower))
 
     # Sort if needed
     if not args.sort_key:
