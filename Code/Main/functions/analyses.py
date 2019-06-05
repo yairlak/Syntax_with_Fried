@@ -47,7 +47,7 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
     n_cycles = 7 # Fieldtrip's default
     if band == 'High-Gamma': n_cycles = 20
 
-    power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_jobs=-2, average=False, n_cycles=n_cycles,
+    power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_jobs=1, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
     # power_ave = np.squeeze(np.average(power.data, axis=2))
 

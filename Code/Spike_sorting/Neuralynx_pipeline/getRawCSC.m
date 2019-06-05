@@ -1,7 +1,7 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_502';
+patient = 'patient_505';
 % recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
 
@@ -68,7 +68,7 @@ end
 save(fullfile(base_folder, 'electrodes_info_names.mat'), 'electrodes_info')
 
 %% !!! sampling rate !!!! - make sure it's correct
-sr = 40000; 
+% sr = 40000; 
 % channels = 1:(idx-1); %idx=130 for UCLA patient 479
 %channels = [13, 47, 48, 49, 55, 57, 59];
 %channels = 1:70;

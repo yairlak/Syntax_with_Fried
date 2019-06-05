@@ -88,6 +88,9 @@ class Settings():
             # Which channels in the raw CSC files have clear spikes
             channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
+        if self.patient == 'patient_504': # BlackRock
+            self.time0 =   0
+            self.timeend = 2614.71593333e+09
         if self.patient == 'patient_505': # Neuralynx
             self.time0 = 1552403091357879  
             self.timeend = 1552405988561685
@@ -109,6 +112,8 @@ class Params:
         if self.patient == 'patient_493': # Neuralynx
             self.sfreq_raw = 40000  # Data sampling frequency [Hz]
         if self.patient == 'patient_502': # Neuralynx
+            self.sfreq_raw = 32000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_504': # BlackRock, but Neuralynx for Macro and Microphone
             self.sfreq_raw = 32000  # Data sampling frequency [Hz]
         if self.patient == 'patient_505': # Neuralynx
             self.sfreq_raw = 32000  # Data sampling frequency [Hz]

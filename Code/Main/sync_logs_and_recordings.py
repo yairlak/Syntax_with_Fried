@@ -4,15 +4,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 parser = argparse.ArgumentParser(description='Synchronize triggers channel and paradigm logs.')
-parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_502/Logs/raw/", help="Path to triggers file")
-parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_502/Raw/nev_files/Events_0003.nev", help="Path to triggers file")
+parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_504/Logs/raw/", help="Path to original log files")
+parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_504/Raw/nev_files/EXP12_Syntax001", help="Path to triggers file. WITHOUT extension for Blackrock")
+parser.add_argument('--recording-system', choices=['Neuralynx', 'BlackRock'], default='BlackRock')
 args = parser.parse_args()
 print(args)
 
 
 CHEETAH_str = 'CHEETAH_SIGNAL'
-recording_system = 'Neuralynx'
 
+# -------------------
+# ---- functions ----
+# -------------------
 
 def remove_false_TTLs(times, event_nums):
     IX_to_keep = []
@@ -46,7 +49,7 @@ def remove_events_zero(times, event_nums):
 
 
 def find_beginning_of_blocks(d_times_ttl, d_events_ttl):
-    delta_thresh = 1.1*1e6 # time deltas around event=100 in microsec
+    delta_thresh = 1.1*1e6 # time deltas around event=100 in microsec. I set it to >1sec, which is the largest ISI, assuming it takes more than a sec to start the block
     IXs_onsets = []
     for i, (delta_t, e) in enumerate(zip(d_times_ttl, d_events_ttl)):
         if i == 0:
@@ -54,9 +57,10 @@ def find_beginning_of_blocks(d_times_ttl, d_events_ttl):
         else:
             prev_delta_t = d_times_ttl[i-1]
 
-        if e==100 and delta_t > delta_thresh and prev_delta_t > delta_thresh: # check if duration after and before event=100 is greater than 1500ms
-            IXs_onsets.append(i)
-    assert len(IXs_onsets) == 6 # Make sure only 6 block onsets were found
+        if e==100:
+            if delta_t > delta_thresh and prev_delta_t > delta_thresh: # check if duration after and before event=100 is greater than 1500ms
+                IXs_onsets.append(i)
+    # assert len(IXs_onsets) == 6 # Make sure only 6 block onsets were found
     return IXs_onsets
 
 
@@ -65,23 +69,29 @@ def find_beginning_of_blocks(d_times_ttl, d_events_ttl):
 # -----------------------------
 
 # Load events from nev file
-if recording_system == 'Neuralynx':
+if args.recording_system == 'Neuralynx':
     NIO = io.NeuralynxIO(os.path.dirname(args.ttl_file))
     time0, timeend = NIO._timestamp_limits[0]
     print('time0, timeend = ', time0, timeend)
     events = NIO._nev_memmap[os.path.basename(args.ttl_file)[:-4]]
     times_ttl = [float(e[3]) for e in events]
     event_nums_ttl = [float(e[5]) for e in events]
-elif recording_system == 'BlackRock':
-    pass
-    # NIO = io.BlackrockIO(op.join(session_folder, 'Yair_practice_2018Nov09001.nev'))
-    # events = NIO.nev_data['NonNeural']
-    # time_stamps = [e[0] for e in events]
-    # event_num = [e[4] for e in events]
-    # plt.plot(np.asarray(time_stamps)/40000, event_num, '.')
-    # plt.show()
+
+elif args.recording_system == 'BlackRock':
+    NIO = io.BlackrockIO(args.ttl_file)
+    events = NIO.nev_data['NonNeural']
+    assert NIO._BlackrockRawIO__nev_basic_header[6] == NIO._BlackrockRawIO__nev_basic_header[7] # I wasnt sure if these two represent indeed sampling rate
+    sr = NIO._BlackrockRawIO__nev_basic_header[6]
+    times_ttl = [1e6*e[0]/sr for e in events] # transfrom from samples to microsec, like with Neuralynx
+    event_nums_ttl = [e[4] for e in events]
+    # !!!! special for patient 504 - for some reason event numbers in first block were shifted upwards
+    event_nums_ttl = [e - 128 if e > 65400 else e for e in event_nums_ttl]
+    # ----- !!!!!!!!!!!!!!! ---------------
+    event_nums_ttl = [e - min(event_nums_ttl) for e in event_nums_ttl]
 
 
+
+# Remove false triggers
 times_ttl, event_nums_ttl = remove_false_TTLs(times_ttl, event_nums_ttl)
 times_ttl, event_nums_ttl = remove_events_zero(times_ttl, event_nums_ttl) # Should come after remove_false_TTLs
 
