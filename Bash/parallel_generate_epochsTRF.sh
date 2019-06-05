@@ -35,7 +35,7 @@ fi
 
 for CH in $(seq $((1+($GROUP-1)*64)) $(($GROUP*64)))
 do
-     path2script='/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Code/Main/'
+     path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/'
      filename_bash='RunScripts/bash_channel_'$CH'.sh'
      filename_py='generate_multichannel_spectrotemporal_epochs.py -patient '$PATIENT' -channels '$CH 
      output_log='Logs/log_o_channel_'$CH

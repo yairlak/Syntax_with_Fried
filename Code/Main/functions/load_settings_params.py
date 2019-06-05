@@ -32,7 +32,7 @@ class Settings():
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
-        #self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
+        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
         self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC', 'micro')
         #self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
@@ -121,7 +121,7 @@ class Params:
         self.downsampling_sfreq = 512
 
         ###### Frequency bands ##########
-        self.iter_freqs = [('High-Gamma', 70, 150, 5)] # (Band-name, min_freq, max_freq, step_freq); the last indicates
+        self.iter_freqs = [('High-Gamma', 70, 151, 10)] # (Band-name, min_freq, max_freq, step_freq); the last indicates
         ##################################
 
         ####### Time-frequency ###########
