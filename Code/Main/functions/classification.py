@@ -103,7 +103,7 @@ def train_test_GAT(X_train, y_train, X_test, y_test):
     #clf = make_pipeline(StandardScaler(), LinearSVC())
     clf = make_pipeline(StandardScaler(), LinearModel(LogisticRegression(solver='lbfgs')))
     # Define the Temporal Generalization object
-    time_gen = GeneralizingEstimator(clf, n_jobs=-2, scoring='roc_auc', verbose=True)
+    time_gen = GeneralizingEstimator(clf, n_jobs=1, scoring='roc_auc', verbose=True)
     # Fit model
     if (X_test is not None) and (y_test is not None): # Generalization across conditions 
         #print(X_train, y_train, X_test, y_test)
@@ -113,7 +113,7 @@ def train_test_GAT(X_train, y_train, X_test, y_test):
         scores = np.expand_dims(scores, axis=0) # For later compatability (plot_GAT() np.mean(scores, axis=0))
         #print(scores)
     else: # Generlization across time only (not across conditions or modalities)
-        scores = cross_val_multiscore(time_gen, X_train, y_train, cv=5, n_jobs=-1)
+        scores = cross_val_multiscore(time_gen, X_train, y_train, cv=5, n_jobs=1)
 
     return time_gen, scores
 
