@@ -5,7 +5,7 @@ import numpy as np
 plt.switch_backend('agg')
 
 
-def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_train, query_classes_test, root_path):
+def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_train, query_classes_test, root_path, k=1):
     '''
 
     :param patients: (list) 
@@ -14,6 +14,7 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     :param query_classes_train: (list of len 2) two queries for the two classes (if no test queries then 5-fold CV is used)
     :param query_classes_test: (optional - list of len 2) two queries for the two test classes.
     :param root_path:
+    :param k: (scalar) number of subsequent time points to cat
     :return:
     1. times
     2. X_train_query
@@ -95,10 +96,45 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     data['y_train'] = y_train
     data['y_test'] = y_test
 
+    del X_train, X_test, y_train, y_test, epochs_class_train
+    if k > 1:
+        data = cat_subsequent_timepoints(k, data)
+
     return data
 
+def cat_subsequent_timepoints(k, data):
+    '''
+    :param k: (scalar) number of subsequent time points
+    :param data: (dict) has the following keys -
+           times: n_times
+           X_train: n_epochs, n_channels, n_times
+           y_train: n_epochs
+           X_test: n_epochs, n_channels, n_times
+           y_test: n_epochs
+    :return:
+    new_times = floor(n_times/k)
+    new_X_train: n_epochs, n_channels * k, floor(n_times/k)
+    new_X_test: n_epochs, n_channels * k, floor(n_times/k)
+    '''
 
-def train_test_GAT(X_train, y_train, X_test, y_test):
+    n_epochs, n_channels, n_times = data['X_train'].shape
+    n_times_round = int(k*np.floor(n_times/k)) # remove residual mod k
+    assert n_times_round > 0
+    data['X_train'] = data['X_train'][:,:,0:n_times_round]
+
+    new_data = data.copy()
+    new_data['times'] = data['times'][0:n_times_round:k]
+    new_data['X_train'] = data['X_train'].reshape((n_epochs, -1, int(n_times_round/k)), order='F')
+
+    if data['X_test'] is not None:
+        data['X_test'] = data['X_test'][:, :, 0:n_times_round]
+        new_data['X_test'] = data['X_test'].reshape((n_epochs, -1, int(n_times_round/k)), order='F')
+
+
+    return new_data
+
+
+def train_test_GAT(data):
     from sklearn.svm import LinearSVC
     from sklearn.pipeline import make_pipeline
     from sklearn.preprocessing import StandardScaler
@@ -109,49 +145,19 @@ def train_test_GAT(X_train, y_train, X_test, y_test):
     #clf = make_pipeline(StandardScaler(), LinearSVC())
     clf = make_pipeline(StandardScaler(), LinearModel(LogisticRegression(solver='lbfgs')))
     # Define the Temporal Generalization object
-    time_gen = GeneralizingEstimator(clf, n_jobs=-2, scoring='roc_auc', verbose=True)
+    time_gen = GeneralizingEstimator(clf, n_jobs=1, scoring='roc_auc', verbose=True)
     # Fit model
-    if (X_test is not None) and (y_test is not None): # Generalization across conditions 
+    if (data['X_test'] is not None) and (data['y_test'] is not None): # Generalization across conditions
         #print(X_train, y_train, X_test, y_test)
         #print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
-        time_gen.fit(X_train, y_train)
-        scores = time_gen.score(X_test, y_test)
+        time_gen.fit(data['X_train'], data['y_train'])
+        scores = time_gen.score(data['X_test'], data['y_test'])
         scores = np.expand_dims(scores, axis=0) # For later compatability (plot_GAT() np.mean(scores, axis=0))
         #print(scores)
     else: # Generlization across time only (not across conditions or modalities)
-        scores = cross_val_multiscore(time_gen, X_train, y_train, cv=5, n_jobs=-1)
+        scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
 
     return time_gen, scores
-
-
-def cat_subsequent_timepoints(k, times, data):
-    '''
-
-    :param k: (scalar) number of subsequent time points
-    :param times: n_times
-    :param X_train: n_epochs, n_channels, n_times
-    :param y_train: n_epochs
-    :param X_test: n_epochs, n_channels, n_times
-    :param y_test: n_epochs
-    :return:
-    new_times = floor(n_times/k)
-    new_X_train: n_epochs, n_channels * k, floor(n_times/k)
-    new_X_test: n_epochs, n_channels * k, floor(n_times/k)
-    '''
-
-    n_epochs, n_channels, n_times = data['X_train'].shape
-    n_times = data['times'].shape
-    new_n_times = np.floor(n_times/k)
-    assert new_n_times > 0
-    data['X_train'] = data['X_train'][:,:,:new_n_times]
-    data['X_test'] = data['X_test'][:, :, :new_n_times]
-
-    new_data = data
-    new_data['times'] = data['times'][0:new_n_times:k]
-    new_data['X_train'] = data['X_train'].reshape((n_epochs, -1, new_n_times), order='F')
-    new_data['X_test'] = data['X_test'].reshape((n_epochs, -1, new_n_times), order='F')
-
-    return new_data
 
 
 def plot_GAT(times, time_gen, scores):
