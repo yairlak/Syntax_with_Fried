@@ -88,8 +88,14 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
         print('Number of samples in test class %i : %i' % (2, X_test[1].shape[0]))
         X_test = np.concatenate(X_test, axis=0)
 
+    data = {}
+    data['times'] = epochs_class_train[0].times
+    data['X_train'] = X_train
+    data['X_test'] = X_test
+    data['y_train'] = y_train
+    data['y_test'] = y_test
 
-    return epochs_class_train[0].times, X_train, y_train, X_test, y_test
+    return data
 
 
 def train_test_GAT(X_train, y_train, X_test, y_test):
@@ -116,6 +122,36 @@ def train_test_GAT(X_train, y_train, X_test, y_test):
         scores = cross_val_multiscore(time_gen, X_train, y_train, cv=5, n_jobs=-1)
 
     return time_gen, scores
+
+
+def cat_subsequent_timepoints(k, times, data):
+    '''
+
+    :param k: (scalar) number of subsequent time points
+    :param times: n_times
+    :param X_train: n_epochs, n_channels, n_times
+    :param y_train: n_epochs
+    :param X_test: n_epochs, n_channels, n_times
+    :param y_test: n_epochs
+    :return:
+    new_times = floor(n_times/k)
+    new_X_train: n_epochs, n_channels * k, floor(n_times/k)
+    new_X_test: n_epochs, n_channels * k, floor(n_times/k)
+    '''
+
+    n_epochs, n_channels, n_times = data['X_train'].shape
+    n_times = data['times'].shape
+    new_n_times = np.floor(n_times/k)
+    assert new_n_times > 0
+    data['X_train'] = data['X_train'][:,:,:new_n_times]
+    data['X_test'] = data['X_test'][:, :, :new_n_times]
+
+    new_data = data
+    new_data['times'] = data['times'][0:new_n_times:k]
+    new_data['X_train'] = data['X_train'].reshape((n_epochs, -1, new_n_times), order='F')
+    new_data['X_test'] = data['X_test'].reshape((n_epochs, -1, new_n_times), order='F')
+
+    return new_data
 
 
 def plot_GAT(times, time_gen, scores):

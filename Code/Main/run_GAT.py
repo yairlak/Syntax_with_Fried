@@ -22,9 +22,15 @@ os.chdir(dname)
 
 
 # 1. Prepare data
-times, X_train_query, y_train_query, X_test_query, y_test_query = classification.prepare_data_for_GAT(args.patients, args.hospitals, args.picks,
-                                                                       args.train_queries, args.test_queries,
-                                                                       args.root_path)
+classification_data = classification.prepare_data_for_GAT(args.patients, args.hospitals, args.picks,
+                                                           args.train_queries, args.test_queries,
+                                                           args.root_path)
+
+# 1.1 Change classification data to have k subsequent time points
+k = 5
+classification_data = classification.cat_subsequent_timepoints(k, classification_data)
+
+
 
 # 2. Train-test GAT
 time_gen, scores = classification.train_test_GAT(X_train_query, y_train_query, X_test_query, y_test_query)
