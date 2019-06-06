@@ -29,7 +29,7 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     # train_times["step"] = 0.01
 
     X_train = [[], []]; y_train = []; X_test = [[], []]; y_test = [] # assuming for now only two classes (two empty lists)
-    for patient, hospital, picks in zip(patients, hospitals, picks_all_patients):
+    for i, (patient, hospital, picks) in enumerate(zip(patients, hospitals, picks_all_patients)):
         if picks == 'all':
             import glob
             epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*.h5'))
@@ -52,10 +52,9 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
                     print('epochsTRF num_epochs X num_channels X num_freq X num_timepoints:', epochs_class_train.data.shape)
                     curr_data = np.squeeze(np.average(epochs_class_train.data, axis=2))
                     print('Curr train data: ', curr_data.shape)
-                    if c == 0:
-                        print(list(epochs_class_train.metadata))
+                    if c == 0 and i==0:
                         print(epochs_class_train.metadata['sentence_string'])
-                        print(epochs_class_train.metadata['word_string'])
+                        print(', '.join(epochs_class_train.metadata['word_string']))
                     X_train[q].append(curr_data)
                     del curr_data
                 if query_classes_test is not None:
@@ -65,9 +64,9 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
                         curr_data = np.squeeze(np.average(epochs_class_test.data, axis=2))
                         X_test[q].append(curr_data)
                         print('Curr test data: ', curr_data.shape)
-                        if c==0:
+                        if c==0 and i==0:
                             print(epochs_class_test.metadata['sentence_string'])
-                            print(epochs_class_test.metadata['word_string'])
+                            print(', '.join(epochs_class_test.metadata['word_string']))
                 else: # no test queries (generalization across time only, not conditions)
                     X_test = None; y_test = None
             except Exception as e:

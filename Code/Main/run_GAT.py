@@ -35,9 +35,9 @@ for c, comparison in comparisons.items():
             cmd += ' -s %s -p %s -k %s' % (hospital, patient, pick)
         cmd += ' --cat-k-timepoints %i' % args.cat_k_timepoints
         
-        fname = comparison['name'] + "_".join(args.patients) + '_cat-k_' + str(args.cat_k_timepoints)
+        fname = comparison['name'] + "_patients_" + '_'.join([s.split('_')[1] for s in args.patients]) + '_cat-k_' + str(args.cat_k_timepoints)
         cmd += ' --output-filename %s' % fname
 
-        cmd += ' > Logs_GAT/%s.log 2>&1 &' % comparison['name']
+        cmd += ' > Logs_GAT/%s.log 2>&1 &' % (comparison['name'] + '_cat-k_' + str(args.cat_k_timepoints))
         print(cmd)
         os.system(cmd)
