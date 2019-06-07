@@ -1,9 +1,3 @@
-usage: plot_epochs_ERPs.py [-h] [-patient PATIENT]
-                           [-block {visual,auditory,1,2,3,4,5,6,}]
-                           [-align {first,last,end}] [-filename FILENAME]
-                           [--sort-key SORT_KEY] [--query QUERY]
-                           [--queries-to-compare QUERIES_TO_COMPARE QUERIES_TO_COMPARE]
-                           [-SOA SOA] [-word-ON-duration WORD_ON_DURATION]
-                           [-y-tick-step Y_TICK_STEP] [-window-st WINDOW_ST]
-                           [-window-ed WINDOW_ED]
-plot_epochs_ERPs.py: error: argument -block: invalid choice: 'v' (choose from 'visual', 'auditory', '1', '2', '3', '4', '5', '6', [])
+/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/functions/analyses.py:13: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
+['GA2-LEC4_0002.ncs']
+  info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)

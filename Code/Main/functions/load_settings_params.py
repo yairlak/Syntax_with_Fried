@@ -126,7 +126,7 @@ class Params:
         self.downsampling_sfreq = 512
 
         ###### Frequency bands ##########
-        self.iter_freqs = [('High-Gamma', 70, 150, 5)] # (Band-name, min_freq, max_freq, step_freq); the last indicates
+        self.iter_freqs = [('High-Gamma', 70, 151, 10)] # (Band-name, min_freq, max_freq, step_freq); the last indicates
         ##################################
 
         ####### Time-frequency ###########

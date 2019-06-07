@@ -16,6 +16,7 @@ CHEETAH_str = 'CHEETAH_SIGNAL'
 # -------------------
 # ---- functions ----
 # -------------------
+>>>>>>> 2946d755b26a7fd417a05956b6fed501e900e322
 
 def remove_false_TTLs(times, event_nums):
     IX_to_keep = []

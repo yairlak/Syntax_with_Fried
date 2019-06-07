@@ -1,6 +1,15 @@
 clear; close all; clc;
 
 %%
+<<<<<<< HEAD
+patient = 'patient_504';
+recording_system = 'BlackRock';
+%recording_system = 'Neuralynx';
+
+% base_folder = ['/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fried/Data/UCLA/', patient];
+base_folder = ['/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/', patient, '/Raw'];
+
+=======
 patient = 'patient_505';
 % recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
@@ -8,6 +17,7 @@ recording_system = 'Neuralynx';
 base_folder = ['/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fried/Data/UCLA/', patient];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
+>>>>>>> 2946d755b26a7fd417a05956b6fed501e900e322
 output_path = fullfile(base_folder,'ChannelsCSC');
 
 mkdir(output_path);
@@ -53,14 +63,14 @@ switch recording_system
             end
         
         case 'BlackRock'
-            nev_file = dir([base_folder '/Raw/*.nev']);
-            nev_file = fullfile(base_folder,'Raw',nev_file(1).name);
-            NEV = openNEV(nev_file, 'read');
+%             nev_file = dir([base_folder '/Raw/*.nev']);
+%             nev_file = fullfile(base_folder,'Raw',nev_file(1).name);
+%             NEV = openNEV(nev_file, 'read');
 %             
-            ns5_files = dir([base_folder '/Raw/*.ns5']);
+            ns5_files = dir([base_folder '/*.ns5']);
             for nc5_file_name=ns5_files'
                 file_name = nc5_file_name.name;
-                nc5_file = fullfile(base_folder,'Raw',file_name);
+                nc5_file = fullfile(base_folder,file_name);
                 neuroport2mat_all4(nc5_file, output_path); 
 %                 x = openNSx('read',ncs_file);
             end

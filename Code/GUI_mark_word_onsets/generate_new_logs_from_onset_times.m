@@ -1,7 +1,11 @@
 clear all; close all; clc
 
 %% Which log to regenerate
+<<<<<<< HEAD
+path2logs = fullfile('..', '..', 'Data', 'UCLA', 'patient_502', 'Logs');
+=======
 path2logs = fullfile('..', '..', 'Data', 'UCLA', 'patient_504', 'Logs');
+>>>>>>> 2946d755b26a7fd417a05956b6fed501e900e322
 % log_file_name = 'events_log_in_cheetah_clock_block6.log'; %For EN_02, choose even numbers for AUDIO (part2, part4, part6)
 log_file_name = 'events_log_in_cheetah_clock_part6.log';
 

@@ -29,7 +29,7 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     # train_times["step"] = 0.01
 
     X_train = [[], []]; y_train = []; X_test = [[], []]; y_test = [] # assuming for now only two classes (two empty lists)
-    for patient, hospital, picks in zip(patients, hospitals, picks_all_patients):
+    for i, (patient, hospital, picks) in enumerate(zip(patients, hospitals, picks_all_patients)):
         if picks == 'all':
             import glob
             epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*.h5'))
@@ -52,10 +52,9 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
                     print('epochsTRF num_epochs X num_channels X num_freq X num_timepoints:', epochs_class_train.data.shape)
                     curr_data = np.squeeze(np.average(epochs_class_train.data, axis=2))
                     print('Curr train data: ', curr_data.shape)
-                    if c == 0:
-                        print(list(epochs_class_train.metadata))
+                    if c == 0 and i==0:
                         print(epochs_class_train.metadata['sentence_string'])
-                        print(epochs_class_train.metadata['word_string'])
+                        print(', '.join(epochs_class_train.metadata['word_string']))
                     X_train[q].append(curr_data)
                     del curr_data
                 if query_classes_test is not None:
@@ -65,9 +64,9 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
                         curr_data = np.squeeze(np.average(epochs_class_test.data, axis=2))
                         X_test[q].append(curr_data)
                         print('Curr test data: ', curr_data.shape)
-                        if c==0:
+                        if c==0 and i==0:
                             print(epochs_class_test.metadata['sentence_string'])
-                            print(epochs_class_test.metadata['word_string'])
+                            print(', '.join(epochs_class_test.metadata['word_string']))
                 else: # no test queries (generalization across time only, not conditions)
                     X_test = None; y_test = None
             except Exception as e:
@@ -127,8 +126,9 @@ def cat_subsequent_timepoints(k, data):
     new_data['X_train'] = data['X_train'].reshape((n_epochs, -1, int(n_times_round/k)), order='F')
 
     if data['X_test'] is not None:
+        n_epochs_test = data['X_test'].shape[0]
         data['X_test'] = data['X_test'][:, :, 0:n_times_round]
-        new_data['X_test'] = data['X_test'].reshape((n_epochs, -1, int(n_times_round/k)), order='F')
+        new_data['X_test'] = data['X_test'].reshape((n_epochs_test, -1, int(n_times_round/k)), order='F')
 
 
     return new_data
@@ -190,229 +190,3 @@ def plot_GAT(times, time_gen, scores):
 
     return fig1, fig2
 
-    # file_name = 'GeneralizingEstimatorAcrossModalities_' + str(comp) + '_' + comparison[
-    #     'contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_' + comparison_to_generalize[
-    #                 'contrast_name']
-    # plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-    # plt.close()
-    # print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-
-#     def get_multichannel_epochs_for_all_current_conditions(comparison, queries, settings, preferences):
-#     epochs_all_queries = []
-#     for q, query in enumerate(queries):
-#         for p, patient in enumerate(settings.patients):
-#             # High-gamma features
-#             for c, channel in enumerate(settings.channels[p]):
-#                 settings.channel = channel
-#                 if preferences.analyze_micro_raw:
-#                     band = 'High-Gamma'
-#                     print('contrast: ' + comparison['contrast_name'] + '; ' + band + '; channel ' + str(channel) + '; ' + patient)
-#                     file_name = 'Feature_matrix_' + band + '_' + patient + '_channel_' + str(
-#                         settings.channel) + '_' + query
-#                     with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
-#                                                file_name + '.pkl'), 'rb') as f:
-#                         curr_data = pickle.load(f)
-#                         #print(curr_data[0].events.shape[0])
-#                         if c == 0 and p==0:
-#                             epochs_all_channels = curr_data[0]
-#                             events_shared_for_all_patients = curr_data[0].events
-#                             #info_shared_for_all_channels
-#
-#                             # collect stimuli info
-#                             stimuli_of_curr_query = []
-#                             label_cond = comparison['cond_labels'][q]
-#                             file_name_root = band + '_' + patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
-#                             with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'r') as f:
-#                                 stimuli_of_curr_query.append(f.readlines())
-#                         else:
-#                             curr_data[0].events = events_shared_for_all_patients
-#                             epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
-#             # Single-unit features
-#             if preferences.analyze_micro_single:
-#                 print('contrast: ' + comparison['contrast_name'] + '; Single-units channel ' + str(channel) + '; ' + patient)
-#                 file_name = 'Feature_matrix_rasters_' + settings.patient + '_' + query
-#                 with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
-#                                        file_name + '.pkl'), 'rb') as f:
-#                     curr_data = pickle.load(f)
-#                 epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
-#         epochs_all_channels.events[:, 2] = q
-#         epochs_all_channels.event_id = {}
-#         epochs_all_channels.event_id[comparison['cond_labels'][q]] = q
-#         epochs_all_queries.append(epochs_all_channels)
-#         print(stimuli_of_curr_query)
-#
-#     epochs_all_queries = mne.concatenate_epochs(epochs_all_queries)
-#     print(epochs_all_queries)
-#
-#     return epochs_all_queries, stimuli_of_curr_query
-#
-#
-# def get_multichannel_epochs_for_all_current_conditions_from_all_trials(comparison, queries, settings, preferences):
-#     epochs_all_queries = []
-#     for q, query in enumerate(queries):
-#         for p, patient in enumerate(settings.patients):
-#             # High-gamma features
-#             for c, channel in enumerate(settings.channels[p]):
-#                 settings.channel = channel
-#                 if preferences.analyze_micro_raw:
-#                     band = 'High-Gamma'
-#                     print('contrast: ' + comparison['contrast_name'] + '; ' + band + '; channel ' + str(channel) + '; ' + patient)
-#                     file_name = 'Feature_matrix_' + band + '_' + patient + '_channel_' + str(
-#                         settings.channel) + '_' + 'All_trials' #ALL_TRIALS
-#                     # file_name = 'Feature_matrix_' + band + '_' + patient + '_channel_' + str(
-#                     #     settings.channel) + '_' + query
-#                     with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
-#                                                file_name + '.pkl'), 'rb') as f:
-#                         curr_data = pickle.load(f)
-#                         #print(curr_data[0].events.shape[0])
-#                         if c == 0 and p==0: # initialize epochs and events objects at the first patient-channel
-#
-#                             # ---- generate the epochs object -----
-#                             # 1. Get query
-#                             # 2. Extract reduced epochs object based on query
-#                             # 3. Get shared events for all patients
-#                             # 4. Extract sentence/word stimuli
-#
-#
-#                             #epochs_all_channels = curr_data[0]
-#                             #events_shared_for_all_patients = curr_data[0].events
-#                             #info_shared_for_all_channels
-#
-#                             # collect stimuli info
-#                             stimuli_of_curr_query = []
-#                             label_cond = comparison['cond_labels'][q]
-#                             file_name_root = band + '_' + patient + '_Blocks_' + comparison['blocks'] + '_' + label_cond + '_' + comparison['align_to']
-#                             with open(os.path.join(settings.path2output, settings.patient, 'HighGamma', file_name_root + '.txt'), 'r') as f:
-#                                 stimuli_of_curr_query.append(f.readlines())
-#                         else:
-#                             #curr_data[0].events = events_shared_for_all_patients
-#                             epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
-#             # Single-unit features
-#             if preferences.analyze_micro_single:
-#                 print('contrast: ' + comparison['contrast_name'] + '; Single-units channel ' + str(channel) + '; ' + patient)
-#                 file_name = 'Feature_matrix_rasters_' + settings.patient + '_' + query
-#                 with open(os.path.join(settings.path2output, patient, 'feature_matrix_for_classification',
-#                                        file_name + '.pkl'), 'rb') as f:
-#                     curr_data = pickle.load(f)
-#                 epochs_all_channels = mne.epochs.add_channels_epochs([epochs_all_channels, curr_data[0]])
-#         epochs_all_channels.events[:, 2] = q
-#         epochs_all_channels.event_id = {}
-#         epochs_all_channels.event_id[comparison['cond_labels'][q]] = q
-#         epochs_all_queries.append(epochs_all_channels)
-#         print(stimuli_of_curr_query)
-#
-#     epochs_all_queries = mne.concatenate_epochs(epochs_all_queries)
-#     print(epochs_all_queries)
-#
-#     return epochs_all_queries, stimuli_of_curr_query
-#
-#
-# def plot_generalizing_estimator(epochs_all_queries, comparison, comp, settings):
-#     train_times = {}
-#     train_times["start"] = -2.5
-#     train_times["stop"] = 2.5
-#     train_times["step"] = 0.01
-#     # test_times = {}
-#     # test_times["start"] = -1.0
-#     # test_times["stop"] = 1.05
-#     # test_times["step"] = 0.01
-#
-#     epochs_all_queries.crop(train_times["start"], train_times["stop"])
-#     epochs_all_queries.decimate(decim=10)
-#
-#     X = epochs_all_queries.get_data()  # MEG signals: n_epochs, n_channels, n_times
-#     y = epochs_all_queries.events[:, 2]  # target: Audio left or right
-#
-#     # Define a classifier for GAT
-#     clf = make_pipeline(StandardScaler(), LinearSVC())
-#     # Define the Temporal Generalization object
-#     time_gen = GeneralizingEstimator(clf, n_jobs=-2, scoring='roc_auc')
-#     # Score CV
-#     scores = cross_val_multiscore(time_gen, X, y, cv=5, n_jobs=-2)
-#     # Mean scores across cross-validation splits
-#     scores = np.mean(scores, axis=0)
-#
-#     # Plot the diagonal
-#     fig, ax = plt.subplots()
-#     ax.plot(epochs_all_queries.times, np.diag(scores), label='score')
-#     ax.axhline(.5, color='k', linestyle='--', label='chance')
-#     ax.set_xlabel('Times')
-#     ax.set_ylabel('AUC')
-#     ax.legend()
-#     ax.axvline(.0, color='k', linestyle='-')
-#     ax.set_title('Decoding over time')
-#
-#     file_name = 'SlidingEstimator_' + str(comp) + '_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
-#     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-#     plt.close()
-#     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-#
-#     # Plot the full GAT matrix
-#     fig, ax = plt.subplots(1, 1)
-#     im = ax.imshow(scores, interpolation='lanczos', origin='lower', cmap='RdBu_r',
-#                    extent=epochs_all_queries.times[[0, -1, 0, -1]], vmin=0., vmax=1.)
-#     ax.set_xlabel('Testing Time (s)')
-#     ax.set_ylabel('Training Time (s)')
-#     ax.set_title('Temporal Generalization')
-#     ax.axvline(0, color='k')
-#     ax.axhline(0, color='k')
-#     plt.colorbar(im, ax=ax)
-#
-#     file_name = 'GeneralizingEstimator_' + str(comp) + '_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients)+comparison['align_to']
-#     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-#     plt.close()
-#     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-#
-#
-# def plot_generalizing_estimator_across_modalities(epochs_all_queries, epochs_all_queries_to_generalize, comparison, comparison_to_generalize, comp, settings):
-#     train_times = {}
-#     train_times["start"] = -2.5
-#     train_times["stop"] = 2.5
-#     train_times["step"] = 0.01
-#
-#     epochs_all_queries.crop(train_times["start"], train_times["stop"])
-#     epochs_all_queries.decimate(decim=10)
-#     epochs_all_queries_to_generalize.crop(train_times["start"], train_times["stop"])
-#     epochs_all_queries_to_generalize.decimate(decim=10)
-#
-#     X = epochs_all_queries.get_data()  # MEG signals: n_epochs, n_channels, n_times
-#     y = epochs_all_queries.events[:, 2]  # target: Audio left or right
-#
-#     # Define a classifier for GAT
-#     clf = make_pipeline(StandardScaler(), LinearSVC())
-#     # Define the Temporal Generalization object
-#     time_gen = GeneralizingEstimator(clf, n_jobs=-2, scoring='roc_auc')
-#     # Fit model
-#     time_gen.fit(X, y)
-#     # Score on other modality
-#     X = epochs_all_queries_to_generalize.get_data()  # MEG signals: n_epochs, n_channels, n_times
-#     y = epochs_all_queries_to_generalize.events[:, 2]  # target: Audio left or right
-#     scores = time_gen.score(X, y)
-#
-#
-#     # Plot the diagonal
-#     fig, ax = plt.subplots()
-#     ax.plot(epochs_all_queries.times, np.diag(scores), label='score')
-#     ax.axhline(.5, color='k', linestyle='--', label='chance')
-#     ax.set_xlabel('Times')
-#     ax.set_ylabel('AUC')
-#     ax.legend()
-#     ax.axvline(.0, color='k', linestyle='-')
-#     ax.set_title('Decoding over time')
-#
-#     file_name = 'SlidingEstimatorAcrossModalities_' + str(comp) + '_' + comparison['contrast_name'] + '_' + '_'.join(settings.patients) + '_generalize_' + comparison_to_generalize['contrast_name']
-#     plt.savefig(os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-#     plt.close()
-#     print('Saved to: ' + os.path.join(settings.path2figures, 'Decoding', file_name + '.png'))
-#
-#     # Plot the full GAT matrix
-#     fig, ax = plt.subplots(1, 1)
-#     im = ax.imshow(scores, interpolation='lanczos', origin='lower', cmap='RdBu_r',
-#                    extent=epochs_all_queries.times[[0, -1, 0, -1]], vmin=0., vmax=1.)
-#     ax.set_xlabel('Testing Time (s)')
-#     ax.set_ylabel('Training Time (s)')
-#     ax.set_title('Temporal Generalization')
-#     ax.axvline(0, color='k')
-#     ax.axhline(0, color='k')
-#     plt.colorbar(im, ax=ax)
-#
