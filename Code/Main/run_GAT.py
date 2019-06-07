@@ -21,6 +21,11 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 
+import pickle
+with open('/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fried/Paradigm/word2POS.pkl', 'rb') as f:
+    poss = pickle.load(f)
+
+
 # 1. Prepare data based on queries
 classification_data = classification.prepare_data_for_GAT(args.patients, args.hospitals, args.picks,
                                                            args.train_queries, args.test_queries,
