@@ -32,8 +32,8 @@ if not args.comparisons:
 
 for c, comparison in comparisons.items():
     if c in [int(s) for s in args.comparisons]:
-        #cmd = 'nohup python GAT.py -r %s --train-queries "%s" --train-queries "%s"' % (args.root_path, comparison['train_queries'][0], comparison['train_queries'][1])
-        cmd = 'python GAT.py -r %s --train-queries "%s" --train-queries "%s"' % (args.root_path, comparison['train_queries'][0], comparison['train_queries'][1])
+        cmd = 'nohup python GAT.py -r %s --train-queries "%s" --train-queries "%s"' % (args.root_path, comparison['train_queries'][0], comparison['train_queries'][1])
+        
         if 'test_queries' in comparison:
             cmd += ' --test-queries "%s" --test-queries "%s"' % (comparison['test_queries'][0], comparison['test_queries'][1])
 
@@ -44,6 +44,6 @@ for c, comparison in comparisons.items():
         fname = comparison['name'] + "_patients_" + '_'.join([s.split('_')[1] for s in args.patients]) + '_cat-k_' + str(args.cat_k_timepoints)
         cmd += ' --output-filename %s' % fname
 
-        #cmd += ' > Logs_GAT/%s.log 2>&1 &' % (comparison['name'] + '_cat-k_' + str(args.cat_k_timepoints))
+        cmd += ' > Logs_GAT/%s.log 2>&1 &' % (comparison['name'] + '_cat-k_' + str(args.cat_k_timepoints))
         print(cmd)
         os.system(cmd)

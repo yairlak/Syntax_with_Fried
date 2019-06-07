@@ -174,4 +174,13 @@ def comparison_list():
     comparisons[33]['train_queries'] = ["Embedding == 1 and word_position==-1 and block in [2, 4, 6]", "sentence_length==5 and Embedding==0 and word_position==-1 and block in [2, 4, 6]"]
     comparisons[33]['test_queries'] = ["Embedding == 1 and word_position==-1 and block in [1, 3, 5]", "sentence_length==5 and Embedding==0 and word_position==-1 and block in [1, 3, 5]"]
 
+# Number of letters
+    comparisons[34] = {}
+    comparisons[34]['name'] = 'word_length_audio'
+    comparisons[34]['train_queries'] = ["word_string.str.len()<4 and block in [2, 4, 6]", "word_string.str.len()>7 and block in [2, 4, 6]"]
+
+    comparisons[35] = {}
+    comparisons[35]['name'] = 'word_length_visual'
+    comparisons[35]['train_queries'] = ["word_string.str.len()<4 and block in [1, 3, 5]", "word_string.str.len()>7 and block in [1, 3, 5]"]
+    
     return comparisons
