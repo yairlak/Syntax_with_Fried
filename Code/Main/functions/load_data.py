@@ -31,6 +31,57 @@ def macro_electrodes(settings):
     return data_all, settings
 
 
+
+def load_combinato_sorted_h5(channel, settings):
+    import h5py
+    spike_times = []; channel_names = []
+
+    h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro' , 'CSC' + str(channel), 'data_*.h5'))
+    if len(h5_files) == 1:
+        filename = h5_files[0]
+        f_all_spikes = h5py.File(filename, 'r')
+
+        for sign in ['pos', 'neg']:
+            filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC' + str(channel), 'sort_' + sign + '_simple', 'sort_cat.h5'))[0]
+            f_sort_cat = h5py.File(filename_sorted, 'r')
+
+            classes =  f_sort_cat['classes'].value
+            index = f_sort_cat['index'].value
+            matches = f_sort_cat['matches'].value
+            groups = f_sort_cat['groups'].value
+            group_numbers = set([g[1] for g in groups])
+            types = f_sort_cat['types'].value # -1: artifact, 0: unassigned, 1: MU, 2: SU
+
+            # For each group, generate a list with all spike times and append to spike_times
+            for g in list(group_numbers):
+                IXs = []
+                if types[g][1]>0: # ignore artifact and unassigned groups
+
+                    # Loop over all spikes
+                    for i, c in enumerate(classes):
+                        # check if current cluster in group
+                        g_of_curr_cluster = [g_ for (c_, g_) in groups if c_ == c]
+                        if len(g_of_curr_cluster) == 1:
+                            g_of_curr_cluster = g_of_curr_cluster[0]
+                        else:
+                            raise('issue with groups: more than one group assigned to a cluster')
+                        # if curr spike is in a cluster of the current group
+                        if g_of_curr_cluster == g:
+                            curr_IX = index[i]
+                            IXs.append(curr_IX)
+
+                    curr_spike_times = f_all_spikes[sign]['times'].value[IXs]
+                    spike_times.append(curr_spike_times)
+                    channel_names.append(sign + '_group_' + str(g) + '_' + str(channel))
+        print(channel)
+
+
+    else:
+        print('None or more than a single combinato h5 was found')
+
+    return spike_times, channel_names
+
+
 # Spike-sorted data
 def spike_clusters(settings):
     CSC_cluster_files = glob.glob(os.path.join(settings.path2spike_clusters, 'CSC*_cluster.mat'))

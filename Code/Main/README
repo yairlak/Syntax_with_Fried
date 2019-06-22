@@ -9,8 +9,8 @@ sync_log_and_recordings: launch to have the nev files and paradigm output logs s
 - First put Microphone mat file in /Channels/micro and name it CSC0.mat
 
 - Then, run
-python generate_multichannel_spectrotemporal_epochs.py -channels 0 -patient 505 --iter-freq "[('Speech', 100, 250, 100)]"
-which will generate the epochsTFR file in Epochs/.
+python generate_multichannel_spectrotemporal_epochs.py -channels 0 -patient 505
+which will generate the epochsTFR file in Data/UCLA/patient_???/Epochs/
 
 - Finall, to generate the fig, launch:
 python plot_epochs_ERPs.py -patient 505 -channel 0 -tmin -1 -tmax 2 -baseline "(-1, 0)" --sort-key "['chronological_order']"
