@@ -46,9 +46,11 @@ def generate_mne_raw_object(data, settings, params):
     return raw
 
 def generate_mne_raw_object_for_spikes(spikes, electrode_names, settings, params):
+    time0_sec = settings.time0 / 1e6
     sfreq = params.sfreq_spikes
-    num_channels = len(spikes)
-    ch_types = ['seeg' for s in range(num_channels)]
+    num_groups = len(spikes)
+    ch_types = ['seeg' for _ in range(num_groups)]
+
 
     # montage = mne.channels.read_montage(kind='filename', ch_names=None, path='datapath', unit='m', transform=False)
     # print(montage)
@@ -60,12 +62,13 @@ def generate_mne_raw_object_for_spikes(spikes, electrode_names, settings, params
     info = mne.create_info(ch_names=electrode_names, sfreq=sfreq, ch_types=ch_types)
 
     num_samples = 1+int(sfreq * (settings.timeend - settings.time0)/1e6) # Use same sampling rate as for macro, just for convenience.
-    spikes_matrix_all_clusters = np.empty((0, num_samples))
-    for cluster, curr_spike_times in enumerate(spikes):
+    spikes_matrix_all_groups = np.empty((0, num_samples))
+    for groups, curr_spike_times_msec in enumerate(spikes):
         spikes_zero_one_vec = np.zeros(num_samples) # convert to samples from sec
-        curr_spike_times = (curr_spike_times - settings.time0 / 1e6) * sfreq # convert to samples from sec
-        curr_spike_times = curr_spike_times.astype(np.int64)
-        spikes_zero_one_vec[curr_spike_times] = 1
-        spikes_matrix_all_clusters = np.vstack((spikes_matrix_all_clusters, spikes_zero_one_vec))
-    raw = mne.io.RawArray(spikes_matrix_all_clusters, info)
+        curr_spike_times_sec = [t/1e3 for t in curr_spike_times_msec]
+        curr_spike_times_sec_ref = [t-time0_sec for t in curr_spike_times_sec]
+        curr_spike_times_samples = [int(t*sfreq) for t in curr_spike_times_sec_ref] # convert to samples from sec
+        spikes_zero_one_vec[curr_spike_times_samples] = 1
+        spikes_matrix_all_groups = np.vstack((spikes_matrix_all_groups, spikes_zero_one_vec))
+    raw = mne.io.RawArray(spikes_matrix_all_groups, info)
     return raw
