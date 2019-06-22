@@ -1,8 +1,9 @@
 # 
-queue='Global_short'
-walltime='02:00:00'
-K=1
-PATIENTS="-p 479 -p 482 -p 502 -p 505"
+queue='Unicog_long'
+walltime='72:00:00'
+K=8
+#PATIENTS="-p 479 -p 482 -p 502 -p 505"
+PATIENTS="-p 479"
 
 for COMP in $(seq 0 35)
 do
