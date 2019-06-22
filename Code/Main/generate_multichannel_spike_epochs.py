@@ -6,13 +6,14 @@ from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
 parser.add_argument('-patient', default='505', help='Patient string')
-parser.add_argument('-channels', action='append', default=list(range(89)), help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('-channels', action='append', default=list(range(20,89)), help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
-parser.add_argument('--over-write', default=False, action='store_true', help="If True then file will be overwritten")
+parser.add_argument('--overwrite', default=False, action='store_true', help="If True then file will be overwritten")
 args = parser.parse_args()
+
 
 # Set current working directory to that of script
 abspath = os.path.abspath(__file__)
@@ -41,6 +42,8 @@ if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
     params.tmin=settings.tmin if not args.tmin else args.tmin
     params.tmax=settings.tmax if not args.tmax else args.tmax
 
+    # Get channels
+    args.channels = sorted(data_manip.get_channel_nums(settings.path2rawdata_mat)) if not args.channels else args.channels
 
     pprint(preferences.__dict__); pprint(settings.__dict__); pprint(params.__dict__)
 
@@ -65,13 +68,16 @@ if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
     events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
 
     print('Analyze channels')
-    channel_nums = data_manip.get_channel_nums(settings.path2rawdata_mat) if not args.channels else args.channels
-    channel_nums.sort()
-    for ch in channel_nums:
-        epochs_spikes = analyses_single_unit.generate_epochs_spikes(ch, events_spikes, event_id, metadata, settings, params, preferences)
+    path2ChannelCSC = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'ChannelsCSC', 'micro')
+    with open(os.path.join(path2ChannelCSC, 'channel_numbers_to_names.txt')) as f_channel_names:
+        channel_names = f_channel_names.readlines()
+
+    for ch in args.channels:
+        channel_name = [l.strip('\n').split('\t')[1] for l in channel_names][ch]
+        epochs_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
         if len(epochs_spikes) > 0:
             filename = args.patient + '_epochs_spikes_ch_' + str(ch) + '.fif' if not args.out_fn else args.out_fn
             epochs_spikes.save(os.path.join(path2epochs, filename))
             print('Epochs object saved to: ' + os.path.join(path2epochs, filename))
 else:
-    print('File already exists (choose flag --over-write if needed): ' + os.path.join(path2epochs, filename))
+    print('File already exists (choose flag --overwrite if needed): ' + os.path.join(path2epochs, filename))

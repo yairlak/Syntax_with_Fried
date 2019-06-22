@@ -32,17 +32,17 @@ def macro_electrodes(settings):
 
 
 
-def load_combinato_sorted_h5(channel, settings):
+def load_combinato_sorted_h5(channel_num, channel_name, settings):
     import h5py
     spike_times = []; channel_names = []
 
-    h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro' , 'CSC' + str(channel), 'data_*.h5'))
+    h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro' , 'CSC' + str(channel_num), 'data_*.h5'))
     if len(h5_files) == 1:
         filename = h5_files[0]
         f_all_spikes = h5py.File(filename, 'r')
 
         for sign in ['pos', 'neg']:
-            filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC' + str(channel), 'sort_' + sign + '_simple', 'sort_cat.h5'))[0]
+            filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC' + str(channel_num), 'sort_' + sign + '_simple', 'sort_cat.h5'))[0]
             f_sort_cat = h5py.File(filename_sorted, 'r')
 
             classes =  f_sort_cat['classes'].value
@@ -55,7 +55,12 @@ def load_combinato_sorted_h5(channel, settings):
             # For each group, generate a list with all spike times and append to spike_times
             for g in list(group_numbers):
                 IXs = []
-                if types[g][1]>0: # ignore artifact and unassigned groups
+                type_of_curr_group = [t_ for (g_, t_) in types if g_ == g]
+                if len(type_of_curr_group) == 1:
+                    type_of_curr_group = type_of_curr_group[0]
+                else:
+                    raise ('issue with types: more than one group assigned to a type')
+                if type_of_curr_group>0: # ignore artifact and unassigned groups
 
                     # Loop over all spikes
                     for i, c in enumerate(classes):
@@ -72,8 +77,11 @@ def load_combinato_sorted_h5(channel, settings):
 
                     curr_spike_times = f_all_spikes[sign]['times'].value[IXs]
                     spike_times.append(curr_spike_times)
-                    channel_names.append(sign + '_group_' + str(g) + '_' + str(channel))
-        print(channel)
+                    if g<0:
+                        print('?')
+                    region_name = channel_name[1+channel_name.find("-"):channel_name.find(".")]
+                    channel_names.append(region_name + '_' + sign + '_g_' + str(g) + '_' + str(channel_num))
+        print(channel_num)
 
 
     else:
