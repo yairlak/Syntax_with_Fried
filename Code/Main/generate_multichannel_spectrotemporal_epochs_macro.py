@@ -1,19 +1,19 @@
 import argparse, os
-from functions import load_settings_params, read_logs_and_features, convert_to_mne, data_manip, analyses_single_unit
+from functions import load_settings_params, read_logs_and_features, convert_to_mne, data_manip, analyses
 from mne.io import _merge_info
 import numpy as np
 from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='502', help='Patient string')
-parser.add_argument('-channels', action='append', default=list(range(97)), help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('-patient', default='505', help='Patient string')
+parser.add_argument('--probe-name', default='RSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
-parser.add_argument('--overwrite', default=False, action='store_true', help="If True then file will be overwritten")
+parser.add_argument('--iter-freqs', default=[], help="frequency band in load_setting_params iter_freqs = [('High-Gamma', 70, 150, 5)]")
+parser.add_argument('--over-write', default=True, action='store_true', help="If True then file will be overwritten")
 args = parser.parse_args()
-
 
 # Set current working directory to that of script
 abspath = os.path.abspath(__file__)
@@ -22,8 +22,8 @@ os.chdir(dname)
 
 # check if output filename already exists
 args.patient = 'patient_' + args.patient
-ch_str = '_ch_' + '_'.join(map(str, args.channels)) if args.channels else ''
-filename = args.patient + ch_str + '-tfr.h5' if not args.out_fn else args.out_fn
+# ch_str = '_ch_' + '_'.join(args.channels) if args.channels else ''
+filename = args.patient + '_' + args.probe_name + '-tfr.h5' if not args.out_fn else args.out_fn
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
 
 if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
@@ -42,8 +42,8 @@ if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
     params.tmin=settings.tmin if not args.tmin else args.tmin
     params.tmax=settings.tmax if not args.tmax else args.tmax
 
-    # Get channels
-    args.channels = sorted(data_manip.get_channel_nums(settings.path2rawdata_mat)) if not args.channels else args.channels
+    if args.iter_freqs:
+        params.iter_freqs = eval(args.iter_freqs)
 
     pprint(preferences.__dict__); pprint(settings.__dict__); pprint(params.__dict__)
 
@@ -68,16 +68,28 @@ if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
     events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
 
     print('Analyze channels')
-    path2ChannelCSC = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'ChannelsCSC', 'micro')
-    with open(os.path.join(path2ChannelCSC, 'channel_numbers_to_names.txt')) as f_channel_names:
-        channel_names = f_channel_names.readlines()
+    # channel_nums = data_manip.get_channel_nums(settings.path2rawdata_mat) if not args.channels else args.channels
+    # channel_nums.sort()
+    # for c, channel_num in enumerate(channel_nums):
+    macro1_data, macro2_data = data_manip.load_macro_data(os.path.join(settings.path2rawdata, 'macro'), args.probe_name)
+    macro_data = macro1_data - macro2_data
+    settings.channel_name = args.probe_name
+    epochsTFR_channel = analyses.compute_time_freq(999, args.probe_name, macro_data, events, event_id, metadata, settings, params)
 
-    for ch in args.channels:
-        channel_name = [l.strip('\n').split('\t')[1] for l in channel_names][ch]
-        epochs_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
-        if len(epochs_spikes) > 0:
-            filename = args.patient + '_epochs_spikes_ch_' + str(ch) + '.fif' if not args.out_fn else args.out_fn
-            epochs_spikes.save(os.path.join(path2epochs, filename))
-            print('Epochs object saved to: ' + os.path.join(path2epochs, filename))
+    # if c == 0:
+    # epochsTFR_all_channels = epochsTFR_channel.copy()
+    # else:
+    #     data = [inst._data for inst in [epochsTFR_all_channels] + [epochsTFR_channel]]
+    #     infos = [epochsTFR_all_channels.info] + [epochsTFR_channel.info]
+    #     new_info = _merge_info(infos, force_update_to_first=False)
+    #     # Now update the attributes
+    #     epochsTFR_all_channels._data = np.concatenate(data, axis=1)
+    #     epochsTFR_all_channels.info = new_info
+
+
+    # Save epochs object to drive
+    # del epochsTFR_channel
+    epochsTFR_channel.save(os.path.join(path2epochs, filename), overwrite=True)
+    print('Epochs object saved to: ' + os.path.join(path2epochs, filename))
 else:
-    print('File already exists (choose flag --overwrite if needed): ' + os.path.join(path2epochs, filename))
+    print('File already exists (choose flag --over-write if needed): ' + os.path.join(path2epochs, filename))
