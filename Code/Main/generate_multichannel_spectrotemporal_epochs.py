@@ -12,7 +12,7 @@ parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
 parser.add_argument('--iter-freqs', default=[], help="frequency band in load_setting_params iter_freqs = [('High-Gamma', 70, 150, 5)]")
-parser.add_argument('--over-write', default=False, action='store_true', help="If True then file will be overwritten")
+parser.add_argument('--over-write', default=True, action='store_true', help="If True then file will be overwritten")
 args = parser.parse_args()
 
 # Set current working directory to that of script

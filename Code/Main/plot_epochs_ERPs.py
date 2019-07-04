@@ -9,8 +9,10 @@ from operator import itemgetter
 from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='502', help='Patient string')
+parser.add_argument('-patient', default='505', help='Patient string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
+parser.add_argument('--micro-macro', choices=['micro','macro'], default='macro', help='electrode type')
+parser.add_argument('--probe-name', default='RSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-align', choices=['first','last', 'end'], default='first', help='Block type')
 parser.add_argument('-channel', default=0, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
 parser.add_argument('--sort-key', default=['chronological_order'], help='Keys to sort according')
@@ -62,10 +64,14 @@ os.chdir(dname)
 
 # 
 plt.close('all')
-if not isinstance(args.channel, int):
-    filename = args.patient + '-tfr.h5'
-else:
-    filename = args.patient + '_ch_' + str(args.channel) + '-tfr.h5'
+if args.micro_macro == 'micro':
+    if not isinstance(args.channel, int):
+        filename = args.patient + '-tfr.h5'
+    else:
+        filename = args.patient + '_ch_' + str(args.channel) + '-tfr.h5'
+elif args.micro_macro == 'macro':
+    filename = args.patient + '_' + args.probe_name + '-tfr.h5'
+
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
 path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
 if not os.path.exists(path2figures):

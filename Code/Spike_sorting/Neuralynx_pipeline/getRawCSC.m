@@ -1,15 +1,6 @@
 clear; close all; clc;
 
 %%
-<<<<<<< HEAD
-patient = 'patient_504';
-recording_system = 'BlackRock';
-%recording_system = 'Neuralynx';
-
-% base_folder = ['/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fried/Data/UCLA/', patient];
-base_folder = ['/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/', patient, '/Raw'];
-
-=======
 patient = 'patient_505';
 % recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
@@ -17,8 +8,7 @@ recording_system = 'Neuralynx';
 base_folder = ['/home/yl254115/Projects/intracranial/single_unit/Syntax_with_Fried/Data/UCLA/', patient];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit/Data/UCLA/', patient, '/Macro'];
 % base_folder = ['/neurospin/unicog/protocols/intracranial/single_unit_syntax_pipeline/Data/UCLA/', patient];
->>>>>>> 2946d755b26a7fd417a05956b6fed501e900e322
-output_path = fullfile(base_folder,'ChannelsCSC');
+output_path = fullfile(base_folder, 'Raw', 'macro', 'ChannelsCSC');
 
 mkdir(output_path);
 addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions'))
@@ -44,12 +34,12 @@ switch recording_system
 %             [TimeStamps, EventIDs, Nttls, Extras, EventStrings] = Nlx2MatEV_v3(nev_filename, FieldSelection, ExtractHeader, ExtractMode, ModeArray);
             
             % Extract raw data and save into MAT files
-            ncs_files = dir([base_folder '/Raw/*.ncs']);
+            ncs_files = dir([base_folder '/Raw/macro/*.ncs']);
             idx=1;
             for ncs_file_name=ncs_files'
                 file_name = ncs_file_name.name;
                 fprintf('%s\n', file_name)
-                ncs_file = fullfile(base_folder,'Raw',file_name);
+                ncs_file = fullfile(base_folder,'Raw', 'macro', file_name);
 %                 ncs_file = fullfile(base_folder,file_name);
                 fprintf('CSC of channnel %d...',idx);
                 [Timestamps, ChannelNumbers, SampleFrequencies, NumberOfValidSamples, Samples, Header] = Nlx2MatCSC_v3(ncs_file,[1 1 1 1 1],1,1,1);

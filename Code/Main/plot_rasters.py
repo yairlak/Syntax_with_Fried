@@ -10,11 +10,11 @@ from pprint import pprint
 from functions.auxilary_functions import  smooth_with_gaussian
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='505', help='Patient string')
+parser.add_argument('-patient', default='502', help='Patient string')
 parser.add_argument('-hospital', default='UCLA', help='Hospital string')
-parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
-parser.add_argument('-align', choices=['first','last', 'end'], default='end', help='Block type')
-parser.add_argument('-channel', default=3, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
+parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default=[], help='Block type')
+parser.add_argument('-align', choices=['first','last', 'end'], default=[], help='Block type')
+parser.add_argument('-channel', default=[], type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
 parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
 parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
@@ -23,7 +23,7 @@ parser.add_argument('-tmax', default=None, type=float, help='crop window')
 parser.add_argument('-baseline', default=None, type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
-parser.add_argument('-y-tick-step', default=20, help='If sorted by key, set the yticklabels density')
+parser.add_argument('-y-tick-step', default=40, help='If sorted by key, set the yticklabels density')
 parser.add_argument('-ylim-PSTH', default=20)
 parser.add_argument('-window-st', default=0, help='Regression start-time window [msec]')
 parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
@@ -83,7 +83,7 @@ if args.tmin is not None and args.tmax is not None:
 
 epochs_spikes = epochs_spikes[args.query]
 
-for cluster in np.arange(epochs_spikes.info['nchan']):
+for i_cluster, cluster in enumerate(np.arange(epochs_spikes.info['nchan'])):
 
     # Sort if needed
     if args.sort_key:
@@ -105,7 +105,7 @@ for cluster in np.arange(epochs_spikes.info['nchan']):
     if args.sort_key:
         fig[0].axes[0].set_yticks(range(0, len(fields_for_sorting[0]), args.y_tick_step))
         yticklabels = np.sort(fields_for_sorting[0])[::args.y_tick_step]
-        yticklabels = yticklabels[::-1]
+        # yticklabels = yticklabels[::-1]
         fig[0].axes[0].set_yticklabels(yticklabels)
         plt.setp(fig[0].axes[0], ylabel=args.sort_key[0])
 
@@ -126,7 +126,8 @@ for cluster in np.arange(epochs_spikes.info['nchan']):
     plt.setp(fig[0].axes[1], ylim=[0, args.ylim_PSTH], xlabel='Time [sec]', ylabel='spikes / s')
 
 
-    fname = 'raster_' + args.hospital + '_' + args.patient +  '_ch_' + str(args.channel) + '_cluster_' + str(cluster) + '_' + args.query
+    region = epochs_spikes.info['ch_names'][i_cluster]
+    fname = 'raster_' + args.hospital + '_' + args.patient + '_' + region + '_ch_' + str(args.channel) + '_cluster_' + str(cluster) + '_' + args.query
 
     for key_sort in args.sort_key:
         fname += '_' + key_sort + 'Sorted'
@@ -136,3 +137,4 @@ for cluster in np.arange(epochs_spikes.info['nchan']):
         os.makedirs(path2figures)
     plt.savefig(os.path.join(path2figures, fname + '.png'))
     plt.close()
+    print('Figures saved to %s:' % os.path.join(path2figures, fname + '.png'))

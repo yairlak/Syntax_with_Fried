@@ -22,6 +22,22 @@ def load_channelsCSC_data(path2channelsCSC, channel):
     return channel_data, channel_name
 
 
+def load_macro_data(path2macro, probe_name):
+    macro1_data = []; macro2_data = []
+    CSC_files = glob.glob(os.path.join(path2macro, 'ChannelsCSC', 'CSC*.mat'))
+    for CSC_file in CSC_files:
+        channel_name = io.loadmat(CSC_file)['file_name'][0]
+        if str(channel_name) == probe_name + '1.ncs':
+            print(CSC_file)
+            macro1_data = io.loadmat(CSC_file)['data']
+            print('channel-data loaded')
+        if str(channel_name) == probe_name + '2.ncs':
+            print(CSC_file)
+            macro2_data = io.loadmat(CSC_file)['data']
+            print('channel-data loaded')
+
+    return macro1_data, macro2_data
+
 def add_event_to_metadata(metadata, event_time, sentence_number, sentence_string, word_position, word_string, pos, num_words, last_word):
     metadata['event_time'].append(event_time)
     metadata['sentence_number'].append(sentence_number)

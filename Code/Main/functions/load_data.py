@@ -77,10 +77,8 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
 
                     curr_spike_times = f_all_spikes[sign]['times'].value[IXs]
                     spike_times.append(curr_spike_times)
-                    if g<0:
-                        print('?')
                     region_name = channel_name[1+channel_name.find("-"):channel_name.find(".")]
-                    channel_names.append(region_name + '_' + sign + '_g_' + str(g) + '_' + str(channel_num))
+                    channel_names.append(sign[0] + '_g' + str(g) + '_' + str(channel_num)+ '_' + region_name)
         print(channel_num)
 
 
