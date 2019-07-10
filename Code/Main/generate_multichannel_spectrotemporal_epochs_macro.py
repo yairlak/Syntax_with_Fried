@@ -66,7 +66,6 @@ if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
 
     print('Generating event object for MNE from log data...')
     events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
-
     print('Analyze channels')
     # channel_nums = data_manip.get_channel_nums(settings.path2rawdata_mat) if not args.channels else args.channels
     # channel_nums.sort()

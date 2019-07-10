@@ -50,6 +50,7 @@ def average_high_gamma(epochs, band, fmin, fmax, fstep, baseline, baseline_type,
 
     power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_jobs=1, average=False, n_cycles=n_cycles,
                                           return_itc=False, picks=[0])
+    print(power)
     # power_ave = np.squeeze(np.average(power.data, axis=2))
 
     return power
