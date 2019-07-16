@@ -65,15 +65,15 @@ if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
     metadata = read_logs_and_features.prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences)
 
     print('Generating event object for MNE from log data...')
-    events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
+    events, events_spikes, _, event_id = convert_to_mne.generate_events_array(metadata, params)
 
     print('Analyze channels')
-    channel_nums = data_manip.get_channel_nums(settings.path2rawdata_mat) if not args.channels else args.channels
+    channel_nums = data_manip.get_channel_nums(settings.path2rawdata) if not args.channels else args.channels
     channel_nums.sort()
     for c, channel_num in enumerate(channel_nums):
-        channel_data, channel_name = data_manip.load_channelsCSC_data(settings.path2rawdata_mat, channel_num)
+        channel_data, channel_name = data_manip.load_channelsCSC_data(settings.path2rawdata, channel_num)
         settings.channel_name = channel_name
-        epochsTFR_channel = analyses.compute_time_freq(channel_num, channel_name, channel_data, events, event_id, metadata, settings, params)
+        epochsTFR_channel = analyses.compute_time_freq(channel_num, channel_name, channel_data, 'micro', events, event_id, metadata, settings, params)
 
         if c == 0:
             epochsTFR_all_channels = epochsTFR_channel.copy()

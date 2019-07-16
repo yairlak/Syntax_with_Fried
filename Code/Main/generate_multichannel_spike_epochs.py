@@ -26,58 +26,57 @@ ch_str = '_ch_' + '_'.join(map(str, args.channels)) if args.channels else ''
 filename = args.patient + ch_str + '-tfr.h5' if not args.out_fn else args.out_fn
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
 
-if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
-    print(args)
+print(args)
+#TODO: add log to power
 
-    #TODO: add log to power
+# Paths
+if not os.path.exists(path2epochs):
+    os.makedirs(path2epochs)
 
-    # Paths
-    if not os.path.exists(path2epochs):
-        os.makedirs(path2epochs)
+print('Loading settings, params and preferences...')
+settings = load_settings_params.Settings(args.patient)
+params = load_settings_params.Params(args.patient)
+preferences = load_settings_params.Preferences()
+params.tmin=settings.tmin if not args.tmin else args.tmin
+params.tmax=settings.tmax if not args.tmax else args.tmax
 
-    print('Loading settings, params and preferences...')
-    settings = load_settings_params.Settings(args.patient)
-    params = load_settings_params.Params(args.patient)
-    preferences = load_settings_params.Preferences()
-    params.tmin=settings.tmin if not args.tmin else args.tmin
-    params.tmax=settings.tmax if not args.tmax else args.tmax
+# Get channels
+args.channels = sorted(data_manip.get_channel_nums(settings.path2rawdata_mat)) if not args.channels else args.channels
 
-    # Get channels
-    args.channels = sorted(data_manip.get_channel_nums(settings.path2rawdata_mat)) if not args.channels else args.channels
+pprint(preferences.__dict__); pprint(settings.__dict__); pprint(params.__dict__)
 
-    pprint(preferences.__dict__); pprint(settings.__dict__); pprint(params.__dict__)
+print('Metadata: Loading features and comparisons from Excel files...')
+features = read_logs_and_features.load_features(settings)
 
-    print('Metadata: Loading features and comparisons from Excel files...')
-    features = read_logs_and_features.load_features(settings)
+print('Logs: Reading experiment log files from experiment...')
+log_all_blocks = {}
+for block in args.blocks:
+    log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
+    log_all_blocks[block] = log.read_and_parse_log(settings)
+del log, block
+print(log_all_blocks)
 
-    print('Logs: Reading experiment log files from experiment...')
-    log_all_blocks = {}
-    for block in args.blocks:
-        log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
-        log_all_blocks[block] = log.read_and_parse_log(settings)
-    del log, block
-    print(log_all_blocks)
+print('Loading POS tags for all words in the lexicon')
+word2pos = read_logs_and_features.load_POS_tags(settings)
 
-    print('Loading POS tags for all words in the lexicon')
-    word2pos = read_logs_and_features.load_POS_tags(settings)
+print('Preparing meta-data')
+metadata = read_logs_and_features.prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences)
 
-    print('Preparing meta-data')
-    metadata = read_logs_and_features.prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences)
+print('Generating event object for MNE from log data...')
+_, events_spikes, _, event_id = convert_to_mne.generate_events_array(metadata, params)
 
-    print('Generating event object for MNE from log data...')
-    events, events_spikes, event_id = convert_to_mne.generate_events_array(metadata, params)
+print('Analyze channels')
+path2ChannelCSC = os.path.join(settings.path2rawdata, 'micro', 'ChannelsCSC')
+with open(os.path.join(path2ChannelCSC, 'channel_numbers_to_names.txt')) as f_channel_names:
+    channel_names = f_channel_names.readlines()
 
-    print('Analyze channels')
-    path2ChannelCSC = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'ChannelsCSC', 'micro')
-    with open(os.path.join(path2ChannelCSC, 'channel_numbers_to_names.txt')) as f_channel_names:
-        channel_names = f_channel_names.readlines()
-
-    for ch in args.channels:
-        channel_name = [l.strip('\n').split('\t')[1] for l in channel_names][ch]
+for ch in args.channels:
+    channel_name = [l.strip('\n').split('\t')[1] for l in channel_names][ch]
+    filename = args.patient + '_epochs_spikes_ch_' + str(ch) + '.fif' if not args.out_fn else args.out_fn
+    if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
         epochs_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
         if len(epochs_spikes) > 0:
-            filename = args.patient + '_epochs_spikes_ch_' + str(ch) + '.fif' if not args.out_fn else args.out_fn
             epochs_spikes.save(os.path.join(path2epochs, filename))
             print('Epochs object saved to: ' + os.path.join(path2epochs, filename))
-else:
-    print('File already exists (choose flag --overwrite if needed): ' + os.path.join(path2epochs, filename))
+    else:
+        print('File already exists (choose flag --overwrite if needed): ' + os.path.join(path2epochs, filename))

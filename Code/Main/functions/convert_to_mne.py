@@ -23,20 +23,25 @@ def generate_events_array(metadata, params):
     event_numbers = np.expand_dims(event_numbers, axis=1)
 
     # EVENT object: concatenate all three columns together (then change to int and sort)
-    events = np.hstack((curr_times, second_column, event_numbers))
-    events = events.astype(int)
-    sort_IX = np.argsort(events[:, 0], axis=0)
-    events = events[sort_IX, :]
+    events_micro = np.hstack((curr_times, second_column, event_numbers))
+    events_micro = events_micro.astype(int)
+    sort_IX = np.argsort(events_micro[:, 0], axis=0)
+    events_micro = events_micro[sort_IX, :]
 
     # EVENT_ID dictionary: mapping block names to event numbers
     event_id = dict([(event_type_name, event_number[0]) for event_type_name, event_number in zip(event_type_names, event_numbers)])
 
     # Generate another event object for single-unit data (which has a different sampling rate)
-    events_spikes = np.copy(events)
+    events_spikes = np.copy(events_micro)
     events_spikes[:, 0] = events_spikes[:, 0] * params.sfreq_spikes / params.sfreq_raw
     events_spikes = events_spikes.astype(np.int64)
 
-    return events, events_spikes, event_id
+    # Generate another event object for single-unit data (which has a different sampling rate)
+    events_macro = np.copy(events_micro)
+    events_macro[:, 0] = events_macro[:, 0] * params.sfreq_macro / params.sfreq_raw
+    events_macro = events_macro.astype(np.int64)
+    
+    return events_micro, events_spikes, events_macro, event_id
 
 def generate_mne_raw_object(data, settings, params):
     num_channels = data.shape[0]

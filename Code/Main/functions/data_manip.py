@@ -3,15 +3,15 @@ import numpy as np
 import mne
 from scipy import io
 
-def get_channel_nums(path2channelsCSC):
-    CSC_files = glob.glob(os.path.join(path2channelsCSC, 'CSC?.mat')) + \
-                glob.glob(os.path.join(path2channelsCSC, 'CSC??.mat')) + \
-                glob.glob(os.path.join(path2channelsCSC, 'CSC???.mat'))
+def get_channel_nums(path2rawdata):
+    CSC_files = glob.glob(os.path.join(path2rawdata, 'micro', 'ChannelsCSC', 'CSC?.mat')) + \
+                glob.glob(os.path.join(path2rawdata, 'micro', 'ChannelsCSC', 'CSC??.mat')) + \
+                glob.glob(os.path.join(path2rawdata, 'micro', 'ChannelsCSC', 'CSC???.mat'))
     return [int(os.path.basename(s)[3:-4]) for s in CSC_files]
 
 
-def load_channelsCSC_data(path2channelsCSC, channel):
-    CSC_file = glob.glob(os.path.join(path2channelsCSC, 'CSC' + str(channel) + '.mat'))
+def load_channelsCSC_data(path2rawdata, channel):
+    CSC_file = glob.glob(os.path.join(path2rawdata, 'micro', 'ChannelsCSC', 'CSC' + str(channel) + '.mat'))
     print(CSC_file)
     channel_data = io.loadmat(CSC_file[0])['data']
     print('channel-data loaded')
@@ -22,10 +22,10 @@ def load_channelsCSC_data(path2channelsCSC, channel):
     return channel_data, channel_name
 
 
-def load_macro_data(path2macro, probe_name):
-    macro1_data = []; macro2_data = []
-    CSC_files = glob.glob(os.path.join(path2macro, 'ChannelsCSC', 'CSC*.mat'))
-    for CSC_file in CSC_files:
+def load_macro_data(path2rawdata, probe_name):
+    macro1_data = []; macro2_data = []; macro3_data = []; macro4_data = []
+    CSC_files = glob.glob(os.path.join(path2rawdata, 'macro', 'ChannelsCSC', 'CSC*.mat'))
+    for CSC_file in sorted(CSC_files):
         channel_name = io.loadmat(CSC_file)['file_name'][0]
         if str(channel_name) == probe_name + '1.ncs':
             print(CSC_file)
@@ -35,8 +35,16 @@ def load_macro_data(path2macro, probe_name):
             print(CSC_file)
             macro2_data = io.loadmat(CSC_file)['data']
             print('channel-data loaded')
+        if str(channel_name) == probe_name + '3.ncs':
+            print(CSC_file)
+            macro3_data = io.loadmat(CSC_file)['data']
+            print('channel-data loaded')
+        if str(channel_name) == probe_name + '4.ncs':
+            print(CSC_file)
+            macro4_data = io.loadmat(CSC_file)['data']
+            print('channel-data loaded')
 
-    return macro1_data, macro2_data
+    return [macro1_data, macro2_data, macro3_data, macro4_data]
 
 def add_event_to_metadata(metadata, event_time, sentence_number, sentence_string, word_position, word_string, pos, num_words, last_word):
     metadata['event_time'].append(event_time)

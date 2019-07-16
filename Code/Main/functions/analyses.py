@@ -4,19 +4,28 @@ import mne
 from scipy import io
 from functions import convert_to_mne
 
-def compute_time_freq(channel_num, channel_name, channel_data, events, event_id, metadata, settings, params):
+def compute_time_freq(channel_num, channel_name, channel_data, channel_type, events, event_id, metadata, settings, params):
     print('Analyzing high-gamma for channel ' + str(channel_num))
 
     print('Generating MNE raw object for continuous data...')
     num_channels = channel_data.shape[0]
     ch_types = ['seeg' for s in range(num_channels)]
-    info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)
+
+    if channel_type == 'macro':
+        sfreq = params.sfreq_macro
+    elif channel_type == 'micro':
+        sfreq = params.sfreq_raw
+
+    info = mne.create_info(ch_names=[settings.channel_name], sfreq=sfreq, ch_types=ch_types)
     raw = mne.io.RawArray(channel_data, info)
 
     print('Line filtering...')
     raw.notch_filter(params.line_frequency, filter_length='auto', phase='zero')
 
     print('Epoching data...')
+    from collections import Counter
+    u, c = np.unique(events[:, 0], return_counts=True)
+    print(u[c>1], c[c>1])
     epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, metadata=metadata, baseline=None, preload=True)
     print(epochs)
 

@@ -3,8 +3,6 @@ import os, glob
 
 class Preferences:
     def __init__(self):
-        self.analyze_micro_single = False
-        self.analyze_micro_raw = True
         self.save_features_for_classification = True
 
         self.run_contrasts = False
@@ -32,9 +30,6 @@ class Settings():
         self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
         self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
         self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
-        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC')
-        self.path2rawdata_mat = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'ChannelsCSC', 'micro')
-        #self.path2output_spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2stimuli = os.path.join('..', '..', 'Paradigm')
         self.path2spike_clusters = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Spike_clusters')
         self.path2figures = os.path.join('..', '..', 'Figures')
@@ -68,25 +63,25 @@ class Settings():
             self.timeend = 1493482901125264
             # Which channels in the raw CSC files have clear spikes
             self.channels_with_spikes = [2, 3, 18, 41, 44, 45, 54, 75, 77, 84, 87]
-            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_487': # Neuralynx
             self.time0 =   1502557237931999
             self.timeend = 1502557237931999
             # Which channels in the raw CSC files have clear spikes
-            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_493': # Neuralynx
             self.time0 =   1520590966262873
             self.timeend = 1520594033849941
             # Which channels in the raw CSC files have clear spikes
-            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_502': # Neuralynx
             self.time0 = 1544197879836945
             self.timeend = 1544201196027613
             # Which channels in the raw CSC files have clear spikes
-            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
         if self.patient == 'patient_504': # BlackRock
             self.time0 =   0
@@ -95,7 +90,7 @@ class Settings():
             self.time0 = 1552403091357879  
             self.timeend = 1552405988561685
             # Which channels in the raw CSC files have clear spikes
-            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata_mat, 'fig2print_CSC*.png'))
+            channels_with_spikes = glob.glob(os.path.join(self.path2rawdata, 'fig2print_CSC*.png'))
             self.channels_with_spikes = [int(s[s.find('fig2print_CSC')+13:s.find('.png')]) for s in channels_with_spikes]
 
 class Params:
@@ -113,10 +108,12 @@ class Params:
             self.sfreq_raw = 40000  # Data sampling frequency [Hz]
         if self.patient == 'patient_502': # Neuralynx
             self.sfreq_raw = 32000  # Data sampling frequency [Hz]
+            self.sfreq_macro = 2000  # Data sampling frequency [Hz]
         if self.patient == 'patient_504': # BlackRock, but Neuralynx for Macro and Microphone
             self.sfreq_raw = 32000  # Data sampling frequency [Hz]
         if self.patient == 'patient_505': # Neuralynx
             self.sfreq_raw = 32000  # Data sampling frequency [Hz]
+            self.sfreq_macro = 2000  # Data sampling frequency [Hz]
 
         self.sfreq_spikes = 100 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]

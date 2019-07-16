@@ -5,7 +5,7 @@ import numpy as np
 plt.switch_backend('agg')
 
 
-def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_train, query_classes_test, root_path, k=1):
+def prepare_data_for_GAT(args):
     '''
 
     :param patients: (list) 
@@ -22,6 +22,12 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     4. X_test_query
     5. y_test_query
     '''
+    patients = args.patients; hospitals=args.hospitals
+    picks_micro=args.picks_micro; picks_macro=args.picks_macro; picks_spike=args.picks_spike
+    query_classes_train=args.query_classes_train; query_classes_test=args.query_classes_test; 
+    root_path=args.root_path
+    k=args.k
+
     # Times
     train_times = {}
     train_times["start"] = -0.1
@@ -29,8 +35,8 @@ def prepare_data_for_GAT(patients, hospitals, picks_all_patients, query_classes_
     # train_times["step"] = 0.01
 
     X_train = [[], []]; y_train = []; X_test = [[], []]; y_test = [] # assuming for now only two classes (two empty lists)
-    for i, (patient, hospital, picks) in enumerate(zip(patients, hospitals, picks_all_patients)):
-        if picks == 'all':
+    for i, (patient, hospital, pick_micro, pick_macro, pick_spike) in enumerate(zip(patients, hospitals, picks_micro, picks_macro, picks_spike)):
+        if pick_micro == 'all':
             import glob
             epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*.h5'))
             channels = [int(filename[filename.find('_ch_')+4:filename.find('-tfr.h5')]) for filename in epochs_filenames]

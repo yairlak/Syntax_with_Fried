@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description='Generate plots for TIMIT experimen
 parser.add_argument('-patient', default='505', help='Patient string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
 parser.add_argument('--micro-macro', choices=['micro','macro'], default='macro', help='electrode type')
-parser.add_argument('--probe-name', default='RSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-align', choices=['first','last', 'end'], default='first', help='Block type')
 parser.add_argument('-channel', default=0, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
 parser.add_argument('--sort-key', default=['chronological_order'], help='Keys to sort according')
@@ -20,14 +20,16 @@ parser.add_argument('--query', default=[], help='Metadata query (e.g., word_posi
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 parser.add_argument('-tmin', default=None, type=float, help='crop window')
 parser.add_argument('-tmax', default=None, type=float, help='crop window')
-parser.add_argument('-baseline', default=None, type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
+parser.add_argument('-baseline', default=(None, None), type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
 parser.add_argument('-y-tick-step', default=20, help='If sorted by key, set the yticklabels density')
 parser.add_argument('-window-st', default=0, help='Regression start-time window [msec]')
 parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
+parser.add_argument('-vmin', default=-1.5, help='vmin of plot (default is in zscore, assuming baseline is zscore)')
+parser.add_argument('-vmax', default=1.5, help='vmax of plot (default is in zscore, assuming baseline is zscore')
 parser.add_argument('--baseline-mode', choices=['mean', 'ratio', 'logratio', 'percent', 'zscore', 'zlogratio'], default='zscore', help='Type of baseline method')
-parser.add_argument('--remove-outliers', action="store_false", default=True, help='Remove outliers based on percentile 25 and 75')
+parser.add_argument('--remove-outliers', action="store_true", default=False, help='Remove outliers based on percentile 25 and 75')
 
 # parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[("word_position==1 and block in [2, 4, 6]", "word_position==-1 and block in [2, 4, 6]")], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 args = parser.parse_args()
@@ -70,7 +72,7 @@ if args.micro_macro == 'micro':
     else:
         filename = args.patient + '_ch_' + str(args.channel) + '-tfr.h5'
 elif args.micro_macro == 'macro':
-    filename = args.patient + '_' + args.probe_name + '-tfr.h5'
+    filename = args.patient + '_macro_' + args.probe_name + '_1_2-tfr.h5'
 
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
 path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
@@ -87,6 +89,7 @@ else:
     epochsTFR.crop(min(epochsTFR.times) + 0.1, max(epochsTFR.times) - 0.1)
 
 # Apply BASELINE
+print('Apply baseline:')
 epochsTFR.apply_baseline(args.baseline, mode=args.baseline_mode, verbose=True)
 
 for ch, ch_name in enumerate(epochsTFR.ch_names):
@@ -148,7 +151,7 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
 
     im = ax0.imshow(power_ave,
                      interpolation='nearest',
-                     aspect='auto', vmin=-0.5, vmax=0.5, cmap='viridis')
+                     aspect='auto', vmin=args.vmin, vmax=args.vmax, cmap='viridis')
     cbar = plt.colorbar(im, cax=cbaxes)
     cbar.set_label(label='z-score of power)', size=22)
 
@@ -160,7 +163,7 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
     else:
         ax0.set_yticks(range(0, len(fields_for_sorting[0]), args.y_tick_step))
         yticklabels = np.sort(fields_for_sorting[0])[::args.y_tick_step]
-        yticklabels = yticklabels[::-1]
+        #yticklabels = yticklabels[::-1]
         ax0.set_yticklabels(yticklabels)
         plt.setp(ax0, ylabel=args.sort_key[0])
 

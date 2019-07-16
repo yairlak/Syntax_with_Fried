@@ -9,7 +9,9 @@ parser.add_argument('--train-queries', action='append', help='Metadata query for
 parser.add_argument('--test-queries', action='append', default=None, help="Metadata query for generalization test (e.g., word_position==1, word_string in ['END']")
 parser.add_argument('-p', '--patients', action='append', help='patient label (e.g., 479, 487)')
 parser.add_argument('-s', '--hospitals', action='append', help='list of hospital per patient')
-parser.add_argument('-k', '--picks', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
+parser.add_argument('--picks-micro', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
+parser.add_argument('--picks-macro', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
+parser.add_argument('--picks-spike', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
 parser.add_argument('-o', '--output-filename', type=str, help='Output filename')
 parser.add_argument('--cat-k-timepoints', type=int, default=1, help='How many time points to concatenate before classification')
 
@@ -23,9 +25,7 @@ os.chdir(dname)
 
 
 # 1. Prepare data based on queries
-classification_data = classification.prepare_data_for_GAT(args.patients, args.hospitals, args.picks,
-                                                           args.train_queries, args.test_queries,
-                                                           args.root_path, args.cat_k_timepoints)
+classification_data = classification.prepare_data_for_GAT(args)
 
 
 # 2. Train-test GAT
