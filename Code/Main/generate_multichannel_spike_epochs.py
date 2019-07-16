@@ -11,7 +11,7 @@ parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', 
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
-parser.add_argument('--overwrite', default=False, action='store_true', help="If True then file will be overwritten")
+parser.add_argument('--overwrite', default=True, action='store_false', help="If True then file will be overwritten")
 args = parser.parse_args()
 
 
@@ -73,7 +73,7 @@ with open(os.path.join(path2ChannelCSC, 'channel_numbers_to_names.txt')) as f_ch
 for ch in args.channels:
     channel_name = [l.strip('\n').split('\t')[1] for l in channel_names][ch]
     filename = args.patient + '_epochs_spikes_ch_' + str(ch) + '.fif' if not args.out_fn else args.out_fn
-    if not os.path.exists(os.path.join(path2epochs, filename)) or args.over_write:
+    if not os.path.exists(os.path.join(path2epochs, filename)) or args.overwrite:
         epochs_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
         if len(epochs_spikes) > 0:
             epochs_spikes.save(os.path.join(path2epochs, filename))
