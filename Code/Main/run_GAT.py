@@ -22,11 +22,14 @@ os.chdir(dname)
 args.patients = ['patient_'+p for p in args.patients]
 if not args.hospitals:
     args.hospitals = ['UCLA' for _ in args.patients]
-if not args.picks:
-    args.picks = ['all' for _ in args.patients]
+if not args.picks_micro:
+    args.picks_micro = ['all' for _ in args.patients]
+if not args.picks_macro:
+    args.picks_macro = ['all' for _ in args.patients]
+if not args.picks_spike:
+    args.picks_spike = ['all' for _ in args.patients]
 
-print(args)
-
+assert len(args.picks_micro) == len(args.picks_macro) == len(args.picks_spike) == len(args.patients) == len(args.hospitals)
 comparisons = comparisons.comparison_list()
 
 if not args.comparisons:
@@ -43,7 +46,7 @@ for c, comparison in comparisons.items():
             cmd += ' -s %s -p %s --picks-micro %s --picks-macro %s --picks-spike %s' % (hospital, patient, pick_micro, pick_macro, pick_spike)
         cmd += ' --cat-k-timepoints %i' % args.cat_k_timepoints
         
-        fname = comparison['name'] + "_patients_" + '_'.join([s.split('_')[1] for s in args.patients]) + '_cat-k_' + str(args.cat_k_timepoints)
+        fname = comparison['name'] + "_patients_" + '_'.join([s.split('_')[1] for s in args.patients]) + '_mic_'+ '_'.join(args.picks_micro) + '_mac_' + '_'.join(args.picks_macro) + '_spi_' + '_'.join(args.picks_spike) + '_cat-k_' + str(args.cat_k_timepoints)
         cmd += ' --output-filename %s' % fname
 
         #cmd += ' > Logs_GAT/%s.log 2>&1 &' % (comparison['name'] + '_cat-k_' + str(args.cat_k_timepoints))

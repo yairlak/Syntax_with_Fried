@@ -17,7 +17,12 @@ parser.add_argument('--cat-k-timepoints', type=int, default=1, help='How many ti
 
 print(mne.__version__)
 args = parser.parse_args()
+#args.picks_micro=[eval(p) for p in args.picks_micro]
+#args.picks_macro=[eval(p) for p in args.picks_macro]
+#args.picks_spike=[eval(p) for p in args.picks_spike]
+
 print(args)
+
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
@@ -26,7 +31,6 @@ os.chdir(dname)
 
 # 1. Prepare data based on queries
 classification_data = classification.prepare_data_for_GAT(args)
-
 
 # 2. Train-test GAT
 time_gen, scores = classification.train_test_GAT(classification_data)

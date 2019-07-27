@@ -1,4 +1,4 @@
-import argparse, os
+import argparse, os, re
 from functions import load_settings_params, read_logs_and_features, convert_to_mne, data_manip, analyses_single_unit
 from mne.io import _merge_info
 import numpy as np
@@ -72,11 +72,14 @@ with open(os.path.join(path2ChannelCSC, 'channel_numbers_to_names.txt')) as f_ch
 
 for ch in args.channels:
     channel_name = [l.strip('\n').split('\t')[1] for l in channel_names][ch]
-    filename = args.patient + '_epochs_spikes_ch_' + str(ch) + '.fif' if not args.out_fn else args.out_fn
+    probe_name = re.split('(\d+)', channel_name)[2][1::]
+
+    filename = args.patient + '_spikes_' + probe_name + '_ch_' + str(ch) + '-tfr.h5' if not args.out_fn else args.out_fn
+    
     if not os.path.exists(os.path.join(path2epochs, filename)) or args.overwrite:
-        epochs_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
-        if len(epochs_spikes) > 0:
-            epochs_spikes.save(os.path.join(path2epochs, filename))
-            print('Epochs object saved to: ' + os.path.join(path2epochs, filename))
+        _, epochsTFR_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
+        if len(epochsTFR_spikes) > 0:
+            epochsTFR_spikes.save(os.path.join(path2epochs, filename))
+            print('EpochsTFR object saved to: ' + os.path.join(path2epochs, filename))
     else:
         print('File already exists (choose flag --overwrite if needed): ' + os.path.join(path2epochs, filename))

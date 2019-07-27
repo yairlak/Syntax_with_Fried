@@ -1,4 +1,4 @@
-import sys, os, pickle
+import sys, os, pickle, glob
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,7 +9,7 @@ def prepare_data_for_GAT(args):
     '''
 
     :param patients: (list) 
-    :param hospitals: (list) same len as patients
+   :param hospitals: (list) same len as patients
     :param picks_all_patients: (list of channel numbers or 'all') same len as patients
     :param query_classes_train: (list of len 2) two queries for the two classes (if no test queries then 5-fold CV is used)
     :param query_classes_test: (optional - list of len 2) two queries for the two test classes.
@@ -22,11 +22,15 @@ def prepare_data_for_GAT(args):
     4. X_test_query
     5. y_test_query
     '''
+
+    print(args)
     patients = args.patients; hospitals=args.hospitals
-    picks_micro=args.picks_micro; picks_macro=args.picks_macro; picks_spike=args.picks_spike
-    query_classes_train=args.query_classes_train; query_classes_test=args.query_classes_test; 
+    picks_micro=[eval(p) for p in args.picks_micro]
+    picks_macro=[eval(p) for p in args.picks_macro]
+    picks_spike=[eval(p) for p in args.picks_spike]
+    query_classes_train=args.train_queries; query_classes_test=args.test_queries; 
     root_path=args.root_path
-    k=args.k
+    k=args.cat_k_timepoints
 
     # Times
     train_times = {}
@@ -36,75 +40,99 @@ def prepare_data_for_GAT(args):
 
     X_train = [[], []]; y_train = []; X_test = [[], []]; y_test = [] # assuming for now only two classes (two empty lists)
     for i, (patient, hospital, pick_micro, pick_macro, pick_spike) in enumerate(zip(patients, hospitals, picks_micro, picks_macro, picks_spike)):
-        if pick_micro == 'all':
-            import glob
-            epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*.h5'))
-            channels = [int(filename[filename.find('_ch_')+4:filename.find('-tfr.h5')]) for filename in epochs_filenames]
-        else:
-            channels = [int(c) for c in picks]
-
-        for c, ch in enumerate(channels):
-            print('-'*80)
-            print('Loading TRAIN epochs object of patient %s channel %i' % (patient, ch))
-            print('-'*80)
+        # ----------------------------------------
+        # --------- micro high-gamma ------------
+        # ---------------------------------------
+        epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*_micro_*.h5'))
+        epochs_filenames = filter_relevant_epochs_filenames(epochs_filenames, pick_micro)
+        for c, fn in enumerate(sorted(epochs_filenames)):
+            print('-'*100)
+            print('Loading TRAIN epochs object: %s' % (os.path.basename(fn)))
+            print('-'*100)
             try:
-                epochs_fname = patient + '_ch_' + str(ch) + '-tfr.h5'
-                path2epochs = os.path.join(root_path, 'Data', hospital, patient, 'Epochs', epochs_fname)
-                epochsTFR = mne.time_frequency.read_tfrs(path2epochs)[0]
+                epochsTFR = mne.time_frequency.read_tfrs(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', fn))[0]
                 print(epochsTFR)
-                for q, query_class_train in enumerate(query_classes_train):
-                    epochs_class_train = epochsTFR[query_class_train]
-                    epochs_class_train.crop(train_times["start"], train_times["stop"])
-                    print('epochsTRF num_epochs X num_channels X num_freq X num_timepoints:', epochs_class_train.data.shape)
-                    curr_data = np.squeeze(np.average(epochs_class_train.data, axis=2))
-                    print('Curr train data: ', curr_data.shape)
-                    if c == 0 and i==0:
-                        print(epochs_class_train.metadata['sentence_string'])
-                        print(', '.join(epochs_class_train.metadata['word_string']))
-                    X_train[q].append(curr_data)
-                    del curr_data
-                if query_classes_test is not None:
-                    for q, query_class_test in enumerate(query_classes_test):
-                        epochs_class_test = epochsTFR[query_class_test]
-                        epochs_class_test.crop(train_times["start"], train_times["stop"])
-                        curr_data = np.squeeze(np.average(epochs_class_test.data, axis=2))
-                        X_test[q].append(curr_data)
-                        print('Curr test data: ', curr_data.shape)
-                        if c==0 and i==0:
-                            print(epochs_class_test.metadata['sentence_string'])
-                            print(', '.join(epochs_class_test.metadata['word_string']))
-                else: # no test queries (generalization across time only, not conditions)
-                    X_test = None; y_test = None
+                curr_epochs = mne.EpochsArray(np.average(epochsTFR.data, axis=2), epochsTFR.info, tmin=np.min(epochsTFR.times), metadata=epochsTFR.metadata, events=epochsTFR.events, event_id=epochsTFR.event_id)
+                del epochsTFR
+                print(curr_epochs)
+                print('previous sfreq: %f' % curr_epochs.info['sfreq'])
+                curr_epochs = curr_epochs.resample(100, npad='auto')
+                print('new sfreq: %f' % curr_epochs.info['sfreq'])
+                X_train, X_test, curr_epochs_query = get_train_test_data_from_epochs(curr_epochs, query_classes_train, query_classes_test, X_train, X_test, train_times)
             except Exception as e:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
-                print('!!!!!! ERROR !!!!!!: patient %s channel %i \n %s line %s' % (patient, ch, e, exc_tb.tb_lineno))
+                print('!!!!!! ERROR !!!!!!: %s \n %s line %s' % (fn, e, exc_tb.tb_lineno))
+        # ---------------------------------------
+        # --------- macro high-gamma ------------
+        # ---------------------------------------
+        epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*_macro_*.h5'))
+        epochs_filenames = filter_relevant_epochs_filenames(epochs_filenames, pick_macro)
+        for c, fn in enumerate(sorted(epochs_filenames)):
+            print('-'*100)
+            print('Loading TRAIN epochs object: %s' % (os.path.basename(fn)))
+            print('-'*100)
+            try:
+                epochsTFR = mne.time_frequency.read_tfrs(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', fn))[0]
+                print(epochsTFR)
+                curr_epochs = mne.EpochsArray(np.average(epochsTFR.data, axis=2), epochsTFR.info, tmin=np.min(epochsTFR.times), metadata=epochsTFR.metadata, events=epochsTFR.events, event_id=epochsTFR.event_id)
+                del epochsTFR
+                print('previous sfreq: %f' % curr_epochs.info['sfreq'])
+                curr_epochs = curr_epochs.resample(100, npad='auto')
+                print('new sfreq: %f' % curr_epochs.info['sfreq'])
+                X_train, X_test, curr_epochs_query = get_train_test_data_from_epochs(curr_epochs, query_classes_train, query_classes_test, X_train, X_test, train_times)
+            except Exception as e:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                print('!!!!!! ERROR !!!!!!: %s \n %s line %s' % (fn, e, exc_tb.tb_lineno))
 
-    X_train = [np.dstack(d) for d in X_train] # signals: n_epochs, n_times, n_channels
-    X_train = [np.swapaxes(d, 1, 2) for d in X_train] # Swap dimensions: n_epochs, n_channels, n_times
+        # ---------------------------------------
+        # --------- single-unit -----------------
+        # ---------------------------------------
+        epochs_filenames = glob.glob(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', '*_spikes_*.h5'))
+        epochs_filenames = filter_relevant_epochs_filenames(epochs_filenames, pick_spike)
+        for c, fn in enumerate(sorted(epochs_filenames)):
+            print('-'*100)
+            print('Loading TRAIN epochs object: %s' % (os.path.basename(fn)))
+            print('-'*100)
+            try:
+                epochsTFR = mne.time_frequency.read_tfrs(os.path.join(root_path, 'Data', hospital, patient, 'Epochs', fn))[0]
+                print(epochsTFR)
+                curr_epochs = mne.EpochsArray(np.average(epochsTFR.data, axis=2), epochsTFR.info, tmin=np.min(epochsTFR.times), metadata=epochsTFR.metadata, events=epochsTFR.events, event_id=epochsTFR.event_id)
+                del epochsTFR
+                print('previous sfreq: %f' % curr_epochs.info['sfreq'])
+                curr_epochs = curr_epochs.resample(100, npad='auto')
+                print('new sfreq: %f' % curr_epochs.info['sfreq'])
+                X_train, X_test, curr_epochs_query = get_train_test_data_from_epochs(curr_epochs, query_classes_train, query_classes_test, X_train, X_test, train_times)
+            except Exception as e:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                print('!!!!!! ERROR !!!!!!: %s \n %s line %s' % (fn, e, exc_tb.tb_lineno))
+
+    [print(x.shape) for x in X_train[0]]
+    X_train = [np.concatenate(d, axis=1) for d in X_train]  # stack: n_epochs, n_channels, n_times
     y_train = np.hstack((np.ones(X_train[0].shape[0]).astype(int), 2*np.ones(X_train[1].shape[0]).astype(int)))  # targets
     print('Number of samples in training class %i : %i' % (1, X_train[0].shape[0]))
     print('Number of samples in training class %i : %i' % (2, X_train[1].shape[0]))
     X_train = np.concatenate(X_train, axis=0)
 
     if query_classes_test is not None:
-        X_test = [np.dstack(d) for d in X_test] # signals: n_epochs, n_times, n_channels
-        X_test = [np.swapaxes(d, 1, 2) for d in X_test] # Swap dimensions: n_epochs, n_channels, n_times
+        X_test = [np.concatenate(d, axis=1) for d in X_test] # signals: n_epochs, n_channels, n_times
         y_test = np.hstack((np.ones(X_test[0].shape[0]).astype(int), 2*np.ones(X_test[1].shape[0]).astype(int)))  # targets
         print('Number of samples in test class %i : %i' % (1, X_test[0].shape[0]))
         print('Number of samples in test class %i : %i' % (2, X_test[1].shape[0]))
         X_test = np.concatenate(X_test, axis=0)
+    else:
+        y_test = None
 
     data = {}
-    data['times'] = epochs_class_train[0].times
+    data['times'] = curr_epochs_query.times
     data['X_train'] = X_train
     data['X_test'] = X_test
     data['y_train'] = y_train
     data['y_test'] = y_test
 
-    del X_train, X_test, y_train, y_test, epochs_class_train
+    del X_train, X_test, y_train, y_test, curr_epochs
     if k > 1:
         data = cat_subsequent_timepoints(k, data)
-
+    
     return data
 
 def cat_subsequent_timepoints(k, data):
@@ -155,7 +183,7 @@ def train_test_GAT(data):
     # Fit model
     if (data['X_test'] is not None) and (data['y_test'] is not None): # Generalization across conditions
         #print(X_train, y_train, X_test, y_test)
-        #print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
+        print(data['X_train'].shape, data['y_train'].shape)
         time_gen.fit(data['X_train'], data['y_train'])
         scores = time_gen.score(data['X_test'], data['y_test'])
         scores = np.expand_dims(scores, axis=0) # For later compatability (plot_GAT() np.mean(scores, axis=0))
@@ -185,8 +213,8 @@ def plot_GAT(times, time_gen, scores):
 
     # Plot the full GAT matrix
     fig2, ax = plt.subplots(1, 1)
-    im = ax.imshow(scores, interpolation='lanczos', origin='lower', cmap='RdBu_r',
-                   extent=times[[0, -1, 0, -1]])#, vmin=0., vmax=1.)
+    im = ax.imshow(scores, interpolation='lanczos', origin='lower', cmap='Reds',
+                   extent=times[[0, -1, 0, -1]], vmin=0.5, vmax=1.)
     ax.set_xlabel('Testing Time (s)')
     ax.set_ylabel('Training Time (s)')
     ax.set_title('Temporal Generalization')
@@ -196,3 +224,57 @@ def plot_GAT(times, time_gen, scores):
 
     return fig1, fig2
 
+def filter_relevant_epochs_filenames(filenames, picks):
+    '''
+    returns filenames that match the criteria in picks, which could be either:
+    - channel numbers (list of int)
+    - ROIs (list of strings), e.g., ['RSTG', 'LSTG']
+    - 'all' (string)
+    '''
+    if isinstance(picks, str):
+        if picks == 'all': # ALL CHANNELS
+            filtered_filenames = filenames
+        elif picks == 'none':
+            filtered_filenames = []
+        else:
+            raise('Yair: Type error of picks')
+    else:
+        if all(isinstance(s, str) for s in picks): # check if ROIs
+            filtered_filenames = []
+            for fn in filenames:
+                bn = os.path.basename(fn)
+                probe_name = bn.split('_')[3]
+                if probe_name in picks:
+                    filtered_filenames.append(fn)
+
+        elif all(isinstance(i, int) for i in picks): # Check if a list of channels
+            filtered_filenames = [fn for c, fn in zip(filenames, channels) if c in pick_micro]
+        else:
+            raise('Yair: Type error of picks')
+
+    return filtered_filenames
+
+
+def get_train_test_data_from_epochs(epochs, queries_train, queries_test, X_train, X_test, train_times):
+    ''' Append to X_train and X_test new epochs based on current train and test queries
+    '''
+    for q, query_train in enumerate(queries_train):
+        epochs_train = epochs[query_train]
+        epochs_train.crop(train_times["start"], train_times["stop"])
+        X_train[q].append(epochs_train._data)
+        print('epochs num_epochs X num_channels X num_timepoints:', epochs_train._data.shape)
+        
+    if queries_test is not None:
+        for q, query_test in enumerate(queries_test):
+            epochs_test = epochs[query_test]
+            epochs_test.crop(train_times["start"], train_times["stop"])
+            X_test[q].append(epochs_test._data)
+    else: # no test queries (generalization across time only, not conditions)
+        X_test = None
+
+    return X_train, X_test, epochs_train
+           
+
+#if c==0 and i==0:
+    #print(epochs_class_test.metadata['sentence_string'])
+    #print(', '.join(epochs_class_test.metadata['word_string']))

@@ -1,4 +1,4 @@
-import argparse, os
+import argparse, os, glob
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,12 +10,12 @@ from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
 parser.add_argument('-patient', default='505', help='Patient string')
-parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
+parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default=[], help='Block type')
 parser.add_argument('--micro-macro', choices=['micro','macro'], default='macro', help='electrode type')
 parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
-parser.add_argument('-align', choices=['first','last', 'end'], default='first', help='Block type')
+parser.add_argument('-align', choices=['first','last', 'end'], default=[], help='Block type')
 parser.add_argument('-channel', default=0, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
-parser.add_argument('--sort-key', default=['chronological_order'], help='Keys to sort according')
+parser.add_argument('--sort-key', default=['num_letters'])#)chronological_order'], help='Keys to sort according')
 parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 parser.add_argument('-tmin', default=None, type=float, help='crop window')
@@ -23,9 +23,9 @@ parser.add_argument('-tmax', default=None, type=float, help='crop window')
 parser.add_argument('-baseline', default=(None, None), type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
-parser.add_argument('-y-tick-step', default=20, help='If sorted by key, set the yticklabels density')
-parser.add_argument('-window-st', default=0, help='Regression start-time window [msec]')
-parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
+parser.add_argument('-y-tick-step', default=30, help='If sorted by key, set the yticklabels density')
+parser.add_argument('-window-st', default=0, type=int, help='Regression start-time window [msec]')
+parser.add_argument('-window-ed', default=200, type=int, help='Regression end-time window [msec]')
 parser.add_argument('-vmin', default=-1.5, help='vmin of plot (default is in zscore, assuming baseline is zscore)')
 parser.add_argument('-vmax', default=1.5, help='vmax of plot (default is in zscore, assuming baseline is zscore')
 parser.add_argument('--baseline-mode', choices=['mean', 'ratio', 'logratio', 'percent', 'zscore', 'zlogratio'], default='zscore', help='Type of baseline method')
@@ -70,11 +70,16 @@ if args.micro_macro == 'micro':
     if not isinstance(args.channel, int):
         filename = args.patient + '-tfr.h5'
     else:
-        filename = args.patient + '_ch_' + str(args.channel) + '-tfr.h5'
+        filename = args.patient + '_micro_*_ch_' + str(args.channel) + '-tfr.h5'
 elif args.micro_macro == 'macro':
     filename = args.patient + '_macro_' + args.probe_name + '_1_2-tfr.h5'
 
-path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
+
+path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
+filenames = glob.glob(os.path.join(path2epochs, filename))
+assert len(filenames)==1
+path2epochs = filenames[0]
+
 path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
 if not os.path.exists(path2figures):
     os.makedirs(path2figures)
@@ -167,7 +172,7 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
         ax0.set_yticklabels(yticklabels)
         plt.setp(ax0, ylabel=args.sort_key[0])
 
-    ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1, 1 + power_ave.shape[0]))
+    ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(power_ave.shape[0]+1,1, -1))
     ax1.set_xlabel('Mean activity\n' + r2_string)
     ax1.set_ylim([1, 1 + power_ave.shape[0]])
     ax1.set_xlim([0, np.nanmean(power_ave) + 3 * np.nanstd(power_ave)])
