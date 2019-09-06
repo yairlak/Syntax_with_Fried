@@ -5,7 +5,7 @@ import numpy as np
 from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='505', help='Patient string')
+parser.add_argument('-patient', default='479_11', help='Patient string')
 parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
@@ -22,7 +22,10 @@ os.chdir(dname)
 
 # check if output filename already exists
 args.patient = 'patient_' + args.patient
-path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
+if not args.out_fn:
+    path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
+else:
+    path2epochs = args.out_fn
 
 print(args)
 
@@ -30,7 +33,8 @@ print(args)
 
 # Paths
 if not os.path.exists(path2epochs):
-    os.makedirs(path2epochs)
+    #os.makedirs(path2epochs)
+    print('a')
 
 print('Loading settings, params and preferences...')
 settings = load_settings_params.Settings(args.patient)
@@ -65,12 +69,16 @@ print('Generating event object for MNE from log data...')
 events, events_spikes, _, event_id = convert_to_mne.generate_events_array(metadata, params)
 
 print('Analyze channels')
-channel_nums = data_manip.get_channel_nums(settings.path2rawdata) if not args.channels else args.channels
+if args.channels:
+    channel_nums = list(map(int, args.channels))
+else:
+    channel_nums = data_manip.get_channel_nums(settings.path2rawdata)
 channel_nums.sort()
+
 for c, channel_num in enumerate(channel_nums):
     channel_data, channel_name = data_manip.load_channelsCSC_data(settings.path2rawdata, channel_num)
     settings.channel_name = channel_name
-    if c > 0: # not MICROPHONE
+    if channel_num > 0: # not MICROPHONE
         probe_name = re.split('(\d+)', channel_name)[2][1::]
     else:
         probe_name = 'MIC'

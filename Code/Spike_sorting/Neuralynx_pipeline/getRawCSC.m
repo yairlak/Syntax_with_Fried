@@ -1,7 +1,7 @@
 clear; close all; clc;
 
 %%
-patient = 'patient_505';
+patient = 'patient_493';
 % recording_system = 'BlackRock';
 recording_system = 'Neuralynx';
 

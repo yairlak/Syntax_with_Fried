@@ -1,4 +1,4 @@
-import argparse, os
+import argparse, os, glob
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,7 +10,7 @@ from pprint import pprint
 from functions.auxilary_functions import  smooth_with_gaussian
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='502', help='Patient string')
+parser.add_argument('-patient', default='479_11', help='Patient string')
 parser.add_argument('-hospital', default='UCLA', help='Hospital string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default=[], help='Block type')
 parser.add_argument('-align', choices=['first','last', 'end'], default=[], help='Block type')
@@ -69,18 +69,22 @@ if not isinstance(args.channel, int):
     #filename = args.patient + '-tfr.h5'
     pass
 else:
-    filename = args.patient + '_epochs_spikes_ch_' + str(args.channel) + '.fif'
+    filename = glob.glob(os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', args.patient + '_spikes_*_ch_' + str(args.channel) + '-tfr.h5'))
+    assert len(filename) == 1
+    filename = os.path.basename(filename[0])
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
-path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
+path2figures = os.path.join('..', '..', 'Figures', args.patient, 'Rasters')
 if not os.path.exists(path2figures):
     os.makedirs(path2figures)
 
 print('Loading epochs object: ' + path2epochs)
-epochs_spikes = mne.read_epochs(path2epochs)
-print(epochs_spikes)
+epochs_spikes = mne.time_frequency.read_tfrs(path2epochs)
+epochs_spikes = epochs_spikes[0]
 if args.tmin is not None and args.tmax is not None:
     epochs_spikes.crop(args.tmin, args.tmax)
-
+print(epochs_spikes)
+#print(mne.__version__)
+#print(args.query)
 epochs_spikes = epochs_spikes[args.query]
 
 for i_cluster, cluster in enumerate(np.arange(epochs_spikes.info['nchan'])):

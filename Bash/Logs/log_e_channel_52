@@ -1,3 +1,0 @@
-/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/functions/analyses.py:13: RuntimeWarning: 1 channel names are too long, have been truncated to 15 characters:
-['GB3-RMH4_0002.ncs']
-  info = mne.create_info(ch_names=[settings.channel_name], sfreq=params.sfreq_raw, ch_types=ch_types)

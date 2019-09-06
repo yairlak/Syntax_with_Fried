@@ -6,12 +6,17 @@ import numpy as np
 import sys
 
 recording_system = 'Neuralynx'
-settings = load_settings_params.Settings(sys.argv[1])
-session_folder = op.join(settings.path2patient_folder, 'Raw', 'nev_files')
+
+# settings = load_settings_params.Settings(sys.argv[1])
+# session_folder = op.join(settings.path2patient_folder, 'Raw', 'nev_files')
+
+
+session_folder = '/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_504/Raw/macro/ncs'
 print(session_folder)
 
 if recording_system == 'Neuralynx':
     NIO = io.NeuralynxIO(session_folder)
+    print(NIO)
     time0, timeend = NIO._timestamp_limits[0]
     print('time0, timeend = ', time0, timeend)
 elif recording_system == 'BlackRock':

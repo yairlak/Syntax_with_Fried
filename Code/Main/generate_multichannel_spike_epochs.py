@@ -5,8 +5,8 @@ import numpy as np
 from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='502', help='Patient string')
-parser.add_argument('-channels', action='append', default=list(range(97)), help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('-patient', default='482', help='Patient string')
+parser.add_argument('-channels', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
@@ -41,7 +41,8 @@ params.tmin=settings.tmin if not args.tmin else args.tmin
 params.tmax=settings.tmax if not args.tmax else args.tmax
 
 # Get channels
-args.channels = sorted(data_manip.get_channel_nums(settings.path2rawdata_mat)) if not args.channels else args.channels
+args.channels = sorted(data_manip.get_channel_nums(settings.path2rawdata)) if not args.channels else sorted(list(map(int, args.channels)))
+args.channels = list(set(args.channels)-set([0])) # REMOVE channel 0 (MICROPHONE)
 
 pprint(preferences.__dict__); pprint(settings.__dict__); pprint(params.__dict__)
 
@@ -54,7 +55,6 @@ for block in args.blocks:
     log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
     log_all_blocks[block] = log.read_and_parse_log(settings)
 del log, block
-print(log_all_blocks)
 
 print('Loading POS tags for all words in the lexicon')
 word2pos = read_logs_and_features.load_POS_tags(settings)
@@ -66,14 +66,14 @@ print('Generating event object for MNE from log data...')
 _, events_spikes, _, event_id = convert_to_mne.generate_events_array(metadata, params)
 
 print('Analyze channels')
-path2ChannelCSC = os.path.join(settings.path2rawdata, 'micro', 'ChannelsCSC')
-with open(os.path.join(path2ChannelCSC, 'channel_numbers_to_names.txt')) as f_channel_names:
+path2CSC_mat = os.path.join(settings.path2rawdata, 'micro', 'CSC_mat')
+with open(os.path.join(path2CSC_mat, 'channel_numbers_to_names.txt')) as f_channel_names:
     channel_names = f_channel_names.readlines()
+channel_names_dict = dict(zip(map(int, [s.split('\t')[0] for s in channel_names]), [s.split('\t')[1] for s in channel_names]))
 
 for ch in args.channels:
-    channel_name = [l.strip('\n').split('\t')[1] for l in channel_names][ch]
+    channel_name = channel_names_dict[ch]
     probe_name = re.split('(\d+)', channel_name)[2][1::]
-
     filename = args.patient + '_spikes_' + probe_name + '_ch_' + str(ch) + '-tfr.h5' if not args.out_fn else args.out_fn
     
     if not os.path.exists(os.path.join(path2epochs, filename)) or args.overwrite:

@@ -5,13 +5,13 @@ import mne
 import matplotlib.pyplot as plt
 import pickle
 from operator import itemgetter
-from functions import load_data, convert_to_mne
+from functions import data_manip, convert_to_mne
 from functions.auxilary_functions import  smooth_with_gaussian
 
 def generate_epochs_spikes(channel_num, channel_name, events_spikes, event_id, metadata, settings, params, preferences):
 
     print('Loading h5 file for CSC%i'%channel_num)
-    spikes, channel_name = load_data.load_combinato_sorted_h5(channel_num, channel_name, settings)
+    spikes, channel_name = data_manip.load_combinato_sorted_h5(channel_num, channel_name, settings)
 
 
     if len(spikes) > 0:

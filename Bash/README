@@ -1,27 +1,38 @@
 Steps to follow with a new patient data:
 
-1. to list files on box: 'rclone lsd box:'
-<<<<<<< HEAD
-2. Put the raw files in 'Raw' subfolder of patient folder. Make sure that only a single event file (nev) exist (the one with the larger file size)
-3. To get time0 and timeEnd, run read_nev_files.py e.g. 'python read_nev_files.py patient_487'. Add these times to 'load_setting_params'
-4. Run generate_new_logs_from_onset_times.m on logs (this will add events for each word also for the auditory blocks based on word time onsets of the stimuli)
-5. To transform raw to mat files, run: Spike_sorting/Neuralynx_pipeline/getRawCSC.m
-6. Make sure the features.xls file is in /Paradigm
-7. Make sure that in function/load_settings_params.py all is well defined (prefix of log files, e.g., mouse_cheatha..part1)
-=======
+Download and organize data:
+---------------------------
+- to list files on box: 'rclone lsd box:'; to copy: 'nohup rclone copy box:path2patient-data . -v &'
+- Put the raw files in 'Raw' subfolder of patient folder. Make sure that only a single event file (nev) exist (the one with the larger file size)
+- Raw folder should contain two subfolders: micro and macro. Each one of these has also two subfolders: ChannelsCSC and ncs. 
+- Copy into each of the ncs subfolders the ncs files and remove undesired endings in the filenames (e.g, rename s/_0019.ncs/.ncs *)
+- To get time0 and timeEnd, run read_nev_files.py e.g. 'python read_nev_files.py patient_487'. Add these times to 'load_setting_params'
+- Run generate_new_logs_from_onset_times.m on logs (this will add events for each word also for the auditory blocks based on word time onsets of the stimuli)
+- To transform raw to mat files, run: Spike_sorting/Neuralynx_pipeline/ncs2CSC.m (matlab -nodisplay -nojvm). This will generate mat files in the ChannelsCSC folder from the ncs subfolder.
+- copy into the ChannelsCSC folder the script Code/Utils/Spike_sorting/get_channel_names.py and run it. This will create a text file that will be read in the next step.
+- copy into the ncs folder the script Code/Utils/Spike_sorting/rename_channel_names_to_CSCs.py and run it. This will copy and rename the ncs files into CSC??.ncs files in Raw folder.
+- place the MICROPHONE.ncs file in the Raw folder
+- Make sure the features.xls file is in /Paradigm
+- Make sure that in function/load_settings_params.py all is well defined (prefix of log files, e.g., mouse_cheatha..part1)
 
-2. Put the raw files in 'Raw' subfolder of patient folder. Make sure that only a single event file (nev) exist (the one with the larger file size)
 
-3. To get time0 and timeEnd, run read_nev_files.py e.g. 'python read_nev_files.py patient_487'. Add these times to 'load_setting_params'
+Spike sorting with Combinato:
+-----------------------------
 
-4. Run generate_new_logs_from_onset_times.m on logs (this will add events for each word also for the auditory blocks based on word time onsets of the stimuli)
+! All commands should be executed from the Raw/micro subfolder (using python2.7)
 
-5. To transform raw to mat files, run: Spike_sorting/Neuralynx_pipeline/getRawCSC.m
-matlab -nodisplay -nojvm 
+0. Make sure that you followed the above steps and that the Raw/micro folder contains all CSC??.ncs files.
+1. Run: css-plot-rawsignal
+2. Open css-overview-gui; initialize from current folder (Raw/micro) and save the actions to file (see actions menu). This will generate do_extract.txt file that should contain all ncs files in the folder.
+3. css-extract --jobs do_extract.txt
+4. css-plot-extracted
+5. css-find-concurrent
+6. css-mask-artifacts
+7. Repeat step 2: open css-overview-gui; initialize from current folder (Raw/micro) and save the actions to file (see actions menu). This will generate do_sort_pos.txt file used in the next step (you could repeat this step also for negative spikes, by clicking in the gui on sort-neg before saving the actions).
+8. 'css-prepare-sorting --jobs do_sort_pos.txt'. This will generate sort_pos_yl2.txt for the next step.
+9. 'css-cluster --jobs sort_pos_yl2.txt'
+10. 'css-combine --jobs sort_pos_yl2.txt'
+11. (optional) 'css-plot-sorted --label sort_pos_yl2'
+12. (fine tuning) css-gui and css-overview-gui
 
-6. Make sure the features.xls file is in /Paradigm
-
-7. Make sure that in function/load_settings_params.py all is well defined (prefix of log files, e.g., mouse_cheatha..part1)
-
->>>>>>> 52d67cfe233746963a7f9004577b5f7b98ab4e7e
-8. Run script from Bash/ folder.
+- Run script from Bash/ folder.

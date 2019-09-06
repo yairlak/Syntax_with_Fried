@@ -1,11 +1,12 @@
 import os, argparse, glob
 from neo import io
+#from neo-0.8.0.dev0-py3.7.egg import io
 import matplotlib.pyplot as plt
 import numpy as np
 
 parser = argparse.ArgumentParser(description='Synchronize triggers channel and paradigm logs.')
-parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_504/Logs/raw/", help="Path to original log files")
-parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_504/Raw/nev_files/EXP12_Syntax001", help="Path to triggers file. WITHOUT extension for Blackrock")
+parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_504/Logs/original/", help="Path to original log files")
+parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_504/Raw/nev_files/EXP12_Syntax001.nev", help="Path to triggers file. WITHOUT extension for Blackrock")
 parser.add_argument('--recording-system', choices=['Neuralynx', 'BlackRock'], default='BlackRock')
 args = parser.parse_args()
 print(args)
@@ -16,7 +17,6 @@ CHEETAH_str = 'CHEETAH_SIGNAL'
 # -------------------
 # ---- functions ----
 # -------------------
->>>>>>> 2946d755b26a7fd417a05956b6fed501e900e322
 
 def remove_false_TTLs(times, event_nums):
     IX_to_keep = []
@@ -71,6 +71,7 @@ def find_beginning_of_blocks(d_times_ttl, d_events_ttl):
 
 # Load events from nev file
 if args.recording_system == 'Neuralynx':
+    print(args.ttl_file)
     NIO = io.NeuralynxIO(os.path.dirname(args.ttl_file))
     time0, timeend = NIO._timestamp_limits[0]
     print('time0, timeend = ', time0, timeend)
@@ -83,10 +84,14 @@ elif args.recording_system == 'BlackRock':
     events = NIO.nev_data['NonNeural']
     assert NIO._BlackrockRawIO__nev_basic_header[6] == NIO._BlackrockRawIO__nev_basic_header[7] # I wasnt sure if these two represent indeed sampling rate
     sr = NIO._BlackrockRawIO__nev_basic_header[6]
-    times_ttl = [1e6*e[0]/sr for e in events] # transfrom from samples to microsec, like with Neuralynx
-    event_nums_ttl = [e[4] for e in events]
-    # !!!! special for patient 504 - for some reason event numbers in first block were shifted upwards
+    times_ttl = [1e6*e[0]/sr for e in events[0]] # transfrom from samples to microsec, like with Neuralynx
+    event_nums_ttl = [e[4] for e in events[0]]
+    # fix, ax = plt.subplots(1)
+
+    # !!!! ONLY for patient 504 - for some reason event numbers in first block were shifted upwards
     event_nums_ttl = [e - 128 if e > 65400 else e for e in event_nums_ttl]
+    # plt.plot(event_nums_ttl)
+    # plt.show()
     # ----- !!!!!!!!!!!!!!! ---------------
     event_nums_ttl = [e - min(event_nums_ttl) for e in event_nums_ttl]
 
@@ -94,7 +99,7 @@ elif args.recording_system == 'BlackRock':
 
 # Remove false triggers
 times_ttl, event_nums_ttl = remove_false_TTLs(times_ttl, event_nums_ttl)
-times_ttl, event_nums_ttl = remove_events_zero(times_ttl, event_nums_ttl) # Should come after remove_false_TTLs
+times_ttl, event_nums_ttl = remove_events_zero(times_ttl, event_nums_ttl) # Should only come after remove_false_TTLs
 
 diff_times_ttl = np.diff(times_ttl)
 diff_events_ttl = event_nums_ttl[0:-1]
@@ -179,8 +184,4 @@ for block, (times_events_block, times_log_block, events_num_block) in enumerate(
     with open(os.path.join(os.path.dirname(log_filenames[block]), '..', 'events_log_in_cheetah_clock_part%i.log'%(block+1)), 'w') as f_new:
         for l in new_log:
             f_new.write("%s" % l)
-
-
-
-
-
+    print('New log file was saved to: %s' % os.path.join(os.path.dirname(log_filenames[block]), '..', 'events_log_in_cheetah_clock_part%i.log'%(block+1)))

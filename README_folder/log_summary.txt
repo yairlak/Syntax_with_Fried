@@ -1,0 +1,22 @@
+
+# -----------------------------------------------
+2019Aug29
+
+- Added to Code/Spike_sorting/NeurlaynxPipeline/ncs2mat.m and ncsMIC2mat.m
+- Added Code/Utils/ with scripts needed for, e.g., spike sorting pipeline
+- Spike sorting with Combinato was done for subjects 479_11, 482, 493, 502 and 505. WITHOUT manual fine-tuning. The multi-process pipeline, using jobs was used for that. See spike_sorting pipeline file for details.
+- Patient 493 may have a bad manually synch'ed log. Ariel should fix it.
+- Patient 502 has an error when launching generate_epochs script about repeated events (check log). 
+
+- epochs were generated for subject 479_11, 482 and 505, for MACRO, MICRO and SPIKES.
+- in Bash/, parallel_generate for micro high gamma was updated (minor issues). currently only generate micro epochs can be run on Alambic, but the output is of zero size (not clear why). Until fixed, use parallel_is153802 instead.
+- Macro and spike epochstfr generation is currently not paralelized. Epochstfr are generated sequentially by launching the script for each patient separately. 
+- Code/Main/plot_rasters.py was changed to be compatible with epochstfr and not epochs (h5 instead of fif files, respectively, in Data/patient/Epochs)
+
+# ------------------------------------------------
+
+UCLA comfirmed patient 479 GA3-RIFAC1.ncs is missing
+UCLA confirmed patient 482 RAH4.ncs is missing
+
+# -----------------------------------
+

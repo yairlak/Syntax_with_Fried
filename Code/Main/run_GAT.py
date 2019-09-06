@@ -13,6 +13,7 @@ parser.add_argument('--picks-macro', action='append', help='List of lists (per p
 parser.add_argument('--picks-spike', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
 parser.add_argument('--cat-k-timepoints', type=int, default=1, help='How many time points to concatenate before classification')
 args = parser.parse_args()
+print(args)
 
 # Set current working directory to that of script
 abspath = os.path.abspath(__file__)
