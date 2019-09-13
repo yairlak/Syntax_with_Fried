@@ -11,7 +11,7 @@ parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', 
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
-parser.add_argument('--overwrite', default=True, action='store_false', help="If True then file will be overwritten")
+parser.add_argument('--overwrite', default=False, action='store_true', help="If True then file will be overwritten")
 args = parser.parse_args()
 
 
@@ -74,12 +74,15 @@ channel_names_dict = dict(zip(map(int, [s.split('\t')[0] for s in channel_names]
 for ch in args.channels:
     channel_name = channel_names_dict[ch]
     probe_name = re.split('(\d+)', channel_name)[2][1::]
-    filename = args.patient + '_spikes_' + probe_name + '_ch_' + str(ch) + '-tfr.h5' if not args.out_fn else args.out_fn
+    filename_epochsTFR = args.patient + '_spikes_' + probe_name + '_ch_' + str(ch) + '-tfr.h5' if not args.out_fn else args.out_fn
+    filename_epochs = args.patient + '_spikes_' + probe_name + '_ch_' + str(ch) + '-epo.fif' if not args.out_fn else args.out_fn
     
     if not os.path.exists(os.path.join(path2epochs, filename)) or args.overwrite:
-        _, epochsTFR_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
+        epochs_spikes, epochsTFR_spikes = analyses_single_unit.generate_epochs_spikes(ch, channel_name, events_spikes, event_id, metadata, settings, params, preferences)
         if len(epochsTFR_spikes) > 0:
-            epochsTFR_spikes.save(os.path.join(path2epochs, filename))
+            epochsTFR_spikes.save(os.path.join(path2epochs, filename_epochsTFR), overwrite=True)
             print('EpochsTFR object saved to: ' + os.path.join(path2epochs, filename))
+            epochs_spikes.save(os.path.join(path2epochs, filename_epochs))
+            print('Epochs object saved to: ' + os.path.join(path2epochs, filename_epochs))
     else:
         print('File already exists (choose flag --overwrite if needed): ' + os.path.join(path2epochs, filename))

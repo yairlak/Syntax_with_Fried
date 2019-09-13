@@ -49,7 +49,7 @@ def load_macro_data(path2rawdata, probe_name):
 
 def load_combinato_sorted_h5(channel_num, channel_name, settings):
     import h5py
-    spike_times = []; channel_names = []
+    spike_times_msec = []; channel_names = []
 
     h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs' , 'CSC' + str(channel_num), 'data_*.h5'))
     if len(h5_files) == 1:
@@ -93,7 +93,7 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
                             IXs.append(curr_IX)
 
                     curr_spike_times = f_all_spikes[sign]['times'].value[IXs]
-                    spike_times.append(curr_spike_times)
+                    spike_times_msec.append(curr_spike_times)
                     region_name = channel_name[1+channel_name.find("-"):channel_name.find(".")]
                     channel_names.append(sign[0] + '_g' + str(g) + '_' + str(channel_num)+ '_' + region_name)
         print(channel_num)
@@ -101,7 +101,7 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
     else:
         print('None or more than a single combinato h5 was found')
 
-    return spike_times, channel_names
+    return spike_times_msec, channel_names
 
 
 def add_event_to_metadata(metadata, event_time, sentence_number, sentence_string, word_position, word_string, pos, num_words, last_word):

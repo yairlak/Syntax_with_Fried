@@ -1,11 +1,11 @@
 import os
 patient = 482
 
-for ch in range(1, 2):
+for ch in range(1, 88):
     block = 'auditory'
-    align = 'first'
-    tmin = -1
-    tmax = 2
+    align = 'end'
+    tmin = -2
+    tmax = 1.2
     cmd = 'python plot_rasters.py -patient %i -block %s -align %s -channel %i -tmin %1.2f -tmax %1.2f' % (patient, block, align, ch, tmin, tmax)
     print(cmd)
     os.system(cmd)
@@ -15,5 +15,5 @@ for ch in range(1, 2):
     tmin = -2.5
     tmax = 1.2
     cmd = 'python plot_rasters.py -patient %i -block %s -align %s -channel %i -tmin %1.2f -tmax %1.2f' % (patient, block, align, ch, tmin, tmax)
-    print(cmd)
-    os.system(cmd)
+    #print(cmd)
+    #os.system(cmd)

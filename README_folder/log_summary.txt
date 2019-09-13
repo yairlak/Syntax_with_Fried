@@ -19,4 +19,6 @@ UCLA comfirmed patient 479 GA3-RIFAC1.ncs is missing
 UCLA confirmed patient 482 RAH4.ncs is missing
 
 # -----------------------------------
+2019Sep06
+- Epochs: both -epo.fif and -tfr.h5 are generated for SPIKES. fif is used for raster plots, whereas tfr.h5 are used for decoding (smoothed rasters)
 

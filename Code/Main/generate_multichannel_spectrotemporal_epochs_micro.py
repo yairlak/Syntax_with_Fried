@@ -11,6 +11,7 @@ parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', 
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
+parser.add_argument('--path2epochs', default=[], help='Output folder where epochs will be saved')
 parser.add_argument('--iter-freqs', default=[], help="frequency band in load_setting_params iter_freqs = [('High-Gamma', 70, 150, 5)]")
 parser.add_argument('--over-write', default=True, action='store_true', help="If True then file will be overwritten")
 args = parser.parse_args()
@@ -22,10 +23,11 @@ os.chdir(dname)
 
 # check if output filename already exists
 args.patient = 'patient_' + args.patient
-if not args.out_fn:
+if not args.path2epochs:
     path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
+    #path2epochs = os.environ['TMPDIR']
 else:
-    path2epochs = args.out_fn
+    path2epochs = args.path2epochs
 
 print(args)
 

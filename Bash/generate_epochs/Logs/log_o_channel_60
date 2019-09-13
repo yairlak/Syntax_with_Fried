@@ -1,0 +1,99 @@
+Namespace(blocks=[1, 2, 3, 4, 5, 6], channels=['60'], iter_freqs=[], out_fn=[], over_write=True, path2epochs='/var/tmp/pbs.337998.pbsserver', patient='patient_504', tmax=3, tmin=-3)
+Loading settings, params and preferences...
+{'classification_use_marco_LFP_data': False,
+ 'classification_use_micro_LFP_data': True,
+ 'classification_use_single_unit_data': False,
+ 'run_POS': False,
+ 'run_contrasts': False,
+ 'save_features_for_classification': True,
+ 'step': 100,
+ 'use_metadata_only': True}
+{'comparisons': range(110, 111),
+ 'comparisons_file': 'comparisons.xlsx',
+ 'features_file': 'features.xlsx',
+ 'hospital': 'UCLA',
+ 'load_line_filtered_resampled_epoch_object': False,
+ 'log_name_beginning': 'new_events_log_in_cheetah_clock_part',
+ 'overwrite_existing_output_files': True,
+ 'path2epoch_data': '../../Data/UCLA/patient_504/Epochs',
+ 'path2figures': '../../Figures',
+ 'path2log': '../../Data/UCLA/patient_504/Logs',
+ 'path2output': '../../Output',
+ 'path2patient_folder': '../../Data/UCLA/patient_504',
+ 'path2rawdata': '../../Data/UCLA/patient_504/Raw',
+ 'path2stimuli': '../../Paradigm',
+ 'patient': 'patient_504',
+ 'sentences_start_end_filename': 'sentences_start_end_dict.pkl',
+ 'stimuli_file': 'features En_02 sentences.xlsx',
+ 'stimuli_text_file': 'sentences_Eng_rand_En02.txt',
+ 'time0': 0,
+ 'timeend': 2614715933330.0,
+ 'word2pos_file': 'word2POS.pkl'}
+{'SOA': 500,
+ 'baseline_period': 500,
+ 'downsampling_sfreq': 512,
+ 'iter_freqs': [('High-Gamma', 70, 151, 10)],
+ 'line_frequency': [50, 100, 150, 200],
+ 'patient': 'patient_504',
+ 'sfreq_macro': 2000,
+ 'sfreq_raw': 30000,
+ 'sfreq_spikes': 1000,
+ 'smooth_time_freq': 0,
+ 'temporal_resolution': 0.05,
+ 'tmax': 3,
+ 'tmin': -3,
+ 'window_ed': 250,
+ 'window_st': 50,
+ 'word_OFF_duration': 300,
+ 'word_ON_duration': 200,
+ 'ylim_PSTH': 20}
+Metadata: Loading features and comparisons from Excel files...
+Logs: Reading experiment log files from experiment...
+{1: <functions.read_logs_and_features.LogSingleUnit object at 0x7f54cf5df860>, 2: <functions.read_logs_and_features.LogSingleUnit object at 0x7f54cf63e748>, 3: <functions.read_logs_and_features.LogSingleUnit object at 0x7f54d59b0eb8>, 4: <functions.read_logs_and_features.LogSingleUnit object at 0x7f54cf56f198>, 5: <functions.read_logs_and_features.LogSingleUnit object at 0x7f54cf523278>, 6: <functions.read_logs_and_features.LogSingleUnit object at 0x7f54cf538710>}
+Loading POS tags for all words in the lexicon
+Preparing meta-data
+Generating event object for MNE from log data...
+0.039544999999975516
+min diff in msec: 39.54
+Analyze channels
+['../../Data/UCLA/patient_504/Raw/micro/CSC_mat/CSC60.mat']
+channel-data loaded
+Analyzing high-gamma for channel 60
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=78441504
+    Range : 0 ... 78441503 =      0.000 ...  2614.717 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+Filter length of 198001 samples (6.600 sec) selected
+Epoching data...
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+Loading data for 3960 events and 180001 original time points ...
+0 bad epochs dropped
+<Epochs  |   3960 events (all good), -3 - 3 sec, baseline off, ~5.31 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 660
+ 'block_3': 660
+ 'block_4': 660
+ 'block_5': 660
+ 'block_6': 660>
+Original sampling rate: 30000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+Adding metadata with 94 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 3960, channels : 1, ~835.3 MB>
+Replacing existing metadata with 94 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 3960, channels : 1, ~835.3 MB>
+Epochs object saved to: /var/tmp/pbs.337998.pbsserver/patient_504_micro__ch_60-tfr.h5
+sending incremental file list
+delta-transmission disabled for local transfer or --whole-file
+./
+patient_504_micro__ch_60-tfr.h5
+total: matches=0  hash_hits=0  false_alarms=0 data=876423237
+
+sent 876,637,364 bytes  received 105 bytes  16,385,747.08 bytes/sec
+total size is 876,423,237  speedup is 1.00

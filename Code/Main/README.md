@@ -3,6 +3,9 @@ conda activate mne
 1.
 sync_log_and_recordings: launch to have the nev files and paradigm output logs synced. May required manual help. 
 
+Check settings in params in
+Main/Code/functions/load_settings_params.py
+Where you define the patient number and relevant info.
 
 
 2. Analyze Microphone
@@ -19,7 +22,14 @@ python plot_epochs_ERPs.py -patient 505 -channel 0 -tmin -1 -tmax 2 -baseline "(
 python plot_epochs_ERPs.py -patient 505 -channel 0 -align end -tmin -2 -tmax 1 -baseline "(0, 1)" --sort-key "['chronological_order']" 
 
 
-3. GAT
+3. Generate epochTFR (files):
+This stage generates an h5 in the /Epochs folder, which will be later used for downward analysis (check the Bash/generate_epochs/ folder for examples of how to parallelize it on your machine or on the cluster using qsub)
+Use --help flag to see for more options. 
+
+python generate_multichannel_spectrotemporal_epochs_micro.py -channels 1 -patient 505
+
+4. GAT
+This part launches the Generalization Across Time (GAT) decoding pipeline, based on comparisons defined in the comparisons.py file. The comparison.py file contains metadata queries for each comparison (contrast). 
 python run_GAT.py -p 479 -p 482 -p 502 -p 504 --cat-k-timepoint 5 -c 0
 
 

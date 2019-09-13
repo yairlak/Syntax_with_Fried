@@ -65,7 +65,7 @@ do
 #do
      path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/'
      filename_bash='RunScripts/bash_channel_'$CH'.sh'
-     filename_py='generate_multichannel_spectrotemporal_epochs_micro.py -patient '$PATIENT' -channels '$CH' --out-fn ~/Epochs/'$CH'-tfr.h5' 
+     filename_py='generate_multichannel_spectrotemporal_epochs_micro.py -patient '$PATIENT' -channels '$CH' --path2epochs $TMPDIR'
      output_log='Logs/log_o_channel_'$CH
      error_log='Logs/log_e_channel_'$CH
      job_name='Channel_'$CH
@@ -73,7 +73,8 @@ do
      rm -f $filename_bash
      touch $filename_bash
      echo "python $path2script$filename_py" >> $filename_bash
-         
+     echo "rsync -av \$TMPDIR'/' '/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_$PATIENT/Epochs/' -v" >> $filename_bash
+
 #echo -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log $filename_py
      qsub -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log $filename_bash
          

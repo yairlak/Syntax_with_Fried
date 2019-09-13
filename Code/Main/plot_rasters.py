@@ -8,27 +8,30 @@ from sklearn.metrics import r2_score
 from operator import itemgetter
 from pprint import pprint
 from functions.auxilary_functions import  smooth_with_gaussian
+from scipy.cluster.hierarchy import dendrogram, linkage
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='479_11', help='Patient string')
+parser.add_argument('-patient', default='505', help='Patient string')
 parser.add_argument('-hospital', default='UCLA', help='Hospital string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default=[], help='Block type')
 parser.add_argument('-align', choices=['first','last', 'end'], default=[], help='Block type')
-parser.add_argument('-channel', default=[], type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
-parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
-parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1)')
+parser.add_argument('-channel', default=17, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
+parser.add_argument('--sort-key', default=['chronological_order'], help='Keys to sort according')
+# parser.add_argument('--query', default='word_position>0 and block in [2, 4, 6]', help='Metadata query (e.g., word_position==1). See pandas query syntax for more')
+parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1). See pandas query syntax for more')
+#parser.add_argument('--query', default='word_position>0 and block in [1, 3, 5]', help='Metadata query (e.g., word_position==1)')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
-parser.add_argument('-tmin', default=None, type=float, help='crop window')
-parser.add_argument('-tmax', default=None, type=float, help='crop window')
+parser.add_argument('-tmin', default=0.05, type=float, help='crop window')
+parser.add_argument('-tmax', default=0.5, type=float, help='crop window')
 parser.add_argument('-baseline', default=None, type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
-parser.add_argument('-y-tick-step', default=40, help='If sorted by key, set the yticklabels density')
+parser.add_argument('-y-tick-step', default=10, help='If sorted by key, set the yticklabels density')
 parser.add_argument('-ylim-PSTH', default=20)
 parser.add_argument('-window-st', default=0, help='Regression start-time window [msec]')
 parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
 # parser.add_argument('--baseline-mode', choices=['mean', 'ratio', 'logratio', 'percent', 'zscore', 'zlogratio'], default='zscore', help='Type of baseline method')
-# parser.add_argument('--remove-outliers', action="store_false", default=True, help='Remove outliers based on percentile 25 and 75')
+parser.add_argument('-sort-cluster', action="store_true", default=False)
 
 
 args = parser.parse_args()
@@ -69,23 +72,26 @@ if not isinstance(args.channel, int):
     #filename = args.patient + '-tfr.h5'
     pass
 else:
-    filename = glob.glob(os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', args.patient + '_spikes_*_ch_' + str(args.channel) + '-tfr.h5'))
+    filename = glob.glob(os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', args.patient + '_spikes_*_ch_' + str(args.channel) + '-epo.fif'))
     assert len(filename) == 1
     filename = os.path.basename(filename[0])
-path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
-path2figures = os.path.join('..', '..', 'Figures', args.patient, 'Rasters')
+    path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
+
+path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
 if not os.path.exists(path2figures):
     os.makedirs(path2figures)
 
 print('Loading epochs object: ' + path2epochs)
-epochs_spikes = mne.time_frequency.read_tfrs(path2epochs)
-epochs_spikes = epochs_spikes[0]
+epochs_spikes = mne.read_epochs(path2epochs)
 if args.tmin is not None and args.tmax is not None:
     epochs_spikes.crop(args.tmin, args.tmax)
-print(epochs_spikes)
-#print(mne.__version__)
-#print(args.query)
+
 epochs_spikes = epochs_spikes[args.query]
+print(epochs_spikes)
+
+sfreq = epochs_spikes.info['sfreq']
+print('Sampling rate: %1.2f' % sfreq)
+gaussian_width = 100 * 1e-3
 
 for i_cluster, cluster in enumerate(np.arange(epochs_spikes.info['nchan'])):
 
@@ -104,17 +110,41 @@ for i_cluster, cluster in enumerate(np.arange(epochs_spikes.info['nchan'])):
     else:
         IX = None
 
+    if args.sort_cluster:
+        import pandas as pd
+        # Move to dataframe to facilitate averaging
+        df = pd.DataFrame(data=np.squeeze(epochs_spikes._data[:, 0, :]))
+        df['word_string'] = list(epochs_spikes.metadata['word_string'])
+        df = df.groupby('word_string').apply(lambda x: x.mean())
+        df = df.loc[:, df.columns != 'word_string']
+        mat = df.values
+        # Smooth AFTER averaging
+        new_mat = []
+        for l in mat:
+            new_l = smooth_with_gaussian(l, sfreq, gaussian_width=gaussian_width * sfreq)  # smooth with 20ms gaussian
+            new_mat.append(new_l)
+        new_mat = np.asarray(new_mat)
+
+        # hierarchical clustering
+        linked = linkage(new_mat, method='complete', metric='seuclidean')
+
+        plt.figure(figsize=(10, 7))
+        dendrogram(linked, labels=list(set(epochs_spikes.metadata['word_string'])))
+        plt.tick_params(axis='x', labelsize=10)
+        plt.show()
+
+
     fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+
 
     if args.sort_key:
         fig[0].axes[0].set_yticks(range(0, len(fields_for_sorting[0]), args.y_tick_step))
-        yticklabels = np.sort(fields_for_sorting[0])[::args.y_tick_step]
-        # yticklabels = yticklabels[::-1]
+        # Change fields_for_sorting[1] instead of 0, if you want ticks to be based on second sort key
+        yticklabels = np.asarray(fields_for_sorting[0])[IX][::args.y_tick_step]
+        #yticklabels = yticklabels[::-1]
         fig[0].axes[0].set_yticklabels(yticklabels)
         plt.setp(fig[0].axes[0], ylabel=args.sort_key[0])
 
-    sfreq = epochs_spikes.info['sfreq']
-    gaussian_width = 20 * 1e-3
     mean_spike_count = np.mean(epochs_spikes._data[:, cluster, :], axis=0)
     new_y_smoothed = smooth_with_gaussian(mean_spike_count, sfreq,
                                           gaussian_width=gaussian_width * sfreq)  # smooth with 20ms gaussian

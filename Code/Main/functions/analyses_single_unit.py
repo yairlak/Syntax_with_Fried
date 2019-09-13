@@ -20,7 +20,7 @@ def generate_epochs_spikes(channel_num, channel_name, events_spikes, event_id, m
 
         print('Epoching spiking data...')
         epochs_spikes = mne.Epochs(raw_spikes, events_spikes, event_id, params.tmin, params.tmax, metadata=metadata,
-                                   baseline=None, preload=True, picks=None)
+                                   baseline=None, preload=True, picks=None) 
         print(epochs_spikes)
 
         print('Generating EpochsTFR for spikes...')
