@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 parser = argparse.ArgumentParser(description='Synchronize triggers channel and paradigm logs.')
-parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_504/Logs/raw/", help="Path to original log files")
-parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_504/Raw/nev_files/EXP12_Syntax001", help="Path to triggers file. WITHOUT extension for Blackrock")
-parser.add_argument('--recording-system', choices=['Neuralynx', 'BlackRock'], default='BlackRock')
+parser.add_argument('--logs-folder', default="../../Data/UCLA/patient_502/Logs/raw/", help="Path to original log files")
+parser.add_argument('--ttl-file', default="../../Data/UCLA/patient_502/Raw/nev_files/Events.nev", help="Path to triggers file. WITHOUT extension for Blackrock")
+parser.add_argument('--recording-system', choices=['Neuralynx', 'BlackRock'], default='Neuralynx')
 args = parser.parse_args()
 print(args)
 
@@ -16,7 +16,6 @@ CHEETAH_str = 'CHEETAH_SIGNAL'
 # -------------------
 # ---- functions ----
 # -------------------
->>>>>>> 2946d755b26a7fd417a05956b6fed501e900e322
 
 def remove_false_TTLs(times, event_nums):
     IX_to_keep = []

@@ -8,6 +8,9 @@ import sys
 recording_system = 'Neuralynx'
 settings = load_settings_params.Settings(sys.argv[1])
 session_folder = op.join(settings.path2patient_folder, 'Raw', 'nev_files')
+# settings = load_settings_params.Settings('patient_504')
+# session_folder = '/nfs/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_504/Raw/macro/ncs/'
+
 print(session_folder)
 
 if recording_system == 'Neuralynx':
