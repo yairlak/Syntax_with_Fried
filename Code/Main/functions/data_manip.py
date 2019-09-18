@@ -10,6 +10,48 @@ def get_channel_nums(path2rawdata):
     return [int(os.path.basename(s)[3:-4]) for s in CSC_files]
 
 
+def get_probes2channels(patient):
+    '''
+    input: patient (str)
+    output: probes (dict) - keys are probe names, values are channel numbers for micro or macro data. For example, probes['LSTG']['micro'] = [25, 26, ...]
+    '''
+    probes = {}
+
+    path2microdata_folder = os.path.join('..', '..', 'Data', 'UCLA', patient, 'Raw', 'micro', 'CSC_mat')
+    path2macrodata_folder = os.path.join('..', '..', 'Data', 'UCLA', patient, 'Raw', 'macro', 'CSC_mat')
+    
+    # MICRO CSC
+    with open(os.path.join(path2microdata_folder, 'channel_numbers_to_names.txt')) as f:
+        lines = f.readlines()
+    channel_numbers_micro  = [l.strip().split('\t')[0] for l in lines]
+    file_names_micro = [l.strip().split('\t')[1] for l in lines]
+    probe_names_micro = set([s[4:-5] for s in file_names_micro if s.startswith('G')])
+    
+    # MACRO CSC
+    with open(os.path.join(path2macrodata_folder, 'channel_numbers_to_names.txt')) as f:
+        lines = f.readlines()
+    channel_numbers_macro = [l.strip().split('\t')[0] for l in lines]
+    file_names_macro = [l.strip().split('\t')[1] for l in lines]
+    probe_names_macro = set([s[:-5] for s in file_names_macro])
+
+    if not probe_names_micro == probe_names_macro:
+        print('--- !!! Warning: not the same probe names in micro and macro !!! ---')
+        print('Micro probe names: %s' % probe_names_micro)
+        print('Macro probe names: %s' % probe_names_macro)
+        
+
+    for probe_name in probe_names_micro:
+        channel_numbers_of_probe_micro = [int(ch) for (ch, fn) in zip(channel_numbers_micro, file_names_micro) if probe_name == fn[4:-5]]
+        channel_numbers_of_probe_macro = [int(ch) for (ch, fn) in zip(channel_numbers_micro, file_names_macro) if probe_name == fn[:-5]]
+        probes[probe_name] = {}
+        probes[probe_name]['micro'] = channel_numbers_of_probe_micro
+        probes[probe_name]['macro'] = channel_numbers_of_probe_macro
+    # MICROPHPNE to micro electrodes
+    probes['MICROPHONE'] = {}
+    probes['MICROPHONE']['micro'] = [0]
+
+    return probes
+
 def load_channelsCSC_data(path2rawdata, channel):
     CSC_file = glob.glob(os.path.join(path2rawdata, 'micro', 'CSC_mat', 'CSC' + str(channel) + '.mat'))
     print(CSC_file)
@@ -56,46 +98,57 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
         filename = h5_files[0]
         f_all_spikes = h5py.File(filename, 'r')
 
-        #for sign in ['pos', 'neg']:
-        for sign in ['pos']:
+        for sign in ['neg', 'pos']:
+        #for sign in ['neg']:
             #filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_simple', 'sort_cat.h5'))[0]
-            filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_yl2', 'sort_cat.h5'))[0]
-            f_sort_cat = h5py.File(filename_sorted, 'r')
+            filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_yl2', 'sort_cat.h5'))
+            if len(filename_sorted) == 1:
+                f_sort_cat = h5py.File(filename_sorted[0], 'r')
+                #print('classes', f_sort_cat['classes'].value)
+                #print('index', f_sort_cat['index'].value)
+                #print('matches', f_sort_cat['matches'].value)
+                #print('groups', f_sort_cat['groups'].value)
+                #print('types', f_sort_cat['types'].value)
+                try:
+                    classes =  f_sort_cat['classes'].value
+                    index = f_sort_cat['index'].value
+                    matches = f_sort_cat['matches'].value
+                    groups = f_sort_cat['groups'].value
+                    group_numbers = set([g[1] for g in groups])
+                    types = f_sort_cat['types'].value # -1: artifact, 0: unassigned, 1: MU, 2: SU
 
-            classes =  f_sort_cat['classes'].value
-            index = f_sort_cat['index'].value
-            matches = f_sort_cat['matches'].value
-            groups = f_sort_cat['groups'].value
-            group_numbers = set([g[1] for g in groups])
-            types = f_sort_cat['types'].value # -1: artifact, 0: unassigned, 1: MU, 2: SU
-
-            # For each group, generate a list with all spike times and append to spike_times
-            for g in list(group_numbers):
-                IXs = []
-                type_of_curr_group = [t_ for (g_, t_) in types if g_ == g]
-                if len(type_of_curr_group) == 1:
-                    type_of_curr_group = type_of_curr_group[0]
-                else:
-                    raise ('issue with types: more than one group assigned to a type')
-                if type_of_curr_group>0: # ignore artifact and unassigned groups
-
-                    # Loop over all spikes
-                    for i, c in enumerate(classes):
-                        # check if current cluster in group
-                        g_of_curr_cluster = [g_ for (c_, g_) in groups if c_ == c]
-                        if len(g_of_curr_cluster) == 1:
-                            g_of_curr_cluster = g_of_curr_cluster[0]
+                    # For each group, generate a list with all spike times and append to spike_times
+                    for g in list(group_numbers):
+                        IXs = []
+                        type_of_curr_group = [t_ for (g_, t_) in types if g_ == g]
+                        if len(type_of_curr_group) == 1:
+                            type_of_curr_group = type_of_curr_group[0]
                         else:
-                            raise('issue with groups: more than one group assigned to a cluster')
-                        # if curr spike is in a cluster of the current group
-                        if g_of_curr_cluster == g:
-                            curr_IX = index[i]
-                            IXs.append(curr_IX)
+                            raise ('issue with types: more than one group assigned to a type')
+                        if type_of_curr_group>0: # ignore artifact and unassigned groups
 
-                    curr_spike_times = f_all_spikes[sign]['times'].value[IXs]
-                    spike_times_msec.append(curr_spike_times)
-                    region_name = channel_name[1+channel_name.find("-"):channel_name.find(".")]
-                    channel_names.append(sign[0] + '_g' + str(g) + '_' + str(channel_num)+ '_' + region_name)
+                            # Loop over all spikes
+                            for i, c in enumerate(classes):
+                                # check if current cluster in group
+                                g_of_curr_cluster = [g_ for (c_, g_) in groups if c_ == c]
+                                if len(g_of_curr_cluster) == 1:
+                                    g_of_curr_cluster = g_of_curr_cluster[0]
+                                else:
+                                    raise('issue with groups: more than one group assigned to a cluster')
+                                # if curr spike is in a cluster of the current group
+                                if g_of_curr_cluster == g:
+                                    curr_IX = index[i]
+                                    IXs.append(curr_IX)
+
+                            curr_spike_times = f_all_spikes[sign]['times'].value[IXs]
+                            spike_times_msec.append(curr_spike_times)
+                            region_name = channel_name[1+channel_name.find("-"):channel_name.find(".")]
+                            channel_names.append(sign[0] + '_g' + str(g) + '_' + str(channel_num)+ '_' + region_name)
+                except:
+                    print('Something is wrong with %s, %s' % (sign, filename_sorted[0]))
+            else:
+                print('%s was not found!' % os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_yl2', 'sort_cat.h5'))
+
         print(channel_num)
 
     else:

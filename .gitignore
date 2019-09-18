@@ -12,6 +12,8 @@ Code/Ariel/arielt/ucla/neuralynx/matlab/clock_sync/
 Code/Main/Logs_GAT/
 Paradigm_Yair/Stimuli
 Paradigm_Yair/Logs
+bash_*.sh
+log_*channel
 *.log
 *.ncs
 *.mat

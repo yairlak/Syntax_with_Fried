@@ -24,17 +24,19 @@ def prepare_data_for_GAT(args):
     '''
 
     print(args)
-    patients = args.patients; hospitals=args.hospitals
-    picks_micro=[eval(p) for p in args.picks_micro]
-    picks_macro=[eval(p) for p in args.picks_macro]
-    picks_spike=[eval(p) for p in args.picks_spike]
+    patients=args.patients
+    hospitals=args.hospitals
+    picks_micro=args.picks_micro
+    picks_macro=args.picks_macro
+    picks_spike=args.picks_spike
+    
     query_classes_train=args.train_queries; query_classes_test=args.test_queries; 
     root_path=args.root_path
     k=args.cat_k_timepoints
 
     # Times
     train_times = {}
-    train_times["start"] = -0.1
+    train_times["start"] = -0.5
     train_times["stop"] = 0.9
     # train_times["step"] = 0.01
 
@@ -207,6 +209,7 @@ def plot_GAT(times, time_gen, scores):
     ax.axhline(.5, color='k', linestyle='--', label='chance')
     ax.set_xlabel('Times')
     ax.set_ylabel('AUC')
+    ax.set_ylim(0.4, np.max([0.8, np.max(np.diag(scores))]))
     ax.legend()
     ax.axvline(.0, color='k', linestyle='-')
     ax.set_title('Decoding over time')
@@ -214,7 +217,7 @@ def plot_GAT(times, time_gen, scores):
     # Plot the full GAT matrix
     fig2, ax = plt.subplots(1, 1)
     im = ax.imshow(scores, interpolation='lanczos', origin='lower', cmap='Reds',
-                   extent=times[[0, -1, 0, -1]], vmin=0.5, vmax=1.)
+                   extent=times[[0, -1, 0, -1]], vmin=0.5, vmax=np.max([0.8, np.max(scores)]))
     ax.set_xlabel('Testing Time (s)')
     ax.set_ylabel('Training Time (s)')
     ax.set_title('Temporal Generalization')
@@ -243,7 +246,10 @@ def filter_relevant_epochs_filenames(filenames, picks):
             filtered_filenames = []
             for fn in filenames:
                 bn = os.path.basename(fn)
-                probe_name = bn.split('_')[3]
+                ugly_hack = 0
+                if 'patient_479_11' in bn or 'patient_479_25' in bn:
+                    ugly_hack = 1
+                probe_name = bn.split('_')[3+ugly_hack]
                 if probe_name in picks:
                     filtered_filenames.append(fn)
 

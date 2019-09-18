@@ -1,3 +1,6 @@
-/home/yl254115/miniconda3/lib/python3.7/site-packages/matplotlib/cbook/__init__.py:424: MatplotlibDeprecationWarning: 
-Passing one of 'on', 'true', 'off', 'false' as a boolean is deprecated; use an actual boolean (True/False) instead.
-  warn_deprecated("2.2", "Passing one of 'on', 'true', 'off', 'false' as a "
+/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)

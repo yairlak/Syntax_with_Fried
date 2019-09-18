@@ -1,1 +1,1 @@
-python /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_epochs_ERPs.py -patient 505 -block visual -align end -channel 78 --micro-macro micro --probe-name None
+python /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py -patient 505 -block auditory -align end -channel 78 -tmin -3 -tmax 1

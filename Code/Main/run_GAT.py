@@ -12,6 +12,8 @@ parser.add_argument('--picks-micro', action='append', help='List of lists (per p
 parser.add_argument('--picks-macro', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
 parser.add_argument('--picks-spike', action='append', help='List of lists (per patient) of channels to pick. Either a string ("all" (for all channels) or roi (e.g., "STG") or channel numbers as integers')
 parser.add_argument('--cat-k-timepoints', type=int, default=1, help='How many time points to concatenate before classification')
+parser.add_argument('--path2figures', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('--over-write', default=False, action='store_true', help="If True then file will be overwritten")
 args = parser.parse_args()
 print(args)
 
@@ -49,7 +51,10 @@ for c, comparison in comparisons.items():
         
         fname = comparison['name'] + "_patients_" + '_'.join([s.split('_')[1] for s in args.patients]) + '_mic_'+ '_'.join(args.picks_micro) + '_mac_' + '_'.join(args.picks_macro) + '_spi_' + '_'.join(args.picks_spike) + '_cat-k_' + str(args.cat_k_timepoints)
         cmd += ' --output-filename %s' % fname
-
+        
+        cmd += ' --path2figures %s' % args.path2figures
+        if args.over_write:
+            cmd += ' --over-write'
         #cmd += ' > Logs_GAT/%s.log 2>&1 &' % (comparison['name'] + '_cat-k_' + str(args.cat_k_timepoints))
         print(cmd)
         os.system(cmd)

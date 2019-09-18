@@ -21,4 +21,12 @@ UCLA confirmed patient 482 RAH4.ncs is missing
 # -----------------------------------
 2019Sep06
 - Epochs: both -epo.fif and -tfr.h5 are generated for SPIKES. fif is used for raster plots, whereas tfr.h5 are used for decoding (smoothed rasters)
+- Manual spike sorting 482 (completed)
+- Manual spike sorting 479_11 (up to CSC15 including)
+# -----------------------------------
+2019Sep13
+- Started working on Main/plot_comparison.py
+# -----------------------------------
+2019Sep14-15
+- Finished first version of plot_comparison. Run on cluster from Bash/Plotting, per patient. For each probe, it plots ERPs for both micro and macro contacts, together with decoding, and the same for spikes. 
 
