@@ -5,13 +5,14 @@ import numpy as np
 from pprint import pprint
 
 parser = argparse.ArgumentParser(description='Generate MNE-py epochs object for a specific frequency band for all channels.')
-parser.add_argument('-patient', default='505', help='Patient string')
+parser.add_argument('-patient', default='479_11', help='Patient string')
 parser.add_argument('--probe-names', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('-blocks', type=int, default=[1, 2, 3, 4, 5, 6], nargs='+', help='Which blocks to analyze')
 parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
 parser.add_argument('--iter-freqs', default=[], help="frequency band in load_setting_params iter_freqs = [('High-Gamma', 70, 150, 5)]")
+parser.add_argument('--contact-pairs', default=[(0, 1), (1, 2), (2, 3)], help="List of tuples for which bi-polar ref will be made. [(0, 1), (1, 2)] means that two inner most ref channels will be generated.")
 parser.add_argument('--over-write', default=True, action='store_false', help="If True then file will be overwritten")
 args = parser.parse_args()
 
@@ -24,7 +25,7 @@ os.chdir(dname)
 args.patient = 'patient_' + args.patient
 # ch_str = '_ch_' + '_'.join(args.channels) if args.channels else ''
 path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
-path2raw_macro = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Raw', 'macro')
+path2raw_macro = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Raw', 'macro', 'ncs')
 if not args.probe_names:
     ncs_files = glob.glob(os.path.join(path2raw_macro, '*.ncs'))
     args.probe_names = list(set([re.split('(\d+)', os.path.basename(f))[0] for f in ncs_files]))
@@ -64,11 +65,13 @@ metadata = read_logs_and_features.prepare_metadata(log_all_blocks, features, wor
 
 print('Generating event object for MNE from log data...')
 _, _, events_macro, event_id = convert_to_mne.generate_events_array(metadata, params)
+#t = events_micro[:, 0]
+#print(len(t), len(set(t)))
 
 for probe_name in args.probe_names:
     #TODO: add log to power
     macro_data_all_4_channels = data_manip.load_macro_data(os.path.join(settings.path2rawdata), probe_name)
-    for channel_pair in [(0, 1), (1, 2)]:
+    for channel_pair in args.contact_pairs:
         if len(macro_data_all_4_channels[channel_pair[0]])>0 and len(macro_data_all_4_channels[channel_pair[1]])>0: # make sure channels are not empty
             macro_data = macro_data_all_4_channels[channel_pair[1]] - macro_data_all_4_channels[channel_pair[0]]
             settings.channel_name = '%s_%i_%i' % (probe_name, channel_pair[0]+1, channel_pair[1]+1)

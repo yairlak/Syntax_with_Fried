@@ -4,31 +4,29 @@ import numpy as np
 import re
 
 # Raw data
-def micro_electrodes_raw(settings):
-    if settings.channel > 0:
-        CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'CSC' + str(settings.channel) + '.mat'))
-    elif settings.channel == 0:
-        CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'MICROPHONE.mat'))
-    print(CSC_file)
-    data_all = io.loadmat(CSC_file[0])['data']
-    print('channel-data loaded')
-    if 'file_name' in io.loadmat(CSC_file[0]).keys():
-        settings.channel_name = io.loadmat(CSC_file[0])['file_name'][0]
-    else:
-        settings.channel_name = 'Channel_'+str(settings.channel)
-    return data_all, settings
+#def micro_electrodes_raw(settings):
+#    if settings.channel > 0:
+#        CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'CSC' + str(settings.channel) + '.mat'))
+#    elif settings.channel == 0:
+#        CSC_file = glob.glob(os.path.join(settings.path2rawdata_mat, 'MICROPHONE.mat'))
+#    print(CSC_file)
+#    data_all = io.loadmat(CSC_file[0])['data']
+#    print('channel-data loaded')
+#    if 'file_name' in io.loadmat(CSC_file[0]).keys():
+#        settings.channel_name = io.loadmat(CSC_file[0])['file_name'][0]
+#    else:
+#        settings.channel_name = 'Channel_'+str(settings.channel)
+#    return data_all, settings
 
 
-def macro_electrodes(settings):
-
-
-    CSC_file = glob.glob(os.path.join(settings.path2macro, 'CSC' + str(settings.channel_macro) + '.mat'))
-    data_all = io.loadmat(CSC_file[0])['data']
-    if 'file_name' in io.loadmat(CSC_file[0]).keys():
-        settings.channel_name = io.loadmat(CSC_file[0])['file_name'][0]
-    else:
-        settings.channel_name = 'Channel_' + str(settings.channel_macro)
-    return data_all, settings
+#def macro_electrodes(settings):
+#    CSC_file = glob.glob(os.path.join(settings.path2macro, 'CSC' + str(settings.channel_macro) + '.mat'))
+#    data_all = io.loadmat(CSC_file[0])['data']
+#    if 'file_name' in io.loadmat(CSC_file[0]).keys():
+#        settings.channel_name = io.loadmat(CSC_file[0])['file_name'][0]
+#    else:
+#        settings.channel_name = 'Channel_' + str(settings.channel_macro)
+#    return data_all, settings
 
 
 
@@ -36,13 +34,13 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
     import h5py
     spike_times = []; channel_names = []
 
-    h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro' , 'CSC' + str(channel_num), 'data_*.h5'))
+    h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs' , 'CSC' + str(channel_num), 'data_*.h5'))
     if len(h5_files) == 1:
         filename = h5_files[0]
         f_all_spikes = h5py.File(filename, 'r')
 
         for sign in ['pos', 'neg']:
-            filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC' + str(channel_num), 'sort_' + sign + '_simple', 'sort_cat.h5'))[0]
+            filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_simple', 'sort_cat.h5'))[0]
             f_sort_cat = h5py.File(filename_sorted, 'r')
 
             classes =  f_sort_cat['classes'].value

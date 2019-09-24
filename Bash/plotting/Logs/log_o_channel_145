@@ -1,0 +1,2 @@
+Namespace(SOA=500, align='end', baseline=None, block='visual', channel=145, hospital='UCLA', path2figures=[], patient='patient_505', queries_to_compare=[], query='word_position == -1 and block in [1, 3, 5]', sort_cluster=False, sort_key=['word_string'], tmax=1.0, tmin=-3.0, window_ed=200, window_st=0, word_ON_duration=250, y_tick_step=10, ylim_PSTH=20)
+Loading: []

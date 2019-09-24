@@ -1,0 +1,25 @@
+Namespace(SOA=500, align='end', baseline=None, block='visual', channel=70, hospital='UCLA', path2figures=[], patient='patient_505', queries_to_compare=[], query='word_position == -1 and block in [1, 3, 5]', sort_cluster=False, sort_key=['word_string'], tmax=1.0, tmin=-3.0, window_ed=200, window_st=0, word_ON_duration=250, y_tick_step=10, ylim_PSTH=20)
+Loading: ['../../Data/UCLA/patient_505/Epochs/patient_505_spikes_RAH_ch_70-epo.fif']
+Loading epochs object: ../../Data/UCLA/patient_505/Epochs/patient_505_spikes_RAH_ch_70-epo.fif
+Reading ../../Data/UCLA/patient_505/Epochs/patient_505_spikes_RAH_ch_70-epo.fif ...
+Isotrak not found
+    Found the data of interest:
+        t =   -3000.00 ...    3000.00 ms
+        0 CTF compensation matrices available
+3960 matching events found
+No baseline correction applied
+Adding metadata with 94 columns
+0 projection items activated
+<EpochsFIF  |   456 events (all good), -3 - 1 sec, baseline off, ~111.4 MB, data loaded, with metadata,
+ 'block_1': 152
+ 'block_3': 152
+ 'block_5': 152>
+Sampling rate: 1000.00
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g1_70_RAH6_ch_70_cluster_0_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g2_70_RAH6_ch_70_cluster_1_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g3_70_RAH6_ch_70_cluster_2_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g4_70_RAH6_ch_70_cluster_3_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g5_70_RAH6_ch_70_cluster_4_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g6_70_RAH6_ch_70_cluster_5_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g7_70_RAH6_ch_70_cluster_6_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:
+Figures saved to ../../Figures/patient_505/Rasters/raster_UCLA_patient_505_p_g8_70_RAH6_ch_70_cluster_7_word_position == -1 and block in [1, 3, 5]_word_stringSorted.png:

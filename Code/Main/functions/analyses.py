@@ -25,7 +25,7 @@ def compute_time_freq(channel_num, channel_name, channel_data, channel_type, eve
     print('Epoching data...')
     from collections import Counter
     u, c = np.unique(events[:, 0], return_counts=True)
-    print(u[c>1], c[c>1])
+    #print(u[c>1], c[c>1])
     epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, metadata=metadata, baseline=None, preload=True)
     print(epochs)
 

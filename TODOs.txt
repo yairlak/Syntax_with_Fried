@@ -1,7 +1,0 @@
-
-2019/06/22:
------------
-- patient 479 - GA3-RIFAC1.ncs is missing. check with UCLA
-- patient 479 - re-run generattion of CSC mat files, but only for micro G??-* files. 
-- patient 479 - remove all ncs files and re-download, just in case, and repeat all pipelines (spike/high-gamma)
-

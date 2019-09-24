@@ -11,7 +11,11 @@ def generate_events_array(metadata, params):
     '''
 
     # First column of events object
-    curr_times = params.sfreq_raw * metadata['event_time'].values
+    times_in_sec = sorted(metadata['event_time'].values)
+    min_diff_sec = np.min(np.diff(times_in_sec))
+    print(min_diff_sec)
+    print("min diff in msec: %1.2f" % (min_diff_sec * 1000))
+    curr_times = params.sfreq_raw * metadata['event_time'].values # convert from sec to samples.
     curr_times = np.expand_dims(curr_times, axis=1)
 
     # Second column
@@ -27,20 +31,24 @@ def generate_events_array(metadata, params):
     events_micro = events_micro.astype(int)
     sort_IX = np.argsort(events_micro[:, 0], axis=0)
     events_micro = events_micro[sort_IX, :]
+    curr_times = curr_times[sort_IX, 0]
 
     # EVENT_ID dictionary: mapping block names to event numbers
     event_id = dict([(event_type_name, event_number[0]) for event_type_name, event_number in zip(event_type_names, event_numbers)])
 
     # Generate another event object for single-unit data (which has a different sampling rate)
     events_spikes = np.copy(events_micro)
-    events_spikes[:, 0] = events_spikes[:, 0] * params.sfreq_spikes / params.sfreq_raw
+    #d = events_spikes[:, 0] * params.sfreq_spikes / params.sfreq_raw
+    events_spikes[:, 0] = curr_times * params.sfreq_spikes / params.sfreq_raw
     events_spikes = events_spikes.astype(np.int64)
 
     # Generate another event object for single-unit data (which has a different sampling rate)
     events_macro = np.copy(events_micro)
-    events_macro[:, 0] = events_macro[:, 0] * params.sfreq_macro / params.sfreq_raw
+    #d = events_macro[:, 0] * params.sfreq_macro / params.sfreq_raw
+    events_macro[:, 0] = curr_times * params.sfreq_macro / params.sfreq_raw
     events_macro = events_macro.astype(np.int64)
-    
+    np.savetxt('events_502.txt', events_macro[:, 0])
+
     return events_micro, events_spikes, events_macro, event_id
 
 def generate_mne_raw_object(data, settings, params):
@@ -55,14 +63,6 @@ def generate_mne_raw_object_for_spikes(spikes, electrode_names, settings, params
     sfreq = params.sfreq_spikes
     num_groups = len(spikes)
     ch_types = ['seeg' for _ in range(num_groups)]
-
-
-    # montage = mne.channels.read_montage(kind='filename', ch_names=None, path='datapath', unit='m', transform=False)
-    # print(montage)
-    # raw.set_montage(montage, set_dig=True)
-    # montage = mne.channels.read_montage('standard_1005')
-    # montage.selection = montage.selection[0:len(electrode_names)]
-    # montage.ch_names[0:len(electrode_names)] = electrode_names
 
     info = mne.create_info(ch_names=electrode_names, sfreq=sfreq, ch_types=ch_types)
 

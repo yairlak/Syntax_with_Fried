@@ -12,23 +12,24 @@ parser = argparse.ArgumentParser(description='Generate plots for TIMIT experimen
 parser.add_argument('-patient', default='505', help='Patient string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default=[], help='Block type')
 parser.add_argument('--micro-macro', choices=['micro','macro'], default='micro', help='electrode type')
-parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
+parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all probe names found in the Epochs folder")
 parser.add_argument('-align', choices=['first','last', 'end'], default=[], help='Block type')
 parser.add_argument('-channel', default=25, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
-parser.add_argument('--sort-key', default=['num_letters'], help='Keys to sort according')
-parser.add_argument('--query', default="word_position>0 and (num_letters<4 or num_letters>7) and block in [1, 3, 5]", help='Metadata query (e.g., word_position==1)')
-parser.add_argument('-tmin', type=float, default=-0.3, help='crop window')
+parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
+parser.add_argument('--query', default=[], help='metadata query (e.g., word_position==1)')
+parser.add_argument('-tmin', type=float, default=-2.5, help='crop window')
 parser.add_argument('-tmax', type=float, default=0.5, help='crop window')
 parser.add_argument('-baseline', default=(None, None), type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
 parser.add_argument('-y-tick-step', default=25, type=int, help='If sorted by key, set the yticklabels density')
-parser.add_argument('-window-st', default=100, type=int, help='Regression start-time window [msec]')
+parser.add_argument('-window-st', default=50, type=int, help='Regression start-time window [msec]')
 parser.add_argument('-window-ed', default=450, type=int, help='Regression end-time window [msec]')
 parser.add_argument('-vmin', default=-1.5, help='vmin of plot (default is in zscore, assuming baseline is zscore)')
 parser.add_argument('-vmax', default=1.5, help='vmax of plot (default is in zscore, assuming baseline is zscore')
 parser.add_argument('--baseline-mode', choices=['mean', 'ratio', 'logratio', 'percent', 'zscore', 'zlogratio'], default='zscore', help='Type of baseline method')
 parser.add_argument('--remove-outliers', action="store_true", default=False, help='Remove outliers based on percentile 25 and 75')
+parser.add_argument('--dont-regress', action="store_false", default=True, help='Remove outliers based on percentile 25 and 75')
 
 # parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[("word_position==1 and block in [2, 4, 6]", "word_position==-1 and block in [2, 4, 6]")], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 args = parser.parse_args()
@@ -82,9 +83,8 @@ if not os.path.exists(path2figures):
 
 print('Loading epochs object: ' + path2epochs)
 epochsTFR = mne.time_frequency.read_tfrs(path2epochs)
-print(epochsTFR[0])
-print('Apply baseline:')
 epochsTFR = epochsTFR[0]
+print('Apply baseline:')
 epochsTFR.apply_baseline(args.baseline, mode=args.baseline_mode, verbose=True)
 
 # Query and crop
@@ -94,6 +94,7 @@ if args.tmin is not None and args.tmax is not None:
 else:
     epochsTFR.crop(min(epochsTFR.times) + 0.1, max(epochsTFR.times) - 0.1)
 
+print(epochsTFR[0])
 for ch, ch_name in enumerate(epochsTFR.ch_names):
     # Plot all trials and ERP for args.query
     fig = plt.subplots(figsize=(10, 10))
@@ -132,17 +133,18 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
             mylist_sorted = sorted(mylist, key=itemgetter(1, 2))
         power_ave = power_ave[IX, :]
 
-        # Run a linear regression if sorted according to, e.g., sentence length
-        IX = (epochsTFR.times > args.window_st / 1e3) & (epochsTFR.times < args.window_ed / 1e3)
-        X = np.asarray([tup[1] for tup in mylist_sorted])
-        y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
-        IX_nan = np.isnan(y)
-        X, y = X[~IX_nan], y[~IX_nan]
-        regr = linear_model.LinearRegression()
-        regr.fit(np.expand_dims(X, 1), y)
-        y_pred = regr.predict(np.expand_dims(X, 1))
-        r2 = r2_score(y, y_pred)
-        r2_string = '%s $ R^2=%1.2f$' % (args.sort_key[0], r2)
+        if args.dont_regress:
+            # Run a linear regression if sorted according to, e.g., sentence length
+            IX = (epochsTFR.times > args.window_st / 1e3) & (epochsTFR.times < args.window_ed / 1e3)
+            X = np.asarray([tup[1] for tup in mylist_sorted])
+            y = np.nanmean(power_ave[:, IX], axis=1)  # mean activity in params.window_st-ed.
+            IX_nan = np.isnan(y)
+            X, y = X[~IX_nan], y[~IX_nan]
+            regr = linear_model.LinearRegression()
+            regr.fit(np.expand_dims(X, 1), y)
+            y_pred = regr.predict(np.expand_dims(X, 1))
+            r2 = r2_score(y, y_pred)
+            r2_string = '%s $ R^2=%1.2f$' % (args.sort_key[0], r2)
 
     # Plot
     # fig = plt.figure(figsize=(10, 12))
@@ -169,11 +171,12 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
         ax0.set_yticklabels(yticklabels)
         plt.setp(ax0, ylabel=args.sort_key[0])
 
-    ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1 + power_ave.shape[0], 1, -1))
-    ax1.set_xlabel('Mean activity\n' + r2_string)
-    ax1.set_ylim([1, 1 + power_ave.shape[0]])
-    ax1.set_xlim([0, np.nanmean(power_ave) + 3 * np.nanstd(power_ave)])
-    ax1.tick_params(axis='y', which='both', left='off', labelleft='off', direction='in')
+    if args.dont_regress:
+        ax1.plot(np.nanmean(power_ave[:, IX], axis=1), np.arange(1 + power_ave.shape[0], 1, -1))
+        ax1.set_xlabel('Mean activity\n' + r2_string)
+        ax1.set_ylim([1, 1 + power_ave.shape[0]])
+        ax1.set_xlim([0, np.nanmean(power_ave) + 3 * np.nanstd(power_ave)])
+        ax1.tick_params(axis='y', which='both', left='off', labelleft='off', direction='in')
 
     ax2.plot(epochsTFR.times, np.nanmean(power_ave, axis=0))
     ax2.set_xlabel('Time [sec]', fontsize=24)
@@ -203,7 +206,10 @@ for ch, ch_name in enumerate(epochsTFR.ch_names):
             ax2.axvline(x=(-2 * args.SOA - args.word_ON_duration) * 1e-3, linestyle='--', linewidth=1, color='b')
 
     # Plot
-    filename_base = 'high_gamma_epochs_ch_' +str(args.channel) + '_' + ch_name + '_' + args.query
+    if args.micro_macro == 'micro':
+        filename_base = 'high_gamma_epochs_ch_' +str(args.channel) + '_' + ch_name + '_' + args.query
+    elif args.micro_macro == 'macro':
+        filename_base = 'high_gamma_epochs_' + ch_name + '_' + args.query
     filename_base += '_' + '_'.join(args.sort_key)
     plt.savefig(os.path.join(path2figures, filename_base + '.png'))
     print('fig saved to: ' + os.path.join(path2figures, filename_base + '.png'))

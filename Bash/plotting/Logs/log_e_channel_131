@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py", line 77, in <module>
+    assert len(filename) == 1
+AssertionError

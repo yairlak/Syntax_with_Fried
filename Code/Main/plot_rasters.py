@@ -1,4 +1,4 @@
-import argparse, os
+import argparse, os, glob
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,11 +18,10 @@ parser.add_argument('-align', choices=['first','last', 'end'], default=[], help=
 parser.add_argument('-channel', default=17, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
 parser.add_argument('--sort-key', default=['word_string'], help='Keys to sort according')
 # parser.add_argument('--query', default='word_position>0 and block in [2, 4, 6]', help='Metadata query (e.g., word_position==1). See pandas query syntax for more')
-parser.add_argument('--query', default='word_string in ["friend", "she", "flowers", "found"] and block in [2, 4, 6]', help='Metadata query (e.g., word_position==1). See pandas query syntax for more')
-#parser.add_argument('--query', default='word_position>0 and block in [1, 3, 5]', help='Metadata query (e.g., word_position==1)')
+parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1). See pandas query syntax for more')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
-parser.add_argument('-tmin', default=0.05, type=float, help='crop window')
-parser.add_argument('-tmax', default=0.5, type=float, help='crop window')
+parser.add_argument('-tmin', default=-0.5, type=float, help='crop window')
+parser.add_argument('-tmax', default=1, type=float, help='crop window')
 parser.add_argument('-baseline', default=None, type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
@@ -32,6 +31,7 @@ parser.add_argument('-window-st', default=0, help='Regression start-time window 
 parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
 # parser.add_argument('--baseline-mode', choices=['mean', 'ratio', 'logratio', 'percent', 'zscore', 'zlogratio'], default='zscore', help='Type of baseline method')
 parser.add_argument('-sort-cluster', action="store_true", default=False)
+parser.add_argument('--path2figures', default=[], help='Patient string')
 
 
 args = parser.parse_args()
@@ -72,20 +72,27 @@ if not isinstance(args.channel, int):
     #filename = args.patient + '-tfr.h5'
     pass
 else:
-    filename = args.patient + '_epochs_spikes_ch_' + str(args.channel) + '.fif'
-path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
-path2figures = os.path.join('..', '..', 'Figures', args.patient, 'ERPs')
-if not os.path.exists(path2figures):
-    os.makedirs(path2figures)
+    filename = glob.glob(os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', args.patient + '_spikes_*_ch_' + str(args.channel) + '-epo.fif'))
+    print('Loading: %s' % filename)
+    assert len(filename) == 1
+    filename = os.path.basename(filename[0])
+    path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs', filename)
+
+if not args.path2figures:
+    args.path2figures = os.path.join('..', '..', 'Figures', args.patient, 'Rasters')
+if not os.path.exists(args.path2figures):
+    os.makedirs(args.path2figures)
 
 print('Loading epochs object: ' + path2epochs)
 epochs_spikes = mne.read_epochs(path2epochs)
-print(epochs_spikes)
 if args.tmin is not None and args.tmax is not None:
     epochs_spikes.crop(args.tmin, args.tmax)
 
 epochs_spikes = epochs_spikes[args.query]
+print(epochs_spikes)
+
 sfreq = epochs_spikes.info['sfreq']
+print('Sampling rate: %1.2f' % sfreq)
 gaussian_width = 100 * 1e-3
 
 for i_cluster, cluster in enumerate(np.arange(epochs_spikes.info['nchan'])):
@@ -161,9 +168,6 @@ for i_cluster, cluster in enumerate(np.arange(epochs_spikes.info['nchan'])):
     for key_sort in args.sort_key:
         fname += '_' + key_sort + 'Sorted'
 
-    path2figures = os.path.join('..', '..', 'Figures', args.patient, 'Rasters')
-    if not os.path.exists(path2figures):
-        os.makedirs(path2figures)
-    plt.savefig(os.path.join(path2figures, fname + '.png'))
+    plt.savefig(os.path.join(args.path2figures, fname + '.png'))
     plt.close()
-    print('Figures saved to %s:' % os.path.join(path2figures, fname + '.png'))
+    print('Figures saved to %s:' % os.path.join(args.path2figures, fname + '.png'))
