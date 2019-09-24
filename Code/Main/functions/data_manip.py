@@ -40,7 +40,7 @@ def get_probes2channels(patient):
         print('Macro probe names: %s' % probe_names_macro)
         
 
-    for probe_name in probe_names_micro:
+    for probe_name in list(set(probe_names_micro))+list(set(probe_names_macro)): # Take the union in case probe_names_micro != probe_names_macro
         channel_numbers_of_probe_micro = [int(ch) for (ch, fn) in zip(channel_numbers_micro, file_names_micro) if probe_name == fn[4:-5]]
         channel_numbers_of_probe_macro = [int(ch) for (ch, fn) in zip(channel_numbers_micro, file_names_macro) if probe_name == fn[:-5]]
         probes[probe_name] = {}

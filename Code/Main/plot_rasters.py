@@ -16,7 +16,7 @@ parser.add_argument('-hospital', default='UCLA', help='Hospital string')
 parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default=[], help='Block type')
 parser.add_argument('-align', choices=['first','last', 'end'], default=[], help='Block type')
 parser.add_argument('-channel', default=17, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
-parser.add_argument('--sort-key', default=['word_string'], help='Keys to sort according')
+parser.add_argument('--sort-key', default=['morpheme'], help='Keys to sort according')
 # parser.add_argument('--query', default='word_position>0 and block in [2, 4, 6]', help='Metadata query (e.g., word_position==1). See pandas query syntax for more')
 parser.add_argument('--query', default=[], help='Metadata query (e.g., word_position==1). See pandas query syntax for more')
 parser.add_argument('--queries-to-compare', nargs = 2, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
@@ -25,7 +25,7 @@ parser.add_argument('-tmax', default=1, type=float, help='crop window')
 parser.add_argument('-baseline', default=None, type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
 parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
 parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
-parser.add_argument('-y-tick-step', default=10, help='If sorted by key, set the yticklabels density')
+parser.add_argument('-y-tick-step', default=30, help='If sorted by key, set the yticklabels density')
 parser.add_argument('-ylim-PSTH', default=20)
 parser.add_argument('-window-st', default=0, help='Regression start-time window [msec]')
 parser.add_argument('-window-ed', default=200, help='Regression end-time window [msec]')
@@ -103,6 +103,7 @@ for i_cluster, cluster in enumerate(np.arange(epochs_spikes.info['nchan'])):
         for field in args.sort_key:
             fields_for_sorting.append(epochs_spikes.metadata[field])
         if len(fields_for_sorting) == 1:
+            print(fields_for_sorting[0])
             mylist = [(i, j) for (i, j) in zip(range(len(fields_for_sorting[0])), fields_for_sorting[0])]
             IX = [i[0] for i in sorted(mylist, key=itemgetter(1))]
         elif len(fields_for_sorting) == 2:

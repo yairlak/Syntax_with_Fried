@@ -227,12 +227,12 @@ def comparison_list():
 # Number of letters
     comparisons[34] = {}
     comparisons[34]['name'] = 'word_length_audio'
-    comparisons[34]['train_queries'] = ["word_string.str.len()<4 and block in [2, 4, 6]", "word_string.str.len()>7 and block in [2, 4, 6]"]
+    comparisons[34]['train_queries'] = ["word_string.str.len()<4 and word_string.str.len()>1 and block in [2, 4, 6]", "word_string.str.len()>7 and block in [2, 4, 6]"]
     comparisons[34]['train_condition_names'] = ['Short_word', 'Long_word']
 
     comparisons[35] = {}
     comparisons[35]['name'] = 'word_length_visual'
-    comparisons[35]['train_queries'] = ["word_string.str.len()<4 and block in [1, 3, 5]", "word_string.str.len()>7 and block in [1, 3, 5]"]
+    comparisons[35]['train_queries'] = ["word_string.str.len()<4 and word_string.str.len()>1 and block in [1, 3, 5]", "word_string.str.len()>7 and block in [1, 3, 5]"]
     comparisons[35]['train_condition_names'] = ['Short_word', 'Long_word']
     
     return comparisons

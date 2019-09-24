@@ -55,7 +55,7 @@ for COMP in $(seq 0 35)
 do
      path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/'
      filename_bash='RunScripts/bash_'$PATIENT'_comp_'$COMP'.sh'
-     filename_py='plot_comparison.py --patients '$PATIENT' --comparisons '$COMP
+     filename_py='plot_comparison.py --patients '$PATIENT' --comparisons '$COMP' --run-gat --signal-type spike'
      output_log='Logs/log_o_'$PATIENT'_comp_'$COMP
      error_log='Logs/log_e_'$PATIENT'_comp_'$COMP
      job_name='Comp_'$COMP'_p_'$PATIENT

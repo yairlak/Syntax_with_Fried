@@ -1,297 +1,673 @@
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+ssh_exchange_identification: Connection closed by remote host
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison.py:153: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
+    assert len(filename) == 1
+AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-=>> PBS: job killed: walltime 7245 exceeded limit 7200
