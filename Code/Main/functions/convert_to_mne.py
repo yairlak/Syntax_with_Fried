@@ -47,7 +47,6 @@ def generate_events_array(metadata, params):
     #d = events_macro[:, 0] * params.sfreq_macro / params.sfreq_raw
     events_macro[:, 0] = curr_times * params.sfreq_macro / params.sfreq_raw
     events_macro = events_macro.astype(np.int64)
-    np.savetxt('events_502.txt', events_macro[:, 0])
 
     return events_micro, events_spikes, events_macro, event_id
 

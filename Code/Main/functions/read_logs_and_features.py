@@ -223,6 +223,22 @@ def load_POS_tags(settings):
 
     return word2pos
 
+def load_morphology(settings, morphology_filename='morphology.xlsx'):
+    import pandas
+    word2morpheme = {}
+    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, morphology_filename))
+    words = sheet['word_string']
+    morphemes = sheet['morpheme']
+    morpheme_types = sheet['morpheme_type']
+
+    for w, m, t in zip(words, morphemes, morpheme_types):
+        if np.isnan(t):
+            t=0
+        if not isinstance(m, str):
+            m=''
+        word2morpheme[w.lower()] = (m, t)
+
+    return word2morpheme
 
 def prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences):
     '''
@@ -236,6 +252,8 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
     '''
     import pandas as pd
 
+    word2morpheme = load_morphology(settings)
+
     trial_numbers = features['fields'][0][1::]
     stimuli = features['fields'][1][1::]
     features = features['fields'][2::]
@@ -243,7 +261,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
 
     # Create a dict with the following keys:
     keys = ['chronological_order', 'event_time', 'block', 'sentence_number', 'word_position', 'word_string', 'pos',
-            'num_letters', 'sentence_string', 'sentence_length', 'last_word']
+            'num_letters', 'sentence_string', 'sentence_length', 'last_word', 'morpheme', 'morpheme_type']
     keys = keys + [col[0] for col in features if isinstance(col[0], str)]
     #keys = keys + [col[0] for col in features]
     metadata = dict([(k, []) for k in keys])
@@ -271,6 +289,8 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
             word_string = word_string.lower()
             metadata['word_string'].append(word_string)
             metadata['pos'].append(word2pos[word_string])
+            metadata['morpheme'].append(word2morpheme[word_string][0])
+            metadata['morpheme_type'].append(int(word2morpheme[word_string][1]))
             metadata['num_letters'].append(getattr(log, 'num_letters')[i])
 
             # Get features from Excel file
@@ -294,6 +314,8 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
                 metadata['word_position'].append(-1)
                 metadata['word_string'].append('.')
                 metadata['pos'].append('END')
+                metadata['morpheme'].append('')
+                metadata['morpheme_type'].append(-1)
                 metadata['num_letters'].append(getattr(log, 'num_letters')[i])
 
                 # Get features from Excel file

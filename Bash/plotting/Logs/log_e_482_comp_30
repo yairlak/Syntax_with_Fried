@@ -1,680 +1,868 @@
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
-    assert len(filename) == 1
-AssertionError
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "plot_evoked_comparison.py", line 136, in <module>
+    color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+IndexError: list index out of range
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
 Traceback (most recent call last):
-  File "plot_rasters.py", line 77, in <module>
+  File "plot_evoked_comparison_rasters.py", line 42, in <module>
     assert len(filename) == 1
 AssertionError
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+plot_evoked_comparison_rasters.py:127: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
+  fig_raster = curr_condition_epochs.plot_image(0, order=IX, vmin=0, vmax=1, colorbar=False, show=False)

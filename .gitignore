@@ -1,14 +1,9 @@
 Figures/
 Output/
 Data/
-Code/Main_analyses/RunScripts/
-Code/Main_analyses/Logs/
 Code/clock_sync/
 Code/Ariel/
 Code/Ariel/arielt/ucla/neuralynx/matlab/clock_sync/
-*/RunScripts/
-*/Logs/
-*/Logs_GAT/
 Code/Main/Logs_GAT/
 Paradigm_Yair/Stimuli
 Paradigm_Yair/Logs

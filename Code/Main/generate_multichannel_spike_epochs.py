@@ -12,8 +12,8 @@ parser.add_argument('-tmin', default=-3, type=int, help='Patient string')
 parser.add_argument('-tmax', default= 3, type=int, help='Patient string')
 parser.add_argument('--out-fn', default=[], help='Output filename for Epochs object')
 parser.add_argument('--overwrite', default=False, action='store_true', help="If True then file will be overwritten")
+parser.add_argument('--path2epochs', default=[], help='Output folder where epochs will be saved')
 args = parser.parse_args()
-
 
 # Set current working directory to that of script
 abspath = os.path.abspath(__file__)
@@ -22,9 +22,14 @@ os.chdir(dname)
 
 # check if output filename already exists
 args.patient = 'patient_' + args.patient
+if not args.path2epochs:
+    path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
+    #path2epochs = os.environ['TMPDIR']
+else:
+    path2epochs = args.path2epochs
+
 ch_str = '_ch_' + '_'.join(map(str, args.channels)) if args.channels else ''
 filename = args.patient + ch_str + '-tfr.h5' if not args.out_fn else args.out_fn
-path2epochs = os.path.join('..', '..', 'Data', 'UCLA', args.patient, 'Epochs')
 
 print(args)
 #TODO: add log to power

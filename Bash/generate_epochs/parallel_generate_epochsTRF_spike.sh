@@ -63,9 +63,11 @@ for CH in $(seq $CH_FROM $CH_TO)
 do
 #for CH in $(seq $((1+($GROUP-1)*64)) $(($GROUP*64)))
 #do
+
+
      path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/'
      filename_bash='RunScripts/bash_channel_'$CH'.sh'
-     filename_py='generate_multichannel_spike_epochs.py -patient '$PATIENT' -channels '$CH
+     filename_py='generate_multichannel_spike_epochs.py -patient '$PATIENT' -channels '$CH' --path2epochs $TMPDIR'
      output_log='Logs/log_o_channel_'$CH
      error_log='Logs/log_e_channel_'$CH
      job_name='Channel_'$CH
