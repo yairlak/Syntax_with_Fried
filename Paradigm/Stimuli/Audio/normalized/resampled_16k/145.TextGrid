@@ -1,0 +1,108 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.37000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.37000
+		intervals: size = 16
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "HH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.08000
+				text = "IY1"
+			intervals [4]:
+				xmin = 0.08000
+				xmax = 0.21000
+				text = "S"
+			intervals [5]:
+				xmin = 0.21000
+				xmax = 0.26000
+				text = "M"
+			intervals [6]:
+				xmin = 0.26000
+				xmax = 0.29000
+				text = "EH1"
+			intervals [7]:
+				xmin = 0.29000
+				xmax = 0.37000
+				text = "L"
+			intervals [8]:
+				xmin = 0.37000
+				xmax = 0.40000
+				text = "D"
+			intervals [9]:
+				xmin = 0.40000
+				xmax = 0.46000
+				text = "DH"
+			intervals [10]:
+				xmin = 0.46000
+				xmax = 0.49000
+				text = "AH0"
+			intervals [11]:
+				xmin = 0.49000
+				xmax = 0.64000
+				text = "F"
+			intervals [12]:
+				xmin = 0.64000
+				xmax = 0.68000
+				text = "L"
+			intervals [13]:
+				xmin = 0.68000
+				xmax = 0.89000
+				text = "AW1"
+			intervals [14]:
+				xmin = 0.89000
+				xmax = 1.07000
+				text = "ER0"
+			intervals [15]:
+				xmin = 1.07000
+				xmax = 1.35000
+				text = "Z"
+			intervals [16]:
+				xmin = 1.35000
+				xmax = 1.37000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.37000
+		intervals: size = 6
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.08000
+				text = "HE"
+			intervals [3]:
+				xmin = 0.08000
+				xmax = 0.40000
+				text = "SMELLED"
+			intervals [4]:
+				xmin = 0.40000
+				xmax = 0.49000
+				text = "THE"
+			intervals [5]:
+				xmin = 0.49000
+				xmax = 1.35000
+				text = "FLOWERS"
+			intervals [6]:
+				xmin = 1.35000
+				xmax = 1.37000
+				text = "sil"

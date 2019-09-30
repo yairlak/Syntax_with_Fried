@@ -1,0 +1,96 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.29000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.29000
+		intervals: size = 14
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.08000
+				text = "AH0"
+			intervals [4]:
+				xmin = 0.08000
+				xmax = 0.14000
+				text = "B"
+			intervals [5]:
+				xmin = 0.14000
+				xmax = 0.26000
+				text = "OY1"
+			intervals [6]:
+				xmin = 0.26000
+				xmax = 0.39000
+				text = "K"
+			intervals [7]:
+				xmin = 0.39000
+				xmax = 0.43000
+				text = "AH0"
+			intervals [8]:
+				xmin = 0.43000
+				xmax = 0.51000
+				text = "L"
+			intervals [9]:
+				xmin = 0.51000
+				xmax = 0.57000
+				text = "AE1"
+			intervals [10]:
+				xmin = 0.57000
+				xmax = 0.73000
+				text = "P"
+			intervals [11]:
+				xmin = 0.73000
+				xmax = 0.82000
+				text = "S"
+			intervals [12]:
+				xmin = 0.82000
+				xmax = 0.88000
+				text = "IH0"
+			intervals [13]:
+				xmin = 0.88000
+				xmax = 1.01000
+				text = "Z"
+			intervals [14]:
+				xmin = 1.01000
+				xmax = 1.29000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.29000
+		intervals: size = 5
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.08000
+				text = "THE"
+			intervals [3]:
+				xmin = 0.08000
+				xmax = 0.26000
+				text = "BOY"
+			intervals [4]:
+				xmin = 0.26000
+				xmax = 1.01000
+				text = "COLLAPSES"
+			intervals [5]:
+				xmin = 1.01000
+				xmax = 1.29000
+				text = "sil"

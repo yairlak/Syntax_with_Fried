@@ -1,0 +1,120 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.51000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.51000
+		intervals: size = 18
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.13000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.13000
+				xmax = 0.16000
+				text = "AH0"
+			intervals [4]:
+				xmin = 0.16000
+				xmax = 0.19000
+				text = "K"
+			intervals [5]:
+				xmin = 0.19000
+				xmax = 0.27000
+				text = "EY1"
+			intervals [6]:
+				xmin = 0.27000
+				xmax = 0.36000
+				text = "K"
+			intervals [7]:
+				xmin = 0.36000
+				xmax = 0.41000
+				text = "W"
+			intervals [8]:
+				xmin = 0.41000
+				xmax = 0.44000
+				text = "AH0"
+			intervals [9]:
+				xmin = 0.44000
+				xmax = 0.53000
+				text = "Z"
+			intervals [10]:
+				xmin = 0.53000
+				xmax = 0.62000
+				text = "OW2"
+			intervals [11]:
+				xmin = 0.62000
+				xmax = 0.71000
+				text = "V"
+			intervals [12]:
+				xmin = 0.71000
+				xmax = 0.78000
+				text = "ER0"
+			intervals [13]:
+				xmin = 0.78000
+				xmax = 0.94000
+				text = "K"
+			intervals [14]:
+				xmin = 0.94000
+				xmax = 0.99000
+				text = "UH1"
+			intervals [15]:
+				xmin = 0.99000
+				xmax = 1.18000
+				text = "K"
+			intervals [16]:
+				xmin = 1.18000
+				xmax = 1.21000
+				text = "T"
+			intervals [17]:
+				xmin = 1.21000
+				xmax = 1.23000
+				text = ""
+			intervals [18]:
+				xmin = 1.23000
+				xmax = 1.51000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.51000
+		intervals: size = 7
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.16000
+				text = "THE"
+			intervals [3]:
+				xmin = 0.16000
+				xmax = 0.36000
+				text = "CAKE"
+			intervals [4]:
+				xmin = 0.36000
+				xmax = 0.53000
+				text = "WAS"
+			intervals [5]:
+				xmin = 0.53000
+				xmax = 1.21000
+				text = "OVERCOOKED"
+			intervals [6]:
+				xmin = 1.21000
+				xmax = 1.23000
+				text = "sp"
+			intervals [7]:
+				xmin = 1.23000
+				xmax = 1.51000
+				text = "sil"

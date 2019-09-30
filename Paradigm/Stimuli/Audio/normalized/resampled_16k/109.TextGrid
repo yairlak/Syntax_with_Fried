@@ -1,0 +1,112 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.43000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.43000
+		intervals: size = 15
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.08000
+				text = "AH0"
+			intervals [4]:
+				xmin = 0.08000
+				xmax = 0.18000
+				text = "B"
+			intervals [5]:
+				xmin = 0.18000
+				xmax = 0.33000
+				text = "OY1"
+			intervals [6]:
+				xmin = 0.33000
+				xmax = 0.41000
+				text = "W"
+			intervals [7]:
+				xmin = 0.41000
+				xmax = 0.46000
+				text = "AH0"
+			intervals [8]:
+				xmin = 0.46000
+				xmax = 0.57000
+				text = "Z"
+			intervals [9]:
+				xmin = 0.57000
+				xmax = 0.62000
+				text = ""
+			intervals [10]:
+				xmin = 0.62000
+				xmax = 0.74000
+				text = "P"
+			intervals [11]:
+				xmin = 0.74000
+				xmax = 0.83000
+				text = "UH1"
+			intervals [12]:
+				xmin = 0.83000
+				xmax = 1.14000
+				text = "SH"
+			intervals [13]:
+				xmin = 1.14000
+				xmax = 1.31000
+				text = "T"
+			intervals [14]:
+				xmin = 1.31000
+				xmax = 1.38000
+				text = ""
+			intervals [15]:
+				xmin = 1.38000
+				xmax = 1.43000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.43000
+		intervals: size = 8
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.08000
+				text = "THE"
+			intervals [3]:
+				xmin = 0.08000
+				xmax = 0.33000
+				text = "BOY"
+			intervals [4]:
+				xmin = 0.33000
+				xmax = 0.57000
+				text = "WAS"
+			intervals [5]:
+				xmin = 0.57000
+				xmax = 0.62000
+				text = "sp"
+			intervals [6]:
+				xmin = 0.62000
+				xmax = 1.31000
+				text = "PUSHED"
+			intervals [7]:
+				xmin = 1.31000
+				xmax = 1.38000
+				text = "sp"
+			intervals [8]:
+				xmin = 1.38000
+				xmax = 1.43000
+				text = "sil"
