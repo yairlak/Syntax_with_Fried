@@ -1,0 +1,136 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.45000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.45000
+		intervals: size = 20
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.08000
+				text = "W"
+			intervals [3]:
+				xmin = 0.08000
+				xmax = 0.14000
+				text = "AH1"
+			intervals [4]:
+				xmin = 0.14000
+				xmax = 0.17000
+				text = "T"
+			intervals [5]:
+				xmin = 0.17000
+				xmax = 0.26000
+				text = "W"
+			intervals [6]:
+				xmin = 0.26000
+				xmax = 0.29000
+				text = "AH0"
+			intervals [7]:
+				xmin = 0.29000
+				xmax = 0.36000
+				text = "L"
+			intervals [8]:
+				xmin = 0.36000
+				xmax = 0.41000
+				text = "DH"
+			intervals [9]:
+				xmin = 0.41000
+				xmax = 0.45000
+				text = "AH0"
+			intervals [10]:
+				xmin = 0.45000
+				xmax = 0.56000
+				text = "G"
+			intervals [11]:
+				xmin = 0.56000
+				xmax = 0.67000
+				text = "ER1"
+			intervals [12]:
+				xmin = 0.67000
+				xmax = 0.76000
+				text = "L"
+			intervals [13]:
+				xmin = 0.76000
+				xmax = 0.87000
+				text = "Z"
+			intervals [14]:
+				xmin = 0.87000
+				xmax = 0.91000
+				text = ""
+			intervals [15]:
+				xmin = 0.91000
+				xmax = 0.95000
+				text = "F"
+			intervals [16]:
+				xmin = 0.95000
+				xmax = 1.12000
+				text = "AY1"
+			intervals [17]:
+				xmin = 1.12000
+				xmax = 1.18000
+				text = "N"
+			intervals [18]:
+				xmin = 1.18000
+				xmax = 1.39000
+				text = "D"
+			intervals [19]:
+				xmin = 1.39000
+				xmax = 1.42000
+				text = ""
+			intervals [20]:
+				xmin = 1.42000
+				xmax = 1.45000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.45000
+		intervals: size = 9
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.17000
+				text = "WHAT"
+			intervals [3]:
+				xmin = 0.17000
+				xmax = 0.36000
+				text = "WILL"
+			intervals [4]:
+				xmin = 0.36000
+				xmax = 0.45000
+				text = "THE"
+			intervals [5]:
+				xmin = 0.45000
+				xmax = 0.87000
+				text = "GIRLS"
+			intervals [6]:
+				xmin = 0.87000
+				xmax = 0.91000
+				text = "sp"
+			intervals [7]:
+				xmin = 0.91000
+				xmax = 1.39000
+				text = "FIND"
+			intervals [8]:
+				xmin = 1.39000
+				xmax = 1.42000
+				text = "sp"
+			intervals [9]:
+				xmin = 1.42000
+				xmax = 1.45000
+				text = "sil"

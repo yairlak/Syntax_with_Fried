@@ -1,0 +1,96 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.32000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.32000
+		intervals: size = 13
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.08000
+				text = "AH0"
+			intervals [4]:
+				xmin = 0.08000
+				xmax = 0.19000
+				text = "B"
+			intervals [5]:
+				xmin = 0.19000
+				xmax = 0.38000
+				text = "OY1"
+			intervals [6]:
+				xmin = 0.38000
+				xmax = 0.51000
+				text = "R"
+			intervals [7]:
+				xmin = 0.51000
+				xmax = 0.54000
+				text = "IH0"
+			intervals [8]:
+				xmin = 0.54000
+				xmax = 0.66000
+				text = "M"
+			intervals [9]:
+				xmin = 0.66000
+				xmax = 0.77000
+				text = "EY1"
+			intervals [10]:
+				xmin = 0.77000
+				xmax = 0.83000
+				text = "N"
+			intervals [11]:
+				xmin = 0.83000
+				xmax = 0.86000
+				text = "Z"
+			intervals [12]:
+				xmin = 0.86000
+				xmax = 1.12000
+				text = ""
+			intervals [13]:
+				xmin = 1.12000
+				xmax = 1.32000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.32000
+		intervals: size = 6
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.08000
+				text = "THE"
+			intervals [3]:
+				xmin = 0.08000
+				xmax = 0.38000
+				text = "BOY"
+			intervals [4]:
+				xmin = 0.38000
+				xmax = 0.86000
+				text = "REMAINS"
+			intervals [5]:
+				xmin = 0.86000
+				xmax = 1.12000
+				text = "sp"
+			intervals [6]:
+				xmin = 1.12000
+				xmax = 1.32000
+				text = "sil"

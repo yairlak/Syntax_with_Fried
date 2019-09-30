@@ -1,0 +1,108 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.36000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.36000
+		intervals: size = 15
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.10000
+				text = "EY1"
+			intervals [4]:
+				xmin = 0.10000
+				xmax = 0.21000
+				text = "F"
+			intervals [5]:
+				xmin = 0.21000
+				xmax = 0.32000
+				text = "AW1"
+			intervals [6]:
+				xmin = 0.32000
+				xmax = 0.36000
+				text = "N"
+			intervals [7]:
+				xmin = 0.36000
+				xmax = 0.39000
+				text = "D"
+			intervals [8]:
+				xmin = 0.39000
+				xmax = 0.42000
+				text = "DH"
+			intervals [9]:
+				xmin = 0.42000
+				xmax = 0.46000
+				text = "AH0"
+			intervals [10]:
+				xmin = 0.46000
+				xmax = 0.55000
+				text = "B"
+			intervals [11]:
+				xmin = 0.55000
+				xmax = 0.70000
+				text = "AY1"
+			intervals [12]:
+				xmin = 0.70000
+				xmax = 0.90000
+				text = "K"
+			intervals [13]:
+				xmin = 0.90000
+				xmax = 1.01000
+				text = "S"
+			intervals [14]:
+				xmin = 1.01000
+				xmax = 1.21000
+				text = ""
+			intervals [15]:
+				xmin = 1.21000
+				xmax = 1.36000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.36000
+		intervals: size = 7
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.10000
+				text = "THEY"
+			intervals [3]:
+				xmin = 0.10000
+				xmax = 0.39000
+				text = "FOUND"
+			intervals [4]:
+				xmin = 0.39000
+				xmax = 0.46000
+				text = "THE"
+			intervals [5]:
+				xmin = 0.46000
+				xmax = 1.01000
+				text = "BIKES"
+			intervals [6]:
+				xmin = 1.01000
+				xmax = 1.21000
+				text = "sp"
+			intervals [7]:
+				xmin = 1.21000
+				xmax = 1.36000
+				text = "sil"

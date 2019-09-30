@@ -1,0 +1,108 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.04000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.04000
+		intervals: size = 15
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.12000
+				text = "EY1"
+			intervals [4]:
+				xmin = 0.12000
+				xmax = 0.22000
+				text = "T"
+			intervals [5]:
+				xmin = 0.22000
+				xmax = 0.25000
+				text = "IH1"
+			intervals [6]:
+				xmin = 0.25000
+				xmax = 0.34000
+				text = "K"
+			intervals [7]:
+				xmin = 0.34000
+				xmax = 0.38000
+				text = "AH0"
+			intervals [8]:
+				xmin = 0.38000
+				xmax = 0.42000
+				text = "L"
+			intervals [9]:
+				xmin = 0.42000
+				xmax = 0.49000
+				text = "DH"
+			intervals [10]:
+				xmin = 0.49000
+				xmax = 0.53000
+				text = "AH0"
+			intervals [11]:
+				xmin = 0.53000
+				xmax = 0.66000
+				text = "G"
+			intervals [12]:
+				xmin = 0.66000
+				xmax = 0.83000
+				text = "ER1"
+			intervals [13]:
+				xmin = 0.83000
+				xmax = 0.98000
+				text = "L"
+			intervals [14]:
+				xmin = 0.98000
+				xmax = 1.02000
+				text = ""
+			intervals [15]:
+				xmin = 1.02000
+				xmax = 1.04000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.04000
+		intervals: size = 7
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.12000
+				text = "THEY"
+			intervals [3]:
+				xmin = 0.12000
+				xmax = 0.42000
+				text = "TICKLE"
+			intervals [4]:
+				xmin = 0.42000
+				xmax = 0.53000
+				text = "THE"
+			intervals [5]:
+				xmin = 0.53000
+				xmax = 0.98000
+				text = "GIRL"
+			intervals [6]:
+				xmin = 0.98000
+				xmax = 1.02000
+				text = "sp"
+			intervals [7]:
+				xmin = 1.02000
+				xmax = 1.04000
+				text = "sil"

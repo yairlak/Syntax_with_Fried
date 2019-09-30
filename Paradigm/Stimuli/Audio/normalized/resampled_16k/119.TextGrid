@@ -1,0 +1,92 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.14000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.14000
+		intervals: size = 12
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.14000
+				text = "SH"
+			intervals [3]:
+				xmin = 0.14000
+				xmax = 0.21000
+				text = "IY1"
+			intervals [4]:
+				xmin = 0.21000
+				xmax = 0.24000
+				text = "W"
+			intervals [5]:
+				xmin = 0.24000
+				xmax = 0.28000
+				text = "AH0"
+			intervals [6]:
+				xmin = 0.28000
+				xmax = 0.40000
+				text = "Z"
+			intervals [7]:
+				xmin = 0.40000
+				xmax = 0.55000
+				text = "K"
+			intervals [8]:
+				xmin = 0.55000
+				xmax = 0.61000
+				text = "IH1"
+			intervals [9]:
+				xmin = 0.61000
+				xmax = 0.81000
+				text = "K"
+			intervals [10]:
+				xmin = 0.81000
+				xmax = 1.03000
+				text = "T"
+			intervals [11]:
+				xmin = 1.03000
+				xmax = 1.07000
+				text = ""
+			intervals [12]:
+				xmin = 1.07000
+				xmax = 1.14000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.14000
+		intervals: size = 6
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.21000
+				text = "SHE"
+			intervals [3]:
+				xmin = 0.21000
+				xmax = 0.40000
+				text = "WAS"
+			intervals [4]:
+				xmin = 0.40000
+				xmax = 1.03000
+				text = "KICKED"
+			intervals [5]:
+				xmin = 1.03000
+				xmax = 1.07000
+				text = "sp"
+			intervals [6]:
+				xmin = 1.07000
+				xmax = 1.14000
+				text = "sil"

@@ -1,0 +1,104 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.48000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.48000
+		intervals: size = 14
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.12000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.12000
+				xmax = 0.25000
+				text = "EY1"
+			intervals [4]:
+				xmin = 0.25000
+				xmax = 0.40000
+				text = "S"
+			intervals [5]:
+				xmin = 0.40000
+				xmax = 0.53000
+				text = "AO1"
+			intervals [6]:
+				xmin = 0.53000
+				xmax = 0.64000
+				text = "HH"
+			intervals [7]:
+				xmin = 0.64000
+				xmax = 0.68000
+				text = "IH1"
+			intervals [8]:
+				xmin = 0.68000
+				xmax = 0.78000
+				text = "M"
+			intervals [9]:
+				xmin = 0.78000
+				xmax = 0.85000
+				text = "D"
+			intervals [10]:
+				xmin = 0.85000
+				xmax = 0.93000
+				text = "AE1"
+			intervals [11]:
+				xmin = 0.93000
+				xmax = 0.98000
+				text = "N"
+			intervals [12]:
+				xmin = 0.98000
+				xmax = 1.01000
+				text = "S"
+			intervals [13]:
+				xmin = 1.01000
+				xmax = 1.28000
+				text = ""
+			intervals [14]:
+				xmin = 1.28000
+				xmax = 1.48000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.48000
+		intervals: size = 7
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.25000
+				text = "THEY"
+			intervals [3]:
+				xmin = 0.25000
+				xmax = 0.53000
+				text = "SAW"
+			intervals [4]:
+				xmin = 0.53000
+				xmax = 0.78000
+				text = "HIM"
+			intervals [5]:
+				xmin = 0.78000
+				xmax = 1.01000
+				text = "DANCE"
+			intervals [6]:
+				xmin = 1.01000
+				xmax = 1.28000
+				text = "sp"
+			intervals [7]:
+				xmin = 1.28000
+				xmax = 1.48000
+				text = "sil"

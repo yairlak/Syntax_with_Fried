@@ -1,0 +1,100 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 1.29000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 1.29000
+		intervals: size = 15
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "DH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.08000
+				text = "IY0"
+			intervals [4]:
+				xmin = 0.08000
+				xmax = 0.16000
+				text = "G"
+			intervals [5]:
+				xmin = 0.16000
+				xmax = 0.25000
+				text = "ER1"
+			intervals [6]:
+				xmin = 0.25000
+				xmax = 0.31000
+				text = "L"
+			intervals [7]:
+				xmin = 0.31000
+				xmax = 0.36000
+				text = "D"
+			intervals [8]:
+				xmin = 0.36000
+				xmax = 0.40000
+				text = "IH2"
+			intervals [9]:
+				xmin = 0.40000
+				xmax = 0.54000
+				text = "S"
+			intervals [10]:
+				xmin = 0.54000
+				xmax = 0.57000
+				text = "AH0"
+			intervals [11]:
+				xmin = 0.57000
+				xmax = 0.75000
+				text = "P"
+			intervals [12]:
+				xmin = 0.75000
+				xmax = 0.90000
+				text = "IH1"
+			intervals [13]:
+				xmin = 0.90000
+				xmax = 1.00000
+				text = "R"
+			intervals [14]:
+				xmin = 1.00000
+				xmax = 1.07000
+				text = "Z"
+			intervals [15]:
+				xmin = 1.07000
+				xmax = 1.29000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 1.29000
+		intervals: size = 5
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.08000
+				text = "THE"
+			intervals [3]:
+				xmin = 0.08000
+				xmax = 0.31000
+				text = "GIRL"
+			intervals [4]:
+				xmin = 0.31000
+				xmax = 1.07000
+				text = "DISAPPEARS"
+			intervals [5]:
+				xmin = 1.07000
+				xmax = 1.29000
+				text = "sil"

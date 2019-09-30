@@ -1,0 +1,92 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 0.96000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 0.96000
+		intervals: size = 13
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.05000
+				text = "HH"
+			intervals [3]:
+				xmin = 0.05000
+				xmax = 0.08000
+				text = "UW1"
+			intervals [4]:
+				xmin = 0.08000
+				xmax = 0.11000
+				text = "D"
+			intervals [5]:
+				xmin = 0.11000
+				xmax = 0.14000
+				text = "IH2"
+			intervals [6]:
+				xmin = 0.14000
+				xmax = 0.26000
+				text = "S"
+			intervals [7]:
+				xmin = 0.26000
+				xmax = 0.29000
+				text = "AH0"
+			intervals [8]:
+				xmin = 0.29000
+				xmax = 0.41000
+				text = "P"
+			intervals [9]:
+				xmin = 0.41000
+				xmax = 0.58000
+				text = "IY1"
+			intervals [10]:
+				xmin = 0.58000
+				xmax = 0.72000
+				text = "R"
+			intervals [11]:
+				xmin = 0.72000
+				xmax = 0.84000
+				text = "D"
+			intervals [12]:
+				xmin = 0.84000
+				xmax = 0.93000
+				text = ""
+			intervals [13]:
+				xmin = 0.93000
+				xmax = 0.96000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 0.96000
+		intervals: size = 5
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.08000
+				text = "WHO"
+			intervals [3]:
+				xmin = 0.08000
+				xmax = 0.84000
+				text = "DISAPPEARED"
+			intervals [4]:
+				xmin = 0.84000
+				xmax = 0.93000
+				text = "sp"
+			intervals [5]:
+				xmin = 0.93000
+				xmax = 0.96000
+				text = "sil"

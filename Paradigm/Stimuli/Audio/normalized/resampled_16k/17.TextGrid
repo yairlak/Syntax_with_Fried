@@ -1,0 +1,92 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 0.98000
+tiers? <exists>
+size = 2
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "phones"
+		xmin = 0.0
+		xmax = 0.98000
+		intervals: size = 12
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.06000
+				text = "HH"
+			intervals [3]:
+				xmin = 0.06000
+				xmax = 0.11000
+				text = "IY1"
+			intervals [4]:
+				xmin = 0.11000
+				xmax = 0.21000
+				text = "W"
+			intervals [5]:
+				xmin = 0.21000
+				xmax = 0.24000
+				text = "AH0"
+			intervals [6]:
+				xmin = 0.24000
+				xmax = 0.40000
+				text = "Z"
+			intervals [7]:
+				xmin = 0.40000
+				xmax = 0.45000
+				text = "HH"
+			intervals [8]:
+				xmin = 0.45000
+				xmax = 0.59000
+				text = "AH1"
+			intervals [9]:
+				xmin = 0.59000
+				xmax = 0.71000
+				text = "G"
+			intervals [10]:
+				xmin = 0.71000
+				xmax = 0.89000
+				text = "D"
+			intervals [11]:
+				xmin = 0.89000
+				xmax = 0.96000
+				text = ""
+			intervals [12]:
+				xmin = 0.96000
+				xmax = 0.98000
+				text = "sil"
+	item [2]:
+		class = "IntervalTier"
+		name = "words"
+		xmin = 0.0
+		xmax = 0.98000
+		intervals: size = 6
+			intervals [1]:
+				xmin = 0.00000
+				xmax = 0.02000
+				text = "sil"
+			intervals [2]:
+				xmin = 0.02000
+				xmax = 0.11000
+				text = "HE"
+			intervals [3]:
+				xmin = 0.11000
+				xmax = 0.40000
+				text = "WAS"
+			intervals [4]:
+				xmin = 0.40000
+				xmax = 0.89000
+				text = "HUGGED"
+			intervals [5]:
+				xmin = 0.89000
+				xmax = 0.96000
+				text = "sp"
+			intervals [6]:
+				xmin = 0.96000
+				xmax = 0.98000
+				text = "sil"

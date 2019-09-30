@@ -29,4 +29,12 @@ UCLA confirmed patient 482 RAH4.ncs is missing
 # -----------------------------------
 2019Sep14-15
 - Finished first version of plot_comparison. Run on cluster from Bash/Plotting, per patient. For each probe, it plots ERPs for both micro and macro contacts, together with decoding, and the same for spikes. 
+# -----------------------------------
+2019Sep30
+- Parsed auditory stimuli with Prosodylab-Aligner (https://github.com/prosodylab/Prosodylab-Aligner; Gorman, Kyle, Jonathan Howell and Michael Wagner. 2011. Prosodylab-Aligner: A Tool for Forced Alignment of Laboratory Speech. Canadian Acoustics)
+- Path to forced alignment between wav and txt files: /home/yl254115/Projects/Prosodylab-Aligner/
+- To run alignment for english stimuli: 'python3 -m aligner -r eng.zip -a ../intracranial/single_unit/Syntax_with_Fried/Paradigm/Stimuli/Audio/normalized/resampled_16k/ -d eng.dict -V'
+- This will generate TextGrid (praat) files in the folder of the wav files (resampled_16k) in this case. 
+- Finally, to generate figures based on the TextGrid and corresponding wav files, run: Code/Main/plot_audio_stimuli_with_alignments.py
+- NOTE that I've installed prosodylab-aligner on my LAPTOP only (is154103) and not on mystation (is153802). 
 
