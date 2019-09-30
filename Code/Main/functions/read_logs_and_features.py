@@ -223,22 +223,23 @@ def load_POS_tags(settings):
 
     return word2pos
 
-def load_morphology(settings, morphology_filename='morphology.xlsx'):
+def load_word_features(settings, word_features_filename='word_features.xlsx'):
     import pandas
-    word2morpheme = {}
-    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, morphology_filename))
+    word2features = {}
+    sheet = pandas.read_excel(os.path.join(settings.path2stimuli, word_features_filename))
     words = sheet['word_string']
     morphemes = sheet['morpheme']
     morpheme_types = sheet['morpheme_type']
+    word_type = sheet['word_type'] # function or content word
 
-    for w, m, t in zip(words, morphemes, morpheme_types):
+    for w, m, t, cf in zip(words, morphemes, morpheme_types, word_type):
         if np.isnan(t):
             t=0
         if not isinstance(m, str):
             m=''
-        word2morpheme[w.lower()] = (m, t)
+        word2features[w.lower()] = (m, t, cf)
 
-    return word2morpheme
+    return word2features
 
 def prepare_metadata(log_all_blocks, features, word2pos, settings, params, preferences):
     '''
@@ -252,7 +253,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
     '''
     import pandas as pd
 
-    word2morpheme = load_morphology(settings)
+    word2features = load_word_features(settings)
 
     trial_numbers = features['fields'][0][1::]
     stimuli = features['fields'][1][1::]
@@ -261,7 +262,7 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
 
     # Create a dict with the following keys:
     keys = ['chronological_order', 'event_time', 'block', 'sentence_number', 'word_position', 'word_string', 'pos',
-            'num_letters', 'sentence_string', 'sentence_length', 'last_word', 'morpheme', 'morpheme_type']
+            'num_letters', 'sentence_string', 'sentence_length', 'last_word', 'morpheme', 'morpheme_type', 'word_type']
     keys = keys + [col[0] for col in features if isinstance(col[0], str)]
     #keys = keys + [col[0] for col in features]
     metadata = dict([(k, []) for k in keys])
@@ -289,8 +290,9 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
             word_string = word_string.lower()
             metadata['word_string'].append(word_string)
             metadata['pos'].append(word2pos[word_string])
-            metadata['morpheme'].append(word2morpheme[word_string][0])
-            metadata['morpheme_type'].append(int(word2morpheme[word_string][1]))
+            metadata['morpheme'].append(word2features[word_string][0])
+            metadata['morpheme_type'].append(int(word2features[word_string][1]))
+            metadata['word_type'].append(word2features[word_string][2])
             metadata['num_letters'].append(getattr(log, 'num_letters')[i])
 
             # Get features from Excel file
@@ -316,7 +318,8 @@ def prepare_metadata(log_all_blocks, features, word2pos, settings, params, prefe
                 metadata['pos'].append('END')
                 metadata['morpheme'].append('')
                 metadata['morpheme_type'].append(-1)
-                metadata['num_letters'].append(getattr(log, 'num_letters')[i])
+                metadata['word_type'].append('')
+                metadata['num_letters'].append(0)
 
                 # Get features from Excel file
                 IX = np.where(trial_numbers == int(sentence_number))[0]
