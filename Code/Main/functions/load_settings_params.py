@@ -35,12 +35,13 @@ class Settings():
         self.path2output = os.path.join('..', '..', 'Output')
 
         # Files info
-        self.log_name_beginning = 'new_events_log_in_cheetah_clock_part'
+        self.log_name_beginning = 'new_with_phones_events_log_in_cheetah_clock_part'
         self.stimuli_file = 'features En_02 sentences.xlsx'
         self.sentences_start_end_filename = 'sentences_start_end_dict.pkl'
         self.stimuli_text_file = 'sentences_Eng_rand_En02.txt'
         self.comparisons_file = 'comparisons.xlsx'
-        self.features_file = 'features.xlsx'
+        self.features_file = 'sentence_features.xlsx'
+        self.word_features_file = 'word_features.xlsx'
         self.word2pos_file = 'word2POS.pkl'
 
         # Time of the beginning and end of the experiment (BlackRock time0 = 0; In Neurlaynx it is measured compared to 01/01/1970)

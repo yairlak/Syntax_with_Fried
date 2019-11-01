@@ -56,10 +56,12 @@ features = read_logs_and_features.load_features(settings)
 print('Logs: Reading experiment log files from experiment...')
 log_all_blocks = {}
 for block in args.blocks:
-    log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
-    log_all_blocks[block] = log.read_and_parse_log(settings)
-del log, block
-print(log_all_blocks)
+    log = read_logs_and_features.read_log(block, settings)
+    log_all_blocks[block] = log
+    #log = read_logs_and_features.LogSingleUnit(settings, block) # Get log filename according to block number
+    #.read_and_parse_log(settings)
+# del log, block
+# print(log_all_blocks)
 
 print('Loading POS tags for all words in the lexicon')
 word2pos = read_logs_and_features.load_POS_tags(settings)

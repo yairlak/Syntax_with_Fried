@@ -74,6 +74,9 @@ print('Apply baseline:')
 epochsTFR = epochsTFR[0]
 epochsTFR.apply_baseline(args.baseline, mode=args.baseline_mode, verbose=True)
 
+condition_names = [c_name for (c_name, _) in args.queries_to_compare]
+n = len(args.queries_to_compare)
+
 # crop
 if args.tmin is not None and args.tmax is not None:
     epochsTFR.crop(args.tmin, args.tmax)
@@ -121,7 +124,13 @@ def get_median_power(epochsTFR, IX_ch):
         print('Identified outliers: %d' % np.sum(power_median < lower))
     return power_median
 
-colors = ['#ff966c', '#7094b7']
+colors_dict = {}
+colors_dict[condition_names[0]] = '#ff966c'
+if n>1:
+    colors_dict[condition_names[1]] = '#7094b7'
+    for i in range(2, n):
+        colors_dict[condition_names[i]] = np.random.rand(3,)
+
 for ch_name in epochsTFR.ch_names:
     # Check if output fig file already exists: 
     str_comparison = '_'.join([tup[0] for tup in args.queries_to_compare])
@@ -130,10 +139,10 @@ for ch_name in epochsTFR.ch_names:
     if not os.path.exists(os.path.join(path2epochs, fig_fn)) or args.over_write:
          # Plot ERPs only for args.queries_to_compare:
         evoked_dict = dict()
-        color_dict = dict()
+        #color_dict = dict()
         #fix, ax = plt.subplots(figsize=(10, 10))
         for i, (condition_name, query) in enumerate(args.queries_to_compare):
-            color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
+            #color_dict[condition_name] = colors[i] # first name in queries mapped to first color in colors list above
             IX_ch = mne.pick_channels(epochsTFR.ch_names, [ch_name])[0]
             power_ave = get_averaged_power(epochsTFR[query], IX_ch)
             power_ave = np.expand_dims(power_ave, axis=1)
@@ -150,7 +159,7 @@ for ch_name in epochsTFR.ch_names:
         #ax.set_xlabel('Time (s)', fontsize=16)
         #ax.set_ylabel('mV', fontsize=16)
         #ax.set_title(epochsTFR.info['chs'][0]['ch_name'], fontsize=16)
-        fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False)
+        fig = mne.viz.plot_compare_evokeds(evoked_dict, picks=['seeg'], show=False, colors=colors_dict)
         #plt.axvline(x=0, ls='--', color='k')
         #plt.axhline(y=0, color='k')
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2)

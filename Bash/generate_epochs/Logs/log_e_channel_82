@@ -1,2 +1,0 @@
-/home/yl254115/miniconda3/lib/python3.7/site-packages/h5py/_hl/dataset.py:313: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
-  "Use dataset[()] instead.", H5pyDeprecationWarning)
