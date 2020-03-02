@@ -1,0 +1,1 @@
+/var/spool/pbs/mom_priv/jobs/797181.pbsserver.SC: line 1: 375641 Segmentation fault      python /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/generate_multichannel_spectrotemporal_epochs_micro.py -patient 487 -channels 49 --path2epochs $TMPDIR

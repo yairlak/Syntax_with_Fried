@@ -12,14 +12,14 @@ Where you define the patient number and relevant info.
 - First put Microphone mat file in /Channels/micro and name it CSC0.mat
 
 - Then, run
-python generate_multichannel_spectrotemporal_epochs_micro.py -channels 0 -patient 505
+python generate_multichannel_spectrotemporal_epochs_micro.py --channels 0 --patient 505
 which will generate the epochsTFR file in Data/UCLA/patient_???/Epochs/
 
 - Finall, to generate the fig, launch:
-python plot_epochs_ERPs.py -patient 505 -channel 0 -tmin -1 -tmax 2 -baseline "(-1, 0)" --sort-key "['chronological_order']" --query "word_position == 1 and block in [2, 4, 6]"
+python plot_epochs_ERPs.py --patient 505 --channel 0 --tmin -1 --tmax 2 --baseline "(-1, 0)" --sort-key "['chronological_order']" --query "word_position == 1 and block in [2, 4, 6]"
 
 # or, if you want to align to the end and have baseline set:
-python plot_epochs_ERPs.py -patient 505 -channel 0 -align end -tmin -2 -tmax 1 -baseline "(0, 1)" --sort-key "['chronological_order']" 
+python plot_epochs_ERPs.py --patient 505 --channel 0 --align end --tmin -2 --tmax 1 --baseline "(0, 1)" --sort-key "['chronological_order']" --block auditory
 
 
 3. Generate epochTFR (files):

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/generate_multichannel_spectrotemporal_epochs_micro.py", line 88, in <module>
+    epochsTFR_channel = analyses.compute_time_freq(channel_num, channel_name, channel_data, 'micro', events, event_id, metadata, settings, params)
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/functions/analyses.py", line 35, in compute_time_freq
+    epochs.resample(params.downsampling_sfreq, npad='auto')
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-107>", line 2, in resample
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 90, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/filter.py", line 1999, in resample
+    n_jobs=n_jobs, pad=pad)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-104>", line 2, in resample
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 90, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/filter.py", line 1447, in resample
+    y = np.zeros((len(x_flat), new_len - to_removes.sum()), dtype=x.dtype)
+MemoryError: Unable to allocate array with shape (7290, 3072) and data type float64

@@ -1,3 +1,4 @@
+# Run this script from the CSC_mat folder
 import os, glob
 from scipy import io
 

@@ -6,20 +6,13 @@ import numpy as np
 import sys
 
 recording_system = 'Neuralynx'
-<<<<<<< HEAD
 settings = load_settings_params.Settings(sys.argv[1])
 session_folder = op.join(settings.path2patient_folder, 'Raw', 'nev_files')
 # settings = load_settings_params.Settings('patient_504')
 # session_folder = '/nfs/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_504/Raw/macro/ncs/'
-
-=======
-
 # settings = load_settings_params.Settings(sys.argv[1])
 # session_folder = op.join(settings.path2patient_folder, 'Raw', 'nev_files')
-
-
-session_folder = '/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_504/Raw/macro/ncs'
->>>>>>> fa03b61a4e6a86f6da649afef0119c4ddb69a9a5
+#session_folder = '/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_504/Raw/macro/ncs'
 print(session_folder)
 
 if recording_system == 'Neuralynx':

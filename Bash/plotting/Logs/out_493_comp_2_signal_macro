@@ -1,0 +1,594 @@
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_RAH_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RAH/macro', patients=['patient_493'], picks_macro=[['RAH']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_RAH_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RAH/macro', patients=['patient_493'], picks_macro=[['RAH']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RAH_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RAH_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RAH_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RAH_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RAH_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RAH_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RAH/macro', patients=['493'], picks_macro=['RAH'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro RAH --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_RAH_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RAH/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_RA_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RA/macro', patients=['patient_493'], picks_macro=[['RA']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_RA_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RA/macro', patients=['patient_493'], picks_macro=[['RA']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RA_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RA_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RA_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RA_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RA_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RA_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RA/macro', patients=['493'], picks_macro=['RA'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro RA --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_RA_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RA/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LAH_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LAH/macro', patients=['patient_493'], picks_macro=[['LAH']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LAH_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LAH/macro', patients=['patient_493'], picks_macro=[['LAH']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LAH_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LAH_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LAH_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LAH_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LAH_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LAH_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LAH/macro', patients=['493'], picks_macro=['LAH'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro LAH --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_LAH_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LAH/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_ROF_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/ROF/macro', patients=['patient_493'], picks_macro=[['ROF']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_ROF_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/ROF/macro', patients=['patient_493'], picks_macro=[['ROF']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_ROF_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_ROF_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_ROF_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_ROF_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_ROF_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_ROF_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/ROF/macro', patients=['493'], picks_macro=['ROF'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro ROF --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_ROF_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/ROF/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_RFSG_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RFSG/macro', patients=['patient_493'], picks_macro=[['RFSG']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_RFSG_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RFSG/macro', patients=['patient_493'], picks_macro=[['RFSG']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RFSG_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RFSG_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RFSG_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RFSG_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_RFSG_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_RFSG_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RFSG/macro', patients=['493'], picks_macro=['RFSG'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro RFSG --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_RFSG_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RFSG/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_REC_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/REC/macro', patients=['patient_493'], picks_macro=[['REC']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_REC_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/REC/macro', patients=['patient_493'], picks_macro=[['REC']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_REC_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_REC_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_REC_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_REC_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_REC_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_REC_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/REC/macro', patients=['493'], picks_macro=['REC'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro REC --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_REC_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/REC/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LPHG_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LPHG/macro', patients=['patient_493'], picks_macro=[['LPHG']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LPHG_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LPHG/macro', patients=['patient_493'], picks_macro=[['LPHG']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LPHG_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LPHG_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LPHG_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LPHG_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LPHG_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LPHG_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LPHG/macro', patients=['493'], picks_macro=['LPHG'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro LPHG --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_LPHG_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LPHG/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LA_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LA/macro', patients=['patient_493'], picks_macro=[['LA']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LA_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LA/macro', patients=['patient_493'], picks_macro=[['LA']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LA_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LA_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LA_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LA_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LA_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LA_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LA/macro', patients=['493'], picks_macro=['LA'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro LA --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_LA_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LA/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LOF_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LOF/macro', patients=['patient_493'], picks_macro=[['LOF']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LOF_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LOF/macro', patients=['patient_493'], picks_macro=[['LOF']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LOF_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LOF_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LOF_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LOF_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LOF_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LOF_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LOF/macro', patients=['493'], picks_macro=['LOF'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro LOF --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_LOF_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LOF/macro
+0.19.1
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LEC_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LEC/macro', patients=['patient_493'], picks_macro=[['LEC']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+Namespace(cat_k_timepoints=1, hospitals=['UCLA'], output_filename='grammatical_number_nouns_audio_patients_493_mic_none_mac_LEC_spi_none_cat-k_1', over_write=True, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LEC/macro', patients=['patient_493'], picks_macro=[['LEC']], picks_micro=[['none']], picks_spike=[['none']], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', test_queries=None, train_queries=["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"])
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LEC_1_2-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LEC_1_2-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LEC_2_3-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LEC_2_3-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+----------------------------------------------------------------------------------------------------
+Loading TRAIN epochs object: patient_493_macro_LEC_3_4-tfr.h5
+----------------------------------------------------------------------------------------------------
+Reading /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_493/Epochs/patient_493_macro_LEC_3_4-tfr.h5 ...
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+0 bad epochs dropped
+previous sfreq: 512.000000
+new sfreq: 100.000000
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Train epochs num_epochs X num_channels X num_timepoints: (0, 1, 141)
+Number of samples in training class 1 : 0
+Number of samples in training class 2 : 0
+times (141,)
+X_train (0, 3, 141)
+y_train (0,)
+Namespace(cat_k_timepoints=1, comparisons=['2'], hospitals=None, over_write=False, path2figures='../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LEC/macro', patients=['493'], picks_macro=['LEC'], picks_micro=['none'], picks_spike=['none'], root_path='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/')
+python GAT.py -r /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/ --train-queries "word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]" --train-queries "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]" -s UCLA -p patient_493 --picks-micro none --picks-macro LEC --picks-spike none --cat-k-timepoints 1 --output-filename grammatical_number_nouns_audio_patients_493_mic_none_mac_LEC_spi_none_cat-k_1 --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LEC/macro
+Namespace(SOA=500, baseline=(None, None), baseline_mode='zscore', channels=[[]], comparisons=['2'], dont_regress=True, patients=['493'], probe_names=[[]], remove_outliers=False, run_erps=False, run_gat=True, signal_type=[['macro']], sort_key=['sentence_length'], tmax=0.5, tmin=-2.5, vmax=1.5, vmin=-1.5, window_ed=450, window_st=50, word_ON_duration=250, y_tick_step=25)
+Comparisons :
+['2']
+{'LA': {'macro': [1, 2, 3, 4, 5, 6, 7, 8],
+        'micro': [49, 50, 51, 52, 53, 54, 55, 56]},
+ 'LAH': {'macro': [9, 10, 11, 12, 13, 14, 15],
+         'micro': [41, 42, 43, 44, 45, 46, 47, 48]},
+ 'LEC': {'macro': [16, 17, 18, 19, 20, 21, 22],
+         'micro': [33, 34, 35, 36, 37, 38, 39, 40]},
+ 'LOF': {'macro': [23, 24, 25, 26, 27, 28, 29, 30],
+         'micro': [73, 74, 75, 76, 77, 78, 79, 80]},
+ 'LPHG': {'macro': [31, 32, 33, 34, 35, 36, 37, 38],
+          'micro': [57, 58, 59, 60, 61, 62, 63, 64]},
+ 'MICROPHONE': {'micro': [0]},
+ 'RA': {'macro': [39, 40, 41, 42, 43, 44, 45, 46],
+        'micro': [17, 18, 19, 20, 21, 22, 23, 24]},
+ 'RAH': {'macro': [47, 48, 49, 50, 51, 52, 53],
+         'micro': [9, 10, 11, 12, 13, 14, 15, 16]},
+ 'REC': {'macro': [54, 55, 56, 57, 58, 59, 60],
+         'micro': [1, 2, 3, 4, 5, 6, 7, 8]},
+ 'RFSG': {'macro': [61, 62, 63, 64, 65, 66, 67],
+          'micro': [25, 26, 27, 28, 29, 30, 31, 32]},
+ 'ROF': {'macro': [68, 69, 70, 71, 72, 73, 74, 75],
+         'micro': [65, 66, 67, 68, 69, 70, 71, 72]}}
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro RAH --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RAH/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro RA --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RA/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro LAH --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LAH/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro ROF --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/ROF/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro RFSG --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/RFSG/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro REC --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/REC/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro LPHG --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LPHG/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro LA --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LA/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro LOF --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LOF/macro
+--------------------------------------------------------------------------------
+python ../decoding/run_GAT.py -p 493 --cat-k-timepoint 1 -c 2 --picks-micro none --picks-macro LEC --picks-spike none --path2figures ../../../Figures/Comparisons/2_grammatical_number_nouns_audio/patient_493/LEC/macro
+--------------------------------------------------------------------------------

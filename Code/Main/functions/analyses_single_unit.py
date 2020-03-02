@@ -12,7 +12,7 @@ def generate_epochs_spikes(channel_num, channel_name, events_spikes, event_id, m
 
     print('Loading h5 file for CSC%i'%channel_num)
     spikes, channel_name = data_manip.load_combinato_sorted_h5(channel_num, channel_name, settings)
-
+    #print(spikes)
 
     if len(spikes) > 0:
         print('Generating MNE raw object for spikes...')

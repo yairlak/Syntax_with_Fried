@@ -26,13 +26,13 @@ class Settings():
         self.overwrite_existing_output_files = True # --- !!!!!! -----
 
         # PATHS
-        self.path2patient_folder = os.path.join('..', '..', 'Data', self.hospital, self.patient)
-        self.path2log = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Logs')
-        self.path2rawdata = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Raw')
-        self.path2epoch_data = os.path.join('..', '..', 'Data', self.hospital, self.patient, 'Epochs')
-        self.path2stimuli = os.path.join('..', '..', 'Paradigm')
-        self.path2figures = os.path.join('..', '..', 'Figures')
-        self.path2output = os.path.join('..', '..', 'Output')
+        self.path2patient_folder = os.path.join('..', '..', '..', 'Data', self.hospital, self.patient)
+        self.path2log = os.path.join('..', '..', '..', 'Data', self.hospital, self.patient, 'Logs')
+        self.path2rawdata = os.path.join('..', '..', '..', 'Data', self.hospital, self.patient, 'Raw')
+        self.path2epoch_data = os.path.join('..', '..', '..', 'Data', self.hospital, self.patient, 'Epochs')
+        self.path2stimuli = os.path.join('..', '..', '..', 'Paradigm')
+        self.path2figures = os.path.join('..', '..', '..', 'Figures')
+        self.path2output = os.path.join('..', '..', '..', 'Output')
 
         # Files info
         self.log_name_beginning = 'new_with_phones_events_log_in_cheetah_clock_part'
@@ -59,7 +59,7 @@ class Settings():
             self.timeend = 1493482901125264
         if self.patient == 'patient_487': # Neuralynx
             self.time0 =   1502557237931999
-            self.timeend = 1502557237931999
+            self.timeend = 1502560879821412
         if self.patient == 'patient_493': # Neuralynx
             self.time0 =   1520590966262873
             self.timeend = 1520594033849941
@@ -72,6 +72,12 @@ class Settings():
         if self.patient == 'patient_505': # Neuralynx
             self.time0 = 1552403091357879  
             self.timeend = 1552405988561685
+        if self.patient == 'patient_513': # Neuralynx
+            self.time0 = 1569327112002003  
+            self.timeend = 1569329632672960
+        if self.patient == 'patient_515': # Neuralynx
+            self.time0 = 1572893698748917
+            self.timeend = 1572896704058679 
 
 class Params:
     def __init__(self, patient):
@@ -86,6 +92,7 @@ class Params:
             self.sfreq_macro = 40000  # Data sampling frequency [Hz]
         if self.patient == 'patient_487': # Neuralynx
             self.sfreq_raw = 40000  # Data sampling frequency [Hz]
+            self.sfreq_macro = 2000  # ??????????? Data sampling frequency [Hz]
         if self.patient == 'patient_493': # Neuralynx
             self.sfreq_raw = 40000  # Data sampling frequency [Hz]
             self.sfreq_macro = 2000  # Data sampling frequency [Hz]
@@ -98,6 +105,15 @@ class Params:
         if self.patient == 'patient_505': # Neuralynx
             self.sfreq_raw = 32000  # Data sampling frequency [Hz]
             self.sfreq_macro = 2000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_510': # Neuralynx
+            self.sfreq_raw = -999  # Data sampling frequency [Hz]
+            self.sfreq_macro = -999  # Data sampling frequency [Hz]
+        if self.patient == 'patient_513': # Neuralynx
+            self.sfreq_raw = 32000  # ????Data sampling frequency [Hz]
+            self.sfreq_macro = 2000  # Data sampling frequency [Hz]
+        if self.patient == 'patient_515': # Neuralynx
+            self.sfreq_raw = 32000  # ?????Data sampling frequency [Hz]
+            self.sfreq_macro = -999  # ?????Data sampling frequency [Hz]
 
         self.sfreq_spikes = 1000 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]

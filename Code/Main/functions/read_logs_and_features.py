@@ -19,12 +19,12 @@ def read_log(block, settings):
         lines = [l for l in lines if l[1]=='PHONE_ONSET']
         events['event_time'] = [l[0] for l in lines]
         events['block'] = len(events['event_time']) * [block]
-        events['first_phone'] = [l[2] for l in lines]
-        events['phone_position'] = [l[3] for l in lines]
+        events['first_phone'] = [int(l[2]) for l in lines]
+        events['phone_position'] = [int(l[3]) for l in lines]
         events['phone_string'] = [l[6] for l in lines]
-        events['word_position'] = [l[4] for l in lines]
+        events['word_position'] = [int(l[4]) for l in lines]
         events['word_string'] = [l[7] for l in lines]
-        events['sentence_number'] = [l[5] for l in lines]
+        events['sentence_number'] = [int(l[5]) for l in lines]
 
     elif block in [1, 3, 5]:
         lines = [l for l in lines if l[1] == 'DISPLAY_TEXT' and l[2] != 'OFF']
@@ -33,9 +33,9 @@ def read_log(block, settings):
         events['first_phone'] = len(events['event_time']) * [-1] # not relevant for visual blocks
         events['phone_position'] = len(events['event_time']) * [-1] # not relevant for visual blocks
         events['phone_string'] = len(events['event_time']) * [-1]  # not relevant for visual blocks
-        events['word_position'] = [l[4] for l in lines]
+        events['word_position'] = [int(l[4]) for l in lines]
         events['word_string'] = [l[5] for l in lines]
-        events['sentence_number'] = [l[3] for l in lines]
+        events['sentence_number'] = [int(l[3]) for l in lines]
 
     return events
 

@@ -1,0 +1,7 @@
+usage: generate_multichannel_spectrotemporal_epochs_macro.py
+       [-h] [-patient PATIENT] [--probe-names PROBE_NAMES]
+       [-blocks BLOCKS [BLOCKS ...]] [-tmin TMIN] [-tmax TMAX]
+       [--out-fn OUT_FN] [--iter-freqs ITER_FREQS]
+       [--contact-pairs CONTACT_PAIRS] [--over-write]
+       [--path2epochs PATH2EPOCHS]
+generate_multichannel_spectrotemporal_epochs_macro.py: error: argument --path2epochs: expected one argument

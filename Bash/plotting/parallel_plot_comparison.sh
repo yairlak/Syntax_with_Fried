@@ -1,11 +1,35 @@
 # 
 #rm -r Logs
-#rm -r RunScripts
 #mkdir Logs
-#mkdir RunScripts
+
+#RUN_GAT='' # ' --run-gat' or ''
+#RUN_ERPS=' --run-erps' # ' --run-erps' or ''
 
 echo "Which patient to run (e.g., 479, 482)?"
 read PATIENT
+
+echo "Which signal type (micro/macro/spike)?"
+read SIGNAL_TYPE
+
+echo "Run GAT ('0' or '1')?"
+read GAT
+
+if [ $GAT -eq 1 ]
+then
+    RUN_GAT=' --run-gat'
+else
+    RUN_GAT=''
+fi
+
+echo "Run ERPs/Rasters ('0' or '1')?"
+read ERPS
+
+if [ $ERPS -eq 1 ]
+then
+    RUN_ERPS=' --run-erps'
+else
+    RUN_ERPS=''
+fi
 
 qstat -q
 
@@ -50,22 +74,28 @@ then
     walltime="72:00:00"
 fi
 
+echo "Local(0) or Alambic (1)?"
+read CLUSTER
 
-for COMP in $(seq 0 35)
+
+
+for COMP in $(seq 0 41)
+#for COMP in 37 39
 do
-     path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/'
-     filename_bash='RunScripts/bash_'$PATIENT'_comp_'$COMP'.sh'
-     filename_py='plot_comparison.py --patients '$PATIENT' --comparisons '$COMP' --run-gat --signal-type spike'
-     output_log='Logs/log_o_'$PATIENT'_comp_'$COMP
-     error_log='Logs/log_e_'$PATIENT'_comp_'$COMP
+     path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plotting/'
+     filename_py='plot_comparison.py --patients '$PATIENT' --comparisons '$COMP' --signal-type '$SIGNAL_TYPE$RUN_ERPS$RUN_GAT
+     output_log='Logs/out_'$PATIENT'_comp_'$COMP'_signal_'$SIGNAL_TYPE
+     error_log='Logs/err_'$PATIENT'_comp_'$COMP'_signal_'$SIGNAL_TYPE
      job_name='Comp_'$COMP'_p_'$PATIENT
 
-     rm -f $filename_bash
-     touch $filename_bash
-     echo "python $path2script$filename_py" >> $filename_bash
+     CMD="python $path2script$filename_py"
          
-#echo -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log $filename_py
-     qsub -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log $filename_bash
+    if [ $CLUSTER -eq 1 ]
+    then
+        echo $CMD | qsub -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log # $filename_bash
+    else
+        echo $CMD'&'
+    fi
          
 done
 

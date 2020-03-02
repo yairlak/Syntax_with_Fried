@@ -12,6 +12,7 @@ def generate_events_array(metadata, params):
 
     # First column of events object
     times_in_sec = sorted(metadata['event_time'].values)
+    #print(times_in_sec)
     min_diff_sec = np.min(np.diff(times_in_sec))
     print(min_diff_sec)
     print("min diff in msec: %1.2f" % (min_diff_sec * 1000))

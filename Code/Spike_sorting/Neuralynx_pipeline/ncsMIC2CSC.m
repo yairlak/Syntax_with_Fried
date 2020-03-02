@@ -2,7 +2,7 @@ clear; close all; clc;
 addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions'))
 
 %%
-patient = 'patient_504';
+patient = 'patient_510';
 recording_system = 'Neuralynx'; % Neuralynx / BlackRock
 
 %% paths
@@ -14,7 +14,7 @@ output_path = fullfile(base_folder, 'Raw');
 switch recording_system
         case 'Neuralynx'
             % Extract raw data and save into MAT files
-            ncs_files = dir(fullfile(base_folder, 'Raw', 'MICROPHONE*.ncs'));
+            ncs_files = dir(fullfile(base_folder, 'Raw', 'MICROPHONE.ncs'));
             
             for ncs_file_name=ncs_files'
                 %
@@ -25,6 +25,7 @@ switch recording_system
                 [Timestamps, ChannelNumbers, SampleFrequencies, NumberOfValidSamples, Samples, Header] = Nlx2MatCSC_v3(ncs_file,[1 1 1 1 1],1,1,1);
                 data=reshape(Samples,1,size(Samples,1)*size(Samples,2));
                 data=int16(data);
+                fprintf('%d\n', SampleFrequencies(1))
                 samplingInterval = 1000/SampleFrequencies(1);
                 save(fullfile(output_path,'MICROPHONE.mat'),'data','samplingInterval', 'file_name');
                 fprintf('saved as %s \n', fullfile(output_path,'MICROPHONE.mat'));

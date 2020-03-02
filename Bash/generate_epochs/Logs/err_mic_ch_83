@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/generate_multichannel_spectrotemporal_epochs_micro.py", line 79, in <module>
+    channel_data, channel_name = data_manip.load_channelsCSC_data(settings.path2rawdata, channel_num)
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/functions/data_manip.py", line 58, in load_channelsCSC_data
+    channel_data = io.loadmat(CSC_file[0])['data']
+IndexError: list index out of range

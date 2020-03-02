@@ -1,0 +1,1 @@
+/var/spool/pbs/mom_priv/jobs/796614.pbsserver.SC: line 1: 22364 Killed                  python /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/generate_multichannel_spectrotemporal_epochs_micro.py -patient 487 -channels 36 --path2epochs $TMPDIR

@@ -1,8 +1,8 @@
 # 
-rm -r Logs
-rm -r RunScripts
-mkdir Logs
-mkdir RunScripts
+#rm -r Logs
+#rm -r RunScripts
+#mkdir Logs
+#mkdir RunScripts
 
 echo "Which patient to run (e.g., 479, 482)?"
 read PATIENT
@@ -18,7 +18,7 @@ read CH_TO
 
 qstat -q
 
-echo "Choose queue (1: Unicog_long, 2: Nspin_long, 3: Unicog_short, 4: Nspin_short, 5: Unicog_run32, 6: Nspin_run32, 7: Unicog_run16, 8: Nspin_run16)"
+echo "Choose queue (1: Unicog_long, 2: Nspin_long, 3: Unicog_short, 4: Nspin_short, 5: Unicog_run32, 6: Nspin_run32, 7: Unicog_run16, 8: Nspin_run16, 9:Nspin_bigM)"
 read QUEUE
 
 if [ $QUEUE -eq 1 ]
@@ -63,12 +63,12 @@ for CH in $(seq $CH_FROM $CH_TO)
 do
 #for CH in $(seq $((1+($GROUP-1)*64)) $(($GROUP*64)))
 #do
-     path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/'
+     path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/micro/'
      filename_bash='RunScripts/bash_channel_'$CH'.sh'
-     filename_py='generate_multichannel_spectrotemporal_epochs_micro.py -patient '$PATIENT' -channels '$CH' --path2epochs $TMPDIR'
-     output_log='Logs/log_o_channel_'$CH
-     error_log='Logs/log_e_channel_'$CH
-     job_name='Channel_'$CH
+     filename_py='generate_multichannel_spectrotemporal_epochs_micro.py --patient '$PATIENT' --channels '$CH' --path2epochs $TMPDIR'
+     output_log='Logs/out_'$PATIENT'_mic_ch_'$CH
+     error_log='Logs/err_'$PATIENT'_mic_ch_'$CH
+     job_name='mic_P_'$PATIENT'_Ch_'$CH
 
      rm -f $filename_bash
      touch $filename_bash

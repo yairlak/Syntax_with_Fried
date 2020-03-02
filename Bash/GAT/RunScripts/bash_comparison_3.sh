@@ -1,1 +1,0 @@
-python /neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/run_GAT.py -p 479_11 --cat-k-timepoints 1 -c 3 --picks-micro \\\"all\\\" --picks-macro \\\"none\\\" --picks-spike \\\"none\\\"

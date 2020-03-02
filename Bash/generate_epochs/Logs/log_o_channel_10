@@ -1,4 +1,4 @@
-Namespace(blocks=[1, 2, 3, 4, 5, 6], channels=['10'], iter_freqs=[], out_fn=[], over_write=True, path2epochs='/var/tmp/pbs.378349.pbsserver', patient='patient_505', tmax=3, tmin=-3)
+Namespace(blocks=[1, 2, 3, 4, 5, 6], channels=['10'], iter_freqs=[], out_fn=[], over_write=True, path2epochs='/var/tmp/pbs.488079.pbsserver', patient='patient_505', tmax=3, tmin=-3)
 Loading settings, params and preferences...
 {'classification_use_marco_LFP_data': False,
  'classification_use_micro_LFP_data': True,
@@ -13,7 +13,7 @@ Loading settings, params and preferences...
  'features_file': 'sentence_features.xlsx',
  'hospital': 'UCLA',
  'load_line_filtered_resampled_epoch_object': False,
- 'log_name_beginning': 'new_events_log_in_cheetah_clock_part',
+ 'log_name_beginning': 'new_with_phones_events_log_in_cheetah_clock_part',
  'overwrite_existing_output_files': True,
  'path2epoch_data': '../../Data/UCLA/patient_505/Epochs',
  'path2figures': '../../Figures',
@@ -50,12 +50,11 @@ Loading settings, params and preferences...
  'ylim_PSTH': 20}
 Metadata: Loading features and comparisons from Excel files...
 Logs: Reading experiment log files from experiment...
-{1: <functions.read_logs_and_features.LogSingleUnit object at 0x7fa4a2a1c2e8>, 2: <functions.read_logs_and_features.LogSingleUnit object at 0x7fa497c7dcc0>, 3: <functions.read_logs_and_features.LogSingleUnit object at 0x7fa4a9704f28>, 4: <functions.read_logs_and_features.LogSingleUnit object at 0x7fa497c01630>, 5: <functions.read_logs_and_features.LogSingleUnit object at 0x7fa497c92a90>, 6: <functions.read_logs_and_features.LogSingleUnit object at 0x7fa497bd47f0>}
 Loading POS tags for all words in the lexicon
 Preparing meta-data
 Generating event object for MNE from log data...
-0.03954499999986183
-min diff in msec: 39.54
+0.02999999999974534
+min diff in msec: 30.00
 Analyze channels
 ['../../Data/UCLA/patient_505/Raw/micro/CSC_mat/CSC10.mat']
 channel-data loaded
@@ -66,35 +65,44 @@ Creating RawArray with float64 data, n_channels=1, n_times=92710912
 Ready.
 Line filtering...
 Setting up band-stop filter
-Filter length of 211201 samples (6.600 sec) selected
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandstop filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower transition bandwidth: 0.50 Hz
+- Upper transition bandwidth: 0.50 Hz
+- Filter length: 211201 samples (6.600 sec)
+
 Epoching data...
-3960 matching events found
+7290 matching events found
 No baseline correction applied
-Adding metadata with 97 columns
+Adding metadata with 100 columns
 0 projection items activated
-Loading data for 3960 events and 192001 original time points ...
+Loading data for 7290 events and 192001 original time points ...
 0 bad epochs dropped
-<Epochs  |   3960 events (all good), -3 - 3 sec, baseline off, ~5.66 GB, data loaded, with metadata,
+<Epochs  |   7290 events (all good), -3 - 3 sec, baseline off, ~10.43 GB, data loaded, with metadata,
  'block_1': 660
- 'block_2': 660
+ 'block_2': 1770
  'block_3': 660
- 'block_4': 660
+ 'block_4': 1770
  'block_5': 660
- 'block_6': 660>
+ 'block_6': 1770>
 Original sampling rate: 32000.0 Hz
 New sampling rate: 512.0 Hz
 Time-frequency analyses...
 Band: High-Gamma
-Adding metadata with 97 columns
-<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 3960, channels : 1, ~835.3 MB>
-Replacing existing metadata with 97 columns
-<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 3960, channels : 1, ~835.3 MB>
-Epochs object saved to: /var/tmp/pbs.378349.pbsserver/patient_505_micro_LAH_ch_10-tfr.h5
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+Replacing existing metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+Epochs object saved to: /var/tmp/pbs.488079.pbsserver/patient_505_micro_LAH_ch_10-tfr.h5
 sending incremental file list
 delta-transmission disabled for local transfer or --whole-file
 ./
 patient_505_micro_LAH_ch_10-tfr.h5
-total: matches=0  hash_hits=0  false_alarms=0 data=876457308
+total: matches=0  hash_hits=0  false_alarms=0 data=1616648678
 
-sent 876,671,445 bytes  received 105 bytes  18,456,243.16 bytes/sec
-total size is 876,457,308  speedup is 1.00
+sent 1,617,043,528 bytes  received 105 bytes  54,815,038.41 bytes/sec
+total size is 1,616,648,678  speedup is 1.00

@@ -1,0 +1,2 @@
+rsync: rename "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/patient_513/Epochs/.patient_513_micro_LPHG_ch_48-tfr.h5.iUKDbX" -> "patient_513_micro_LPHG_ch_48-tfr.h5": Device or resource busy (16)
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1183) [sender=3.1.1]

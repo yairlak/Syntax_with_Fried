@@ -17,8 +17,8 @@ def get_probes2channels(patient):
     '''
     probes = {}
 
-    path2microdata_folder = os.path.join('..', '..', 'Data', 'UCLA', patient, 'Raw', 'micro', 'CSC_mat')
-    path2macrodata_folder = os.path.join('..', '..', 'Data', 'UCLA', patient, 'Raw', 'macro', 'CSC_mat')
+    path2microdata_folder = os.path.join('..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'micro', 'CSC_mat')
+    path2macrodata_folder = os.path.join('..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'macro', 'CSC_mat')
     
     # MICRO CSC
     with open(os.path.join(path2microdata_folder, 'channel_numbers_to_names.txt')) as f:
@@ -104,6 +104,7 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
             filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_yl2', 'sort_cat.h5'))
             if len(filename_sorted) == 1:
                 f_sort_cat = h5py.File(filename_sorted[0], 'r')
+                
                 #print('classes', f_sort_cat['classes'].value)
                 #print('index', f_sort_cat['index'].value)
                 #print('matches', f_sort_cat['matches'].value)
@@ -126,7 +127,7 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
                         else:
                             raise ('issue with types: more than one group assigned to a type')
                         if type_of_curr_group>0: # ignore artifact and unassigned groups
-
+                            print('found cluster')
                             # Loop over all spikes
                             for i, c in enumerate(classes):
                                 # check if current cluster in group
@@ -149,12 +150,64 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
             else:
                 print('%s was not found!' % os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_yl2', 'sort_cat.h5'))
 
-        print(channel_num)
+        #print(channel_num)
+        #print(channel_names)
 
     else:
         print('None or more than a single combinato h5 was found')
 
     return spike_times_msec, channel_names
+
+
+def get_channels_with_spikes_from_combinato_sorted_h5(settings, signs):
+    import h5py
+    # GET ALL CHANNELS NAMES FOR CURRENT SUBJECT
+    path2CSC_mat = os.path.join(settings.path2rawdata, 'micro', 'CSC_mat')
+    with open(os.path.join(path2CSC_mat, 'channel_numbers_to_names.txt')) as f_channel_names:
+        channel_names = f_channel_names.readlines()
+        channel_names_dict = dict(zip(map(int, [s.strip().split('\t')[0] for s in channel_names]), [s.strip().split('\t')[1] for s in channel_names]))
+    channel_names_dict.pop(0, None) # SKIP THE MIC CHANNEL (channel_num=0)
+
+    # GENERATE A LIST OF SUBLISTS, EACH SUBLIST: [channel_number, channel_name, number_of_cluster_groups[pos], number_of_cluster_groups[neg]]
+    channels_with_spikes = []
+    for channel_num, channel_name in channel_names_dict.items():
+        h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs' , 'CSC' + str(channel_num), 'data_*.h5'))
+        if len(h5_files) == 1: # MAKE SURE THE h5 FILE EXISTS 
+            filename = h5_files[0]
+            f_all_spikes = h5py.File(filename, 'r')
+
+            num_cluster_groups_pos, num_cluster_groups_neg = (0, 0)
+            for sign in signs:
+                filename_sorted = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_yl2', 'sort_cat.h5'))
+                if len(filename_sorted) == 1:
+                    f_sort_cat = h5py.File(filename_sorted[0], 'r') 
+                    groups = f_sort_cat['groups'].value
+                    group_numbers = set([g[1] for g in groups])
+                    types = f_sort_cat['types'].value # -1: artifact, 0: unassigned, 1: MU, 2: SU
+
+                    for g in list(group_numbers):
+                        type_of_curr_group = [t_ for (g_, t_) in types if g_ == g]
+                        if len(type_of_curr_group) == 1:
+                            type_of_curr_group = type_of_curr_group[0]
+                        else:
+                            raise ('issue with types: more than one group assigned to a type')
+                        if type_of_curr_group>0:
+                            if sign == 'pos':
+                                num_cluster_groups_pos += 1
+                            if sign == 'neg':
+                                num_cluster_groups_neg += 1
+                    channels_with_spikes.append([channel_num, channel_name, num_cluster_groups_pos, num_cluster_groups_neg])
+			#if dict_num_group_clusters[sign]>0:
+			#    print('Channel %i (%s) - %s: %i cluster groups' % (channel_num, channel_name, sign, dict_num_group_clusters[sign]))
+		     #else:
+		     #print('%s was not found!' % os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs', 'CSC' + str(channel_num), 'sort_' + sign + '_yl2', 'sort_cat.h5'))
+
+
+        else:
+            print('None or more than a single combinato h5 was found', channel_num, channel_name, settings.patient, h5_files)
+
+    return channels_with_spikes
+
 
 
 def add_event_to_metadata(metadata, event_time, sentence_number, sentence_string, word_position, word_string, pos, num_words, last_word):

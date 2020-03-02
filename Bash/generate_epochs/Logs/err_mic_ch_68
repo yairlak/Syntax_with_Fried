@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/generate_multichannel_spectrotemporal_epochs_micro.py", line 88, in <module>
+    epochsTFR_channel = analyses.compute_time_freq(channel_num, channel_name, channel_data, 'micro', events, event_id, metadata, settings, params)
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/functions/analyses.py", line 31, in compute_time_freq
+    epochs = mne.Epochs(raw, events, event_id, params.tmin, params.tmax, metadata=metadata, baseline=None, preload=True, reject=None)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-180>", line 2, in __init__
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 90, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/epochs.py", line 1960, in __init__
+    event_repeated=event_repeated, verbose=verbose)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-171>", line 2, in __init__
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 90, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/epochs.py", line 520, in __init__
+    self.load_data()  # this will do the projection
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/epochs.py", line 556, in load_data
+    self._data = self._get_data()
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-178>", line 2, in _get_data
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 90, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/epochs.py", line 1338, in _get_data
+    dtype=epoch_out.dtype, order='C')
+MemoryError: Unable to allocate array with shape (7290, 1, 240001) and data type float64

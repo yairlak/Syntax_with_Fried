@@ -1,0 +1,7 @@
+sending incremental file list
+delta-transmission disabled for local transfer or --whole-file
+./
+total: matches=0  hash_hits=0  false_alarms=0 data=0
+
+sent 65 bytes  received 86 bytes  302.00 bytes/sec
+total size is 0  speedup is 0.00

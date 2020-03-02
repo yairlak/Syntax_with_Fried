@@ -1,12 +1,18 @@
-/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
-/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_rasters.py:139: RuntimeWarning: Cannot find channel coordinates in the supplied Evokeds. Not showing channel locations.
-  fig = epochs_spikes.plot_image(cluster, order=IX, vmin=0, vmax=1, colorbar=False, show=False)
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plot_epochs_ERPs.py", line 85, in <module>
+    epochsTFR = mne.time_frequency.read_tfrs(path2epochs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/time_frequency/tfr.py", line 2315, in read_tfrs
+    tfr_data = read_hdf5(fname, title='mnepython', slash='replace')
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/h5io/_h5io.py", line 262, in read_hdf5
+    data = _triage_read(fid[title], slash=slash)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/h5io/_h5io.py", line 270, in _triage_read
+    type_str = node.attrs['TITLE']
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/h5py/_hl/attrs.py", line 81, in __getitem__
+    attr.read(arr, mtype=htype)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5a.pyx", line 355, in h5py.h5a.AttrID.read
+  File "h5py/_proxy.pyx", line 58, in h5py._proxy.attr_rw
+OSError: Unable to read attribute (len not positive after adjustment for EOA)

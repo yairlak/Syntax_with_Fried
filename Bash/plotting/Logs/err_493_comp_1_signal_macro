@@ -1,0 +1,270 @@
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 211, in train_test_GAT
+    scores = cross_val_multiscore(time_gen, data['X_train'], data['y_train'], cv=5, n_jobs=1)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in cross_val_multiscore
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 453, in <genexpr>
+    for train, test in cv_iter)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 492, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-417>", line 2, in fit
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in fit
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 96, in <genexpr>
+    for pb_idx, split in array_split_idx(X, n_jobs, axis=-1))
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/search_light.py", line 333, in _sl_fit
+    est.fit(X[..., ii], y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/pipeline.py", line 356, in fit
+    self._final_estimator.fit(Xt, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/decoding/base.py", line 97, in fit
+    self.model.fit(X, y, **fit_params)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py", line 1563, in fit
+    " class: %r" % classes_[0])
+ValueError: This solver needs samples of at least 2 classes in the data, but the data contains only one class: 2.0

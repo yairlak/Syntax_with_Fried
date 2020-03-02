@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/spikes/generate_multichannel_spike_epochs.py", line 80, in <module>
+    channel_name = channel_names_dict[ch]
+KeyError: 82

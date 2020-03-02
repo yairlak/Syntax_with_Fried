@@ -1,0 +1,61 @@
+ssh_exchange_identification: Connection closed by remote host
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence
+Traceback (most recent call last):
+  File "GAT.py", line 38, in <module>
+    time_gen, scores = classification.train_test_GAT(classification_data)
+  File "../functions/classification.py", line 192, in train_test_GAT
+    if max(data['y_train']) > 2:
+ValueError: max() arg is an empty sequence

@@ -2,9 +2,9 @@ clear; close all; clc;
 addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions'))
 
 %%
-patient = 'patient_504';
-elec_type = 'micro'; % micro / macro
-recording_system = 'BlackRock'; % Neuralynx / BlackRock
+patient = 'patient_513';
+elec_type = 'macro'; % micro / macro
+recording_system = 'Neuralynx'; % Neuralynx / BlackRock
 
 %% pathsls 
 base_folder = ['/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/', patient];
@@ -32,6 +32,8 @@ switch recording_system
                 data=reshape(Samples,1,size(Samples,1)*size(Samples,2));
                 data=int16(data);
                 samplingInterval = 1000/SampleFrequencies(1);
+                fprintf('Sampling freq:')
+                fprintf('%i\n', SampleFrequencies(1))
                 save(fullfile(output_path,['CSC' num2str(idx) '.mat']),'data','samplingInterval', 'file_name');
                 fprintf('saved as %s \n', fullfile(output_path,['CSC' num2str(idx) '.mat']));
                 electrodes_info{idx} = ncs_file_name.name;

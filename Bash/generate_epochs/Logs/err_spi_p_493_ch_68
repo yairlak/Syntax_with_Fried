@@ -1,0 +1,17 @@
+/home/yl254115/miniconda3/lib/python3.7/site-packages/h5py/_hl/dataset.py:313: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  "Use dataset[()] instead.", H5pyDeprecationWarning)
+/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/spikes/generate_multichannel_spike_epochs.py:90: DeprecationWarning: overwrite defaults to True in 0.18 but will change to False in 0.19, set it explicitly to avoid this warning
+  epochs_spikes.save(os.path.join(path2epochs, filename_epochs))
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/spikes/generate_multichannel_spike_epochs.py", line 90, in <module>
+    epochs_spikes.save(os.path.join(path2epochs, filename_epochs))
+  File "</home/yl254115/miniconda3/lib/python3.7/site-packages/mne/externals/decorator.py:decorator-gen-179>", line 2, in save
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/utils/_logging.py", line 89, in wrapper
+    return function(*args, **kwargs)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/epochs.py", line 1567, in save
+    _save_split(this_epochs, fname, part_idx, n_parts, fmt)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/epochs.py", line 155, in _save_split
+    write_function(fid, FIFF.FIFF_EPOCH, data)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/mne/io/write.py", line 147, in write_float_matrix
+    fid.write(np.array(mat, dtype='>f4').tostring())
+OSError: [Errno 28] No space left on device

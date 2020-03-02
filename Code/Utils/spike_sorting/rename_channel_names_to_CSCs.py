@@ -1,3 +1,4 @@
+# Run from Raw/micro/ncs/
 import os, shutil
 with open('../CSC_mat/channel_numbers_to_names.txt', 'r') as f:
     nums2names = f.readlines()

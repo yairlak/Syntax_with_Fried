@@ -1,0 +1,16 @@
+ssh_exchange_identification: read: Connection reset by peer
+/home/yl254115/miniconda3/lib/python3.7/site-packages/h5py/_hl/dataset.py:313: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  "Use dataset[()] instead.", H5pyDeprecationWarning)
+Traceback (most recent call last):
+  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plotting/plot_comparison.py", line 130, in <module>
+    channels_with_spikes = data_manip.get_channels_with_spikes_from_combinato_sorted_h5(settings, ['pos']) # TODO: fox 'neg' case
+  File "../functions/data_manip.py", line 183, in get_channels_with_spikes_from_combinato_sorted_h5
+    f_sort_cat = h5py.File(filename_sorted[0], 'r') 
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/h5py/_hl/files.py", line 394, in __init__
+    swmr=swmr)
+  File "/home/yl254115/miniconda3/lib/python3.7/site-packages/h5py/_hl/files.py", line 170, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 85, in h5py.h5f.open
+OSError: Unable to open file (unable to lock file, errno = 5, error message = 'Input/output error')

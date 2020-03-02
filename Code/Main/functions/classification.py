@@ -11,8 +11,8 @@ def prepare_data_for_GAT(args):
     :param patients: (list) 
    :param hospitals: (list) same len as patients
     :param picks_all_patients: (list of channel numbers or 'all') same len as patients
-    :param query_classes_train: (list of len 2) two queries for the two classes (if no test queries then 5-fold CV is used)
-    :param query_classes_test: (optional - list of len 2) two queries for the two test classes.
+    :param query_classes_train: (list) queries for each class
+    :param query_classes_test: (optional - list) queries for each class (if empry, then 5-fold CV is used)
     :param root_path:
     :param k: (scalar) number of subsequent time points to cat
     :return:
@@ -40,7 +40,12 @@ def prepare_data_for_GAT(args):
     train_times["stop"] = 0.9
     # train_times["step"] = 0.01
 
-    X_train = [[], []]; y_train = []; X_test = [[], []]; y_test = [] # assuming for now only two classes (two empty lists)
+    X_train = [[] for _ in query_classes_train]
+    y_train = []
+    X_test, y_test = ([], [])
+    if query_classes_test:
+        X_test = [[] for _ in query_classes_test]
+        y_test = []
     for i, (patient, hospital, pick_micro, pick_macro, pick_spike) in enumerate(zip(patients, hospitals, picks_micro, picks_macro, picks_spike)):
         # ----------------------------------------
         # --------- micro high-gamma ------------
@@ -108,18 +113,23 @@ def prepare_data_for_GAT(args):
                 exc_type, exc_obj, exc_tb = sys.exc_info()
                 print('!!!!!! ERROR !!!!!!: %s \n %s line %s' % (fn, e, exc_tb.tb_lineno))
 
-    [print(x.shape) for x in X_train[0]]
+    #print('X_train shape:')
+    #[print(x.shape) for x in X_train[0]]
     X_train = [np.concatenate(d, axis=1) for d in X_train]  # stack: n_epochs, n_channels, n_times
-    y_train = np.hstack((np.ones(X_train[0].shape[0]).astype(int), 2*np.ones(X_train[1].shape[0]).astype(int)))  # targets
-    print('Number of samples in training class %i : %i' % (1, X_train[0].shape[0]))
-    print('Number of samples in training class %i : %i' % (2, X_train[1].shape[0]))
+    y_train = np.empty([0])
+    for i in range(len(X_train)):
+        y_train = np.hstack((y_train, (i+1)*np.ones(X_train[i].shape[0]).astype(int)))  # targets
+        print('Number of samples in training class %i : %i' % (i+1, X_train[i].shape[0]))
+    #print(y_train, y_train.shape)
+
     X_train = np.concatenate(X_train, axis=0)
 
     if query_classes_test is not None:
         X_test = [np.concatenate(d, axis=1) for d in X_test] # signals: n_epochs, n_channels, n_times
-        y_test = np.hstack((np.ones(X_test[0].shape[0]).astype(int), 2*np.ones(X_test[1].shape[0]).astype(int)))  # targets
-        print('Number of samples in test class %i : %i' % (1, X_test[0].shape[0]))
-        print('Number of samples in test class %i : %i' % (2, X_test[1].shape[0]))
+        y_test = np.empty([0])
+        for i in range(len(X_test)):
+            y_test = np.hstack((y_test, (i+1)*np.ones(X_test[i].shape[0]).astype(int)))  # targets
+            print('Number of samples in test class %i : %i' % (i+1, X_test[i].shape[0]))
         X_test = np.concatenate(X_test, axis=0)
     else:
         y_test = None
@@ -179,12 +189,19 @@ def train_test_GAT(data):
 
     # Define a classifier for GAT
     #clf = make_pipeline(StandardScaler(), LinearSVC())
-    clf = make_pipeline(StandardScaler(), LinearModel(LogisticRegression(solver='lbfgs')))
+    if max(data['y_train']) > 2:
+        print('Multiclass classification')
+        clf = make_pipeline(StandardScaler(), OneVsRestClassifier(LogisticRegression(solver='lbfgs')))
+    else:
+        print('Binary classification')
+        clf = make_pipeline(StandardScaler(), LinearModel(LogisticRegression(solver='lbfgs')))
+
     # Define the Temporal Generalization object
     time_gen = GeneralizingEstimator(clf, n_jobs=1, scoring='roc_auc', verbose=True)
     # Fit model
     if (data['X_test'] is not None) and (data['y_test'] is not None): # Generalization across conditions
         #print(X_train, y_train, X_test, y_test)
+        print('X_train, y_train, shapes:')
         print(data['X_train'].shape, data['y_train'].shape)
         time_gen.fit(data['X_train'], data['y_train'])
         scores = time_gen.score(data['X_test'], data['y_test'])
@@ -268,7 +285,7 @@ def get_train_test_data_from_epochs(epochs, queries_train, queries_test, X_train
         epochs_train = epochs[query_train]
         epochs_train.crop(train_times["start"], train_times["stop"])
         X_train[q].append(epochs_train._data)
-        print('epochs num_epochs X num_channels X num_timepoints:', epochs_train._data.shape)
+        print('Train epochs num_epochs X num_channels X num_timepoints:', epochs_train._data.shape)
         
     if queries_test is not None:
         for q, query_test in enumerate(queries_test):

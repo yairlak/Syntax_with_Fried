@@ -1,0 +1,108 @@
+Namespace(blocks=[1, 2, 3, 4, 5, 6], channels=['10'], iter_freqs=[], out_fn=[], over_write=True, path2epochs='/var/tmp/pbs.797230.pbsserver', patient='patient_487', tmax=3, tmin=-3)
+Loading settings, params and preferences...
+{'classification_use_marco_LFP_data': False,
+ 'classification_use_micro_LFP_data': True,
+ 'classification_use_single_unit_data': False,
+ 'run_POS': False,
+ 'run_contrasts': False,
+ 'save_features_for_classification': True,
+ 'step': 100,
+ 'use_metadata_only': True}
+{'comparisons': range(110, 111),
+ 'comparisons_file': 'comparisons.xlsx',
+ 'features_file': 'sentence_features.xlsx',
+ 'hospital': 'UCLA',
+ 'load_line_filtered_resampled_epoch_object': False,
+ 'log_name_beginning': 'new_with_phones_events_log_in_cheetah_clock_part',
+ 'overwrite_existing_output_files': True,
+ 'path2epoch_data': '../../Data/UCLA/patient_487/Epochs',
+ 'path2figures': '../../Figures',
+ 'path2log': '../../Data/UCLA/patient_487/Logs',
+ 'path2output': '../../Output',
+ 'path2patient_folder': '../../Data/UCLA/patient_487',
+ 'path2rawdata': '../../Data/UCLA/patient_487/Raw',
+ 'path2stimuli': '../../Paradigm',
+ 'patient': 'patient_487',
+ 'sentences_start_end_filename': 'sentences_start_end_dict.pkl',
+ 'stimuli_file': 'features En_02 sentences.xlsx',
+ 'stimuli_text_file': 'sentences_Eng_rand_En02.txt',
+ 'time0': 1502557237931999,
+ 'timeend': 1502557237931999,
+ 'word2pos_file': 'word2POS.pkl',
+ 'word_features_file': 'word_features.xlsx'}
+{'SOA': 500,
+ 'baseline_period': 500,
+ 'downsampling_sfreq': 512,
+ 'iter_freqs': [('High-Gamma', 70, 151, 10)],
+ 'line_frequency': [50, 100, 150, 200],
+ 'patient': 'patient_487',
+ 'sfreq_macro': 2000,
+ 'sfreq_raw': 40000,
+ 'sfreq_spikes': 1000,
+ 'smooth_time_freq': 0,
+ 'temporal_resolution': 0.05,
+ 'tmax': 3,
+ 'tmin': -3,
+ 'window_ed': 250,
+ 'window_st': 50,
+ 'word_OFF_duration': 300,
+ 'word_ON_duration': 200,
+ 'ylim_PSTH': 20}
+Metadata: Loading features and comparisons from Excel files...
+Logs: Reading experiment log files from experiment...
+Loading POS tags for all words in the lexicon
+Preparing meta-data
+Generating event object for MNE from log data...
+0.02999999999974534
+min diff in msec: 30.00
+Analyze channels
+['../../Data/UCLA/patient_487/Raw/micro/CSC_mat/CSC10.mat']
+channel-data loaded
+Analyzing high-gamma for channel 10
+Generating MNE raw object for continuous data...
+Creating RawArray with float64 data, n_channels=1, n_times=146008576
+    Range : 0 ... 146008575 =      0.000 ...  3650.214 secs
+Ready.
+Line filtering...
+Setting up band-stop filter
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandstop filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower transition bandwidth: 0.50 Hz
+- Upper transition bandwidth: 0.50 Hz
+- Filter length: 264001 samples (6.600 sec)
+
+Epoching data...
+7290 matching events found
+No baseline correction applied
+Adding metadata with 100 columns
+0 projection items activated
+Loading data for 7290 events and 240001 original time points ...
+0 bad epochs dropped
+<Epochs  |   7290 events (all good), -3 - 3 sec, baseline off, ~13.04 GB, data loaded, with metadata,
+ 'block_1': 660
+ 'block_2': 1770
+ 'block_3': 660
+ 'block_4': 1770
+ 'block_5': 660
+ 'block_6': 1770>
+Original sampling rate: 40000.0 Hz
+New sampling rate: 512.0 Hz
+Time-frequency analyses...
+Band: High-Gamma
+Adding metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+Replacing existing metadata with 100 columns
+<EpochsTFR  |  time : [-3.000000, 2.998047], freq : [70.000000, 150.000000], epochs : 7290, channels : 1, ~1.50 GB>
+Epochs object saved to: /var/tmp/pbs.797230.pbsserver/patient_487_micro_RAH_ch_10-tfr.h5
+sending incremental file list
+delta-transmission disabled for local transfer or --whole-file
+./
+patient_487_micro_RAH_ch_10-tfr.h5
+total: matches=0  hash_hits=0  false_alarms=0 data=1615242112
+
+sent 1,615,636,619 bytes  received 105 bytes  19,823,763.48 bytes/sec
+total size is 1,615,242,112  speedup is 1.00
