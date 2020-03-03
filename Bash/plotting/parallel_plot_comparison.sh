@@ -82,8 +82,13 @@ read CLUSTER
 for COMP in $(seq 0 41)
 #for COMP in 37 39
 do
-     path2script='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plotting/'
-     filename_py='plot_comparison.py --patients '$PATIENT' --comparisons '$COMP' --signal-type '$SIGNAL_TYPE$RUN_ERPS$RUN_GAT
+     path2script="/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plotting/"
+     arg_patient=''
+     for patient in $PATIENT
+     do
+        arg_patient="${arg_patient} --patients ${patient}"
+     done
+     filename_py="plot_comparison.py"$arg_patient" --comparisons "$COMP" --signal-type "$SIGNAL_TYPE$RUN_ERPS$RUN_GAT
      output_log='Logs/out_'$PATIENT'_comp_'$COMP'_signal_'$SIGNAL_TYPE
      error_log='Logs/err_'$PATIENT'_comp_'$COMP'_signal_'$SIGNAL_TYPE
      job_name='Comp_'$COMP'_p_'$PATIENT

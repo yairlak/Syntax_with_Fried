@@ -1,0 +1,14 @@
+
+2019/06/22:
+-----------
+- patient 479 - GA3-RIFAC1.ncs is missing. check with UCLA
+- patient 479 - re-run generattion of CSC mat files, but only for micro G??-* files. 
+- patient 479 - remove all ncs files and re-download, just in case, and repeat all pipelines (spike/high-gamma)
+- patient 479 - XP11 vs XP25. On 2019 July they sent only EXP25, not 11
+
+
+- patient 482 - RAH4.ncs is missing
+
+
+2020/03/02
+- fix Code/Main/plotting/plot_evoked comparisons.py so it would be compatible with getting acomparison as an argument. Then plot_comparison can be simplified, just like the part in it for GAT. 

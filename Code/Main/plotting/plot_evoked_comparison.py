@@ -16,11 +16,11 @@ from pprint import pprint
 from functions import data_manip
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='505', help='Patient string')
-parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
+parser.add_argument('--patient', default='505', help='Patient string')
+parser.add_argument('--block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
 parser.add_argument('--micro-macro', choices=['micro','macro'], default='micro', help='electrode type')
 #parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
-parser.add_argument('-channel', default=25, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
+parser.add_argument('--channel', default=25, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
 parser.add_argument('--queries-to-compare', nargs = 3, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
 parser.add_argument('-tmin', default=-0.5, type=float, help='crop window')
 parser.add_argument('-tmax', default=1, type=float, help='crop window')

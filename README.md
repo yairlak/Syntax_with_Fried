@@ -43,7 +43,8 @@ Data/
 
 # LOGS
 
-### cd /Code/arielt/ucla/neuralynx/matlab/clock_sync/
+### cd to required path
+cd /Code/arielt/ucla/neuralynx/matlab/clock_sync/
 
 ### Make sure no previous nev files exist
 rm *.nev
@@ -87,10 +88,9 @@ from GUI_mark_word_onsets/, launch: generate_logs_with_phonemes.py
 .. python plot_epochs_ERPs.py --patient 505 --channel 0 --align end --block auditory --tmin -2 --tmax 1 --baseline "(0, 1)" --sort-key "['chronological_order']" # aligned to end
 
 
-# GENERATE EPOCH FILES
-- convert the ncs file for the mic to mat: Code/Spike_sorting/Neuralynx_pipeline/ncs2CSC.m (matlab --nodisplay)
-- from Code/Main/micro, launch generate_multichannel_spectrotemporal_epochs_micro.py
-- from Code/Main/macro, launch generate_multichannel_spectrotemporal_epochs_macro.py
+# GENERATE MAT FILES
+- convert the ncs file of the micro and macro electrodes to mat files: Code/Spike_sorting/Neuralynx_pipeline/ncs2CSC.m (matlab --nodisplay)
+- Sampling frequency should be printed during the previous stage. Update these in functions/load_settings_params.py
 
 # SPIKE SORTING        
 ### Run from Raw/micro/
@@ -151,6 +151,16 @@ css-prepare-sorting --jobs do_sort_neg.txt --neg
 10. Manual fix:
 ..css-gui
 
+# GENERATE EPOCH FILES
+- from Code/Main/micro, launch generate_multichannel_spectrotemporal_epochs_micro.py
+- or, Bash/generate_epochs/parallel_generate_epochsTRF_micro.sh
+- Same for macro electrodes or spikes. Replace in the above micro -> macro/spikes
 
-# ANALYSES
-See Bash/ folder.
+### Generate ERSP and GAT figures
+From Bash/plotting, launch:
+parallel_plot_comparisons.py
+
+### Get probe names from all patients:
+In Code/Main
+python get_probe_names.py --patient 479_11 --patient 482 --patient 487 --patient 493 --patient 502 --patient 504 --patient 505 --patient 510 --patient 513 --patient 515
+

@@ -78,6 +78,7 @@ channel_nums.sort()
 
 for c, channel_num in enumerate(channel_nums):
     channel_data, channel_name = data_manip.load_channelsCSC_data(settings.path2rawdata, channel_num)
+    print('Current channel: %s' % channel_name)
     settings.channel_name = channel_name
     if channel_num > 0: # not MICROPHONE
         probe_name = re.split('(\d+)', channel_name)[2][1::]

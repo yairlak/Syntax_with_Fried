@@ -12,12 +12,12 @@ from pprint import pprint
 from functions.auxilary_functions import  smooth_with_gaussian
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
-parser.add_argument('-patient', default='479_11', help='Patient string')
-parser.add_argument('-hospital', default='UCLA', help='Hospital string')
-parser.add_argument('-block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
-parser.add_argument('-align', choices=['first','last', 'end'], default=[], help='Block type')
+parser.add_argument('--patient', default='479_11', help='Patient string')
+parser.add_argument('--hospital', default='UCLA', help='Hospital string')
+parser.add_argument('--block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
+parser.add_argument('--align', choices=['first','last', 'end'], default=[], help='Block type')
 #parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
-parser.add_argument('-channel', default=15, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
+parser.add_argument('--channel', default=15, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
 parser.add_argument('--queries-to-compare', nargs = 3, action='append', default=[], help="Triplets of condition-name, a metadata query and a color. For example, --queries-to-compare FIRST_WORD word_position==1 r --queries-to-compare LAST_WORD word_string in ['END'] b")
 parser.add_argument('--sort-key', default=['phone_string', 'phone_position'], help='Keys to sort according')
 parser.add_argument('-tmin', default=-0.5, type=float, help='crop window')

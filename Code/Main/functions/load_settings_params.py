@@ -113,7 +113,7 @@ class Params:
             self.sfreq_macro = 2000  # Data sampling frequency [Hz]
         if self.patient == 'patient_515': # Neuralynx
             self.sfreq_raw = 32000  # ?????Data sampling frequency [Hz]
-            self.sfreq_macro = -999  # ?????Data sampling frequency [Hz]
+            self.sfreq_macro = 2000  # ?????Data sampling frequency [Hz]
 
         self.sfreq_spikes = 1000 # dummy frequency for rasters via MNE [Hz]
         self.line_frequency = [50, 100, 150, 200]  # Line frequency [Hz]

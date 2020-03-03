@@ -2,7 +2,7 @@ clear; close all; clc;
 addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions'))
 
 %%
-patient = 'patient_513';
+patient = 'patient_515';
 elec_type = 'macro'; % micro / macro
 recording_system = 'Neuralynx'; % Neuralynx / BlackRock
 
@@ -41,10 +41,6 @@ switch recording_system
             end
         
         case 'BlackRock'
-%             nev_file = dir([base_folder '/Raw/*.nev']);
-%             nev_file = fullfile(base_folder,'Raw',nev_file(1).name);
-%             NEV = openNEV(nev_file, 'read');
-%             
             ns5_files = dir(fullfile(base_folder, 'Raw', elec_type, 'ns', '*.ns5'));
             assert(length(ns5_files)==1, 'A SINGLE ns5 file in folder is expected')
             for ns_file_name=ns5_files'
@@ -57,6 +53,9 @@ switch recording_system
                 for elec = 1:size(NS5.Data, 1)
                    elec_name = NS5.ElectrodesInfo(elec).Label
                    data = NS5.Data(elec, :);
+                   fprintf('Sampling freq:')
+                   fprintf('%i\n', SampleFrequencies(1))
+                   fprintf('%s\n', elec_name)
                    save(fullfile(output_path,['CSC' num2str(idx) '.mat']),'data','samplingInterval', 'elec_name');
                    electrodes_info{idx} = elec_name;
                    idx = idx+1;
