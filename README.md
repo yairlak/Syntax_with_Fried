@@ -84,8 +84,8 @@ from GUI_mark_word_onsets/, launch: generate_logs_with_phonemes.py
 .. which will generate the epochsTFR file in Data/UCLA/patient_???/Epochs/
 
 - To plot, launch:
-.. python plot_epochs_ERPs.py --patient 505 --channel 0 --tmin -1 --tmax 2 --baseline "(-1, 0)" --sort-key "['chronological_order']" --query "word_position == 1 and block in [2, 4, 6]"
-.. python plot_epochs_ERPs.py --patient 505 --channel 0 --align end --block auditory --tmin -2 --tmax 1 --baseline "(0, 1)" --sort-key "['chronological_order']" # aligned to end
+...python plot_epochs_ERPs.py --patient 505 --channel 0 --tmin -1 --tmax 2 --baseline "(-1, 0)" --sort-key "['chronological_order']" --query "word_position == 1 and block in [2, 4, 6]"
+...python plot_epochs_ERPs.py --patient 505 --channel 0 --align end --block auditory --tmin -2 --tmax 1 --baseline "(0, 1)" --sort-key "['chronological_order']" # aligned to end
 
 
 # GENERATE MAT FILES
@@ -104,52 +104,52 @@ Code/Utils/spike_sorting/rename_channel_names_to_CSCs.py
 ### All the following steps should be run from the folder: /CSC_ncs
 
 0. cd to path
-.. cd /Raw/micro/CSC_ncs
+...cd /Raw/micro/CSC_ncs
 
 1. (optional) generate overview plots for raw signal
-.. css-plot-rawsignal
-.. check new subfolder overview
+...css-plot-rawsignal
+...check new subfolder overview
 
 
 2. extract spikes (not yet sorted) from all channels
-.. css-extract --files *.ncs > css_extract.log
-.. new subfolder CSC were genereted with data_CSC*.h5 files
+...css-extract --files *.ncs > css_extract.log
+...new subfolder CSC were genereted with data_CSC*.h5 files
 
 3. find artifacts
-.. css-find-concurrent
+...css-find-concurrent
 
 4. remove artifacts
-.. css-mask-artifacts
+...css-mask-artifacts
 
 5. prepare for sorting
-..- Use css-plot-extracted to create plots of the spikes after artifact removal. These plots display the different artifact types, and also visualize cumulative spike counts.
-..- Next, prepare a job file (do_sort_pos.txt) by using css-overview-gui (Actions-->init from current folder and then  Actions->Save actions to file): this will generate the job file.
-..- (!!--important--!!) remove duplications in this job file (not clear why it happens). Make sure you have #channels lines in this file, without duplications, before you continue.
-..- Note that you can also prepare a job file for negative spikes (do_neg*.txt). For this, use css-overview-gui (toggle sort negative) to change the values in the corresponding channel rows. This will generate a second job file (do_sort_neg.txt). You would then need to repeat the step below TWICE, once for pos and once for neg.
+...Use css-plot-extracted to create plots of the spikes after artifact removal. These plots display the different artifact types, and also visualize cumulative spike counts.
+...Next, prepare a job file (do_sort_pos.txt) by using css-overview-gui (Actions-->init from current folder and then  Actions->Save actions to file): this will generate the job file.
+...(!!--important--!!) remove duplications in this job file (not clear why it happens). Make sure you have #channels lines in this file, without duplications, before you continue.
+...Note that you can also prepare a job file for negative spikes (do_neg*.txt). For this, use css-overview-gui (toggle sort negative) to change the values in the corresponding channel rows. This will generate a second job file (do_sort_neg.txt). You would then need to repeat the step below TWICE, once for pos and once for neg.
 
 Run:
 css-prepare-sorting --jobs do_sort_pos.txt
 css-prepare-sorting --jobs do_sort_neg.txt --neg
 
 6. Sorting
-.. css-cluster --jobs sort_pos_yl2.txt
-.. css-cluster --jobs sort_neg_yl2.txt
+...css-cluster --jobs sort_pos_yl2.txt
+...css-cluster --jobs sort_neg_yl2.txt
 
 7. combine
-.. css-combine --jobs sort_pos_yl2.txt
-.. css-combine --jobs sort_neg_yl2.txt
+...css-combine --jobs sort_pos_yl2.txt
+...css-combine --jobs sort_neg_yl2.txt
 
 8. (optional) generate sorting plots
-.. css-plot-sorted --label sort_pos_yl2
-.. plot_sorted_CSC.py
-.. still get errors (skip this step)
+...css-plot-sorted --label sort_pos_yl2
+...plot_sorted_CSC.py
+...still get errors (skip this step)
 
 9. (optional) Use the GUIs to optimize results
-.. css-overview-gui
-.. enter the sorting label sort_pos_abc and initialize the folder (from the menu or by pressing Ctrl+I).
+...css-overview-gui
+...enter the sorting label sort_pos_abc and initialize the folder (from the menu or by pressing Ctrl+I).
 
 10. Manual fix:
-..css-gui
+...css-gui
 
 # GENERATE EPOCH FILES
 - from Code/Main/micro, launch generate_multichannel_spectrotemporal_epochs_micro.py

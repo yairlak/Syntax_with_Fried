@@ -1,4 +1,4 @@
-Namespace(blocks=[1, 2, 3, 4, 5, 6], channels=['69'], out_fn=[], overwrite=False, path2epochs='/var/tmp/pbs.796929.pbsserver', patient='patient_515', tmax=3, tmin=-3)
+Namespace(blocks=[1, 2, 3, 4, 5, 6], channels=['69'], out_fn=[], overwrite=False, path2epochs='/var/tmp/pbs.816804.pbsserver', patient='patient_515', tmax=3, tmin=-3)
 Loading settings, params and preferences...
 {'classification_use_marco_LFP_data': False,
  'classification_use_micro_LFP_data': True,
@@ -15,13 +15,13 @@ Loading settings, params and preferences...
  'load_line_filtered_resampled_epoch_object': False,
  'log_name_beginning': 'new_with_phones_events_log_in_cheetah_clock_part',
  'overwrite_existing_output_files': True,
- 'path2epoch_data': '../../Data/UCLA/patient_515/Epochs',
- 'path2figures': '../../Figures',
- 'path2log': '../../Data/UCLA/patient_515/Logs',
- 'path2output': '../../Output',
- 'path2patient_folder': '../../Data/UCLA/patient_515',
- 'path2rawdata': '../../Data/UCLA/patient_515/Raw',
- 'path2stimuli': '../../Paradigm',
+ 'path2epoch_data': '../../../Data/UCLA/patient_515/Epochs',
+ 'path2figures': '../../../Figures',
+ 'path2log': '../../../Data/UCLA/patient_515/Logs',
+ 'path2output': '../../../Output',
+ 'path2patient_folder': '../../../Data/UCLA/patient_515',
+ 'path2rawdata': '../../../Data/UCLA/patient_515/Raw',
+ 'path2stimuli': '../../../Paradigm',
  'patient': 'patient_515',
  'sentences_start_end_filename': 'sentences_start_end_dict.pkl',
  'stimuli_file': 'features En_02 sentences.xlsx',
@@ -36,7 +36,7 @@ Loading settings, params and preferences...
  'iter_freqs': [('High-Gamma', 70, 151, 10)],
  'line_frequency': [50, 100, 150, 200],
  'patient': 'patient_515',
- 'sfreq_macro': -999,
+ 'sfreq_macro': 2000,
  'sfreq_raw': 32000,
  'sfreq_spikes': 1000,
  'smooth_time_freq': 0,
@@ -50,10 +50,18 @@ Loading settings, params and preferences...
  'ylim_PSTH': 20}
 Metadata: Loading features and comparisons from Excel files...
 Logs: Reading experiment log files from experiment...
+Loading POS tags for all words in the lexicon
+Preparing meta-data
+Generating event object for MNE from log data...
+0.02999999999974534
+min diff in msec: 30.00
+Analyze channels
+Loading h5 file for CSC69
+../../../Data/UCLA/patient_515/Raw/micro/CSC_ncs/CSC69/sort_neg_yl2/sort_cat.h5 was not found!
 sending incremental file list
 delta-transmission disabled for local transfer or --whole-file
 ./
 total: matches=0  hash_hits=0  false_alarms=0 data=0
 
-sent 64 bytes  received 86 bytes  300.00 bytes/sec
+sent 69 bytes  received 86 bytes  310.00 bytes/sec
 total size is 0  speedup is 0.00

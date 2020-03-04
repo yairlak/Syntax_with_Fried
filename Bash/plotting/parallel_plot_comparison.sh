@@ -1,6 +1,6 @@
 # 
-#rm -r Logs
-#mkdir Logs
+#rm -r RunScripts 
+#mkdir RunScripts
 
 #RUN_GAT='' # ' --run-gat' or ''
 #RUN_ERPS=' --run-erps' # ' --run-erps' or ''
@@ -84,20 +84,28 @@ for COMP in $(seq 0 41)
 do
      path2script="/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/plotting/"
      arg_patient=''
+     str_patients=''
      for patient in $PATIENT
      do
         arg_patient="${arg_patient} --patients ${patient}"
+        str_patients="${str_patients}${patient}_"
      done
      filename_py="plot_comparison.py"$arg_patient" --comparisons "$COMP" --signal-type "$SIGNAL_TYPE$RUN_ERPS$RUN_GAT
-     output_log='Logs/out_'$PATIENT'_comp_'$COMP'_signal_'$SIGNAL_TYPE
-     error_log='Logs/err_'$PATIENT'_comp_'$COMP'_signal_'$SIGNAL_TYPE
-     job_name='Comp_'$COMP'_p_'$PATIENT
+     output_log='Logs/out_'$str_patients'_comp_'$COMP'_signal_'$SIGNAL_TYPE
+     error_log='Logs/err_'$str_patients'_comp_'$COMP'_signal_'$SIGNAL_TYPE
+     job_name='Comp_'$COMP'_p_'$str_patients
 
      CMD="python $path2script$filename_py"
-         
+       
+
+    #filename_bash='RunScripts/'$str_patients'_comp_'$COMP'.sh'
     if [ $CLUSTER -eq 1 ]
     then
-        echo $CMD | qsub -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log # $filename_bash
+        #rm -f $filename_bash
+        #touch $filename_bash
+        #echo "python $path2script$filename_py" >> $filename_bash
+        #echo qsub -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log $filename_bash
+        echo $CMD | qsub -q $queue -N $job_name -l walltime=$walltime -o $output_log -e $error_log
     else
         echo $CMD'&'
     fi

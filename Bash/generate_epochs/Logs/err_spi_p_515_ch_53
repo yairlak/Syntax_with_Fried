@@ -1,6 +1,4 @@
-Traceback (most recent call last):
-  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/generate_multichannel_spike_epochs.py", line 60, in <module>
-    log = read_logs_and_features.read_log(block, settings)
-  File "/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/functions/read_logs_and_features.py", line 14, in read_log
-    with open(os.path.join(settings.path2log, log_fn)) as f:
-FileNotFoundError: [Errno 2] No such file or directory: '../../Data/UCLA/patient_515/Logs/new_with_phones_events_log_in_cheetah_clock_part1.log'
+/home/yl254115/miniconda3/lib/python3.7/site-packages/h5py/_hl/dataset.py:313: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  "Use dataset[()] instead.", H5pyDeprecationWarning)
+/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Code/Main/spikes/generate_multichannel_spike_epochs.py:90: DeprecationWarning: overwrite defaults to True in 0.18 but will change to False in 0.19, set it explicitly to avoid this warning
+  epochs_spikes.save(os.path.join(path2epochs, filename_epochs))
