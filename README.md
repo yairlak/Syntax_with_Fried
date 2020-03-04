@@ -44,18 +44,18 @@ Data/
 # LOGS
 
 ### cd to required path
-cd /Code/arielt/ucla/neuralynx/matlab/clock_sync/
+`cd /Code/arielt/ucla/neuralynx/matlab/clock_sync/`
 
 ### Make sure no previous nev files exist
-rm *.nev
+`rm *.nev`
 
 ### Copy the new event file and rename it to nlx_new.nev
-cp ../../../../../../Data/UCLA/patient_505/EXP6_Syntax/2018-12-07_15-48-17/*.nev nlx_new.nev
+`cp ../../../../../../Data/UCLA/patient_505/EXP6_Syntax/2018-12-07_15-48-17/*.nev nlx_new.nev`
 
 ### Remove history log files to make sure there's only a single log file in the forma "events_log_yyyy-mm-dd_hh-mm-ss.log"
-rm events_log_in_cheetah_clock.log  
-rm events_log.log  
-rm events_log_20*.log  
+`rm events_log_in_cheetah_clock.log`
+`rm events_log.log`
+`rm events_log_20*.log`
 
 ### copy the new log for sync
 cp ../../../../../../Data/UCLA/patient_505/log_patient/505/events_log_2018 . -v
