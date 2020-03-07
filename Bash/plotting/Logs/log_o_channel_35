@@ -1,3 +1,0 @@
-Namespace(SOA=500, align='first', baseline=(None, None), baseline_mode='zscore', block='auditory', channel=35, dont_regress=True, micro_macro='micro', patient='patient_487', probe_name='None', query='word_position == 1 and block in [2, 4, 6]', remove_outliers=False, sort_key=['sentence_length'], tmax=0.5, tmin=-2.5, vmax=1.5, vmin=-1.5, window_ed=450, window_st=50, word_ON_duration=250, y_tick_step=25)
-Loading epochs object: ../../Data/UCLA/patient_487/Epochs/patient_487_micro_LEC_ch_35-tfr.h5
-Reading ../../Data/UCLA/patient_487/Epochs/patient_487_micro_LEC_ch_35-tfr.h5 ...

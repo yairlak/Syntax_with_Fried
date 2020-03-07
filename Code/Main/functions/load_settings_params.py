@@ -72,6 +72,9 @@ class Settings():
         if self.patient == 'patient_505': # Neuralynx
             self.time0 = 1552403091357879  
             self.timeend = 1552405988561685
+        if self.patient == 'patient_510': # BlackRock
+            self.time0 =   0
+            self.timeend = -999
         if self.patient == 'patient_513': # Neuralynx
             self.time0 = 1569327112002003  
             self.timeend = 1569329632672960
@@ -106,8 +109,8 @@ class Params:
             self.sfreq_raw = 32000  # Data sampling frequency [Hz]
             self.sfreq_macro = 2000  # Data sampling frequency [Hz]
         if self.patient == 'patient_510': # Neuralynx
-            self.sfreq_raw = -999  # Data sampling frequency [Hz]
-            self.sfreq_macro = -999  # Data sampling frequency [Hz]
+            self.sfreq_raw = 30000  # Data sampling frequency [Hz]
+            self.sfreq_macro = 2000  # Data sampling frequency [Hz]
         if self.patient == 'patient_513': # Neuralynx
             self.sfreq_raw = 32000  # ????Data sampling frequency [Hz]
             self.sfreq_macro = 2000  # Data sampling frequency [Hz]

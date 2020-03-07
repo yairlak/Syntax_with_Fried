@@ -10,10 +10,12 @@ import numpy as np
 from operator import itemgetter
 from pprint import pprint
 from functions.auxilary_functions import  smooth_with_gaussian
+from functions import comparisons
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
 parser.add_argument('--patient', default='479_11', help='Patient string')
 parser.add_argument('--hospital', default='UCLA', help='Hospital string')
+parser.add_argument('--comparison', default=[], help='int. Comparison number from Code/Main/functions/comparisons.py')
 parser.add_argument('--block', choices=['visual','auditory', '1', '2', '3', '4', '5', '6', []], default='auditory', help='Block type')
 parser.add_argument('--align', choices=['first','last', 'end'], default=[], help='Block type')
 #parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
@@ -37,6 +39,17 @@ args.patient = 'patient_' + args.patient
 if isinstance(args.sort_key, str):
     args.sort_key = eval(args.sort_key)
 pprint(args)
+
+# COMPARISON
+if args.comparison: # OVERWRITES queries-to-compare
+    comparisons = comparisons.comparison_list()
+    comparison = comparisons[int(args.comparison)]
+    if 'colors' not in comparison.keys(): # if no color info for current comparison in function/comparisons.py then fill-in default colors
+        comparison['colors'] = ['r', 'g']
+    print(comparison['name'])
+    args.queries_to_compare = []
+    for condition_name, query, color in zip(comparison['train_condition_names'], comparison['train_queries'], comparison['colors']):
+        args.queries_to_compare.append((condition_name, query, color))
 
 
 #

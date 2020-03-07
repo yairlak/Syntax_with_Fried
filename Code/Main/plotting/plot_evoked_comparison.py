@@ -13,7 +13,7 @@ from sklearn import linear_model
 from sklearn.metrics import r2_score
 from operator import itemgetter
 from pprint import pprint
-from functions import data_manip
+from functions import data_manip, comparisons
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
 parser.add_argument('--patient', default='505', help='Patient string')
@@ -21,7 +21,8 @@ parser.add_argument('--block', choices=['visual','auditory', '1', '2', '3', '4',
 parser.add_argument('--micro-macro', choices=['micro','macro'], default='micro', help='electrode type')
 #parser.add_argument('--probe-name', default='LSTG', help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
 parser.add_argument('--channel', default=25, type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
-parser.add_argument('--queries-to-compare', nargs = 3, action='append', default=[], help="Pairs of condition-name and a metadata query. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END']")
+parser.add_argument('--comparison', default=[], help='int. Comparison number from Code/Main/functions/comparisons.py')
+parser.add_argument('--queries-to-compare', nargs = 3, action='append', default=[], help="Triplets of condition-name, metadata query and color. For example, --queries-to-compare FIRST_WORD word_position==1 --queries-to-compare LAST_WORD word_string in ['END'] g")
 parser.add_argument('-tmin', default=-0.5, type=float, help='crop window')
 parser.add_argument('-tmax', default=1, type=float, help='crop window')
 parser.add_argument('-baseline', default=(None, None), type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
@@ -40,9 +41,18 @@ if isinstance(args.baseline, str):
 
 pprint(args)
 
+# COMPARISON
+if args.comparison: # OVERWRITES queries-to-compare
+    comparisons = comparisons.comparison_list()
+    comparison = comparisons[int(args.comparison)]
+    if 'colors' not in comparison.keys(): # if no color info for current comparison in function/comparisons.py then fill-in default colors
+        comparison['colors'] = ['r', 'g']    
+    print(comparison['name'])
+    args.queries_to_compare = []
+    for condition_name, query, color in zip(comparison['train_condition_names'], comparison['train_queries'], comparison['colors']):
+        args.queries_to_compare.append((condition_name, query, color))
 
-
-probes = data_manip.get_probes2channels(args.patient)
+probes = data_manip.get_probes2channels([args.patient])
 
 # 
 plt.close('all')
@@ -52,7 +62,7 @@ if args.micro_macro == 'micro':
     else:
         filename = args.patient + '_micro_*_ch_' + str(args.channel) + '-tfr.h5'
 elif args.micro_macro == 'macro':
-    probe_based_on_ch_num = [p for p in set(probes.keys())-set(['MICROPHONE']) if args.channel in probes[p]['macro']]
+    probe_based_on_ch_num = [p for p in set(probes['probe_names'].keys())-set(['MICROPHONE']) if args.channel in probes['probe_names'][p]['macro'][0]]
     assert len(probe_based_on_ch_num) == 1
     filename = args.patient + '_macro_' + probe_based_on_ch_num[0] + '_1_2-tfr.h5'
 

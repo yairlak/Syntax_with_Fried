@@ -2,9 +2,9 @@ clear; close all; clc;
 addpath(genpath('releaseDec2015'), genpath('NPMK-4.5.3.0'), genpath('functions'))
 
 %%
-patient = 'patient_515';
-elec_type = 'macro'; % micro / macro
-recording_system = 'Neuralynx'; % Neuralynx / BlackRock
+patient = 'patient_510';
+elec_type = 'micro'; % micro / macro
+recording_system = 'BlackRock'; % Neuralynx / BlackRock
 
 %% pathsls 
 base_folder = ['/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/Data/UCLA/', patient];
@@ -50,11 +50,11 @@ switch recording_system
                 samplingInterval = 1/samplingFreq;
                 timeend_sec = NS5.MetaTags.DataDurationSec
                 idx=1;
-                for elec = 1:size(NS5.Data, 1)
+                for elec = 104:size(NS5.Data, 1)
                    elec_name = NS5.ElectrodesInfo(elec).Label
                    data = NS5.Data(elec, :);
                    fprintf('Sampling freq:')
-                   fprintf('%i\n', SampleFrequencies(1))
+                   fprintf('%i\n', samplingFreq)
                    fprintf('%s\n', elec_name)
                    save(fullfile(output_path,['CSC' num2str(idx) '.mat']),'data','samplingInterval', 'elec_name');
                    electrodes_info{idx} = elec_name;

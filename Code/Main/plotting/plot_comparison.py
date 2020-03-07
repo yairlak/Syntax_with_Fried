@@ -9,47 +9,22 @@ from functions import comparisons, data_manip, load_settings_params
 
 parser = argparse.ArgumentParser(description='Generate plots for TIMIT experiment')
 # What to plot:
-parser.add_argument('--comparisons', default=[], action='append',  help='comparison number from comparisons.py file.')
-#parser.add_argument('--patients', action='append', default=[], help='Patient string')
-parser.add_argument('--patients', action='append', default=[], help='List of patient numbers.')
-parser.add_argument('--signal-type', nargs=1,  choices=['micro','macro', 'spike'], default=[], help='electrode type')
-parser.add_argument('--probe-names', action='append', nargs=1, default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all probe names found in the Epochs folder")
-parser.add_argument('-channels', action='append', nargs='+', default=[], type=int, help='channel number (if empty list [] then all channels of patient are analyzed)')
+parser.add_argument('-r', '--root-path', default='/neurospin/unicog/protocols/intracranial/Syntax_with_Fried/', help='Path to parent project folder')
+parser.add_argument('--comparisons', default=[], action='append', required=True, help='comparison number from comparisons.py file.')
+parser.add_argument('--patient', action='append', required=True, help='Add patient.')
+parser.add_argument('--signal-type', choices=['micro','macro', 'spike'], required=True, help='electrode type')
+parser.add_argument('--probe-names', action='append', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all probe names found in the Epochs folder")
 # Figure setting:
-parser.add_argument('--sort-key', default=['sentence_length'], help='Keys to sort according')
-parser.add_argument('-tmin', type=float, default=-2.5, help='crop window')
-parser.add_argument('-tmax', type=float, default=0.5, help='crop window')
-parser.add_argument('-baseline', default=(None, None), type=str, help='Baseline to apply as in mne: (a, b), (None, b), (a, None) or None')
-parser.add_argument('-SOA', default=500, help='SOA in design [msec]')
-parser.add_argument('-word-ON-duration', default=250, help='Duration for which word word presented in the RSVP [msec]')
-parser.add_argument('-y-tick-step', default=25, type=int, help='If sorted by key, set the yticklabels density')
-parser.add_argument('-window-st', default=50, type=int, help='Regression start-time window [msec]')
-parser.add_argument('-window-ed', default=450, type=int, help='Regression end-time window [msec]')
-parser.add_argument('-vmin', default=-1.5, help='vmin of plot (default is in zscore, assuming baseline is zscore)')
-parser.add_argument('-vmax', default=1.5, help='vmax of plot (default is in zscore, assuming baseline is zscore')
-parser.add_argument('--baseline-mode', choices=['mean', 'ratio', 'logratio', 'percent', 'zscore', 'zlogratio'], default='zscore', help='Type of baseline method')
-parser.add_argument('--remove-outliers', action="store_true", default=False, help='Remove outliers based on percentile 25 and 75')
-parser.add_argument('--dont-regress', action="store_false", default=True, help='Remove outliers based on percentile 25 and 75')
 parser.add_argument('--run-gat', action="store_true", default=False)
 parser.add_argument('--run-erps', action="store_true", default=False)
 parser.add_argument('--print-only', action="store_true", default=False, help='Dont execute commands. Print only')
+parser.add_argument('--dont-overwrite', default=False, action='store_true', help="If True then file will be overwritten")
 args = parser.parse_args()
 
-# What to do in case of input of empty lists (default)
-if not args.patients:
-    args.patients = ['479_11']
-if not args.channels:
-    for p in args.patients:
-        args.channels.append([])
+'''
+Launches ERPs (--run-erps) or GAT (--run-gat) plot generation, for a given PATIENT, PROBE NAME and SIGNAL-TYPE (micro/macro/spike).
 
-# Santiy checks
-assert len(args.patients) == len(args.channels)
-
-if isinstance(args.sort_key, str):
-    args.sort_key = eval(args.sort_key)
-if isinstance(args.baseline, str):
-    args.baseline = eval(args.baseline)
-
+'''
 pprint(args)
 
 comparisons = comparisons.comparison_list()
@@ -67,104 +42,59 @@ for c in args.comparisons:
     comparison_name_str = c + '_' + comparison['name']
     # Get probes from all patients. Returns a dict. Each key is a probe name whose value is a dict:
     # micro: list of lists (per patient), with channel number that correspond to probe. macro: same. patients: which patients have this probe.
-    probes = data_manip.get_probes2channels(['patient_'+p for p in args.patients])
+    probes = data_manip.get_probes2channels(['patient_'+p for p in args.patient])
     pprint(probes)
     for probe in list(set(probes['probe_names'].keys())-set(['MICROPHONE']))+['all']:
-        if (probe in args.probe_names) or not (args.probe_names):
-            for signal_type in args.signal_type:
-                # MKDIR (Figures folder)
-                print(comparison_name_str, "_".join(['patient_'+p for p in args.patients]), probe, signal_type)
-                path2figures_all_patients = os.path.join(rootpath2figures, comparison_name_str, "_".join(['patient_'+p for p in args.patients]), probe, signal_type)
+        if (probe in args.probe_names) or (not args.probe_names): # FILTER PROBES IF USER CHOSES
+            # MKDIR (Figures folder)
+            print(comparison_name_str, "_".join(['patient_'+p for p in args.patient]), probe, args.signal_type)
+            ########
+            # ERPs #
+            ########
+            if args.run_erps:
+                for p, patient in enumerate(args.patient):
+                    path2figures = os.path.join(rootpath2figures, comparison_name_str, 'patient_'+patient, probe, args.signal_type)
+                    if not os.path.exists(path2figures):
+                            os.makedirs(path2figures)
+                    if probe!='all':
+                        for ch in probes['probe_names'][probe][args.signal_type][p]:
+                            if args.signal_type == 'spike':
+                                script_fn = 'plot_evoked_comparison_rasters.py'
+                                micro_macro = ''
+                            else:
+                                script_fn = 'plot_evoked_comparison.py'
+                                micro_macro = ' --micro-macro %s' % args.signal_type
+                            cmd = 'python %s --path2figures %s --patient %s%s --channel %i --comparison %s' % (script_fn, path2figures, patient, micro_macro, ch, c)
+                            print(cmd)
+                            print('-'*80)
+                            if not args.print_only:
+                                os.system(cmd)
+                            if (args.signal_type == 'macro') & (ch == 1): # ONLY ONE CHANNEL FROM MACRO, since the biploar of macro 1_2 is usually of most interest
+                                break
+            ########
+            # GAT  #
+            ########
+            if args.run_gat:
+                path2figures_all_patients = os.path.join(rootpath2figures, comparison_name_str, "_".join(['patient'] + args.patient), probe, args.signal_type)
                 if not os.path.exists(path2figures_all_patients):
-                        os.makedirs(path2figures_all_patients)
-                #########
-                # MICRO #
-                #########
-                if 'micro' in signal_type:
-                    if args.run_erps:
-                        for p, patient in enumerate(args.patients):
-                            path2figures = os.path.join(rootpath2figures, comparison_name_str, 'patient_'+patient, probe, signal_type)
-                            if not os.path.exists(path2figures):
-                                    os.makedirs(path2figures)
-                            for ch in probes['probe_names'][probe]['micro'][p]:
-                                cmd_micro = 'python plot_evoked_comparison.py --path2figures %s' % path2figures
-                                cmd_micro+=' --patient %s --micro-macro %s --channel %i' % (patient, 'micro', ch)
-                                for condition_name, query, color in zip(comparison['train_condition_names'], comparison['train_queries'], comparison['colors']):
-                                    cmd_micro += ' --queries-to-compare %s "%s" %s' % (condition_name, query, color)
-                                if 'test_queries' in comparison:
-                                    for condition_name, query, color in zip(comparison['test_condition_names'], comparison['test_queries'], comparison['colors']):
-                                        cmd_micro += ' --queries-to-compare %s "%s" %s' % (condition_name, query, color)
-                                print(cmd_micro)
-                                print('-'*80)
-                                if not args.print_only:
-                                    os.system(cmd_micro)
-                    if args.run_gat:
-                        cmd_decode = 'python ../decoding/run_GAT.py --cat-k-timepoint 1 -c %s --path2figures %s' % (c, path2figures_all_patients)
-                        for patient in args.patients:
-                            cmd_decode += ' -p %s --picks-micro %s --picks-macro none --picks-spike none' % (patient, probe)
-                        print(cmd_decode)
-                        print('-'*80)
-                        if not args.print_only:
-                            os.system(cmd_decode)
-                #########
-                # MACRO # 
-                #########
-                if 'macro' in signal_type:
-                    if args.run_erps:
-                        for p, patient in enumerate(args.patients):
-                            path2figures = os.path.join(rootpath2figures, comparison_name_str, 'patient_'+patient, probe, signal_type)
-                            if not os.path.exists(path2figures):
-                                    os.makedirs(path2figures)
-                            if probes['probe_names'][probe]['macro'][p]:
-                                ch = probes['probe_names'][probe]['macro'][p][0] # ONLY ONE CHANNEL FROM MACRO, since the biploar of macro 1_2 is usually of most interest
-                                cmd_macro = 'python plot_evoked_comparison.py --path2figures %s --patient %s --micro-macro %s --channel %i' % (path2figures, patient, 'macro', ch)
-                                for condition_name, query, color in zip(comparison['train_condition_names'], comparison['train_queries'], comparison['colors']):
-                                    cmd_macro += ' --queries-to-compare %s "%s" %s' % (condition_name, query, color)
-                                if 'test_queries' in comparison:
-                                    for condition_name, query, color in zip(comparison['test_condition_names'], comparison['test_queries'], comparison['colors']):
-                                        cmd_macro += ' --queries-to-compare %s "%s" %s' % (condition_name, query, color)
-                                print(cmd_macro)
-                                print('-'*80)
-                                if not args.print_only:
-                                    os.system(cmd_macro)
-                    if args.run_gat:
-                        cmd_decode = 'python ../decoding/run_GAT.py --cat-k-timepoint 1 -c %s --path2figures %s' % (c, path2figures_all_patients)
-                        for patient in args.patients:
-                            cmd_decode += ' -p %s --picks-micro none --picks-macro %s --picks-spike none' % (patient, probe)
-                        print(cmd_decode)
-                        print('-'*80)
-                        if not args.print_only:
-                            os.system(cmd_decode)
-                
-                ##########
-                # SPIKES #
-                ##########
-                if 'spike' in signal_type:
-                    if args.run_erps:
-                        for p, patient in enumerate(args.patients):
-                            path2figures = os.path.join(rootpath2figures, comparison_name_str, 'patient_'+patient, probe, signal_type)
-                            if not os.path.exists(path2figures):
-                                    os.makedirs(path2figures)
-                            settings = load_settings_params.Settings('patient_'+patient)
-                            channels_with_spikes = data_manip.get_channels_with_spikes_from_combinato_sorted_h5(settings, ['pos']) # TODO: fox 'neg' case
-                            channels_with_spikes = [sublist[0] for sublist in channels_with_spikes if (sublist[2]>0)|(sublist[3]>0)]
-                            for ch in sorted(probes['probe_names'][probe]['micro'][p]):
-                                if ch in channels_with_spikes:
-                                    cmd_spike = 'python plot_evoked_comparison_rasters.py --path2figures %s --patient %s --channel %i' % (path2figures, patient, ch)
-                                    for condition_name, query, color in zip(comparison['train_condition_names'], comparison['train_queries'], comparison['colors']):
-                                        cmd_spike += ' --queries-to-compare %s "%s" %s' % (condition_name, query, color)
-                                    if 'test_queries' in comparison:
-                                        for condition_name, query, color in zip(comparison['test_condition_names'], comparison['test_queries'], comparison['colors']):
-                                            cmd_spike += ' --queries-to-compare %s "%s" %s' % (condition_name, query, color)
-                                    print(cmd_spike)
-                                    print('-'*80)
-                                    if not args.print_only:
-                                        os.system(cmd_spike)
-                    if args.run_gat:
-                        cmd_decode = 'python ../decoding/run_GAT.py --cat-k-timepoint 1 -c %s --path2figures %s' % (c, path2figures_all_patients)
-                        for patient in args.patients:
-                            cmd_decode += ' -p %s --picks-micro none --picks-macro none --picks-spike %s' % (patient, probe)
-                        print(cmd_decode)
-                        print('-'*80)
-                        if not args.print_only:
-                            os.system(cmd_decode)
+                    os.makedirs(path2figures_all_patients)
+                # Build command with basic args
+                cmd_decode = 'python ../decoding/GAT.py --cat-k-timepoint 1 --path2figures %s' % (path2figures_all_patients)
+                # Add train/test queries to GAT command
+                cmd_decode += ' -r %s --train-queries "%s" --train-queries "%s"' % (args.root_path, comparison['train_queries'][0], comparison['train_queries'][1])
+                if 'test_queries' in comparison:
+                    cmd_decode += ' --test-queries "%s" --test-queries "%s"' % (comparison['test_queries'][0], comparison['test_queries'][1])
+                # Add probe selection to GAT command
+                IX_signal_type = ['micro', 'macro', 'spike'].index(args.signal_type)
+                picks_list = ['none']*3
+                picks_list[IX_signal_type] = probe
+                for patient in args.patient:
+                    cmd_decode += ' -s %s -p %s --picks-micro %s --picks-macro %s --picks-spike %s' % ('UCLA', 'patient_'+patient, picks_list[0], picks_list[1], picks_list[2])
+                fname = comparison['name'] + "_patients_" + '_'.join(args.patient) + '_mic_'+ picks_list[0] + '_mac_' + picks_list[1] + '_spi_' + picks_list[2]
+                cmd_decode += ' --output-filename %s' % fname
+                if args.dont_overwrite:
+                    cmd_decode += ' --dont-overwrite'
+                print(cmd_decode)
+                print('-'*80)
+                if not args.print_only:
+                    os.system(cmd_decode)

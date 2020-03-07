@@ -19,7 +19,7 @@ parser.add_argument('--picks-spike', type=str, nargs='+', action='append', help=
 parser.add_argument('-o', '--output-filename', type=str, help='Output filename')
 parser.add_argument('--cat-k-timepoints', type=int, default=1, help='How many time points to concatenate before classification')
 parser.add_argument('--path2figures', default=[], help="Channels to analyze and merge into a single epochs object (e.g. -c 1 -c 2). If empty then all channels found in the ChannelsCSC folder")
-parser.add_argument('--over-write', default=True, action='store_true', help="If True then file will be overwritten")
+parser.add_argument('--dont-overwrite', default=False, action='store_true', help="If True then file will be overwritten")
 print(mne.__version__)
 args = parser.parse_args()
 

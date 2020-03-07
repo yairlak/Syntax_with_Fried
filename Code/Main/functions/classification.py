@@ -23,7 +23,7 @@ def prepare_data_for_GAT(args):
     5. y_test_query
     '''
 
-    print(args)
+    #print(args)
     patients=args.patients
     hospitals=args.hospitals
     picks_micro=args.picks_micro
@@ -36,8 +36,8 @@ def prepare_data_for_GAT(args):
 
     # Times
     train_times = {}
-    train_times["start"] = -0.5
-    train_times["stop"] = 0.9
+    train_times["start"] = -1
+    train_times["stop"] = 1
     # train_times["step"] = 0.01
 
     X_train = [[] for _ in query_classes_train]

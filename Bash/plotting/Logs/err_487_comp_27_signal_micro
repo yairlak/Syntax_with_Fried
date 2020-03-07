@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "GAT.py", line 34, in <module>
-    classification_data = classification.prepare_data_for_GAT(args)
-  File "../functions/classification.py", line 118, in prepare_data_for_GAT
-    X_train = [np.concatenate(d, axis=1) for d in X_train]  # stack: n_epochs, n_channels, n_times
-  File "../functions/classification.py", line 118, in <listcomp>
-    X_train = [np.concatenate(d, axis=1) for d in X_train]  # stack: n_epochs, n_channels, n_times
-  File "<__array_function__ internals>", line 6, in concatenate
-ValueError: need at least one array to concatenate

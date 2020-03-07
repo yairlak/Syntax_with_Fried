@@ -90,17 +90,17 @@ from GUI_mark_word_onsets/, launch:
 
 
 # GENERATE MAT FILES
+### Convert
 - convert the ncs file of the micro and macro electrodes to mat files: `Code/Spike_sorting/Neuralynx_pipeline/ncs2CSC.m` (matlab --nodisplay)
+### Get sampling frequency
 - Sampling frequency should be printed during the previous stage. Update these in `functions/load_settings_params.py`
+### Get channel names: copy the following file to /CSC_mat folder and run it
+Code/Utils/spike_sorting/get_channel_names.py
+### Rename ncs files to csc.ncs format: copy the following to /ncs folder and run it
+Code/Utils/spike_sorting/rename_channel_names_to_CSCs.py
 
 # SPIKE SORTING        
 ### Run from Raw/micro/
-
-### 0. rename ncs files to CSC?.ncs
-### Copy the following file to /CSC_mat folder and run it
-Code/Utils/spike_sorting/get_channel_names.py
-### Copt the following to /ncs folder and run it
-Code/Utils/spike_sorting/rename_channel_names_to_CSCs.py
 
 ### All the following steps should be run from the folder: /CSC_ncs
 

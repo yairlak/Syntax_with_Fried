@@ -3,6 +3,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 from pprint import pprint
+from functions import data_manip
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--patient', action='append', default=[])
@@ -50,7 +51,16 @@ for patient in patients:
         print('macro:', names_macro)
     print('-'*100)
 
-x = {name:names_from_all_patients.count(name) for name in names_from_all_patients}
-dict_names = {k: v for k, v in sorted(x.items(), key=lambda item: item[1], reverse=True)}
-[print('%s:%i'%(k,v)) for (k,v) in dict_names.items()]
+x = {}
+probes = data_manip.get_probes2channels(patients)
+for probe in probes['probe_names'].keys():
+    if 'patients' in probes['probe_names'][probe].keys():
+        x[probe] = ' '.join(probes['probe_names'][probe]['patients'])
+dict_names = {k: v for k, v in sorted(x.items(), key=lambda item: len(item[1].split()), reverse=True)}
+[print('%s (%i):%s'%(k,len(v.split()),v)) for (k,v) in dict_names.items()]
+
+#x = {name:names_from_all_patients.count(name) for name in names_from_all_patients}
+#dict_names = {k: v for k, v in sorted(x.items(), key=lambda item: item[1], reverse=True)}
+#[print('%s:%i'%(k,v)) for (k,v) in dict_names.items()]
 #pprint(dict_names)
+#pprint(probes)

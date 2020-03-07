@@ -4,13 +4,13 @@ def comparison_list():
 # Sanity checks:
     comparisons[0] = {}
     comparisons[0]['name'] = 'first_last_word_audio'
-    comparisons[0]['train_queries'] = ["word_position==1 and block in [2, 4, 6]", "word_position==-1 and block in [2, 4, 6]"]
+    comparisons[0]['train_queries'] = ["word_position==1 and (block in [2, 4, 6])", "word_position==-1 and (block in [2, 4, 6])"]
     comparisons[0]['train_condition_names'] = ['First_word', 'Last_word']
     comparisons[0]['colors'] = ['b', 'g']
 
     comparisons[1] = {}
     comparisons[1]['name'] = 'first_last_word_visual'
-    comparisons[1]['train_queries'] = ["word_position==1 and block in [1, 3, 5]", "word_position==-1 and block in [1, 3, 5]"]
+    comparisons[1]['train_queries'] = ["word_position==1 and (block in [1, 3, 5])", "word_position==-1 and (block in [1, 3, 5])"]
     comparisons[1]['train_condition_names'] = ['First_word', 'Last_word']
     comparisons[1]['colors'] = ['b', 'g']
 
@@ -19,20 +19,20 @@ def comparison_list():
     # Nouns:
     comparisons[2] = {}
     comparisons[2]['name'] = 'grammatical_number_nouns_audio'
-    comparisons[2]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"]
+    comparisons[2]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and (block in [2, 4, 6])", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and (block in [2, 4, 6])"]
     comparisons[2]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[2]['colors'] = ['b', 'g']
 
     comparisons[3] = {}
     comparisons[3]['name'] = 'grammatical_number_nouns_visual'
-    comparisons[3]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [1, 3, 5]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [1, 3, 5]"]
+    comparisons[3]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and (block in [1, 3, 5])", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and (block in [1, 3, 5])"]
     comparisons[3]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[3]['colors'] = ['b', 'g']
 
     comparisons[4] = {}
     comparisons[4]['name'] = 'grammatical_number_nouns_audio2visual'
-    comparisons[4]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"]
-    comparisons[4]['test_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [1, 3, 5]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [1, 3, 5]"]
+    comparisons[4]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and (block in [2, 4, 6])", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and (block in [2, 4, 6])"]
+    comparisons[4]['test_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and (block in [1, 3, 5])", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and (block in [1, 3, 5])"]
     comparisons[4]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[4]['test_condition_names'] = ['Singular', 'Plural']
     comparisons[4]['colors'] = ['b', 'g']
@@ -40,20 +40,20 @@ def comparison_list():
     # Verbs:
     comparisons[5] = {}
     comparisons[5]['name'] = 'grammatical_number_verbs_audio'
-    comparisons[5]['train_queries'] = ["pos=='VBZ' and block in [2, 4, 6]", "pos=='VBP' and block in [2, 4, 6]"]
+    comparisons[5]['train_queries'] = ["pos=='VBZ' and (block in [2, 4, 6])", "pos=='VBP' and (block in [2, 4, 6])"]
     comparisons[5]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[5]['colors'] = ['b', 'g']
 
     comparisons[6] = {}
     comparisons[6]['name'] = 'grammatical_number_verbs_visual'
-    comparisons[6]['train_queries'] = ["pos=='VBZ' and block in [1, 3, 5]", "pos=='VBP' and block in [1, 3, 5]"]
+    comparisons[6]['train_queries'] = ["pos=='VBZ' and (block in [1, 3, 5])", "pos=='VBP' and (block in [1, 3, 5])"]
     comparisons[6]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[6]['colors'] = ['b', 'g']
 
     comparisons[7] = {}
     comparisons[7]['name'] = 'grammatical_number_verbs_audio2visual'
-    comparisons[7]['train_queries'] = ["pos=='VBZ' and block in [2, 4, 6]", "pos=='VBP' and block in [2, 4, 6]"]
-    comparisons[7]['test_queries'] = ["pos=='VBZ' and block in [1, 3, 5]", "pos=='VBP' and block in [1, 3, 5]"]
+    comparisons[7]['train_queries'] = ["pos=='VBZ' and (block in [2, 4, 6])", "pos=='VBP' and (block in [2, 4, 6])"]
+    comparisons[7]['test_queries'] = ["pos=='VBZ' and (block in [1, 3, 5])", "pos=='VBP' and (block in [1, 3, 5])"]
     comparisons[7]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[7]['test_condition_names'] = ['Singular', 'Plural']
     comparisons[7]['colors'] = ['b', 'g']
@@ -61,20 +61,20 @@ def comparison_list():
     # Pronouns:
     comparisons[8] = {}
     comparisons[8]['name'] = 'grammatical_number_pronouns_audio'
-    comparisons[8]['train_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and block in [2, 4, 6]", "word_position==1 and (word_string=='they') and block in [2, 4, 6]"]
+    comparisons[8]['train_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and (block in [2, 4, 6])", "word_position==1 and (word_string=='they') and (block in [2, 4, 6])"]
     comparisons[8]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[8]['colors'] = ['b', 'g']
 
     comparisons[9] = {}
     comparisons[9]['name'] = 'grammatical_number_pronouns_visual'
-    comparisons[9]['train_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and block in [1, 3, 5]", "word_position==1 and (word_string=='they') and block in [1, 3, 5]"]
+    comparisons[9]['train_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and (block in [1, 3, 5])", "word_position==1 and (word_string=='they') and (block in [1, 3, 5])"]
     comparisons[9]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[9]['colors'] = ['b', 'g']
 
     comparisons[10] = {}
     comparisons[10]['name'] = 'grammatical_number_pronouns_audio2visual'
-    comparisons[10]['train_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and block in [2, 4, 6]", "word_position==1 and (word_string=='they') and block in [2, 4, 6]"]
-    comparisons[10]['test_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and block in [1, 3, 5]", "word_position==1 and (word_string=='they') and block in [1, 3, 5]"]
+    comparisons[10]['train_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and (block in [2, 4, 6])", "word_position==1 and (word_string=='they') and (block in [2, 4, 6])"]
+    comparisons[10]['test_queries'] = ["word_position==1 and (word_string=='he' or word_string=='she') and (block in [1, 3, 5])", "word_position==1 and (word_string=='they') and (block in [1, 3, 5])"]
     comparisons[10]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[10]['test_condition_names'] = ['Singular', 'Plural']
     comparisons[10]['colors'] = ['b', 'g']
@@ -82,8 +82,8 @@ def comparison_list():
     #Nouns2Verbs-audio
     comparisons[11] = {}
     comparisons[11]['name'] = 'grammatical_number_verbs2nouns_audio'
-    comparisons[11]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [2, 4, 6]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [2, 4, 6]"]
-    comparisons[11]['test_queries'] = ["pos=='VBZ' and block in [2, 4, 6]", "pos=='VBP' and block in [2, 4, 6]"]
+    comparisons[11]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and (block in [2, 4, 6])", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and (block in [2, 4, 6])"]
+    comparisons[11]['test_queries'] = ["pos=='VBZ' and (block in [2, 4, 6])", "pos=='VBP' and (block in [2, 4, 6])"]
     comparisons[11]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[11]['test_condition_names'] = ['Singular', 'Plural']
     comparisons[11]['colors'] = ['b', 'g']
@@ -91,8 +91,8 @@ def comparison_list():
     #Nouns2Verbs-visual
     comparisons[12] = {}
     comparisons[12]['name'] = 'grammatical_number_verbs2nouns_visual'
-    comparisons[12]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and block in [1, 3, 5]", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and block in [1, 3, 5]"]
-    comparisons[12]['test_queries'] = ["pos=='VBZ' and block in [1, 3, 5]", "pos=='VBP' and block in [1, 3, 5]"]
+    comparisons[12]['train_queries'] = ["word_position==2 and (word_string=='boy' or word_string=='girl' or word_string=='man' or word_string=='woman') and (block in [1, 3, 5])", "word_position==2 and (word_string=='boys' or word_string=='girls' or word_string=='men' or word_string=='women') and (block in [1, 3, 5])"]
+    comparisons[12]['test_queries'] = ["pos=='VBZ' and (block in [1, 3, 5])", "pos=='VBP' and (block in [1, 3, 5])"]
     comparisons[12]['train_condition_names'] = ['Singular', 'Plural']
     comparisons[12]['test_condition_names'] = ['Singular', 'Plural']
     comparisons[12]['colors'] = ['b', 'g']
@@ -352,9 +352,28 @@ def comparison_list():
         comparisons[41]['train_condition_names'].append(cl)
     comparisons[41]['colors'] = ['r', 'g']
 
+# WORD POSITION
+    comparisons[42] = {}
+    comparisons[42]['name'] = 'word_position_audio'
+    comparisons[42]['train_queries'] = ["word_position==%i and block in [2, 4, 6]" for i in range(1, 6)]
+    comparisons[42]['train_condition_names'] = ['1', '2', '3', '4', '5']
+    comparisons[42]['colors'] = ['r', 'g', 'b', 'c', 'm']
+
+    comparisons[43] = {}
+    comparisons[43]['name'] = 'word_position_visual'
+    comparisons[43]['train_queries'] = ["word_position==%i and block in [1, 3, 5]" for i in range(1, 6)]
+    comparisons[43]['train_condition_names'] = ['1', '2', '3', '4', '5']
+    comparisons[43]['colors'] = ['r', 'g', 'b', 'c', 'm']
+
+    comparisons[44] = {}
+    comparisons[44]['name'] = 'word_position_audio2visual'
+    comparisons[44]['train_queries'] = ["word_position==%i and block in [2, 4, 6]" for i in range(1, 6)]
+    comparisons[44]['test_queries'] = ["word_position==%i and block in [1, 3, 5]" for i in range(1, 6)]
+    comparisons[44]['train_condition_names'] = ['1', '2', '3', '4', '5']
+    comparisons[44]['test_condition_names'] = ['1', '2', '3', '4', '5']
+    comparisons[44]['colors'] = ['r', 'g', 'b', 'c', 'm']
+
     return comparisons
-
-
 
 
 

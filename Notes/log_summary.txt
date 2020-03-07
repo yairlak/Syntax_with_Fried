@@ -54,3 +54,6 @@ UCLA confirmed patient 482 RAH4.ncs is missing
 - New script to get channel names from all patients. See Code/Main/get_probe_names.py
 - Auto Spike sorting of blackrock mat files of patient 504 with combinato. Only the css-extract step is different, with --matfile flag. See also bash that loops over all CSC*.mat files, in the same folde.r.
 - patient 502 has more MACRO than MICRO. ROF and RAF don't exist in micro. probably since there was no way to record so many micro.
+
+2020Mar04
+- Fake channel_numers_to_names.txt in 510 micro/CSC_mat (copied from macro/CSC_mat)

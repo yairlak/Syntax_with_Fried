@@ -1,4 +1,4 @@
-import os, glob
+import os, glob, sys
 import numpy as np
 import mne
 from scipy import io
@@ -10,12 +10,11 @@ def get_channel_nums(path2rawdata):
     return [int(os.path.basename(s)[3:-4]) for s in CSC_files]
 
 
-def get_probes2channels(patients):
+def get_probes2channels(patients, flag_get_channels_with_spikes=True):
     '''
     input: patient (str)
     output: probes (dict) - key is the probe names; value is a list of lists (per patient), with channel numbers for micro or macro data. For example, probes['LSTG']['micro'] = [[25, 26, ...], [36, ..]]
     '''
-
     def get_file_probe_names(path2mat_folder, micro_macro):
         with open(os.path.join(path2mat_folder, 'channel_numbers_to_names.txt')) as f:
             lines = f.readlines()
@@ -27,20 +26,26 @@ def get_probes2channels(patients):
             probe_names = set([s[:-5] for s in file_names])
         return channel_numbers, file_names, probe_names
 
+    path2functions = os.path.dirname(os.path.abspath(__file__))
+    sys.path.append(path2functions)
+    import load_settings_params
     # First, find probe names from all patients
     probe_names_all_patients = []
     for patient in patients:
         # MICRO CSC
-        path2microdata_folder = os.path.join('..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'micro', 'CSC_mat')
+        path2microdata_folder = os.path.join(path2functions, '..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'micro', 'CSC_mat')
         channel_numbers_micro, file_names_micro, probe_names_micro = get_file_probe_names(path2microdata_folder, 'micro')
         # MACRO CSC
-        path2macrodata_folder = os.path.join('..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'macro', 'CSC_mat')
+        path2macrodata_folder = os.path.join(path2functions, '..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'macro', 'CSC_mat')
         channel_numbers_macro, file_names_macro, probe_names_macro = get_file_probe_names(path2macrodata_folder, 'macro')
         # COMPARE micro-macro
         if not probe_names_micro == probe_names_macro:
-            print('--- !!! Warning: not the same probe names in micro and macro !!! ---')
+            print('%s: --- !!! Warning: not the same probe names in micro and macro !!! ---' % patient)
             print('Micro probe names: %s' % probe_names_micro)
             print('Macro probe names: %s' % probe_names_macro)
+        else:
+            pass
+            #print('%s: '%patient, probe_names_micro)
         # UNIFY micro-macro
         probe_names_micro_macro = list(set(list(set(probe_names_micro))+list(set(probe_names_macro))))
         probe_names_all_patients.append(probe_names_micro_macro)
@@ -52,25 +57,38 @@ def get_probes2channels(patients):
     probes['probe_names'] = {}
     for patient in patients:
         probes['patients'].append(patient)
+        # CHECK CHANNELS WITH SPIKES
+        settings = load_settings_params.Settings(patient)
+        if flag_get_channels_with_spikes:
+            channels_with_spikes = get_channels_with_spikes_from_combinato_sorted_h5(settings, ['pos']) # TODO: fox 'neg' case
+            channels_with_spikes = [sublist[0] for sublist in channels_with_spikes if (sublist[2]>0)|(sublist[3]>0)]
+        else:
+            channels_with_spikes = []
+        print('Channels with spikes for patient %s' % patient, channels_with_spikes)
         for probe_name in probe_names_all_patients: # Take the union in case probe_names_micro != probe_names_macro
-            path2microdata_folder = os.path.join('..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'micro', 'CSC_mat')
+            path2microdata_folder = os.path.join(path2functions, '..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'micro', 'CSC_mat')
             channel_numbers_micro, file_names_micro, probe_names_micro = get_file_probe_names(path2microdata_folder, 'micro')
-            path2macrodata_folder = os.path.join('..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'macro', 'CSC_mat')
+            path2macrodata_folder = os.path.join(path2functions, '..', '..', '..', 'Data', 'UCLA', patient, 'Raw', 'macro', 'CSC_mat')
             channel_numbers_macro, file_names_macro, probe_names_macro = get_file_probe_names(path2macrodata_folder, 'macro')
             channel_numbers_of_probe_micro = [int(ch) for (ch, fn) in zip(channel_numbers_micro, file_names_micro) if probe_name == fn[4:-5]]
             channel_numbers_of_probe_macro = [int(ch) for (ch, fn) in zip(channel_numbers_macro, file_names_macro) if probe_name == fn[:-5]]
             if probe_name not in probes['probe_names'].keys(): # a new probe was found - initialize patient list with channel numbers.
                 probes['probe_names'][probe_name] = {}
-                probes['probe_names'][probe_name]['micro'] = [] # list of list (per patient), with which channel numbers belong to this probe
-                probes['probe_names'][probe_name]['macro'] = [] # list of list (per patient), with which channel numbers belong to this probe
+                probes['probe_names'][probe_name]['micro'] = [] # list of lists (per patient), with which channel numbers belong to this probe
+                probes['probe_names'][probe_name]['macro'] = [] # list of lists (per patient), with which channel numbers belong to this probe
+                probes['probe_names'][probe_name]['spike'] = [] # list of lists (per patient), with which channel numbers have spikes
                 probes['probe_names'][probe_name]['patients'] = [] # which patients have this probe
             #print(patient, probe_name, channel_numbers_of_probe_macro)
             probes['probe_names'][probe_name]['micro'].append(channel_numbers_of_probe_micro)
             probes['probe_names'][probe_name]['macro'].append(channel_numbers_of_probe_macro)
-            probes['probe_names'][probe_name]['patients'].append(patient)
+            probes['probe_names'][probe_name]['spike'].append(list(set(channels_with_spikes).intersection(channel_numbers_of_probe_micro)))
+            if channel_numbers_of_probe_micro or channel_numbers_of_probe_macro:
+                probes['probe_names'][probe_name]['patients'].append(patient)
     # MICROPHPNE to micro electrodes
     probes['probe_names']['MICROPHONE'] = {}
     probes['probe_names']['MICROPHONE']['micro'] = [0]
+
+
 
     return probes
 
@@ -118,7 +136,6 @@ def load_macro_data(path2rawdata, probe_name):
 def load_combinato_sorted_h5(channel_num, channel_name, settings):
     import h5py
     spike_times_msec = []; channel_names = []
-     
     if settings.time0 == 0: # BlackRock
         h5_folder = 'CSC_mat' # since combinato clusters based on mat files
     else:
@@ -192,6 +209,8 @@ def load_combinato_sorted_h5(channel_num, channel_name, settings):
 def get_channels_with_spikes_from_combinato_sorted_h5(settings, signs):
     import h5py
     # GET ALL CHANNELS NAMES FOR CURRENT SUBJECT
+    path2functions = os.path.dirname(os.path.abspath(__file__))
+    settings.path2rawdata = os.path.join(path2functions, '..', '..', '..', 'Data', 'UCLA', settings.patient, 'Raw')
     path2CSC_mat = os.path.join(settings.path2rawdata, 'micro', 'CSC_mat')
     with open(os.path.join(path2CSC_mat, 'channel_numbers_to_names.txt')) as f_channel_names:
         channel_names = f_channel_names.readlines()
@@ -200,8 +219,12 @@ def get_channels_with_spikes_from_combinato_sorted_h5(settings, signs):
 
     # GENERATE A LIST OF SUBLISTS, EACH SUBLIST: [channel_number, channel_name, number_of_cluster_groups[pos], number_of_cluster_groups[neg]]
     channels_with_spikes = []
+    if settings.time0 == 0: # BlackRock
+        h5_folder = 'CSC_mat' # since combinato clusters based on mat files
+    else:
+        h5_folder = 'CSC_ncs' # Neuralynx case
     for channel_num, channel_name in channel_names_dict.items():
-        h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro', 'CSC_ncs' , 'CSC' + str(channel_num), 'data_*.h5'))
+        h5_files = glob.glob(os.path.join(settings.path2rawdata, 'micro', h5_folder , 'CSC' + str(channel_num), 'data_*.h5'))
         if len(h5_files) == 1: # MAKE SURE THE h5 FILE EXISTS 
             filename = h5_files[0]
             f_all_spikes = h5py.File(filename, 'r')
@@ -216,9 +239,13 @@ def get_channels_with_spikes_from_combinato_sorted_h5(settings, signs):
                     types = f_sort_cat['types'][()] # -1: artifact, 0: unassigned, 1: MU, 2: SU
                     for g in list(group_numbers):
                         type_of_curr_group = [t_ for (g_, t_) in types if g_ == g]
-                        if len(type_of_curr_group) == 1:
+                        if (len(type_of_curr_group) == 1)|all(t==-1 for t in type_of_curr_group): #sanity check that types has only a single row per group (and exception for artifacts t=-1)
                             type_of_curr_group = type_of_curr_group[0]
                         else:
+                            print('file:', filename_sorted[0])
+                            #print('Type of curr group:', type_of_curr_group)
+                            #print('groups:', groups)
+                            #print('types:', types)
                             raise ('issue with types: more than one group assigned to a type')
                         if type_of_curr_group>0:
                             if sign == 'pos':
